@@ -6,7 +6,7 @@ const pageLinks = [
   { href: "/system", label: "The system" },
   { href: "/results", label: "Results" },
   { href: "/about", label: "About" },
-  { href: "/book", label: "Book a call" },
+  { href: "/book", label: "Get your free audit" },
 ];
 
 export function Footer() {
@@ -21,11 +21,11 @@ export function Footer() {
               className="h-9 w-auto"
             />
             <p className="my-4 max-w-[340px] text-[17px] leading-[1.5] text-white/70">
-              We build websites that generate enquiries — then keep improving
+              We build websites that generate enquiries, then keep improving
               them until the numbers move.
             </p>
             <Button href="/book" variant="secondary">
-              Book a discovery call
+              Get your free audit
             </Button>
           </div>
 
@@ -52,16 +52,10 @@ export function Footer() {
             </div>
             <div className="flex flex-col gap-3">
               <a
-                href="mailto:hello@tandemm.com"
+                href="mailto:hello@tandemm.co.uk"
                 className="text-[15px] text-white/85 no-underline"
               >
-                hello@tandemm.com
-              </a>
-              <a
-                href="tel:+447948091506"
-                className="text-[15px] text-white/85 no-underline"
-              >
-                07948 091506
+                hello@tandemm.co.uk
               </a>
               <span className="text-[15px] text-white/60">London, UK</span>
             </div>

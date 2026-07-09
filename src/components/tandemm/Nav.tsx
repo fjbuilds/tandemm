@@ -43,18 +43,13 @@ export function Nav({
         </nav>
 
         <div className="flex shrink-0 items-center gap-2.5">
-          <a
-            href="tel:+447948091506"
-            className="hidden items-center gap-1.5 px-1.5 text-sm font-semibold text-white/80 no-underline lg:flex"
-          >
-            07948 091506
-          </a>
           <Link
             href="/book"
             aria-current={active === "book" ? "page" : undefined}
-            className="whitespace-nowrap rounded-[var(--radius-pill)] bg-white px-5 py-[11px] text-sm font-semibold text-[var(--color-primary)] no-underline"
+            className="whitespace-nowrap rounded-[var(--radius-pill)] bg-white px-4 py-[11px] text-sm font-semibold text-[var(--color-primary)] no-underline sm:px-5"
           >
-            Book a call
+            <span className="sm:hidden">Free audit</span>
+            <span className="hidden sm:inline">Get your free audit</span>
           </Link>
         </div>
       </div>

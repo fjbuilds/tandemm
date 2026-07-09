@@ -34,7 +34,7 @@ const ARROW_ITEMS = [
   "Understand your customers before we touch a line of code",
   "Remove friction between someone landing and someone enquiring",
   "Measure performance with real numbers, not vanity metrics",
-  "Improve continuously — not just at launch",
+  "Improve continuously, well past launch",
 ];
 
 const OPTIMISE_TABLE = [
@@ -97,12 +97,6 @@ export default function AboutPage() {
       <section className="px-6 pb-16 pt-[60px] text-center">
         <div className="mx-auto max-w-[820px]">
           <Reveal>
-            <div className="mb-7 inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-white/70 px-3.5 py-[7px] text-[13px] font-semibold tracking-[0.02em] text-[var(--color-ink-muted)]">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
-              About Tandemm
-            </div>
-          </Reveal>
-          <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
               We build the system behind consistent business growth.
             </h1>
@@ -151,8 +145,8 @@ export default function AboutPage() {
           <Reveal>
             <div className="mt-8 rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-8 text-center text-[var(--color-on-primary)]">
               <p className="mx-auto max-w-[640px] text-[19px] font-semibold leading-[1.5]">
-                Tandemm exists to bring the pieces together &mdash; research,
-                design, development, and ongoing optimisation in one system
+                Tandemm exists to bring the pieces together: research, design,
+                development, and ongoing optimisation in one system
                 that&apos;s accountable to one number: enquiries.
               </p>
             </div>
@@ -174,9 +168,9 @@ export default function AboutPage() {
             <Reveal>
               <div>
                 <h3 className="mb-6 font-[family-name:var(--font-display)] text-[22px] font-bold leading-[1.2]">
-                  A website isn&apos;t the destination.
+                  A website is a tool for one job:
                   <br />
-                  It&apos;s a tool.
+                  getting the phone to ring.
                 </h3>
                 <div className="flex flex-col gap-4">
                   {ARROW_ITEMS.map((item) => (

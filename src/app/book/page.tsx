@@ -97,14 +97,14 @@ export default function BookPage() {
           <div className="mx-auto max-w-[820px]">
             <div className="mb-7 inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-white/70 px-3.5 py-[7px] text-[13px] font-semibold tracking-[0.02em] text-[var(--color-ink-muted)]">
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
-              Book a call
+              Get your free audit
             </div>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
               A straight read on your website. Free.
             </h1>
             <p className="mx-auto mt-[22px] max-w-[600px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
               30 minutes. No pitch deck, no obligation. We&apos;ll tell you
-              where your enquiries are leaking and whether we can help — even
+              where your enquiries are leaking and whether we can help, even
               if the answer is &quot;you don&apos;t need us.&quot;
             </p>
           </div>
@@ -163,7 +163,7 @@ export default function BookPage() {
                   {
                     n: 3,
                     title: "What we'd do next",
-                    body: "A clear, honest recommendation — or none.",
+                    body: "A clear, honest recommendation, or none.",
                   },
                 ].map((item) => (
                   <div key={item.n} className="flex items-start gap-3">
@@ -405,7 +405,7 @@ export default function BookPage() {
                       </div>
                       <div>2 · We take a quick look at your site before we speak.</div>
                       <div>
-                        3 · We call at the agreed time — no prep needed from
+                        3 · We call at the agreed time, no prep needed from
                         you.
                       </div>
                     </div>

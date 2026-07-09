@@ -22,56 +22,6 @@ const paletteOverride = {
 /* ------------------------------------------------------------------ */
 /*  Static data                                                       */
 /* ------------------------------------------------------------------ */
-const SYSTEM_CARDS = [
-  {
-    label: "Traffic",
-    desc: "Google Ads, SEO, socials",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <path d="M4 20l6-8 5 4 9-12" stroke="var(--color-accent)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    label: "Website",
-    desc: "Built to convert visitors",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <rect x="3" y="5" width="22" height="18" rx="3" stroke="var(--color-accent)" strokeWidth="2" />
-        <line x1="3" y1="10" x2="25" y2="10" stroke="var(--color-accent)" strokeWidth="2" />
-      </svg>
-    ),
-  },
-  {
-    label: "Tracking",
-    desc: "Every click, call & form",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <circle cx="14" cy="14" r="10" stroke="var(--color-accent)" strokeWidth="2" />
-        <circle cx="14" cy="14" r="4" fill="var(--color-accent)" />
-      </svg>
-    ),
-  },
-  {
-    label: "Optimisation",
-    desc: "Monthly improvements",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <path d="M6 22V14M11 22V10M16 22V16M21 22V6" stroke="var(--color-accent)" strokeWidth="2.5" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    label: "Booked jobs",
-    desc: "Real revenue, measured",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <path d="M7 14l5 5 9-9" stroke="var(--color-accent)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-];
-
 const KPIS = [
   {
     label: "Enquiries",
@@ -175,15 +125,15 @@ const TESTIMONIALS = [
 const FAQS = [
   {
     q: "What kind of businesses do you work with?",
-    a: "Trade and service businesses — electricians, plumbers, builders, landscapers, cleaners, and similar. If your customers find you online and you do the work locally, we're a good fit.",
+    a: "Trade and service businesses: electricians, plumbers, builders, landscapers, cleaners, and similar. If your customers find you online and you do the work locally, we're a good fit.",
   },
   {
     q: "How much does it cost?",
-    a: "It depends on the scope, but most clients invest between £800 and £2,000 per month for the full system. We'll give you a clear number on the discovery call — no surprises.",
+    a: "It depends on the scope, but most clients invest between £800 and £2,000 per month for the full system. We'll give you a clear number on the discovery call, no surprises.",
   },
   {
     q: "How long before I see results?",
-    a: "Most clients see a measurable uplift within the first 4–6 weeks. The system compounds over time — month three is always better than month one.",
+    a: "Most clients see a measurable uplift within the first 4–6 weeks. The system compounds over time; month three is always better than month one.",
   },
   {
     q: "Do I need to do anything?",
@@ -304,15 +254,6 @@ function KpiCard({
 /*  Main page                                                         */
 /* ------------------------------------------------------------------ */
 export default function HomePage() {
-  /* Card deck state */
-  const [activeCard, setActiveCard] = useState(0);
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveCard((prev) => (prev + 1) % SYSTEM_CARDS.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
-
   /* Testimonial slider */
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const nextTestimonial = useCallback(() => {
@@ -344,29 +285,20 @@ export default function HomePage() {
       >
         <div className="mx-auto max-w-[820px]">
           <Reveal>
-            <div className="mb-7 inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-white/70 px-3.5 py-[7px] text-[13px] font-semibold tracking-[0.02em] text-[var(--color-ink-muted)]">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
-              A growth partner for trade businesses
-            </div>
-          </Reveal>
-          <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              We don&apos;t just build websites.
-              <br className="hidden sm:block" />
-              We run the system that brings you enquiries.
+              We build the system that brings you enquiries.
             </h1>
           </Reveal>
           <Reveal>
             <p className="mx-auto mt-[22px] max-w-[620px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
               Most trade businesses have a website that sits there doing
-              nothing. We replace it with a system that drives traffic,
-              converts visitors and tracks every enquiry — so your phone
-              actually rings.
+              nothing. We build one that drives traffic, converts visitors and
+              tracks every enquiry, so your phone actually rings.
             </p>
           </Reveal>
           <Reveal>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button href="/book">Book a free call</Button>
+              <Button href="/book">Get your free audit</Button>
               <Button href="/results" variant="ghost">
                 See real results
               </Button>
@@ -374,64 +306,13 @@ export default function HomePage() {
           </Reveal>
         </div>
 
-        {/* Card deck */}
-        <Reveal className="mx-auto mt-14 max-w-[540px]">
-          <div className="relative h-[200px]">
-            {SYSTEM_CARDS.map((card, i) => {
-              const offset = i - activeCard;
-              const isActive = i === activeCard;
-              const absOffset = Math.abs(offset);
-              const adjustedOffset =
-                offset > SYSTEM_CARDS.length / 2
-                  ? offset - SYSTEM_CARDS.length
-                  : offset < -SYSTEM_CARDS.length / 2
-                    ? offset + SYSTEM_CARDS.length
-                    : offset;
-
-              return (
-                <button
-                  key={card.label}
-                  type="button"
-                  onClick={() => setActiveCard(i)}
-                  className={cn(
-                    "absolute left-1/2 top-1/2 w-[260px] -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-2)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
-                    isActive ? "z-30 scale-100 opacity-100" : "",
-                    absOffset === 1 && !isActive ? "z-20 scale-[0.92] opacity-70" : "",
-                    absOffset >= 2 && !isActive ? "z-10 scale-[0.84] opacity-40" : "",
-                  )}
-                  style={{
-                    transform: `translate(-50%, -50%) translateX(${adjustedOffset * 32}px) translateY(${Math.abs(adjustedOffset) * 8}px) scale(${isActive ? 1 : absOffset === 1 ? 0.92 : 0.84})`,
-                  }}
-                >
-                  <div className="mb-3 flex items-center justify-center">
-                    {card.icon}
-                  </div>
-                  <div className="font-[family-name:var(--font-display)] text-lg font-bold">
-                    {card.label}
-                  </div>
-                  <div className="mt-1 text-sm text-[var(--color-ink-muted)]">
-                    {card.desc}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-          {/* Dots */}
-          <div className="mt-4 flex items-center justify-center gap-2">
-            {SYSTEM_CARDS.map((card, i) => (
-              <button
-                key={card.label}
-                type="button"
-                onClick={() => setActiveCard(i)}
-                className={cn(
-                  "h-2 rounded-full transition-all duration-300",
-                  i === activeCard
-                    ? "w-6 bg-[var(--color-primary)]"
-                    : "w-2 bg-[var(--color-hairline)] hover:bg-[var(--color-ink-faint)]",
-                )}
-              />
-            ))}
-          </div>
+        {/* Ambient signal pulse */}
+        <Reveal className="mx-auto mt-14 flex h-[72px] max-w-[540px] items-center justify-center">
+          <span className="signal-pulse" aria-hidden="true">
+            <span className="signal-pulse-ring" />
+            <span className="signal-pulse-ring" />
+            <span className="signal-pulse-dot" />
+          </span>
         </Reveal>
       </section>
 
@@ -811,21 +692,21 @@ export default function HomePage() {
                 Still not sure?
               </h3>
               <p className="mb-5 text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-                Book a free 30-minute call. No pitch, no obligation. We&apos;ll
+                Get a free 30-minute audit. No pitch, no obligation. We&apos;ll
                 give you a straight answer on whether we can help.
               </p>
               <div className="mb-4">
                 <Button href="/book" className="w-full text-center">
-                  Book a free call
+                  Get your free audit
                 </Button>
               </div>
               <div className="text-center text-sm text-[var(--color-ink-muted)]">
-                or call{" "}
+                or email{" "}
                 <a
-                  href="tel:+447948091506"
+                  href="mailto:hello@tandemm.co.uk"
                   className="font-semibold text-[var(--color-ink)] no-underline"
                 >
-                  07948 091506
+                  hello@tandemm.co.uk
                 </a>
               </div>
             </div>
@@ -851,7 +732,7 @@ export default function HomePage() {
                 href="/book"
                 className="bg-white text-[var(--color-primary)] hover:bg-white/90"
               >
-                Book a free call
+                Get your free audit
               </Button>
               <Button href="/results" variant="secondary">
                 See real results

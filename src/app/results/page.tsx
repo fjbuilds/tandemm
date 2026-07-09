@@ -21,7 +21,7 @@ const KPI_CARDS = [
   { label: "Enquiries", value: "▲ 240%", desc: "Average lift across clients in the first 6 months" },
   { label: "Conversion rate", value: "▲ 3.4x", desc: "From visitor to enquiry, measured end-to-end" },
   { label: "Page speed", value: "▼ 84%", desc: "Load-time reduction on mobile (LCP)" },
-  { label: "Tracking", value: "Full", desc: "Every click, call and form — attributed to source" },
+  { label: "Tracking", value: "Full", desc: "Every click, call and form, attributed to source" },
   { label: "Search visibility", value: "▲", desc: "Organic impressions and ranking positions" },
   {
     label: "Wasted ad spend",
@@ -50,9 +50,9 @@ const CASE_STUDIES = [
 ];
 
 const SYSTEM_STEPS = [
-  { n: 1, title: "Traffic", desc: "Get the right people to the site — paid, organic, referral." },
-  { n: 2, title: "Website", desc: "Give them a reason to enquire — speed, copy, layout, trust." },
-  { n: 3, title: "Tracking", desc: "Measure every click, call and form — attributed to source." },
+  { n: 1, title: "Traffic", desc: "Get the right people to the site: paid, organic, referral." },
+  { n: 2, title: "Website", desc: "Give them a reason to enquire: speed, copy, layout, trust." },
+  { n: 3, title: "Tracking", desc: "Measure every click, call and form, attributed to source." },
   { n: 4, title: "Optimisation", desc: "Read the data, run tests, cut waste, double down on what works." },
   { n: 5, title: "Stronger", desc: "Each cycle compounds. The system gets sharper every month.", navy: true },
 ] as Array<{ n: number; title: string; desc: string; navy?: boolean }>;
@@ -89,12 +89,6 @@ export default function ResultsPage() {
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="relative px-6 pb-8 pt-[60px] text-center">
         <div className="mx-auto max-w-[820px]">
-          <Reveal>
-            <div className="mb-7 inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-white/70 px-3.5 py-[7px] text-[13px] font-semibold tracking-[0.02em] text-[var(--color-ink-muted)]">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
-              The growth record
-            </div>
-          </Reveal>
           <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
               Results from a system built to generate enquiries.
@@ -277,7 +271,7 @@ export default function ResultsPage() {
               Marlow &amp; Co Plumbing
             </h2>
             <p className="mx-auto mt-3 max-w-[560px] text-[17px] leading-[1.55] text-[var(--color-ink-muted)]">
-              From 9 enquiries a month to 37 — in 12 weeks.
+              From 9 enquiries a month to 37, in 12 weeks.
             </p>
           </Reveal>
 
@@ -493,7 +487,7 @@ export default function ResultsPage() {
               Find out where your website is losing enquiries.
             </h2>
             <p className="mx-auto mt-4 max-w-[500px] text-[17px] leading-[1.55] text-white/70">
-              A free 30-minute call. No obligation, no pitch deck — just a
+              A free 30-minute call. No obligation, no pitch deck, just a
               straight read on your site.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">

@@ -21,19 +21,19 @@ const STAGES = [
   {
     num: 1,
     title: "Growth Audit",
-    desc: "We review your site and show you exactly where enquiries are leaking — free, no obligation.",
+    desc: "We review your site and show you exactly where enquiries are leaking. Free, no obligation.",
     badge: "Free",
     highlight: true,
   },
   {
     num: 2,
     title: "Growth Foundation",
-    desc: "We rebuild the parts that matter — messaging, structure, speed, trust — so visitors convert.",
+    desc: "We rebuild the parts that matter: messaging, structure, speed, trust, so visitors convert.",
   },
   {
     num: 3,
     title: "Growth Engine",
-    desc: "We run, measure, and improve — month after month — until the numbers move.",
+    desc: "We run, measure, and improve, month after month, until the numbers move.",
   },
 ];
 
@@ -42,7 +42,7 @@ const AUDIT_CHECKS = [
   "What your site says (and what it should say)",
   "Whether your pages load fast enough to keep people",
   "How visible you are on Google right now",
-  "What you're tracking — and what you're missing",
+  "What you're tracking, and what you're missing",
 ];
 
 const SCORECARD = [
@@ -72,7 +72,7 @@ const AUDIT_STEPS = [
   {
     num: 4,
     title: "You get a one-page plan",
-    desc: "Prioritised fixes you can act on — with or without us.",
+    desc: "Prioritised fixes you can act on, with or without us.",
     dark: true,
   },
 ];
@@ -85,12 +85,12 @@ const PATHS = [
   },
   {
     title: "We rebuild it",
-    desc: "We redesign and rebuild your site so it actually converts — then hand you the keys.",
+    desc: "We redesign and rebuild your site so it actually converts, then hand you the keys.",
     icon: "🔧",
   },
   {
     title: "We manage growth",
-    desc: "We build it, run it, and keep improving it — so you can focus on your business.",
+    desc: "We build it, run it, and keep improving it, so you can focus on your business.",
     icon: "📈",
   },
 ];
@@ -98,7 +98,7 @@ const PATHS = [
 const WHY_CARDS = [
   {
     title: "Nothing is guessed",
-    desc: "Every recommendation comes from data — analytics, heatmaps, benchmarks. Not hunches.",
+    desc: "Every recommendation comes from data: analytics, heatmaps, benchmarks. Not hunches.",
   },
   {
     title: "Nothing is wasted",
@@ -124,12 +124,6 @@ export default function SystemPage() {
       <section className="relative px-6 pb-10 pt-[60px] text-center">
         <div className="mx-auto max-w-[820px]">
           <Reveal>
-            <div className="mb-7 inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-white/70 px-3.5 py-[7px] text-[13px] font-semibold tracking-[0.02em] text-[var(--color-ink-muted)]">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
-              The Tandemm system
-            </div>
-          </Reveal>
-          <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
               Most agencies start by selling.
               <br className="hidden sm:inline" /> We start by understanding.
@@ -137,9 +131,9 @@ export default function SystemPage() {
           </Reveal>
           <Reveal>
             <p className="mx-auto mt-[22px] max-w-[600px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
-              A free audit shows you exactly where your website loses customers.
-              Then — if you want us to — we fix it and keep improving, month
-              after month.
+              A free audit shows you exactly where your website loses
+              customers. Then, if you want us to, we fix it and keep
+              improving, month after month.
             </p>
           </Reveal>
         </div>
@@ -185,7 +179,7 @@ export default function SystemPage() {
         </Reveal>
         <Reveal>
           <p className="mt-8 text-center text-sm text-[var(--color-ink-muted)]">
-            Most businesses move through all three stages — but you choose how
+            Most businesses move through all three stages, but you choose how
             far to go, and when.
           </p>
         </Reveal>
@@ -199,7 +193,7 @@ export default function SystemPage() {
             <div>
               <div className="mb-5 inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-white/70 px-3.5 py-[7px] text-[13px] font-semibold tracking-[0.02em] text-[var(--color-ink-muted)]">
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                Free — no obligation
+                Free, no obligation
               </div>
               <h2 className="mb-6 font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,42px)] font-bold leading-[1.12] tracking-[-0.02em]">
                 Where is your website losing customers?
@@ -403,7 +397,7 @@ export default function SystemPage() {
         <Reveal>
           <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-14 text-center text-[var(--color-on-primary)] shadow-[var(--shadow-2)] sm:px-14">
             <h2 className="mx-auto max-w-[640px] font-[family-name:var(--font-display)] text-[clamp(24px,3.6vw,36px)] font-bold leading-[1.15] tracking-[-0.02em]">
-              See where your website is losing customers — for free.
+              See where your website is losing customers, for free.
             </h2>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Button
@@ -413,10 +407,10 @@ export default function SystemPage() {
                 Get your free audit
               </Button>
               <a
-                href="tel:+447948091506"
+                href="mailto:hello@tandemm.co.uk"
                 className="inline-flex h-[42px] items-center gap-2 rounded-[var(--radius-pill)] border border-white/25 bg-white/10 px-5 text-[15px] font-semibold text-white no-underline transition-colors hover:bg-white/20"
               >
-                Call 07948 091506
+                Email hello@tandemm.co.uk
               </a>
             </div>
           </div>
