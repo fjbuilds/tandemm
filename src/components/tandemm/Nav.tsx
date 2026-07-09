@@ -1,7 +1,12 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-const links = [] as const;
+const links = [
+  { href: "/", label: "Home", key: "home" },
+  { href: "/system", label: "The system", key: "system" },
+  { href: "/results", label: "Results", key: "results" },
+  { href: "/about", label: "About", key: "about" },
+] as const;
 
 export function Nav({
   active,
