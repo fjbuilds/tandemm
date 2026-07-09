@@ -2,11 +2,11 @@ import Link from "next/link";
 import { Button } from "./Button";
 
 const pageLinks = [
-  { href: "/steady", label: "Home" },
-  { href: "/steady/system", label: "The system" },
-  { href: "/steady/results", label: "Results" },
-  { href: "/steady/about", label: "About" },
-  { href: "/steady/book", label: "Book a call" },
+  { href: "/", label: "Home" },
+  { href: "/system", label: "The system" },
+  { href: "/results", label: "Results" },
+  { href: "/about", label: "About" },
+  { href: "/book", label: "Book a call" },
 ];
 
 export function Footer() {
@@ -16,13 +16,13 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-12 border-b border-white/[0.14] pb-14 sm:grid-cols-3 sm:items-start">
           <div className="min-w-[260px] sm:col-span-1">
             <div className="font-[family-name:var(--font-display)] text-[28px] font-extrabold tracking-[-0.01em]">
-              Steady
+              Tandemm
             </div>
             <p className="my-4 max-w-[340px] text-[17px] leading-[1.5] text-white/70">
               We build websites that generate enquiries — then keep improving
               them until the numbers move.
             </p>
-            <Button href="/steady/book" variant="secondary">
+            <Button href="/book" variant="secondary">
               Book a discovery call
             </Button>
           </div>
@@ -50,10 +50,10 @@ export function Footer() {
             </div>
             <div className="flex flex-col gap-3">
               <a
-                href="mailto:hello@steady.com"
+                href="mailto:hello@tandemm.com"
                 className="text-[15px] text-white/85 no-underline"
               >
-                hello@steady.com
+                hello@tandemm.com
               </a>
               <a
                 href="tel:+447948091506"
@@ -68,7 +68,7 @@ export function Footer() {
 
         <div className="flex flex-wrap items-center justify-between gap-3 pt-7">
           <span className="text-[13px] text-white/50">
-            &copy; 2026 Steady. A London growth studio.
+            &copy; 2026 Tandemm. A London growth studio.
           </span>
           <span className="text-[13px] text-white/50">
             Measured. Tracked. Improved.

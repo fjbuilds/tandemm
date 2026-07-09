@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import "./steady.css";
+import "./tandemm.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Steady | A straight read on your website",
-    template: "%s | Steady",
+    default: "Tandemm | A straight read on your website",
+    template: "%s | Tandemm",
   },
   description:
-    "Steady tells trades businesses what's stopping enquiries, then only fixes what actually needs fixing.",
+    "Tandemm tells trades businesses what's stopping enquiries, then only fixes what actually needs fixing.",
 };
 
-export default function SteadyLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -24,7 +24,7 @@ export default function SteadyLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font -- this route tree has no top-level app/layout.tsx, so this layout is itself a root layout */}
+        {/* eslint-disable-next-line @next/next/no-page-custom-font -- app/halide has its own separate root layout, so this one owns its own font links */}
         <link
           href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap"
           rel="stylesheet"

@@ -1,16 +1,16 @@
 "use client";
 
 import { CSSProperties, useMemo, useState } from "react";
-import { Nav } from "@/components/steady/Nav";
-import { Footer } from "@/components/steady/Footer";
-import { Reveal } from "@/components/steady/Reveal";
-import { ButtonEl } from "@/components/steady/Button";
-import { Input } from "@/components/steady/Input";
-import { Select } from "@/components/steady/Select";
+import { Nav } from "@/components/tandemm/Nav";
+import { Footer } from "@/components/tandemm/Footer";
+import { Reveal } from "@/components/tandemm/Reveal";
+import { ButtonEl } from "@/components/tandemm/Button";
+import { Input } from "@/components/tandemm/Input";
+import { Select } from "@/components/tandemm/Select";
 import { cn } from "@/lib/utils";
 
 // Book page uses a slightly cooler canvas/surface palette than the rest of
-// the Steady site — overridden locally to match the source design.
+// the Tandemm site — overridden locally to match the source design.
 const bookPaletteOverride = {
   "--color-canvas": "#EDEEEA",
   "--color-canvas-deep": "#E1E3DD",
@@ -148,7 +148,7 @@ export default function BookPage() {
                 Discovery call
               </div>
               <div className="mb-7 text-sm text-white/70">
-                30 min · Steady, London
+                30 min · Tandemm, London
               </div>
               <div className="mb-4 text-xs font-bold uppercase tracking-[0.05em] text-white/55">
                 What we&apos;ll cover
@@ -194,10 +194,10 @@ export default function BookPage() {
                 </a>{" "}
                 or email{" "}
                 <a
-                  href="mailto:hello@steady.com"
+                  href="mailto:hello@tandemm.com"
                   className="font-semibold text-white"
                 >
-                  hello@steady.com
+                  hello@tandemm.com
                 </a>
                 .
               </div>

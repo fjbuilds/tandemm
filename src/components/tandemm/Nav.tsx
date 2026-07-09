@@ -2,10 +2,10 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { href: "/steady", label: "Home", key: "home" },
-  { href: "/steady/system", label: "The system", key: "system" },
-  { href: "/steady/results", label: "Results", key: "results" },
-  { href: "/steady/about", label: "About", key: "about" },
+  { href: "/", label: "Home", key: "home" },
+  { href: "/system", label: "The system", key: "system" },
+  { href: "/results", label: "Results", key: "results" },
+  { href: "/about", label: "About", key: "about" },
 ] as const;
 
 export function Nav({
@@ -17,12 +17,12 @@ export function Nav({
     <div className="w-full p-4 font-[family-name:var(--font-body)]">
       <div className="mx-auto flex h-[60px] max-w-[1180px] items-center justify-between gap-4 rounded-[var(--radius-pill)] bg-[var(--color-primary)] py-0 pl-[26px] pr-3 shadow-[var(--shadow-2)]">
         <Link
-          href="/steady"
+          href="/"
           className="flex shrink-0 items-center gap-[9px] no-underline"
         >
           <span className="inline-block h-3.5 w-3.5 shrink-0 rotate-45 rounded-[4px] bg-[var(--color-accent)]" />
           <span className="font-[family-name:var(--font-display)] text-[21px] font-extrabold tracking-[-0.01em] text-white">
-            Steady
+            Tandemm
           </span>
         </Link>
 
@@ -52,7 +52,7 @@ export function Nav({
             07948 091506
           </a>
           <Link
-            href="/steady/book"
+            href="/book"
             aria-current={active === "book" ? "page" : undefined}
             className="whitespace-nowrap rounded-[var(--radius-pill)] bg-white px-5 py-[11px] text-sm font-semibold text-[var(--color-primary)] no-underline"
           >
