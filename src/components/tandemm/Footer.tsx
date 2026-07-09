@@ -63,9 +63,23 @@ export function Footer() {
         </div>
 
         <div className="flex flex-wrap items-center justify-between gap-3 pt-7">
-          <span className="text-[13px] text-white/50">
-            &copy; 2026 Tandemm. A London growth studio.
-          </span>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span className="text-[13px] text-white/50">
+              &copy; 2026 Tandemm. A London growth studio.
+            </span>
+            <Link
+              href="/privacy"
+              className="text-[13px] text-white/50 no-underline hover:text-white/80"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/terms"
+              className="text-[13px] text-white/50 no-underline hover:text-white/80"
+            >
+              Terms &amp; Conditions
+            </Link>
+          </div>
           <span className="text-[13px] text-white/50">
             Measured. Tracked. Improved.
           </span>

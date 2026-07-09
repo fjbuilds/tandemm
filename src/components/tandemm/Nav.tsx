@@ -11,7 +11,7 @@ const links = [
 export function Nav({
   active,
 }: {
-  active: "home" | "system" | "results" | "about" | "book";
+  active: "home" | "system" | "results" | "about" | "book" | "legal";
 }) {
   return (
     <div className="w-full p-4 font-[family-name:var(--font-body)]">

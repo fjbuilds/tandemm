@@ -37,6 +37,29 @@ const ARROW_ITEMS = [
   "Improve continuously, well past launch",
 ];
 
+const REPLACES_TABLE = [
+  {
+    stage: "Traffic",
+    normally: "A separate SEO or ads agency, another invoice to chase",
+    withUs: "Handled as part of the system",
+  },
+  {
+    stage: "Website",
+    normally: "A one-off build, then it's someone else's problem",
+    withUs: "Rebuilt properly, then maintained",
+  },
+  {
+    stage: "Tracking",
+    normally: "Extra software bolted on afterwards, if at all",
+    withUs: "Wired in from day one",
+  },
+  {
+    stage: "Optimisation",
+    normally: "Rarely happens once the invoice is paid",
+    withUs: "Monthly, by default",
+  },
+];
+
 const OPTIMISE_TABLE = [
   { label: "Looks impressive", goal: false },
   { label: "Enquiries generated", goal: true },
@@ -149,6 +172,53 @@ export default function AboutPage() {
                 development, and ongoing optimisation in one system
                 that&apos;s accountable to one number: enquiries.
               </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── WHAT ONE SYSTEM REPLACES ── */}
+      <section className="px-6 pb-20">
+        <div className="mx-auto max-w-[900px]">
+          <Reveal>
+            <h2 className="mb-4 text-center font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
+              What one system replaces.
+            </h2>
+            <p className="mx-auto mb-10 max-w-[520px] text-center text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
+              Everything below usually comes from a different supplier, on a
+              different invoice, on a different schedule.
+            </p>
+          </Reveal>
+
+          <Reveal>
+            <div className="overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] shadow-[var(--shadow-1)]">
+              <div className="hidden grid-cols-[0.8fr_1.4fr_1.4fr] gap-4 border-b border-[var(--color-hairline)] bg-[var(--color-surface-muted)] px-7 py-3 text-xs font-bold uppercase tracking-[0.05em] text-[var(--color-ink-muted)] sm:grid">
+                <div>Stage</div>
+                <div>Normally</div>
+                <div>With Tandemm</div>
+              </div>
+              {REPLACES_TABLE.map((row, i) => (
+                <div
+                  key={row.stage}
+                  className={`grid grid-cols-1 gap-2 px-7 py-5 sm:grid-cols-[0.8fr_1.4fr_1.4fr] sm:items-center sm:gap-4 ${
+                    i > 0 ? "border-t border-[var(--color-hairline-soft)]" : ""
+                  }`}
+                >
+                  <div className="font-[family-name:var(--font-display)] text-[15px] font-bold">
+                    {row.stage}
+                  </div>
+                  <div className="text-sm leading-[1.5] text-[var(--color-ink-muted)]">
+                    {row.normally}
+                  </div>
+                  <div className="text-sm font-semibold leading-[1.5] text-[var(--color-accent-hover)]">
+                    {row.withUs}
+                  </div>
+                </div>
+              ))}
+              <div className="bg-[var(--color-primary)] px-7 py-5 text-center text-[15px] font-semibold text-[var(--color-on-primary)]">
+                One point of contact. One invoice. One number that matters:
+                enquiries.
+              </div>
             </div>
           </Reveal>
         </div>
