@@ -71,7 +71,6 @@ export default function BookPage() {
 
   const goToStep = (n: Step) => {
     setStep(n);
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const calendarCells = useMemo(() => {

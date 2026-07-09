@@ -2,10 +2,6 @@ import Link from "next/link";
 import { Button } from "./Button";
 
 const pageLinks = [
-  { href: "/book", label: "Home" },
-  { href: "/book", label: "The system" },
-  { href: "/book", label: "Results" },
-  { href: "/book", label: "About" },
   { href: "/book", label: "Book a call" },
 ];
 
