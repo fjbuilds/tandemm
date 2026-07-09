@@ -183,16 +183,12 @@ export default function BookPage() {
               </div>
               <div className="my-7 h-px bg-white/[0.16]" />
               <div className="text-sm leading-[1.55] text-white/70">
-                Prefer to talk now? Call{" "}
-                <a href="tel:+447948091506" className="font-semibold text-white">
-                  07948 091506
-                </a>{" "}
-                or email{" "}
+                Prefer to talk now? Email{" "}
                 <a
-                  href="mailto:hello@tandemm.com"
+                  href="mailto:hello@tandemm.co.uk"
                   className="font-semibold text-white"
                 >
-                  hello@tandemm.com
+                  hello@tandemm.co.uk
                 </a>
                 .
               </div>
