@@ -82,13 +82,9 @@ export default function BookPage() {
 
   return (
     <div
-      className="box-border p-5 pb-7 font-[family-name:var(--font-body)] text-[var(--color-ink)]"
-      style={{ background: "#1F2A27" }}
+      className="min-h-screen bg-[var(--color-canvas)] font-[family-name:var(--font-body)] text-[var(--color-ink)]"
+      style={bookPaletteOverride}
     >
-      <div
-        className="mx-auto max-w-[1280px] overflow-hidden rounded-[36px] border border-white/70 bg-[var(--color-canvas)] shadow-[0_40px_90px_-34px_rgba(27,35,32,0.4)]"
-        style={bookPaletteOverride}
-      >
         <Nav active="book" />
 
         {/* HERO */}
@@ -465,7 +461,6 @@ export default function BookPage() {
         </section>
 
         <Footer />
-      </div>
     </div>
   );
 }
