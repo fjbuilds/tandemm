@@ -15,9 +15,11 @@ export function Footer() {
       <div className="mx-auto max-w-[1160px] px-6 pb-10 pt-20">
         <div className="grid grid-cols-1 gap-12 border-b border-white/[0.14] pb-14 sm:grid-cols-3 sm:items-start">
           <div className="min-w-[260px] sm:col-span-1">
-            <div className="font-[family-name:var(--font-display)] text-[28px] font-extrabold tracking-[-0.01em]">
-              Tandemm
-            </div>
+            <img
+              src="/brand/logo/tandemm-lockup-white.svg"
+              alt="Tandemm"
+              className="h-9 w-auto"
+            />
             <p className="my-4 max-w-[340px] text-[17px] leading-[1.5] text-white/70">
               We build websites that generate enquiries — then keep improving
               them until the numbers move.
