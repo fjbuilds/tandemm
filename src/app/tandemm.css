@@ -106,38 +106,76 @@ body {
   font-family: var(--font-body);
 }
 
-/* ---- System flow illustration (home hero) ---- */
-/* A signal travels left to right along the connector, lighting up each
-   stage node as it arrives, visualising the Traffic -> Booked pipeline. */
-.flow-node {
-  animation: flow-node-pulse 7s ease-in-out infinite;
-  transform-origin: center;
+/* ---- Brand-mark illustration (home hero) ---- */
+/* The two tiles of our own icon mark drift apart and reassemble on a loop,
+   rendered with a beveled gradient + shadow for a sense of depth. */
+.brand-tiles {
+  position: relative;
+  width: 170px;
+  height: 110px;
+  perspective: 700px;
+  transform-style: preserve-3d;
 }
 
-.flow-dot {
-  filter: drop-shadow(
-    0 0 5px color-mix(in srgb, var(--color-accent) 70%, transparent)
+.brand-tile {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-accent) 78%, white) 0%,
+    var(--color-accent) 45%,
+    color-mix(in srgb, var(--color-accent) 60%, black) 100%
   );
+  box-shadow: 0 10px 24px -8px
+    color-mix(in srgb, var(--color-accent) 55%, transparent);
+  animation-duration: 6.5s;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.2, 1);
+  animation-iteration-count: infinite;
 }
 
-@keyframes flow-node-pulse {
+.brand-tile--a {
+  animation-name: brand-tile-a;
+}
+
+.brand-tile--b {
+  animation-name: brand-tile-b;
+}
+
+@keyframes brand-tile-a {
   0%,
-  6%,
-  100% {
-    transform: scale(1);
-    filter: brightness(1);
+  18% {
+    transform: translate3d(-17px, 0, 0) rotate(0deg) scale(1);
   }
-  3% {
-    transform: scale(1.16);
-    filter: brightness(1.3);
+  50%,
+  68% {
+    transform: translate3d(-50px, -18px, 36px) rotate(-16deg) scale(0.9);
+  }
+  100% {
+    transform: translate3d(-17px, 0, 0) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes brand-tile-b {
+  0%,
+  18% {
+    transform: translate3d(17px, 0, 0) rotate(0deg) scale(1);
+  }
+  50%,
+  68% {
+    transform: translate3d(50px, 18px, -36px) rotate(16deg) scale(0.9);
+  }
+  100% {
+    transform: translate3d(17px, 0, 0) rotate(0deg) scale(1);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .flow-node {
+  .brand-tile {
     animation: none;
-  }
-  .flow-dot {
-    display: none;
   }
 }

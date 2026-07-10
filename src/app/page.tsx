@@ -20,84 +20,6 @@ const paletteOverride = {
 } as CSSProperties;
 
 /* ------------------------------------------------------------------ */
-/*  Hero system-flow illustration                                     */
-/* ------------------------------------------------------------------ */
-const FLOW_PATH =
-  "M60,70 C110,45 160,45 210,70 C260,95 300,95 350,70 C400,45 440,45 490,70 C540,95 580,95 640,70";
-
-const FLOW_NODES = [
-  {
-    key: "traffic",
-    x: 60,
-    icon: (
-      <path
-        d="M2 17l4-6 4 3 8-10"
-        stroke="var(--color-accent)"
-        strokeWidth="2"
-        fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    ),
-  },
-  {
-    key: "website",
-    x: 210,
-    icon: (
-      <>
-        <rect
-          x="1"
-          y="3"
-          width="20"
-          height="16"
-          rx="2.5"
-          stroke="var(--color-accent)"
-          strokeWidth="1.8"
-          fill="none"
-        />
-        <line x1="1" y1="8" x2="21" y2="8" stroke="var(--color-accent)" strokeWidth="1.8" />
-      </>
-    ),
-  },
-  {
-    key: "tracking",
-    x: 350,
-    icon: (
-      <>
-        <circle cx="11" cy="11" r="8" stroke="var(--color-accent)" strokeWidth="1.8" fill="none" />
-        <circle cx="11" cy="11" r="3.2" fill="var(--color-accent)" />
-      </>
-    ),
-  },
-  {
-    key: "optimisation",
-    x: 490,
-    icon: (
-      <path
-        d="M4 19V13M9.5 19V8M15 19V12M20 19V4"
-        stroke="var(--color-accent)"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    ),
-  },
-  {
-    key: "booked",
-    x: 640,
-    icon: (
-      <path
-        d="M4 12l5 5 9-9"
-        stroke="var(--color-accent)"
-        strokeWidth="2.3"
-        fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    ),
-  },
-];
-
-/* ------------------------------------------------------------------ */
 /*  Static data                                                       */
 /* ------------------------------------------------------------------ */
 const KPIS = [
@@ -384,47 +306,12 @@ export default function HomePage() {
           </Reveal>
         </div>
 
-        {/* System flow illustration: a signal travels through each stage */}
-        <Reveal className="mx-auto mt-14 max-w-[640px]">
-          <svg viewBox="0 0 700 140" className="h-auto w-full" aria-hidden="true">
-            <path
-              d={FLOW_PATH}
-              fill="none"
-              stroke="var(--color-hairline)"
-              strokeWidth="2"
-              strokeDasharray="1 9"
-              strokeLinecap="round"
-            />
-            {FLOW_NODES.map((node, i) => (
-              <g
-                key={node.key}
-                className="flow-node"
-                style={{
-                  animationDelay: `${(i / (FLOW_NODES.length - 1)) * 7}s`,
-                }}
-              >
-                <circle
-                  cx={node.x}
-                  cy="70"
-                  r="22"
-                  fill="var(--color-surface)"
-                  stroke="var(--color-hairline)"
-                  strokeWidth="1.5"
-                />
-                <g transform={`translate(${node.x - 11}, 59)`}>{node.icon}</g>
-              </g>
-            ))}
-            <circle r="6" fill="var(--color-accent)" className="flow-dot">
-              <animateMotion
-                dur="7s"
-                repeatCount="indefinite"
-                calcMode="spline"
-                keyTimes="0;1"
-                keySplines="0.45 0 0.55 1"
-                path={FLOW_PATH}
-              />
-            </circle>
-          </svg>
+        {/* Brand-mark illustration: our own icon assembling and drifting apart */}
+        <Reveal className="mx-auto mt-14 flex h-[130px] max-w-[640px] items-center justify-center">
+          <div className="brand-tiles" aria-hidden="true">
+            <span className="brand-tile brand-tile--a" />
+            <span className="brand-tile brand-tile--b" />
+          </div>
         </Reveal>
       </section>
 
