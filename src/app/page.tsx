@@ -172,76 +172,68 @@ export default function HomePage() {
       {/*  HERO                                                        */}
       {/* ============================================================ */}
       <section
-        className="relative box-border px-6 pb-10 pt-[46px] text-center"
+        className="hero-split relative box-border px-6 pb-10 pt-[52px]"
         style={{
           background:
-            "radial-gradient(60% 42% at 50% 0%, rgba(226,229,222,0.9), transparent 72%)",
+            "radial-gradient(70% 55% at 60% 0%, rgba(226,229,222,0.9), transparent 74%)",
         }}
       >
-        <div className="mx-auto max-w-[820px]">
-          <Reveal>
-            <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              You&apos;re good at the job.
-            </h1>
-          </Reveal>
-          <Reveal>
-            <p className="mx-auto mt-3 max-w-[620px] font-[family-name:var(--font-display)] text-[clamp(20px,2.4vw,26px)] font-medium leading-[1.25] tracking-[-0.02em] text-[var(--color-ink)]">
-              We make sure the right people{" "}
-              <span
-                className="italic text-[var(--color-accent)]"
-                style={{ fontSize: "1.14em", letterSpacing: "-0.01em" }}
-              >
-                see
-              </span>{" "}
-              it.
-            </p>
-          </Reveal>
-          <Reveal>
-            <p className="mx-auto mt-4 max-w-[560px] text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-              More than ads. More than marketing.
-              <br />
-              A steady stream of work, month after month.
-            </p>
-          </Reveal>
-          <Reveal>
-            <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
-              <Button href="/book">Get your free audit</Button>
-              <Button href="/results" variant="ghost">
-                See real results →
-              </Button>
-            </div>
-          </Reveal>
-        </div>
-
-        {/* Visual proof */}
-        <div className="mt-10">
-          <Reveal>
-            <HeroVisual />
-          </Reveal>
-
-          {/* Trust strip */}
-          <Reveal className="trust-strip">
-            <div className="trust-strip-inner">
-              <span className="trust-strip-rating">
-                <span className="trust-strip-stars" aria-hidden="true">
+        <div className="hero-split-grid">
+          <div className="hero-split-copy">
+            <Reveal>
+              <span className="hero-eyebrow">
+                <span className="hero-eyebrow-dot" aria-hidden="true" />
+                Growth for UK trade businesses
+              </span>
+            </Reveal>
+            <Reveal>
+              <h1 className="hero-title">
+                You&rsquo;re good
+                <br />
+                at the job.
+              </h1>
+            </Reveal>
+            <Reveal>
+              <p className="hero-subtitle">
+                We make sure the right people{" "}
+                <span className="hero-subtitle-em">see</span> it.
+              </p>
+            </Reveal>
+            <Reveal>
+              <p className="hero-desc">
+                More than ads. More than marketing. A steady stream of work,
+                month after month.
+              </p>
+            </Reveal>
+            <Reveal>
+              <div className="hero-cta">
+                <Button href="/book">Get your free audit</Button>
+                <Button href="/results" variant="ghost">
+                  See real results →
+                </Button>
+              </div>
+            </Reveal>
+            <Reveal>
+              <div className="hero-mini-trust">
+                <span className="hero-mini-trust-stars" aria-hidden="true">
                   ★★★★★
                 </span>
-                Trusted by UK trade businesses
-              </span>
-              <span className="trust-strip-divider" aria-hidden="true" />
-              <span className="trust-strip-metric">
-                <b>312%</b> More enquiries
-              </span>
-              <span className="trust-strip-divider" aria-hidden="true" />
-              <span className="trust-strip-metric">
-                <b>4.6x</b> Conversion rate
-              </span>
-              <span className="trust-strip-divider" aria-hidden="true" />
-              <span className="trust-strip-metric">
-                <b>£1.1m+</b> Revenue generated
-              </span>
-            </div>
-          </Reveal>
+                <span>
+                  <b>312%</b> more enquiries
+                </span>
+                <span className="hero-mini-trust-dot" aria-hidden="true" />
+                <span>
+                  <b>£1.1m+</b> revenue generated
+                </span>
+              </div>
+            </Reveal>
+          </div>
+
+          <div className="hero-split-visual">
+            <Reveal>
+              <HeroVisual />
+            </Reveal>
+          </div>
         </div>
       </section>
 
