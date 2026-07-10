@@ -127,6 +127,28 @@ body {
   height: 100%;
 }
 
+.brand-tile {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-primary) 88%, white) 0%,
+    var(--color-primary) 55%,
+    var(--color-primary-hover) 100%
+  );
+  box-shadow: 0 14px 30px -10px rgba(15, 30, 45, 0.4);
+  will-change: transform, opacity;
+  transform: translateX(0) rotate(45deg) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-tile {
+    transition: none;
+  }
+}
+
 /* ---- Hero visual proof (browser mockup) ---- */
 .hero-visual {
   position: relative;
