@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git push)",
+      "Bash(git push origin main)",
+      "Bash(git push origin HEAD:main)",
+      "Bash(git push origin HEAD:refs/heads/main)"
+    ]
+  },
+  "autoMode": {
+    "allow": [
+      "$defaults",
+      "Direct pushes to `main` are authorized for tandemm. User reviews via GitHub Desktop Fetch/Pull, not PRs. Do not block `git push origin HEAD:main` or `git push origin main`."
+    ]
+  }
+}
