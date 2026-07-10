@@ -14,7 +14,7 @@ export function Nav({
   active: "home" | "system" | "results" | "about" | "book" | "legal";
 }) {
   return (
-    <div className="w-full p-4 font-[family-name:var(--font-body)]">
+    <div className="sticky top-0 z-50 w-full p-4 font-[family-name:var(--font-body)]">
       <div className="mx-auto flex h-[60px] max-w-[1180px] items-center justify-between gap-4 rounded-[var(--radius-pill)] bg-[var(--color-primary)] py-0 pl-[26px] pr-3 shadow-[var(--shadow-2)]">
         <Link href="/" className="flex shrink-0 items-center no-underline">
           <img
