@@ -1,151 +1,330 @@
 "use client";
 
-const CHART_POINTS = [22, 28, 26, 34, 40, 44, 52, 58, 64, 70, 78, 88];
+/* ------------------------------------------------------------------ */
+/*  Chart geometry                                                    */
+/* ------------------------------------------------------------------ */
+const BASELINE = [12, 11, 13, 12, 12, 14, 13, 12, 13, 12, 14, 13];
+const PROJECTED = [12, 13, 15, 18, 22, 27, 31, 35, 39, 42, 45, 48];
 
-function buildChartPath(values: number[], width: number, height: number) {
-  const max = Math.max(...values);
-  const min = Math.min(...values);
-  const range = max - min || 1;
-  const stepX = width / (values.length - 1);
+function toPath(values: number[], w: number, h: number, max: number) {
+  const stepX = w / (values.length - 1);
   return values
     .map((v, i) => {
       const x = i * stepX;
-      const y = height - ((v - min) / range) * height;
+      const y = h - (v / max) * h;
       return `${i === 0 ? "M" : "L"}${x.toFixed(1)},${y.toFixed(1)}`;
     })
     .join(" ");
 }
 
-function buildAreaPath(values: number[], width: number, height: number) {
-  const line = buildChartPath(values, width, height);
-  return `${line} L${width.toFixed(1)},${height.toFixed(1)} L0,${height.toFixed(1)} Z`;
+function toArea(values: number[], w: number, h: number, max: number) {
+  const line = toPath(values, w, h, max);
+  return `${line} L${w.toFixed(1)},${h.toFixed(1)} L0,${h.toFixed(1)} Z`;
 }
 
-export function HeroVisual() {
-  const chartLine = buildChartPath(CHART_POINTS, 380, 90);
-  const chartArea = buildAreaPath(CHART_POINTS, 380, 90);
+/* ------------------------------------------------------------------ */
+/*  Donut (score ring)                                                */
+/* ------------------------------------------------------------------ */
+function Donut({
+  size,
+  stroke,
+  score,
+  tone,
+}: {
+  size: number;
+  stroke: number;
+  score: number;
+  tone: "success" | "warn" | "danger" | "primary";
+}) {
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
+  const pct = Math.max(0, Math.min(100, score)) / 100;
+  const toneVar =
+    tone === "success"
+      ? "var(--color-success)"
+      : tone === "danger"
+      ? "var(--color-danger)"
+      : tone === "warn"
+      ? "var(--color-accent)"
+      : "var(--color-primary)";
 
   return (
-    <div className="hero-visual">
-      <div className="hero-visual-browser">
-        {/* Browser chrome */}
-        <div className="hero-visual-chrome">
-          <div className="hero-visual-dots">
-            <span />
-            <span />
-            <span />
+    <svg
+      width={size}
+      height={size}
+      viewBox={`0 0 ${size} ${size}`}
+      aria-hidden="true"
+      className="audit-donut-svg"
+    >
+      <circle
+        cx={size / 2}
+        cy={size / 2}
+        r={r}
+        fill="none"
+        stroke="var(--color-hairline-soft)"
+        strokeWidth={stroke}
+      />
+      <circle
+        cx={size / 2}
+        cy={size / 2}
+        r={r}
+        fill="none"
+        stroke={toneVar}
+        strokeWidth={stroke}
+        strokeDasharray={`${(c * pct).toFixed(2)} ${c.toFixed(2)}`}
+        strokeLinecap="round"
+        transform={`rotate(-90 ${size / 2} ${size / 2})`}
+      />
+    </svg>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Category scorecards                                               */
+/* ------------------------------------------------------------------ */
+const CATEGORIES: {
+  score: number;
+  label: string;
+  note: string;
+  tone: "success" | "warn" | "danger";
+}[] = [
+  {
+    score: 48,
+    label: "Website speed",
+    note: "Loads too slow on 4G",
+    tone: "danger",
+  },
+  {
+    score: 72,
+    label: "Mobile experience",
+    note: "Works, but taps feel fiddly",
+    tone: "warn",
+  },
+  {
+    score: 51,
+    label: "Found on Google",
+    note: "Shows up for name, not services",
+    tone: "warn",
+  },
+  {
+    score: 40,
+    label: "Turns visits into jobs",
+    note: "Enquiry form is buried",
+    tone: "danger",
+  },
+];
+
+/* ------------------------------------------------------------------ */
+/*  Findings                                                          */
+/* ------------------------------------------------------------------ */
+const FINDINGS: {
+  severity: "critical" | "warn" | "ok";
+  title: string;
+  desc: string;
+}[] = [
+  {
+    severity: "critical",
+    title: "Site takes 4.2s to load on a phone",
+    desc: "About 6 in 10 visitors leave before the page opens.",
+  },
+  {
+    severity: "critical",
+    title: "8 service pages invisible to Google",
+    desc: "Missing titles and descriptions — search skips past them.",
+  },
+  {
+    severity: "warn",
+    title: "No enquiry form on the homepage",
+    desc: "Visitors have to hunt through the menu to get in touch.",
+  },
+  {
+    severity: "warn",
+    title: "Reviews sit at the bottom of every page",
+    desc: "Trust signals belong up top, where people decide.",
+  },
+  {
+    severity: "ok",
+    title: "Domain and business name are well established",
+    desc: "Solid foundation — worth building on, not replacing.",
+  },
+];
+
+/* ------------------------------------------------------------------ */
+/*  Component                                                         */
+/* ------------------------------------------------------------------ */
+export function HeroVisual() {
+  const CHART_W = 560;
+  const CHART_H = 90;
+  const CHART_MAX = 55;
+  const baselinePath = toPath(BASELINE, CHART_W, CHART_H, CHART_MAX);
+  const projectedPath = toPath(PROJECTED, CHART_W, CHART_H, CHART_MAX);
+  const projectedArea = toArea(PROJECTED, CHART_W, CHART_H, CHART_MAX);
+
+  return (
+    <div className="audit-report" aria-label="Sample Growth Audit report">
+      {/* Stacked sheets underneath for PDF feel */}
+      <div className="audit-sheet-back audit-sheet-back--2" aria-hidden="true" />
+      <div className="audit-sheet-back audit-sheet-back--1" aria-hidden="true" />
+
+      <div className="audit-sheet">
+        {/* Letterhead */}
+        <div className="audit-letterhead">
+          <div className="audit-brand">
+            <span className="audit-brand-mark" aria-hidden="true" />
+            <div>
+              <div className="audit-brand-name">Tandemm</div>
+              <div className="audit-brand-role">Growth Audit</div>
+            </div>
           </div>
-          <div className="hero-visual-url">
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              aria-hidden="true"
-              fill="none"
-            >
-              <path
-                d="M8.5 5.5V4a2.5 2.5 0 1 0-5 0v1.5M3 5.5h6v4.25H3z"
-                stroke="currentColor"
-                strokeWidth="1.1"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            tandemm.co.uk/report
+          <div className="audit-letterhead-meta">
+            <span>Report № TM-2078</span>
+            <span className="audit-dot" aria-hidden="true" />
+            <span>Prepared Nov 2025</span>
           </div>
-          <span className="hero-visual-live">Live</span>
         </div>
 
-        {/* Report body */}
-        <div className="hero-visual-body">
-          {/* Report heading */}
-          <div className="hero-visual-report-head">
-            <div>
-              <div className="hero-visual-eyebrow">Growth audit</div>
-              <div className="hero-visual-title">
-                Marlow &amp; Co Electrical
-              </div>
-            </div>
-            <div className="hero-visual-score">
-              <svg width="56" height="56" viewBox="0 0 56 56" aria-hidden="true">
+        <div className="audit-rule" />
+
+        {/* Cover row: prepared for + overall score */}
+        <div className="audit-cover">
+          <div className="audit-cover-info">
+            <div className="audit-eyebrow">Prepared for</div>
+            <div className="audit-company">Marlow &amp; Co Electrical</div>
+            <div className="audit-domain">
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                aria-hidden="true"
+                fill="none"
+              >
                 <circle
-                  cx="28"
-                  cy="28"
-                  r="24"
-                  fill="none"
-                  stroke="var(--color-hairline)"
-                  strokeWidth="4"
+                  cx="6"
+                  cy="6"
+                  r="4.5"
+                  stroke="currentColor"
+                  strokeWidth="1"
                 />
-                <circle
-                  cx="28"
-                  cy="28"
-                  r="24"
-                  fill="none"
-                  stroke="var(--color-success)"
-                  strokeWidth="4"
-                  strokeDasharray="150.8 150.8"
-                  strokeDashoffset="6"
-                  strokeLinecap="round"
-                  transform="rotate(-90 28 28)"
+                <path
+                  d="M1.5 6h9M6 1.5c1.6 1.4 1.6 7.6 0 9M6 1.5c-1.6 1.4-1.6 7.6 0 9"
+                  stroke="currentColor"
+                  strokeWidth="1"
                 />
               </svg>
-              <div className="hero-visual-score-value">
-                <span>96</span>
-                <span>Score</span>
+              marlowelectrical.co.uk
+            </div>
+            <p className="audit-summary">
+              A solid base — but visitors are landing and leaving before you
+              hear from them. Fix the four items on the next page and enquiries
+              typically lift 3–4× within 90 days.
+            </p>
+          </div>
+
+          <div className="audit-overall">
+            <div className="audit-overall-ring">
+              <Donut size={128} stroke={10} score={62} tone="warn" />
+              <div className="audit-overall-value">
+                <span className="audit-overall-num">62</span>
+                <span className="audit-overall-den">/ 100</span>
+              </div>
+            </div>
+            <div className="audit-overall-tag">Growth score</div>
+            <div className="audit-overall-caption">
+              Room to grow · 24 issues found
+            </div>
+          </div>
+        </div>
+
+        {/* Category scorecards */}
+        <div className="audit-cats">
+          {CATEGORIES.map((c) => (
+            <div key={c.label} className="audit-cat">
+              <div className="audit-cat-ring">
+                <Donut size={52} stroke={5} score={c.score} tone={c.tone} />
+                <div className="audit-cat-score">{c.score}</div>
+              </div>
+              <div className="audit-cat-body">
+                <div className="audit-cat-label">{c.label}</div>
+                <div className="audit-cat-note">{c.note}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Findings */}
+        <div className="audit-block">
+          <div className="audit-block-head">
+            <div className="audit-block-num">01</div>
+            <div>
+              <div className="audit-block-title">
+                Where you&rsquo;re losing work
+              </div>
+              <div className="audit-block-sub">
+                Ranked by impact on enquiries — plain English, no jargon.
               </div>
             </div>
           </div>
 
-          {/* Metric row */}
-          <div className="hero-visual-metrics">
-            <div className="hero-visual-metric">
-              <div className="hero-visual-metric-label">Enquiries / mo</div>
-              <div className="hero-visual-metric-value">47</div>
-              <div className="hero-visual-metric-delta hero-visual-metric-delta--up">
-                +312%
+          <ul className="audit-findings">
+            {FINDINGS.map((f) => (
+              <li key={f.title} className={`audit-finding audit-finding--${f.severity}`}>
+                <span className="audit-finding-dot" aria-hidden="true">
+                  {f.severity === "critical" ? "!" : f.severity === "warn" ? "•" : "✓"}
+                </span>
+                <div className="audit-finding-body">
+                  <div className="audit-finding-title">{f.title}</div>
+                  <div className="audit-finding-desc">{f.desc}</div>
+                </div>
+                <span
+                  className={`audit-finding-tag audit-finding-tag--${f.severity}`}
+                >
+                  {f.severity === "critical"
+                    ? "Fix now"
+                    : f.severity === "warn"
+                    ? "Improve"
+                    : "Keep"}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Projection chart */}
+        <div className="audit-block audit-block--chart">
+          <div className="audit-block-head">
+            <div className="audit-block-num">02</div>
+            <div>
+              <div className="audit-block-title">
+                What happens after we fix this
               </div>
-            </div>
-            <div className="hero-visual-metric">
-              <div className="hero-visual-metric-label">Load time</div>
-              <div className="hero-visual-metric-value">1.1s</div>
-              <div className="hero-visual-metric-delta hero-visual-metric-delta--up">
-                −68%
-              </div>
-            </div>
-            <div className="hero-visual-metric">
-              <div className="hero-visual-metric-label">Conversion</div>
-              <div className="hero-visual-metric-value">4.6x</div>
-              <div className="hero-visual-metric-delta hero-visual-metric-delta--up">
-                +360%
+              <div className="audit-block-sub">
+                Based on 40+ trade sites — enquiries per month, 12 weeks after
+                launch.
               </div>
             </div>
           </div>
 
-          {/* Chart */}
-          <div className="hero-visual-chart">
-            <div className="hero-visual-chart-head">
-              <div>
-                <div className="hero-visual-chart-title">
-                  Enquiries — last 12 weeks
-                </div>
-                <div className="hero-visual-chart-sub">
-                  Compounding, week after week
-                </div>
-              </div>
-              <div className="hero-visual-chart-tag">▲ 4× baseline</div>
+          <div className="audit-chart">
+            <div className="audit-chart-legend">
+              <span className="audit-chart-key audit-chart-key--now">
+                <span /> Now — 12 / mo
+              </span>
+              <span className="audit-chart-key audit-chart-key--proj">
+                <span /> Projected — 48 / mo
+              </span>
             </div>
             <svg
-              viewBox="0 0 380 90"
+              viewBox={`0 0 ${CHART_W} ${CHART_H}`}
               preserveAspectRatio="none"
-              className="hero-visual-chart-svg"
+              className="audit-chart-svg"
               aria-hidden="true"
             >
               <defs>
-                <linearGradient id="heroChartFill" x1="0" x2="0" y1="0" y2="1">
+                <linearGradient id="auditProjFill" x1="0" x2="0" y1="0" y2="1">
                   <stop
                     offset="0%"
                     stopColor="var(--color-accent)"
-                    stopOpacity="0.28"
+                    stopOpacity="0.32"
                   />
                   <stop
                     offset="100%"
@@ -154,17 +333,59 @@ export function HeroVisual() {
                   />
                 </linearGradient>
               </defs>
-              <path d={chartArea} fill="url(#heroChartFill)" />
+
+              {/* Grid */}
+              {[0.25, 0.5, 0.75].map((f) => (
+                <line
+                  key={f}
+                  x1="0"
+                  x2={CHART_W}
+                  y1={CHART_H * f}
+                  y2={CHART_H * f}
+                  stroke="var(--color-hairline-soft)"
+                  strokeWidth="1"
+                  strokeDasharray="2 4"
+                />
+              ))}
+
+              {/* Projected area + line */}
+              <path d={projectedArea} fill="url(#auditProjFill)" />
               <path
-                d={chartLine}
+                d={projectedPath}
                 fill="none"
                 stroke="var(--color-accent)"
-                strokeWidth="2"
+                strokeWidth="2.2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
+
+              {/* Baseline */}
+              <path
+                d={baselinePath}
+                fill="none"
+                stroke="var(--color-ink-muted)"
+                strokeWidth="1.4"
+                strokeDasharray="4 4"
+                strokeLinecap="round"
+              />
             </svg>
+            <div className="audit-chart-axis">
+              <span>Wk 1</span>
+              <span>Wk 4</span>
+              <span>Wk 8</span>
+              <span>Wk 12</span>
+            </div>
           </div>
+        </div>
+
+        {/* Foot */}
+        <div className="audit-foot">
+          <span>Page 1 of 8</span>
+          <span className="audit-foot-mid">
+            Continues → Speed report, page-by-page SEO, mobile checks,
+            conversion path
+          </span>
+          <span>Prepared by Tandemm</span>
         </div>
       </div>
     </div>
