@@ -77,15 +77,27 @@ export function BrandTiles() {
     // on load and reaches 1 after a fixed, predictable scroll distance.
     const SCROLL_RANGE = 650;
 
+    // Tile positions/sizes are tuned for a 700px-wide container. On
+    // narrower screens, scale both the spread (x) and tile size down by
+    // the same factor so the layout shrinks uniformly instead of the
+    // outer tiles running off-screen or the expanded cards overlapping.
+    const REFERENCE_WIDTH = 700;
+    const MIN_SPREAD_SCALE = 0.45;
+
     const update = () => {
       rafRef.current = null;
       if (!containerRef.current) return;
       const p = Math.min(1, Math.max(0, window.scrollY / SCROLL_RANGE));
+      const containerWidth = containerRef.current.clientWidth || REFERENCE_WIDTH;
+      const spreadScale = Math.min(
+        1,
+        Math.max(MIN_SPREAD_SCALE, containerWidth / REFERENCE_WIDTH),
+      );
 
       TILE_STOPS.forEach((stops, i) => {
-        const x = sample(stops, p, "x");
+        const x = sample(stops, p, "x") * spreadScale;
         const rotate = sample(stops, p, "rotate");
-        const scale = sample(stops, p, "scale");
+        const scale = sample(stops, p, "scale") * spreadScale;
         const opacity = sample(stops, p, "opacity");
         const tile = tileRefs.current[i];
         if (tile) {

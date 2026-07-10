@@ -1,6 +1,6 @@
 "use client";
 
-import { CSSProperties, useCallback, useEffect, useRef, useState } from "react";
+import { CSSProperties, useCallback, useState } from "react";
 import { Nav } from "@/components/tandemm/Nav";
 import { Footer } from "@/components/tandemm/Footer";
 import { Reveal } from "@/components/tandemm/Reveal";
@@ -23,37 +23,6 @@ const paletteOverride = {
 /* ------------------------------------------------------------------ */
 /*  Static data                                                       */
 /* ------------------------------------------------------------------ */
-const KPIS = [
-  {
-    label: "Enquiries",
-    value: 312,
-    suffix: "%",
-    prefix: "+",
-    sparkline: [20, 35, 28, 45, 60, 55, 72, 85, 90, 100],
-  },
-  {
-    label: "Conversion",
-    value: 4.3,
-    suffix: "%",
-    prefix: "",
-    sparkline: [30, 40, 35, 50, 55, 60, 65, 70, 68, 75],
-  },
-  {
-    label: "Page load",
-    value: 1.1,
-    suffix: "s",
-    prefix: "",
-    sparkline: [90, 80, 75, 65, 55, 50, 45, 40, 38, 35],
-  },
-  {
-    label: "Return on ad spend",
-    value: 4.6,
-    suffix: "x",
-    prefix: "",
-    sparkline: [15, 25, 30, 40, 50, 55, 65, 70, 75, 80],
-  },
-];
-
 const HOW_IT_WORKS = [
   {
     step: "01",
@@ -73,27 +42,6 @@ const HOW_IT_WORKS = [
     desc: "Monthly traffic, testing and tuning. We run Google Ads, test copy and layouts, and improve your numbers every month.",
     items: ["Google Ads management", "A/B testing", "Monthly reporting", "Continuous improvement"],
   },
-];
-
-const CASE_STUDY_BEFORE = [
-  "Template site, no clear CTA",
-  "No tracking on calls or forms",
-  "Bounce rate over 70%",
-  "Zero visibility on ad spend ROI",
-];
-
-const CASE_STUDY_AFTER = [
-  "Custom site built to convert",
-  "Every call, form and click tracked",
-  "Bounce rate down to 32%",
-  "4.6x return on ad spend",
-];
-
-const CASE_STUDY_STATS = [
-  { label: "Enquiries / month", value: "47" },
-  { label: "Conversion rate", value: "4.3%" },
-  { label: "Cost per lead", value: "£12" },
-  { label: "ROAS", value: "4.6x" },
 ];
 
 const TESTIMONIALS = [
@@ -145,111 +93,6 @@ const FAQS = [
     a: "We don't lock you into long contracts. If the numbers aren't where they should be after 90 days, you can walk away. But honestly, that hasn't happened yet.",
   },
 ];
-
-/* ------------------------------------------------------------------ */
-/*  Sparkline component                                               */
-/* ------------------------------------------------------------------ */
-function Sparkline({ data }: { data: number[] }) {
-  const max = Math.max(...data);
-  const min = Math.min(...data);
-  const range = max - min || 1;
-  const h = 32;
-  const w = 80;
-  const points = data
-    .map((v, i) => {
-      const x = (i / (data.length - 1)) * w;
-      const y = h - ((v - min) / range) * h;
-      return `${x},${y}`;
-    })
-    .join(" ");
-
-  return (
-    <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} className="opacity-50">
-      <polyline
-        points={points}
-        fill="none"
-        stroke="var(--color-accent)"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Count-up hook                                                     */
-/* ------------------------------------------------------------------ */
-function useCountUp(target: number, duration = 1600) {
-  const [value, setValue] = useState(0);
-  const [started, setStarted] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setStarted(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.3 },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!started) return;
-    const start = performance.now();
-    let raf: number;
-    const tick = (now: number) => {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setValue(eased * target);
-      if (progress < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [started, target, duration]);
-
-  return { ref, value };
-}
-
-/* ------------------------------------------------------------------ */
-/*  KPI Card                                                          */
-/* ------------------------------------------------------------------ */
-function KpiCard({
-  label,
-  value: target,
-  suffix,
-  prefix,
-  sparkline,
-}: (typeof KPIS)[number]) {
-  const { ref, value } = useCountUp(target);
-  const isDecimal = target % 1 !== 0;
-  const displayed = isDecimal ? value.toFixed(1) : Math.round(value).toString();
-
-  return (
-    <div
-      ref={ref}
-      className="flex flex-col items-center gap-3 rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-1)]"
-    >
-      <Sparkline data={sparkline} />
-      <div className="font-[family-name:var(--font-display)] text-[clamp(32px,4vw,42px)] font-extrabold tracking-[-0.03em] text-[var(--color-ink)]">
-        {prefix}
-        {displayed}
-        {suffix}
-      </div>
-      <div className="text-sm font-medium text-[var(--color-ink-muted)]">
-        {label}
-      </div>
-    </div>
-  );
-}
 
 /* ------------------------------------------------------------------ */
 /*  Main page                                                         */
@@ -312,27 +155,6 @@ export default function HomePage() {
             scroll past the hero */}
         <div className="mx-auto mt-10 max-w-[700px]">
           <BrandTiles />
-        </div>
-      </section>
-
-      {/* ============================================================ */}
-      {/*  KPI TRUST BAND                                              */}
-      {/* ============================================================ */}
-      <section className="mx-auto max-w-[1160px] box-border px-6 pb-24 pt-8">
-        <Reveal className="mb-10 text-center">
-          <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
-            What we measure
-          </div>
-          <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-            Numbers, not promises
-          </h2>
-        </Reveal>
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-          {KPIS.map((kpi) => (
-            <Reveal key={kpi.label}>
-              <KpiCard {...kpi} />
-            </Reveal>
-          ))}
         </div>
       </section>
 
@@ -426,132 +248,6 @@ export default function HomePage() {
             </Button>
           </Reveal>
         </div>
-      </section>
-
-      {/* ============================================================ */}
-      {/*  CASE STUDY BEFORE / AFTER                                   */}
-      {/* ============================================================ */}
-      <section className="mx-auto max-w-[1160px] box-border px-6 pb-24 pt-20">
-        <Reveal className="mb-4 text-center">
-          <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
-            A worked example
-          </div>
-          <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-            Marlow &amp; Co Electrical
-          </h2>
-        </Reveal>
-
-        {/* Process strip */}
-        <Reveal className="mb-10">
-          <div className="flex flex-wrap items-center justify-center gap-3 text-sm font-semibold text-[var(--color-ink-muted)]">
-            {["Before", "Problems identified", "Changes made", "Measured"].map(
-              (step, i) => (
-                <div key={step} className="flex items-center gap-3">
-                  <span className="rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-[var(--color-surface)] px-4 py-2">
-                    {step}
-                  </span>
-                  {i < 3 && (
-                    <span className="text-[var(--color-hairline)]">&rarr;</span>
-                  )}
-                </div>
-              ),
-            )}
-          </div>
-        </Reveal>
-
-        {/* Before / After cards */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <Reveal>
-            <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
-              {/* Mini browser wireframe */}
-              <div className="mb-5 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[var(--color-surface-sunken)]">
-                <div className="flex items-center gap-1.5 border-b border-[var(--color-hairline)] px-3 py-2">
-                  <span className="h-2 w-2 rounded-full bg-[#E57373]" />
-                  <span className="h-2 w-2 rounded-full bg-[#FFB74D]" />
-                  <span className="h-2 w-2 rounded-full bg-[#81C784]" />
-                  <span className="ml-2 h-3 flex-1 rounded bg-[var(--color-hairline)]" />
-                </div>
-                <div className="space-y-2 p-4">
-                  <div className="h-3 w-3/4 rounded bg-[var(--color-hairline)]" />
-                  <div className="h-3 w-1/2 rounded bg-[var(--color-hairline)]" />
-                  <div className="h-16 w-full rounded bg-[var(--color-hairline)] opacity-60" />
-                </div>
-              </div>
-              <div className="mb-3 text-xs font-bold uppercase tracking-[0.06em] text-[#E57373]">
-                Before
-              </div>
-              <ul className="flex flex-col gap-2.5">
-                {CASE_STUDY_BEFORE.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2.5 text-[15px] leading-[1.5] text-[var(--color-ink-muted)]"
-                  >
-                    <span className="mt-0.5 text-[#E57373]">&times;</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
-          <Reveal>
-            <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
-              {/* Mini browser wireframe - improved */}
-              <div className="mb-5 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-accent)]/30 bg-[var(--color-surface-sunken)]">
-                <div className="flex items-center gap-1.5 border-b border-[var(--color-hairline)] px-3 py-2">
-                  <span className="h-2 w-2 rounded-full bg-[#E57373]" />
-                  <span className="h-2 w-2 rounded-full bg-[#FFB74D]" />
-                  <span className="h-2 w-2 rounded-full bg-[#81C784]" />
-                  <span className="ml-2 h-3 flex-1 rounded bg-[var(--color-hairline)]" />
-                </div>
-                <div className="space-y-2 p-4">
-                  <div className="h-3 w-3/4 rounded bg-[var(--color-accent)] opacity-60" />
-                  <div className="h-3 w-1/2 rounded bg-[var(--color-accent)] opacity-40" />
-                  <div className="flex gap-2">
-                    <div className="h-8 w-24 rounded-[var(--radius-sm)] bg-[var(--color-accent)] opacity-70" />
-                    <div className="h-8 flex-1 rounded-[var(--radius-sm)] bg-[var(--color-hairline)]" />
-                  </div>
-                </div>
-              </div>
-              <div className="mb-3 text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-accent)]">
-                After
-              </div>
-              <ul className="flex flex-col gap-2.5">
-                {CASE_STUDY_AFTER.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2.5 text-[15px] leading-[1.5] text-[var(--color-ink-muted)]"
-                  >
-                    <span className="mt-0.5 font-bold text-[var(--color-accent)]">
-                      &check;
-                    </span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
-        </div>
-
-        {/* Stats bar */}
-        <Reveal>
-          <div className="mt-6 grid grid-cols-2 gap-4 rounded-[var(--radius-xl)] bg-[var(--color-primary)] p-6 text-center text-[var(--color-on-primary)] shadow-[var(--shadow-2)] md:grid-cols-4">
-            {CASE_STUDY_STATS.map((stat) => (
-              <div key={stat.label}>
-                <div className="font-[family-name:var(--font-display)] text-2xl font-extrabold">
-                  {stat.value}
-                </div>
-                <div className="mt-1 text-xs font-medium text-white/60">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-        <Reveal className="mt-8 text-center">
-          <Button href="/results" variant="ghost">
-            More client results
-          </Button>
-        </Reveal>
       </section>
 
       {/* ============================================================ */}
