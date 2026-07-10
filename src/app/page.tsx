@@ -50,21 +50,47 @@ const paletteOverride = {
 const HOW_IT_WORKS = [
   {
     step: "01",
-    title: "Growth Audit",
-    desc: "We look at your site, your traffic and your competitors. You get a clear picture of where enquiries leak.",
-    items: ["Site speed & mobile", "Conversion paths", "Competitor benchmarks", "Tracking gaps"],
+    title: "Diagnosis",
+    tag: null as string | null,
+    oneLiner:
+      "A proper audit of your site and your online presence, before either of us talks about work.",
+    desc: "We spend 15–30 minutes preparing an audit using a dedicated platform, backed up by manual review. You get a PDF report, and we walk through it with you live on a call. The report is yours to keep, whether you work with us or not.",
+    items: [
+      "Website performance",
+      "SEO & technical factors",
+      "Local visibility",
+      "On-site issues affecting enquiries",
+    ],
   },
   {
     step: "02",
-    title: "Growth Foundation",
-    desc: "We rebuild the parts that matter most: a fast, conversion-focused site with proper tracking wired end-to-end.",
-    items: ["Responsive design", "Clear CTAs", "Speed-optimised", "Analytics & tracking"],
+    title: "Prevention",
+    tag: null as string | null,
+    oneLiner:
+      "If the audit shows your website is holding things back, we rebuild it. If it doesn't, we say so.",
+    desc: "We don't assume you need a new site. The audit tells us — and you — whether the site is the bottleneck. If it is, we'll show you a one-page concept. You decide whether to proceed, or take the audit and fix things yourself.",
+    items: [
+      "One-page concept, no pressure",
+      "Deposit, rebuild, launch",
+      "New audit on the finished site",
+      "Before / after score, side by side",
+    ],
   },
   {
     step: "03",
-    title: "Growth Engine",
-    desc: "Monthly traffic, testing and tuning. We run Google Ads, test copy and layouts, and improve your numbers every month.",
-    items: ["Google Ads management", "A/B testing", "Monthly reporting", "Continuous improvement"],
+    title: "Cure",
+    tag: "Optional",
+    oneLiner:
+      "Once the foundation is right, you can hand us the ongoing work — or not.",
+    desc: "Cure is only for clients who want us keeping things moving after the rebuild. It's not required, and it's not part of the audit conversation.",
+    items: [
+      "Google Ads setup & management",
+      "Local SEO & rank tracking",
+      "Unlimited site edits",
+      "One new page per quarter",
+      "Live dashboard, GA4 & monthly summary",
+      "Email support, 2 business days",
+    ],
   },
 ];
 
@@ -229,84 +255,164 @@ export default function HomePage() {
               How it works
             </div>
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              One system. Three stages.
+              We diagnose before we sell.
             </h2>
+            <p className="mx-auto mt-4 max-w-[640px] text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
+              Most agencies open with a website pitch or an ads package. We
+              open with a report. If it says your site isn&apos;t the problem,
+              we&apos;ll tell you — and you&apos;ll still have something
+              useful to take away.
+            </p>
           </Reveal>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {HOW_IT_WORKS.map((item) => (
               <Reveal key={item.step}>
                 <div className="flex h-full flex-col rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
-                  {/* Mini UI illustration area */}
+                  {/* Mini illustration area */}
                   <div className="mb-5 rounded-[var(--radius-lg)] bg-[var(--color-surface-sunken)] p-4">
                     {item.step === "01" && (
-                      /* Checklist UI */
-                      <div className="flex flex-col gap-2">
-                        {item.items.map((it, idx) => (
-                          <div key={it} className="flex items-center gap-2.5">
-                            <span
-                              className={cn(
-                                "flex h-4 w-4 shrink-0 items-center justify-center rounded-[3px] text-[10px]",
-                                idx < 3
-                                  ? "bg-[var(--color-accent)] text-white"
-                                  : "border border-[var(--color-hairline)] bg-white",
-                              )}
+                      /* PDF report mock */
+                      <div className="mx-auto flex w-full max-w-[220px] flex-col gap-2 rounded-[var(--radius-sm)] border border-[var(--color-hairline)] bg-white p-3 shadow-[0_1px_2px_rgba(15,25,35,0.05)]">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[9px] font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
+                            Growth audit · PDF
+                          </span>
+                          <span className="rounded-full bg-[color-mix(in_srgb,var(--color-success)_14%,transparent)] px-1.5 py-[1px] text-[9px] font-bold text-[var(--color-success)]">
+                            96
+                          </span>
+                        </div>
+                        <div className="h-1.5 w-4/5 rounded bg-[var(--color-hairline)]" />
+                        <div className="h-1.5 w-3/5 rounded bg-[var(--color-hairline)]" />
+                        <div className="mt-1 grid grid-cols-4 gap-1">
+                          {[0, 1, 2, 3].map((n) => (
+                            <div
+                              key={n}
+                              className="h-6 rounded-[3px] bg-[var(--color-canvas)]"
+                            />
+                          ))}
+                        </div>
+                        <div className="h-1.5 w-2/3 rounded bg-[var(--color-hairline)]" />
+                        <div className="h-1.5 w-1/2 rounded bg-[var(--color-hairline)]" />
+                      </div>
+                    )}
+                    {item.step === "02" && (
+                      /* Before / after audit score */
+                      <div className="flex items-center justify-around gap-2">
+                        {[
+                          { label: "Before", value: 42, color: "var(--color-danger)" },
+                          { label: "After", value: 96, color: "var(--color-success)" },
+                        ].map((s) => {
+                          const R = 22;
+                          const C = 2 * Math.PI * R;
+                          const dash = (s.value / 100) * C;
+                          return (
+                            <div
+                              key={s.label}
+                              className="flex flex-col items-center gap-1"
                             >
-                              {idx < 3 ? "✓" : ""}
+                              <div className="relative h-14 w-14">
+                                <svg
+                                  viewBox="0 0 56 56"
+                                  className="h-full w-full"
+                                  aria-hidden="true"
+                                >
+                                  <circle
+                                    cx="28"
+                                    cy="28"
+                                    r={R}
+                                    fill="none"
+                                    stroke="var(--color-hairline)"
+                                    strokeWidth="4"
+                                  />
+                                  <circle
+                                    cx="28"
+                                    cy="28"
+                                    r={R}
+                                    fill="none"
+                                    stroke={s.color}
+                                    strokeWidth="4"
+                                    strokeDasharray={`${dash} ${C}`}
+                                    strokeLinecap="round"
+                                    transform="rotate(-90 28 28)"
+                                  />
+                                </svg>
+                                <div className="pointer-events-none absolute inset-0 flex items-center justify-center font-[family-name:var(--font-display)] text-[15px] font-extrabold text-[var(--color-ink)]">
+                                  {s.value}
+                                </div>
+                              </div>
+                              <span className="text-[9px] font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
+                                {s.label}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                    {item.step === "03" && (
+                      /* Simple included-list mock */
+                      <div className="flex flex-col gap-1.5">
+                        {item.items.slice(0, 4).map((it) => (
+                          <div
+                            key={it}
+                            className="flex items-center gap-2 rounded-[6px] bg-white px-2 py-1.5"
+                          >
+                            <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--color-primary)_14%,transparent)] text-[8px] font-bold text-[var(--color-primary)]">
+                              +
                             </span>
-                            <span className="text-xs text-[var(--color-ink-muted)]">
+                            <span className="text-[10.5px] font-medium text-[var(--color-ink)]">
                               {it}
                             </span>
                           </div>
                         ))}
                       </div>
                     )}
-                    {item.step === "02" && (
-                      /* Wireframe UI */
-                      <div className="space-y-2">
-                        <div className="h-2.5 w-3/4 rounded bg-[var(--color-hairline)]" />
-                        <div className="h-2.5 w-1/2 rounded bg-[var(--color-hairline)]" />
-                        <div className="mt-3 flex gap-2">
-                          <div className="h-8 flex-1 rounded-[var(--radius-sm)] bg-[var(--color-accent)] opacity-80" />
-                          <div className="h-8 flex-1 rounded-[var(--radius-sm)] border border-[var(--color-hairline)] bg-white" />
-                        </div>
-                        <div className="mt-2 grid grid-cols-3 gap-1.5">
-                          {[1, 2, 3].map((n) => (
-                            <div key={n} className="h-10 rounded-[var(--radius-sm)] bg-[var(--color-hairline)]" />
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    {item.step === "03" && (
-                      /* Bar chart */
-                      <div className="flex items-end justify-between gap-2 px-1" style={{ height: 80 }}>
-                        {[35, 50, 42, 65, 58, 80, 72, 90].map((h, idx) => (
-                          <div
-                            key={idx}
-                            className="flex-1 rounded-t-[3px] bg-[var(--color-accent)] opacity-70"
-                            style={{ height: `${h}%` }}
-                          />
-                        ))}
-                      </div>
-                    )}
                   </div>
 
-                  <div className="mb-1.5 text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-accent)]">
-                    Stage {item.step}
+                  <div className="mb-1.5 flex items-center gap-2">
+                    <span className="text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-accent)]">
+                      Stage {item.step}
+                    </span>
+                    {item.tag && (
+                      <span className="rounded-full border border-[var(--color-hairline)] bg-[var(--color-canvas)] px-2 py-[2px] text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
+                        {item.tag}
+                      </span>
+                    )}
                   </div>
                   <h3 className="mb-2 font-[family-name:var(--font-display)] text-xl font-bold">
                     {item.title}
                   </h3>
-                  <p className="flex-1 text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
+                  <p className="mb-3 text-[15px] font-semibold leading-[1.4] text-[var(--color-ink)]">
+                    {item.oneLiner}
+                  </p>
+                  <p className="mb-4 text-[14.5px] leading-[1.6] text-[var(--color-ink-muted)]">
                     {item.desc}
                   </p>
+                  <ul className="mt-auto flex flex-col gap-1.5 border-t border-[var(--color-hairline-soft)] pt-4">
+                    {item.items.map((it) => (
+                      <li
+                        key={it}
+                        className="flex items-start gap-2 text-[13.5px] leading-[1.4] text-[var(--color-ink-muted)]"
+                      >
+                        <span className="mt-[6px] block h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]" />
+                        <span>{it}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </Reveal>
             ))}
           </div>
           <Reveal className="mt-10 text-center">
-            <Button href="/system" variant="ghost">
-              See the full system
-            </Button>
+            <p className="mb-5 text-[15px] font-semibold text-[var(--color-ink)]">
+              You keep the audit either way. No obligation, no follow-up sales
+              pitch.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <Button href="/book">Book your audit</Button>
+              <Button href="/system" variant="ghost">
+                See what&apos;s inside the audit →
+              </Button>
+            </div>
           </Reveal>
         </div>
       </section>
