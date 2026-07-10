@@ -106,31 +106,32 @@ body {
   font-family: var(--font-body);
 }
 
-/* ---- Brand-mark illustration (home hero) ---- */
-.brand-tiles-outer {
-  position: relative;
-  height: 200vh;
-}
-
-.brand-tiles-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background: linear-gradient(180deg, var(--color-canvas) 0%, #dce6f0 40%, #d0dfed 60%, var(--color-canvas) 100%);
-}
-
-.brand-tiles-diamonds {
-  position: absolute;
+/* ---- Diamond loading overlay ---- */
+.diamond-loader-overlay {
+  position: fixed;
   inset: 0;
+  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: linear-gradient(180deg, var(--color-canvas) 0%, #dce6f0 40%, #d0dfed 60%, var(--color-canvas) 100%);
   pointer-events: none;
-  z-index: 1;
+}
+
+.diamond-loader-diamonds {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---- Static stat cards section ---- */
+.brand-tiles-static {
+  position: relative;
+  padding: 0 24px 48px;
+  background: linear-gradient(180deg, transparent 0%, var(--color-canvas) 100%);
 }
 
 .brand-tile {
@@ -157,9 +158,13 @@ body {
   gap: 20px;
   max-width: 960px;
   width: 100%;
-  padding: 0 24px;
+  margin: 0 auto;
   opacity: 0;
   will-change: transform, opacity;
+}
+
+.brand-stat-cards--visible {
+  opacity: 1;
 }
 
 .brand-stat-card {
@@ -173,6 +178,10 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.06);
   opacity: 0;
   will-change: transform, opacity;
+}
+
+.brand-stat-card--visible {
+  opacity: 1;
 }
 
 .brand-stat-value {

@@ -6,6 +6,7 @@ import { Footer } from "@/components/tandemm/Footer";
 import { Reveal } from "@/components/tandemm/Reveal";
 import { Button, ButtonEl } from "@/components/tandemm/Button";
 import { BrandTiles } from "@/components/tandemm/BrandTiles";
+import { DiamondLoader } from "@/components/tandemm/DiamondLoader";
 import { cn } from "@/lib/utils";
 
 /* ------------------------------------------------------------------ */
@@ -115,6 +116,7 @@ export default function HomePage() {
       className="min-h-screen bg-[var(--color-canvas)] font-[family-name:var(--font-body)] text-[var(--color-ink)]"
       style={paletteOverride}
     >
+      <DiamondLoader />
       <Nav active="home" />
 
       {/* ============================================================ */}
