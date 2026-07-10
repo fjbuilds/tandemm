@@ -5,6 +5,7 @@ import { Nav } from "@/components/tandemm/Nav";
 import { Footer } from "@/components/tandemm/Footer";
 import { Reveal } from "@/components/tandemm/Reveal";
 import { Button, ButtonEl } from "@/components/tandemm/Button";
+import { BrandTiles } from "@/components/tandemm/BrandTiles";
 import { cn } from "@/lib/utils";
 
 /* ------------------------------------------------------------------ */
@@ -306,13 +307,12 @@ export default function HomePage() {
           </Reveal>
         </div>
 
-        {/* Brand-mark illustration: our own icon assembling and drifting apart */}
-        <Reveal className="mx-auto mt-14 flex h-[130px] max-w-[640px] items-center justify-center">
-          <div className="brand-tiles" aria-hidden="true">
-            <span className="brand-tile brand-tile--a" />
-            <span className="brand-tile brand-tile--b" />
-          </div>
-        </Reveal>
+        {/* Brand-mark illustration: two diamonds slide in and meet to form
+            our logo mark, then expand into the 3-stage process as you
+            scroll past the hero */}
+        <div className="mx-auto mt-10 max-w-[700px]">
+          <BrandTiles />
+        </div>
       </section>
 
       {/* ============================================================ */}
