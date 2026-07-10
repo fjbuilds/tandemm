@@ -5,9 +5,32 @@ import { Nav } from "@/components/tandemm/Nav";
 import { Footer } from "@/components/tandemm/Footer";
 import { Reveal } from "@/components/tandemm/Reveal";
 import { Button, ButtonEl } from "@/components/tandemm/Button";
-import { BrandTiles } from "@/components/tandemm/BrandTiles";
+import { HeroVisual } from "@/components/tandemm/HeroVisual";
 import { DiamondLoader } from "@/components/tandemm/DiamondLoader";
 import { cn } from "@/lib/utils";
+
+const RESULTS = [
+  {
+    value: "312%",
+    label: "More Enquiries",
+    sub: "Average lift in monthly enquiries within 90 days.",
+  },
+  {
+    value: "4.6x",
+    label: "Conversion Rate",
+    sub: "Visitors turned into booked jobs, up from 0.8%.",
+  },
+  {
+    value: "47",
+    label: "Leads / Month",
+    sub: "Steady flow — enough to plan the diary weeks ahead.",
+  },
+  {
+    value: "£1.1M",
+    label: "Revenue Generated",
+    sub: "Attributable client revenue across the last 12 months.",
+  },
+];
 
 /* ------------------------------------------------------------------ */
 /*  Palette override (matches book page)                              */
@@ -123,7 +146,7 @@ export default function HomePage() {
       {/*  HERO                                                        */}
       {/* ============================================================ */}
       <section
-        className="relative box-border px-6 pb-16 pt-[60px] text-center"
+        className="relative box-border px-6 pb-10 pt-[46px] text-center"
         style={{
           background:
             "radial-gradient(60% 42% at 50% 0%, rgba(226,229,222,0.9), transparent 72%)",
@@ -132,37 +155,76 @@ export default function HomePage() {
         <div className="mx-auto max-w-[820px]">
           <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              We build the system that brings you enquiries.
+              You&apos;re good at the job.
             </h1>
           </Reveal>
           <Reveal>
-            <p className="mx-auto mt-[22px] max-w-[620px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Most trade businesses have a website that sits there doing
-              nothing. We build one that drives traffic, converts visitors and
-              tracks every enquiry, so your phone actually rings.
+            <p className="mx-auto mt-3 max-w-[620px] font-[family-name:var(--font-display)] text-[clamp(20px,2.4vw,26px)] font-medium leading-[1.25] tracking-[-0.02em] text-[var(--color-ink)]">
+              We make sure the right people{" "}
+              <span
+                className="italic text-[var(--color-accent)]"
+                style={{ fontSize: "1.14em", letterSpacing: "-0.01em" }}
+              >
+                see
+              </span>{" "}
+              it.
             </p>
           </Reveal>
           <Reveal>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <p className="mx-auto mt-4 max-w-[560px] text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
+              More than ads. More than marketing.
+              <br />
+              A steady stream of work, month after month.
+            </p>
+          </Reveal>
+          <Reveal>
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
               <Button href="/book">Get your free audit</Button>
               <Button href="/results" variant="ghost">
-                See real results
+                See real results →
               </Button>
             </div>
           </Reveal>
         </div>
 
-      </section>
+        {/* Visual proof */}
+        <div className="mt-10">
+          <Reveal>
+            <HeroVisual />
+          </Reveal>
 
-      {/* Diamond scroll → stat cards */}
-      <BrandTiles />
+          {/* Trust strip */}
+          <Reveal className="trust-strip">
+            <div className="trust-strip-inner">
+              <span className="trust-strip-rating">
+                <span className="trust-strip-stars" aria-hidden="true">
+                  ★★★★★
+                </span>
+                Trusted by UK trade businesses
+              </span>
+              <span className="trust-strip-divider" aria-hidden="true" />
+              <span className="trust-strip-metric">
+                <b>312%</b> More enquiries
+              </span>
+              <span className="trust-strip-divider" aria-hidden="true" />
+              <span className="trust-strip-metric">
+                <b>4.6x</b> Conversion rate
+              </span>
+              <span className="trust-strip-divider" aria-hidden="true" />
+              <span className="trust-strip-metric">
+                <b>£1.1m+</b> Revenue generated
+              </span>
+            </div>
+          </Reveal>
+        </div>
+      </section>
 
       {/* ============================================================ */}
       {/*  HOW IT WORKS                                                */}
       {/* ============================================================ */}
-      <section className="bg-[var(--color-canvas-deep)] px-6 pb-24 pt-20">
+      <section className="bg-[var(--color-canvas-deep)] px-6 pb-20 pt-16">
         <div className="mx-auto max-w-[1160px]">
-          <Reveal className="mb-12 text-center">
+          <Reveal className="mb-10 text-center">
             <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
               How it works
             </div>
@@ -250,11 +312,109 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================ */}
+      {/*  RESULTS                                                     */}
+      {/* ============================================================ */}
+      <section className="px-6 pb-20 pt-16">
+        <div className="mx-auto max-w-[1160px]">
+          <Reveal className="mb-10 text-center">
+            <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
+              Results
+            </div>
+            <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
+              Numbers that show up in the bank.
+            </h2>
+            <p className="mx-auto mt-3 max-w-[560px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
+              Averages across the trade and service businesses we work with.
+              Every client gets a monthly report with their own numbers, in
+              plain English.
+            </p>
+          </Reveal>
+
+          {/* Larger result cards */}
+          <Reveal>
+            <div className="results-grid">
+              {RESULTS.map((r) => (
+                <div key={r.label} className="result-card">
+                  <div className="result-card-value">{r.value}</div>
+                  <div className="result-card-label">{r.label}</div>
+                  <div className="result-card-sub">{r.sub}</div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+
+          {/* Case study strip with growth chart */}
+          <Reveal className="mt-8">
+            <div className="grid grid-cols-1 gap-6 rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)] md:grid-cols-[1.1fr_1fr] md:p-9">
+              <div className="flex flex-col justify-center">
+                <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-accent)]">
+                  Case study
+                </div>
+                <h3 className="mb-3 font-[family-name:var(--font-display)] text-[22px] font-bold leading-[1.2] tracking-[-0.02em]">
+                  Marlow &amp; Co Electrical went from 12 to 47 enquiries a
+                  month in 90 days.
+                </h3>
+                <p className="mb-5 text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
+                  New site, tracked ads, weekly tuning. The diary is now booked
+                  four weeks out — and every job is measured back to the pound
+                  that brought it in.
+                </p>
+                <div>
+                  <Button href="/results" variant="ghost">
+                    Read the full case study →
+                  </Button>
+                </div>
+              </div>
+              <div className="rounded-[var(--radius-lg)] bg-[var(--color-canvas)] p-5">
+                <div className="mb-3 flex items-center justify-between">
+                  <div className="text-[13px] font-semibold text-[var(--color-ink)]">
+                    Monthly enquiries
+                  </div>
+                  <div className="rounded-full bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] px-2.5 py-0.5 text-[11px] font-bold text-[var(--color-accent)]">
+                    ▲ 4× baseline
+                  </div>
+                </div>
+                <div
+                  className="flex items-end gap-2"
+                  style={{ height: 130 }}
+                  aria-hidden="true"
+                >
+                  {[12, 15, 14, 18, 22, 26, 30, 34, 38, 42, 45, 47].map(
+                    (v, i) => (
+                      <div
+                        key={i}
+                        className="flex-1 rounded-t-[4px]"
+                        style={{
+                          height: `${(v / 47) * 100}%`,
+                          background:
+                            i < 6
+                              ? "var(--color-hairline)"
+                              : "var(--color-accent)",
+                          opacity: i < 6 ? 1 : 0.85,
+                        }}
+                      />
+                    ),
+                  )}
+                </div>
+                <div className="mt-2 flex justify-between text-[10.5px] font-medium uppercase tracking-[0.06em] text-[var(--color-ink-faint)]">
+                  <span>Jan</span>
+                  <span>Apr</span>
+                  <span>Jul</span>
+                  <span>Oct</span>
+                  <span>Dec</span>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============================================================ */}
       {/*  TESTIMONIALS                                                */}
       {/* ============================================================ */}
-      <section className="bg-[var(--color-canvas-deep)] px-6 pb-24 pt-20">
+      <section className="bg-[var(--color-canvas-deep)] px-6 pb-20 pt-16">
         <div className="mx-auto max-w-[800px]">
-          <Reveal className="mb-12 text-center">
+          <Reveal className="mb-10 text-center">
             <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
               What clients say
             </div>
@@ -336,8 +496,8 @@ export default function HomePage() {
       {/* ============================================================ */}
       {/*  FAQ                                                         */}
       {/* ============================================================ */}
-      <section className="mx-auto max-w-[1160px] box-border px-6 pb-24 pt-20">
-        <Reveal className="mb-10 text-center">
+      <section className="mx-auto max-w-[1160px] box-border px-6 pb-20 pt-16">
+        <Reveal className="mb-8 text-center">
           <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
             Frequently asked questions
           </h2>
@@ -411,9 +571,9 @@ export default function HomePage() {
       {/* ============================================================ */}
       {/*  FINAL CTA                                                   */}
       {/* ============================================================ */}
-      <section className="mx-auto max-w-[1160px] box-border px-6 pb-20">
+      <section className="mx-auto max-w-[1160px] box-border px-6 pb-16">
         <Reveal>
-          <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-14 text-center text-[var(--color-on-primary)] shadow-[var(--shadow-2)] sm:px-14">
+          <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-11 text-center text-[var(--color-on-primary)] shadow-[var(--shadow-2)] sm:px-14">
             <h2 className="mx-auto max-w-[560px] font-[family-name:var(--font-display)] text-[clamp(24px,3.2vw,34px)] font-extrabold leading-[1.12] tracking-[-0.02em]">
               Let&apos;s find where your business is losing enquiries
             </h2>
