@@ -107,24 +107,36 @@ body {
 }
 
 /* ---- Brand-mark illustration (home hero) ---- */
-/* Two diamonds slide in from either side and meet at the exact offsets
-   used in the nav/footer logo, so the merged pair reads as our icon. A
-   third, hidden tile then appears alongside them as all three unrotate
-   into upright squares and expand into process tabs. Driven by scroll
-   progress in BrandTiles.tsx (inline transform/opacity), not a CSS loop. */
-.brand-tiles {
+.brand-tiles-outer {
   position: relative;
-  width: 100%;
-  height: 190px;
+  height: 200vh;
+}
+
+.brand-tiles-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--color-canvas) 0%, #dce6f0 40%, #d0dfed 60%, var(--color-canvas) 100%);
+}
+
+.brand-tiles-diamonds {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .brand-tile {
   position: absolute;
-  top: 50%;
-  left: 50%;
   width: 60px;
   height: 60px;
-  margin: -30px 0 0 -30px;
   border-radius: 14px;
   background: linear-gradient(
     135deg,
@@ -133,48 +145,65 @@ body {
     var(--color-primary-hover) 100%
   );
   box-shadow: 0 14px 30px -10px rgba(15, 30, 45, 0.4);
-  overflow: hidden;
-  will-change: transform;
-  transition: transform 60ms linear, opacity 200ms linear;
+  will-change: transform, opacity;
   transform: translateX(0) rotate(45deg) scale(1);
 }
 
-.brand-tile-label {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 3px;
-  text-align: center;
-  color: white;
+.brand-stat-cards {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 960px;
+  width: 100%;
+  padding: 0 24px;
   opacity: 0;
-  transition: opacity 200ms linear;
+  will-change: transform, opacity;
 }
 
-.brand-tile-label strong {
-  font-size: 5px;
+.brand-stat-card {
+  background: white;
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    0 12px 32px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.brand-stat-value {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--color-ink);
+  letter-spacing: -0.02em;
+}
+
+.brand-stat-label {
+  margin-top: 8px;
+  font-size: 12px;
   font-weight: 700;
-  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-muted);
 }
 
-.brand-tile-label span {
-  margin-top: 1px;
-  font-size: 4px;
-  line-height: 1.2;
-  opacity: 0.75;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .brand-tile {
-    transition: none;
+@media (max-width: 640px) {
+  .brand-stat-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .brand-tile,
-  .brand-tile-label {
-    animation: none;
+  .brand-stat-cards,
+  .brand-stat-card {
+    transition: none;
   }
 }

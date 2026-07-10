@@ -150,13 +150,10 @@ export default function HomePage() {
           </Reveal>
         </div>
 
-        {/* Brand-mark illustration: two diamonds slide in and meet to form
-            our logo mark, then expand into the 3-stage process as you
-            scroll past the hero */}
-        <div className="mx-auto mt-10 max-w-[700px]">
-          <BrandTiles />
-        </div>
       </section>
+
+      {/* Diamond scroll → stat cards */}
+      <BrandTiles />
 
       {/* ============================================================ */}
       {/*  HOW IT WORKS                                                */}
