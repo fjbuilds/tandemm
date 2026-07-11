@@ -231,7 +231,12 @@ export default function HomePage() {
 
           <div className="hero-split-visual">
             <Reveal>
-              <HeroVisual />
+              <div className="hero-glass">
+                <div className="hero-glass-highlight" aria-hidden="true" />
+                <HeroVisual />
+                <div className="hero-glass-fade" aria-hidden="true" />
+                <div className="hero-glass-glow" aria-hidden="true" />
+              </div>
             </Reveal>
           </div>
         </div>
