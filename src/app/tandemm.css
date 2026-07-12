@@ -210,10 +210,26 @@ body {
 }
 
 .hero-subtitle-em {
+  position: relative;
   font-style: italic;
-  color: var(--color-accent);
+  color: var(--color-accent-hover);
   font-size: 1.14em;
   letter-spacing: -0.01em;
+}
+
+/* Hand-drawn underline curve under the accented word */
+.hero-subtitle-em::after {
+  content: "";
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  bottom: -0.1em;
+  height: 0.22em;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'><path d='M2 6 Q 20 1, 42 4 T 82 3 Q 92 3, 98 6' fill='none' stroke='%23A9551F' stroke-width='1.8' stroke-linecap='round'/></svg>");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  pointer-events: none;
+  opacity: 0.85;
 }
 
 .hero-desc {
@@ -230,6 +246,15 @@ body {
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
+}
+
+/* Small posture line under the CTA */
+.hero-cta-note {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--color-ink-muted);
+  letter-spacing: 0.005em;
 }
 
 .hero-mini-trust {
@@ -293,7 +318,7 @@ body {
   overflow: hidden;
   isolation: isolate;
   /* Cap the pane height so the audit fades where the copy ends */
-  max-height: 780px;
+  max-height: 620px;
 }
 
 /* Top-left highlight sweep */
@@ -398,7 +423,7 @@ body {
 /* ---- Hero visual proof: PDF audit report ---- */
 .audit-report {
   position: relative;
-  max-width: 620px;
+  max-width: 500px;
   margin: 0 auto;
   padding: 0;
 }
@@ -413,14 +438,14 @@ body {
   background: var(--color-surface);
   border: 1px solid color-mix(in srgb, var(--color-hairline) 60%, transparent);
   border-radius: 18px;
-  padding: 28px 30px 24px;
+  padding: 22px 24px 18px;
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.9) inset,
     0 1px 2px rgba(15, 25, 35, 0.04),
     0 18px 40px -24px rgba(15, 25, 35, 0.18);
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   overflow: hidden;
   text-align: start;
 }
@@ -434,8 +459,8 @@ body {
   content: "";
   position: absolute;
   top: 0;
-  left: 30px;
-  right: 30px;
+  left: 24px;
+  right: 24px;
   height: 2px;
   background: linear-gradient(
     90deg,
@@ -519,6 +544,39 @@ body {
   );
 }
 
+/* ---- Margin note — “a human looked at this” ---- */
+.audit-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--color-accent) 6%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--color-accent) 32%, transparent);
+}
+
+.audit-note-mark {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin-top: 1px;
+  color: var(--color-accent-hover);
+  transform: rotate(-6deg);
+}
+
+.audit-note-text {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--color-accent-hover);
+  letter-spacing: 0.005em;
+}
+
 /* ---- Cover row ---- */
 .audit-cover {
   display: grid;
@@ -583,8 +641,8 @@ body {
 
 .audit-overall-ring {
   position: relative;
-  width: 128px;
-  height: 128px;
+  width: 112px;
+  height: 112px;
 }
 
 .audit-overall-value {
@@ -599,7 +657,7 @@ body {
 
 .audit-overall-num {
   font-family: var(--font-display);
-  font-size: 40px;
+  font-size: 34px;
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--color-ink);
@@ -607,79 +665,28 @@ body {
 
 .audit-overall-den {
   margin-top: 2px;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.06em;
   color: var(--color-ink-muted);
 }
 
 .audit-overall-tag {
-  font-size: 10.5px;
+  margin-top: 2px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-ink-muted);
 }
 
-.audit-overall-caption {
-  font-size: 11.5px;
-  font-weight: 600;
-  color: var(--color-accent);
-}
-
-/* ---- Category scorecards ---- */
-.audit-cats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
-
-.audit-cat {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  border-radius: 8px;
-  background: var(--color-canvas);
-  border: 1px solid var(--color-hairline-soft);
-  min-width: 0;
-}
-
-.audit-cat-ring {
-  position: relative;
-  width: 52px;
-  height: 52px;
-  flex-shrink: 0;
-}
-
-.audit-cat-score {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: 15px;
-  font-weight: 800;
-  color: var(--color-ink);
-}
-
-.audit-cat-body {
-  min-width: 0;
-}
-
-.audit-cat-label {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--color-ink);
-  line-height: 1.2;
-}
-
-.audit-cat-note {
-  margin-top: 3px;
-  font-size: 11.5px;
-  color: var(--color-ink-muted);
+.audit-overall-checks {
+  max-width: 148px;
+  margin-top: 2px;
+  font-size: 10.5px;
   line-height: 1.35;
+  color: var(--color-ink-faint);
+  text-align: center;
 }
 
 /* ---- Content blocks ---- */
@@ -807,29 +814,20 @@ body {
   line-height: 1.4;
 }
 
-.audit-finding-tag {
+.audit-finding-chevron {
   flex-shrink: 0;
-  padding: 3px 9px;
-  border-radius: 999px;
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-ink-faint);
+  padding-left: 4px;
+  transition: color 120ms ease, transform 120ms ease;
 }
 
-.audit-finding-tag--critical {
-  background: color-mix(in srgb, var(--color-danger) 14%, transparent);
-  color: var(--color-danger);
-}
-
-.audit-finding-tag--warn {
-  background: color-mix(in srgb, var(--color-accent) 14%, transparent);
-  color: var(--color-accent);
-}
-
-.audit-finding-tag--ok {
-  background: color-mix(in srgb, var(--color-success) 14%, transparent);
-  color: var(--color-success);
+.audit-finding:hover .audit-finding-chevron {
+  color: var(--color-ink-muted);
+  transform: translateX(1px);
 }
 
 /* Projection chart */
@@ -875,8 +873,8 @@ body {
 .audit-chart-svg {
   display: block;
   width: 100%;
-  height: 88px;
-  margin-top: 10px;
+  height: 72px;
+  margin-top: 8px;
 }
 
 .audit-chart-axis {
@@ -1023,39 +1021,24 @@ body {
     font-size: 10px;
   }
   .audit-overall-tag,
-  .audit-overall-caption {
+  .audit-overall-checks {
     text-align: left;
   }
-  .audit-cats {
-    grid-template-columns: repeat(2, 1fr);
+  .audit-overall-checks {
+    max-width: none;
+  }
+  .audit-note {
+    padding: 8px 10px;
     gap: 8px;
   }
-  .audit-cat {
-    padding: 10px 10px;
-    gap: 10px;
-  }
-  .audit-cat-ring {
-    width: 44px;
-    height: 44px;
-  }
-  .audit-cat-ring .audit-donut-svg {
-    width: 44px;
-    height: 44px;
-  }
-  .audit-cat-score {
-    font-size: 13px;
-  }
-  .audit-cat-label {
-    font-size: 11.5px;
-  }
-  .audit-cat-note {
-    font-size: 11px;
+  .audit-note-text {
+    font-size: 12.5px;
   }
   .audit-finding {
     padding: 10px 12px;
     gap: 10px;
   }
-  .audit-finding-tag {
+  .audit-finding-chevron {
     display: none;
   }
   .audit-finding-title {
