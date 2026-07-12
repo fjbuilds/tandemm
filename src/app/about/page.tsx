@@ -18,7 +18,7 @@ const paletteOverride = {
 const DISCONNECTED_PIECES = [
   {
     title: "Hire in-house",
-    desc: "£40k+ a year for one person who can't cover ads, SEO, the site and the tracking on their own.",
+    desc: "£40k+ a year, plus NI and holiday, for one person who can't cover ads, SEO, the site and the tracking on their own.",
   },
   {
     title: "Juggle freelancers",
@@ -26,7 +26,7 @@ const DISCONNECTED_PIECES = [
   },
   {
     title: "One team, one system",
-    desc: "Ads, SEO, your website and the reporting run together. One point of contact, one dashboard, booked jobs month after month.",
+    desc: "Ads, SEO, your site and the reporting, one team. One number. One dashboard showing the money coming back.",
   },
 ];
 
@@ -34,7 +34,7 @@ const ARROW_ITEMS = [
   "Understand how homeowners search before we write a line of copy",
   "Take out anything between a visitor landing and picking up the phone",
   "Track calls, forms and jobs back to the pound that brought them in",
-  "Keep improving the site long after launch, so it earns for years",
+  "Keep tuning the site long after launch, so it earns for years",
 ];
 
 const REPLACES_TABLE = [
@@ -56,14 +56,14 @@ const REPLACES_TABLE = [
   {
     stage: "Reporting",
     normally: "GA4 you never open, or spreadsheets once a quarter",
-    withUs: "Live dashboard, so you know where every lead came from",
+    withUs: "Live dashboard, so you know which ad paid for each job",
   },
 ];
 
 const OPTIMISE_TABLE = [
   { label: "Looks impressive", goal: false },
   { label: "Enquiries generated", goal: true },
-  { label: "Cost per enquiry", goal: true },
+  { label: "Cost per booked job", goal: true },
   { label: "Return on spend", goal: true },
 ];
 
@@ -71,17 +71,17 @@ const PRINCIPLES = [
   {
     n: 1,
     title: "Understand first",
-    body: "Before we build a page or run an ad, we learn how homeowners in your area search and what makes them pick one trade over another. Guesswork is what most agencies charge for.",
+    body: "Before we build a page or run an ad, we learn how homeowners in your area search and what makes them pick one electrician over another. Guesswork is what most agencies charge for.",
   },
   {
     n: 2,
     title: "Build to convert",
-    body: "Fast, clear, honest. Every page has one job: turn a visitor into a booked call. No filler, no stock hero shots, no clever animations that get in the way.",
+    body: "Fast, clear, honest. Every page has one job: turn a homeowner into a booked call. No filler, no stock hero shots, no clever animations getting in the way.",
   },
   {
     n: 3,
     title: "Keep improving",
-    body: "Launch is day one, not the finish line. We tune ads weekly, add landing pages each quarter, and push you up the rankings month after month. That's how a site becomes a long-term asset.",
+    body: "Launch is day one, not the finish line. We tune the ads weekly, add landing pages each quarter, and push you up Google month after month. That's how a site becomes a long-term asset instead of a one-off cost.",
   },
 ];
 
@@ -99,12 +99,12 @@ const STANDARDS = [
   {
     n: "03",
     title: "Show the numbers",
-    body: "If we can't show it in the dashboard, we haven't done the job. Calls, forms and booked jobs, tied back to the ad or keyword that brought them in.",
+    body: "If it's not in the dashboard, we haven't done the job. Every call, every form, every booked job, tied back to the ad or keyword that brought it in.",
   },
   {
     n: "04",
     title: "Stay after launch",
-    body: "A site that stands still loses ground. We keep tuning, adding pages, and earning links so you stay at the top of the results month after month.",
+    body: "A site that stands still loses ground. We keep tuning it, adding pages, and earning links, so you stay at the top of Google month after month.",
   },
 ];
 
@@ -121,14 +121,14 @@ export default function AboutPage() {
         <div className="mx-auto max-w-[820px]">
           <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              We build the system behind consistent business growth.
+              We&rsquo;re the growth team electricians can&rsquo;t afford to hire full-time.
             </h1>
           </Reveal>
           <Reveal>
             <p className="mx-auto mt-[22px] max-w-[620px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
               Most UK trades don&apos;t need more marketing. They need the ads,
               the site and the SEO they already pay for to actually turn into
-              booked jobs. That&apos;s what we do.
+              work in the van. That&apos;s what we do.
             </p>
           </Reveal>
         </div>
@@ -139,12 +139,12 @@ export default function AboutPage() {
         <div className="mx-auto max-w-[1060px]">
           <Reveal>
             <h2 className="mb-4 text-center font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              Most trades are sold the pieces, not the system.
+              Most trades are sold the pieces, not the whole thing.
             </h2>
             <p className="mx-auto mb-10 max-w-[560px] text-center text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Three suppliers, three invoices, nobody joined up. You end up
-              with a smart-looking site that doesn&apos;t bring the phone to
-              life. There are three ways this usually goes.
+              Three suppliers, three invoices, three logins, nobody joined up.
+              You end up with a nice-looking site that doesn&apos;t get the
+              phone ringing. Three ways this usually goes.
             </p>
           </Reveal>
 
@@ -169,8 +169,8 @@ export default function AboutPage() {
           <Reveal>
             <div className="mt-8 rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-8 text-center text-[var(--color-on-primary)]">
               <p className="mx-auto max-w-[640px] text-[19px] font-semibold leading-[1.5]">
-                Tandemm runs ads, SEO, your website and the reporting in one
-                place, held to one number: booked jobs.
+                Tandemm runs the ads, the SEO, the site and the reporting.
+                All held to one number: jobs in the van.
               </p>
             </div>
           </Reveal>
@@ -216,8 +216,8 @@ export default function AboutPage() {
                 </div>
               ))}
               <div className="bg-[var(--color-primary)] px-7 py-5 text-center text-[15px] font-semibold text-[var(--color-on-primary)]">
-                One point of contact. One invoice. One number that matters,
-                booked jobs.
+                One point of contact. One invoice. One number that matters:
+                jobs in the van.
               </div>
             </div>
           </Reveal>
@@ -372,7 +372,7 @@ export default function AboutPage() {
                   variant="secondary"
                   className="border-white/25 bg-white text-[var(--color-primary)] hover:bg-white/90"
                 >
-                  Get your free audit
+                  Get the 80-point audit
                 </Button>
                 <Button href="/results" variant="secondary">
                   See the results

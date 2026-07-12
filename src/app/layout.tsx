@@ -3,11 +3,11 @@ import "./tandemm.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Tandemm | A straight read on your website",
+    default: "Tandemm | More jobs for UK electricians and trades",
     template: "%s | Tandemm",
   },
   description:
-    "Tandemm tells trades businesses what's stopping enquiries, then only fixes what actually needs fixing.",
+    "We run ads, SEO and the site for UK electricians so the phone rings. You quote the work. Get the 80-point audit, free.",
 };
 
 export default function RootLayout({

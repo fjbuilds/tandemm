@@ -95,7 +95,7 @@ const FINDINGS: {
   {
     severity: "critical",
     title: "Site takes 4.2s to load on a phone",
-    desc: "About 6 in 10 visitors leave before the page opens.",
+    desc: "About 6 in 10 homeowners tap back to Google before the page opens.",
   },
   {
     severity: "warn",
@@ -110,7 +110,7 @@ const FINDINGS: {
   {
     severity: "ok",
     title: "Domain and business name are well established",
-    desc: "Solid foundation — worth building on, not replacing.",
+    desc: "Solid foundation. Worth building on, not replacing.",
   },
 ];
 
@@ -157,7 +157,7 @@ export function HeroVisual() {
             </svg>
           </span>
           <span className="audit-note-text">
-            Nothing critical. Four quick wins would move the needle.
+            Nothing broken. Four quick wins would put the phone back on the ring.
           </span>
         </div>
 
@@ -190,9 +190,9 @@ export function HeroVisual() {
               marlowelectrical.co.uk
             </div>
             <p className="audit-summary">
-              A solid base — but visitors are landing and leaving before you
-              hear from them. Fix the four items below and enquiries typically
-              lift 3–4× within 90 days.
+              A solid base, but homeowners are landing and leaving before you
+              hear from them. Fix the four items below and jobs typically lift
+              three to four times inside 90 days.
             </p>
           </div>
 
@@ -220,7 +220,7 @@ export function HeroVisual() {
                 Where you&rsquo;re losing work
               </div>
               <div className="audit-block-sub">
-                Ranked by impact on enquiries — plain English, no jargon.
+                Ranked by impact on jobs. Plain English, no jargon.
               </div>
             </div>
           </div>
@@ -252,7 +252,7 @@ export function HeroVisual() {
                 What happens after we fix this
               </div>
               <div className="audit-block-sub">
-                Based on 40+ trade sites — enquiries per month, 12 weeks after
+                Based on 40+ trade sites. Jobs per month, 12 weeks after
                 launch.
               </div>
             </div>
@@ -261,10 +261,10 @@ export function HeroVisual() {
           <div className="audit-chart">
             <div className="audit-chart-legend">
               <span className="audit-chart-key audit-chart-key--now">
-                <span /> Now — 12 / mo
+                <span /> Now · 12 / mo
               </span>
               <span className="audit-chart-key audit-chart-key--proj">
-                <span /> Projected — 48 / mo
+                <span /> Projected · 48 / mo
               </span>
             </div>
             <svg
@@ -336,7 +336,7 @@ export function HeroVisual() {
         <div className="audit-foot">
           <span>Page 1 of 8</span>
           <span className="audit-foot-mid">
-            Continues → Speed report, page-by-page SEO, mobile checks,
+            Continues: speed report, page-by-page SEO, mobile checks,
             conversion path
           </span>
           <span>Prepared by Tandemm</span>

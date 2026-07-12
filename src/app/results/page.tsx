@@ -18,15 +18,15 @@ const paletteOverride = {
 /* ─── Data ──────────────────────────────────────────────────────── */
 
 const KPI_CARDS = [
-  { label: "Enquiries", value: "▲ 240%", desc: "Average lift across clients in the first 6 months" },
-  { label: "Conversion rate", value: "▲ 3.4x", desc: "From visitor to booked job, tracked call to call" },
-  { label: "Page speed", value: "▼ 84%", desc: "Faster load on mobile, so people don't bounce" },
-  { label: "Tracking", value: "Full", desc: "Every call and form tied back to the ad or keyword" },
-  { label: "Search visibility", value: "▲", desc: "Higher rankings on the searches homeowners actually run" },
+  { label: "Jobs enquired", value: "▲ 240%", desc: "Average lift for our electricians in the first 6 months" },
+  { label: "Booked-job rate", value: "▲ 3.4x", desc: "From homeowner landing on the site to booked job, call for call" },
+  { label: "Page speed", value: "▼ 84%", desc: "Faster load on a phone, so homeowners don't tap back to Google" },
+  { label: "Money tracked", value: "Every £", desc: "Every call and form tied back to the ad or keyword that paid for it" },
+  { label: "Google rankings", value: "Up", desc: "Higher on the searches homeowners actually run" },
   {
     label: "Wasted ad spend",
     value: "▼ 41%",
-    desc: "Budget moved off dead clicks and onto keywords that book jobs",
+    desc: "Budget pulled off dead clicks, poured into keywords that book jobs",
     navy: true,
   },
 ] as Array<{ label: string; value: string; desc: string; navy?: boolean }>;
@@ -50,11 +50,11 @@ const CASE_STUDIES = [
 ];
 
 const SYSTEM_STEPS = [
-  { n: 1, title: "Traffic", desc: "Bring in high-intent homeowners: Google Ads, local SEO, referrals." },
-  { n: 2, title: "Website", desc: "Fast, clear pages built to convert visitors into real customers." },
-  { n: 3, title: "Tracking", desc: "Every call and form tied back to the ad, keyword or page that earned it." },
-  { n: 4, title: "Optimisation", desc: "Cut what's not paying back, double down on what is. Every week." },
-  { n: 5, title: "Compounding", desc: "Rankings climb, cost per lead drops, the site earns more each month.", navy: true },
+  { n: 1, title: "Get seen", desc: "Bring in homeowners ready to buy: Google Ads, local SEO, referrals." },
+  { n: 2, title: "Site", desc: "Fast, plain pages built to get a homeowner off the fence and on the phone." },
+  { n: 3, title: "Tracking", desc: "Every call and every form, tied back to the pound that brought it in." },
+  { n: 4, title: "Tuning", desc: "Cut what's not paying back. Double down on what is. Every week." },
+  { n: 5, title: "Compounding", desc: "Rankings climb. Cost per job drops. The site earns more every month.", navy: true },
 ] as Array<{ n: number; title: string; desc: string; navy?: boolean }>;
 
 const BEFORE_ITEMS = [
@@ -64,7 +64,7 @@ const BEFORE_ITEMS = [
 ];
 
 const DIAGNOSIS_ITEMS = [
-  "73% of mobile visitors bounced",
+  "73% of homeowners on a phone tapped back to Google before the page opened",
   "Call button hidden below the fold",
   "No way to tell which ads paid back",
 ];
@@ -73,7 +73,7 @@ const CHANGES_ITEMS = [
   "Rebuilt the site, fast and mobile-first",
   "Rewrote every service page to match local search",
   "Wired in call, form and Google Ads tracking",
-  "Restructured Google Ads onto keywords that book jobs",
+  "Restructured Google Ads round the jobs he actually wanted more of",
 ];
 
 /* ─── Component ─────────────────────────────────────────────────── */
@@ -91,13 +91,13 @@ export default function ResultsPage() {
         <div className="mx-auto max-w-[820px]">
           <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              Real numbers. From real UK trades.
+              Real numbers. From real UK electricians.
             </h1>
           </Reveal>
           <Reveal>
             <p className="mx-auto mt-[22px] max-w-[600px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Not vanity metrics. Booked jobs and tracked calls from trades
-              we&apos;ve worked with month after month.
+              Not vanity metrics. Jobs booked, money banked, and every call
+              tracked back to the ad that earned it.
             </p>
           </Reveal>
         </div>
@@ -110,7 +110,7 @@ export default function ResultsPage() {
             <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
               <div>
                 <div className="text-xs font-bold uppercase tracking-[0.05em] text-[var(--color-ink-muted)]">
-                  Enquiry Performance
+                  Jobs booked, tracked back
                 </div>
                 <div className="mt-1 flex items-baseline gap-3">
                   <span className="font-[family-name:var(--font-display)] text-[36px] font-extrabold leading-none tracking-tight">
@@ -121,7 +121,7 @@ export default function ResultsPage() {
                   </span>
                 </div>
                 <div className="mt-0.5 text-sm text-[var(--color-ink-muted)]">
-                  enquiries in 6 months
+                  jobs booked in 6 months
                 </div>
               </div>
               <div className="flex gap-3 text-xs font-semibold text-[var(--color-ink-muted)]">
@@ -201,8 +201,8 @@ export default function ResultsPage() {
         </Reveal>
         <Reveal>
           <p className="mt-4 text-center text-[13px] leading-[1.5] text-[var(--color-ink-faint)]">
-            The live dashboard every Tandemm client sees. Figures shown are a
-            composite of real accounts.
+            The live dashboard every Tandemm customer gets. Figures are a
+            composite of real accounts, not stock demos.
           </p>
         </Reveal>
       </section>
@@ -251,8 +251,8 @@ export default function ResultsPage() {
         </div>
         <Reveal>
           <p className="mx-auto mt-6 max-w-[600px] text-center text-[13px] leading-[1.5] text-[var(--color-ink-faint)]">
-            Averages across active clients. Your numbers will depend on trade,
-            area and starting point.
+            Averages across live accounts. Your numbers depend on your trade,
+            your area, and where you're starting.
           </p>
         </Reveal>
       </section>
@@ -487,18 +487,18 @@ export default function ResultsPage() {
               See where your site is costing you jobs.
             </h2>
             <p className="mx-auto mt-4 max-w-[500px] text-[17px] leading-[1.55] text-white/70">
-              A free 30-minute call. No hard sell, no pitch deck. Just a
-              straight read on your site, ads and rankings.
+              30 minutes on the phone. No pitch deck. Just a straight read
+              on your site, your ads and your Google rankings.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Button
                 href="/book"
                 className="bg-white text-[var(--color-primary)] hover:bg-white/90"
               >
-                Get your free audit
+                Get the 80-point audit
               </Button>
               <Button href="/system" variant="secondary">
-                See how the system works
+                See how it works
               </Button>
             </div>
           </div>
