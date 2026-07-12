@@ -22,13 +22,13 @@ const RESULTS = [
   },
   {
     value: "47",
-    label: "Leads / month",
-    sub: "Enough to book the diary weeks ahead, month after month.",
+    label: "Jobs / month",
+    sub: "Enough to book the diary six weeks out, month after month.",
   },
   {
     value: "£1.1M",
-    label: "Revenue generated",
-    sub: "Client revenue we can tie back to work we did.",
+    label: "Booked for clients",
+    sub: "Money in customer bank accounts that traces back to our ads.",
   },
 ];
 
@@ -54,12 +54,12 @@ const HOW_IT_WORKS = [
     tag: null as string | null,
     oneLiner:
       "A proper audit of your site and your online presence, before either of us talks about work.",
-    desc: "We spend 15 to 30 minutes running your site through a dedicated audit platform, then check it by hand. You get a PDF report, and we walk you through it live on a call. The report is yours to keep, whether you hire us or not.",
+    desc: "We run your site through an 80-point audit, then check every finding by hand. You get a PDF report and a 30-minute walk-through. Yours to keep whether you hire us or not.",
     items: [
       "Site speed and technical health",
       "SEO and Google visibility",
       "Local rankings in the areas you cover",
-      "The pages costing you enquiries",
+      "The pages costing you jobs",
     ],
   },
   {
@@ -67,7 +67,7 @@ const HOW_IT_WORKS = [
     title: "Prevention",
     tag: null as string | null,
     oneLiner:
-      "If the site is what's holding you back, we rebuild it. If it isn't, we tell you.",
+      "If the site is what's costing you jobs, we rebuild it. If it isn't, we tell you.",
     desc: "We don't assume you need a new site. The audit shows whether it's the bottleneck. If it is, we send you a one-page concept and a fixed price. You either book the rebuild or take the report and fix things yourself.",
     items: [
       "One-page concept, no pressure",
@@ -81,7 +81,7 @@ const HOW_IT_WORKS = [
     title: "Cure",
     tag: "Optional",
     oneLiner:
-      "Once the site is right, you can hand us the ongoing work, or not.",
+      "Once the site is right, hand us the ads and SEO. Or don't. Cancel any time.",
     desc: "Cure is for owners who want one team running ads, SEO, and the reporting in one place after the rebuild. No long-term contract, one month's notice, cancel any time.",
     items: [
       "Google Ads set up and managed",
@@ -128,15 +128,15 @@ const FAQS = [
   },
   {
     q: "How much does it cost?",
-    a: "Most clients spend between £800 and £2,000 a month for the full system, ads, SEO, site, and reporting in one place. You'll get an exact number on the audit call. No surprises later.",
+    a: "Most electricians spend £800 to £2,000 a month with us. That's the ads budget, the SEO, the site work and the reporting, one price. You'll get the exact number on the audit call.",
   },
   {
     q: "How long before I see results?",
-    a: "Most clients see enquiries moving inside 4 to 6 weeks. It compounds. Month three is better than month one, and month six is better again.",
+    a: "Most clients see the phone ringing more inside 4 to 6 weeks. It compounds. Month three beats month one. Month six beats month three.",
   },
   {
     q: "Do I need to do anything?",
-    a: "Very little. We run the ads, the SEO, the site, and the tracking. You answer the phone and do the work you're actually good at.",
+    a: "Very little. We run the ads, the SEO, the site and the tracking. You get in the van and quote the work.",
   },
   {
     q: "What if it doesn't work?",
@@ -144,7 +144,7 @@ const FAQS = [
   },
   {
     q: "What about AI search, ChatGPT and Google's AI answers?",
-    a: "Homeowners are starting to ask ChatGPT, Perplexity and Google's AI answers which tradesperson to use. The same content and links that push you up traditional rankings are what get you named in those answers. It's part of what we build.",
+    a: "Homeowners are starting to ask ChatGPT and Google's AI answers which electrician to use. The pages and links that push you up normal Google are the same ones that get you named in those answers. Same job, both places.",
   },
 ];
 
@@ -187,7 +187,7 @@ export default function HomePage() {
             <Reveal>
               <span className="hero-eyebrow">
                 <span className="hero-eyebrow-dot" aria-hidden="true" />
-                Growth for UK trade businesses
+                Google Ads and SEO for UK electricians
               </span>
             </Reveal>
             <Reveal>
@@ -199,27 +199,29 @@ export default function HomePage() {
             </Reveal>
             <Reveal>
               <p className="hero-subtitle">
-                We make sure the right people{" "}
-                <span className="hero-subtitle-em">see</span> it.
+                We make sure your phone{" "}
+                <span className="hero-subtitle-em">rings</span>.
               </p>
             </Reveal>
             <Reveal>
               <p className="hero-desc">
-                More than ads. More than marketing. A steady stream of work,
-                month after month.
+                Over 40,000 people search Google for an electrician in the UK
+                every month. We run the ads, we run the SEO, we send the
+                enquiries straight to your phone. You get in the van and quote
+                them.
               </p>
             </Reveal>
             <Reveal>
               <div className="hero-cta">
-                <Button href="/book">Get your free audit</Button>
+                <Button href="/book">Get the 80-point audit</Button>
                 <Button href="/results" variant="ghost">
-                  See real results →
+                  See how it works →
                 </Button>
               </div>
             </Reveal>
             <Reveal>
               <p className="hero-cta-note">
-                We score your business before we pitch anything.
+                We score your site before you spend a penny.
               </p>
             </Reveal>
             <Reveal>
@@ -228,11 +230,11 @@ export default function HomePage() {
                   ★★★★★
                 </span>
                 <span>
-                  <b>312%</b> more enquiries
+                  <b>47</b> jobs a month
                 </span>
                 <span className="hero-mini-trust-dot" aria-hidden="true" />
                 <span>
-                  <b>£1.1m+</b> revenue generated
+                  <b>£1.1m+</b> booked for clients
                 </span>
               </div>
             </Reveal>
@@ -265,9 +267,9 @@ export default function HomePage() {
             </h2>
             <p className="mx-auto mt-4 max-w-[640px] text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
               Every other agency opens with a pitch. We open with a report on
-              your site, your rankings, and where enquiries are going missing.
-              If the site isn&apos;t the problem, we&apos;ll say so. You keep
-              the audit either way.
+              your site, your rankings, and where jobs are going missing. If
+              the site isn&apos;t the problem, we&apos;ll say so. You keep the
+              audit either way.
             </p>
           </Reveal>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -410,12 +412,12 @@ export default function HomePage() {
           </div>
           <Reveal className="mt-10 text-center">
             <p className="mb-5 text-[15px] font-semibold text-[var(--color-ink)]">
-              You keep the audit either way. No hard sell, no follow-up hassle.
+              You keep the audit either way. No hard sell, no chasing calls.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
-              <Button href="/book">Book your audit</Button>
+              <Button href="/book">Get the 80-point audit</Button>
               <Button href="/system" variant="ghost">
-                See what&apos;s inside the audit →
+                See what&apos;s inside →
               </Button>
             </div>
           </Reveal>
@@ -435,10 +437,9 @@ export default function HomePage() {
               Numbers that turn up in the bank.
             </h2>
             <p className="mx-auto mt-3 max-w-[560px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Averages across the UK trade businesses we work with. Every
-              client gets a live dashboard and a monthly report in plain
-              English, so you always know what&apos;s working and where your
-              leads come from.
+              Averages across the electricians, plumbers and roofers we work
+              with. See how much money your ads are making. See which van jobs
+              came from which keyword. See what you spent to get each one.
             </p>
           </Reveal>
 
@@ -463,13 +464,13 @@ export default function HomePage() {
                   Case study
                 </div>
                 <h3 className="mb-3 font-[family-name:var(--font-display)] text-[22px] font-bold leading-[1.2] tracking-[-0.02em]">
-                  Marlow &amp; Co Electrical went from 12 to 47 enquiries a
-                  month in 90 days.
+                  Marlow &amp; Co Electrical went from 12 to 47 jobs a month
+                  in 90 days.
                 </h3>
                 <p className="mb-5 text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-                  New site, tracked Google Ads, keyword-focused landing pages,
-                  weekly tuning. The diary is booked four weeks out, and every
-                  job traces back to the pound that brought it in.
+                  New site, Google Ads, landing pages built round the jobs he
+                  wants. Diary booked four weeks out. Every job traces back to
+                  the pound that brought it in.
                 </p>
                 <div>
                   <Button href="/results" variant="ghost">
@@ -480,7 +481,7 @@ export default function HomePage() {
               <div className="rounded-[var(--radius-lg)] bg-[var(--color-canvas)] p-5">
                 <div className="mb-3 flex items-center justify-between">
                   <div className="text-[13px] font-semibold text-[var(--color-ink)]">
-                    Monthly enquiries
+                    Jobs booked, monthly
                   </div>
                   <div className="rounded-full bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] px-2.5 py-0.5 text-[11px] font-bold text-[var(--color-accent)]">
                     ▲ 4× baseline
