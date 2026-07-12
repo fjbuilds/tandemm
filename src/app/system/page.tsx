@@ -21,28 +21,28 @@ const STAGES = [
   {
     num: 1,
     title: "Growth Audit",
-    desc: "We review your site and show you exactly where enquiries are leaking. Free, no obligation.",
+    desc: "We look at your site, your rankings and your ads, then show you where the enquiries are going missing. Free, no hard sell.",
     badge: "Free",
     highlight: true,
   },
   {
     num: 2,
     title: "Growth Foundation",
-    desc: "We rebuild the parts that matter: messaging, structure, speed, trust, so visitors convert.",
+    desc: "A clean, modern website built to convert visitors into real customers. Fast pages, clear messaging, honest trust signals.",
   },
   {
     num: 3,
     title: "Growth Engine",
-    desc: "We run, measure, and improve, month after month, until the numbers move.",
+    desc: "One team running ads, SEO and your website together, with a live dashboard so you always know what's working.",
   },
 ];
 
 const AUDIT_CHECKS = [
-  "Where visitors drop off before enquiring",
-  "What your site says (and what it should say)",
-  "Whether your pages load fast enough to keep people",
-  "How visible you are on Google right now",
-  "What you're tracking, and what you're missing",
+  "Where visitors leave before they call",
+  "What your site says, and what it should say to a homeowner",
+  "Whether your pages load fast enough to hold people",
+  "How you rank for the jobs people actually search for",
+  "What you're tracking, and what's slipping through",
 ];
 
 const SCORECARD = [
@@ -56,23 +56,23 @@ const SCORECARD = [
 const AUDIT_STEPS = [
   {
     num: 1,
-    title: "We review your site",
-    desc: "Before we speak, we dig into your pages, speed, SEO, and analytics.",
+    title: "We look at your site",
+    desc: "Before the call, we go through your pages, speed, SEO and analytics ourselves.",
   },
   {
     num: 2,
     title: "We score every area",
-    desc: "Each dimension gets a clear rating so nothing is left to opinion.",
+    desc: "Each part gets a clear rating, so nothing comes down to opinion.",
   },
   {
     num: 3,
     title: "We walk you through it",
-    desc: "A 30-minute call where we show you exactly what we found.",
+    desc: "A 30-minute call where we show you what we found, in plain English.",
   },
   {
     num: 4,
     title: "You get a one-page plan",
-    desc: "Prioritised fixes you can act on, with or without us.",
+    desc: "The fixes that matter most, ranked. Act on it with us, or on your own.",
     dark: true,
   },
 ];
@@ -80,17 +80,17 @@ const AUDIT_STEPS = [
 const PATHS = [
   {
     title: "Do it yourself",
-    desc: "Take the audit, take the plan, and run with it. No strings attached.",
+    desc: "Take the audit and the plan, and get on with it. No strings, no follow-up sell.",
     icon: "📋",
   },
   {
-    title: "We rebuild it",
-    desc: "We redesign and rebuild your site so it actually converts, then hand you the keys.",
+    title: "We rebuild the site",
+    desc: "A clean, modern website built to convert visitors into real customers. Fixed price, then it's yours.",
     icon: "🔧",
   },
   {
-    title: "We manage growth",
-    desc: "We build it, run it, and keep improving it, so you can focus on your business.",
+    title: "We run the lot",
+    desc: "Ads, SEO, the website and the reporting in one place, so you get booked jobs month after month.",
     icon: "📈",
   },
 ];
@@ -98,15 +98,15 @@ const PATHS = [
 const WHY_CARDS = [
   {
     title: "Nothing is guessed",
-    desc: "Every recommendation comes from data: analytics, heatmaps, benchmarks. Not hunches.",
+    desc: "Every change comes from real numbers. Analytics, call tracking, rank data, benchmarks. No hunches.",
   },
   {
     title: "Nothing is wasted",
-    desc: "We only work on what moves the needle. No vanity redesigns, no filler pages.",
+    desc: "We only work on what brings in booked jobs. No vanity redesigns, no filler blog posts nobody reads.",
   },
   {
     title: "Nothing stands still",
-    desc: "Your site is reviewed and improved every month. Growth compounds when you keep going.",
+    desc: "Your site is reviewed and improved every month. That's how you push up the rankings and stay there.",
   },
 ];
 
@@ -179,8 +179,8 @@ export default function SystemPage() {
         </Reveal>
         <Reveal>
           <p className="mt-8 text-center text-sm text-[var(--color-ink-muted)]">
-            Most businesses move through all three stages, but you choose how
-            far to go, and when.
+            Most clients move through all three, but you decide how far to go
+            and when. No long-term contracts, one month's notice.
           </p>
         </Reveal>
       </section>
@@ -196,7 +196,7 @@ export default function SystemPage() {
                 Free, no obligation
               </div>
               <h2 className="mb-6 font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,42px)] font-bold leading-[1.12] tracking-[-0.02em]">
-                Where is your website losing customers?
+                Where is your site costing you jobs?
               </h2>
               <ul className="mb-8 flex flex-col gap-3.5">
                 {AUDIT_CHECKS.map((item) => (
@@ -369,7 +369,7 @@ export default function SystemPage() {
       <section className="mx-auto max-w-[1160px] px-6 py-20">
         <Reveal className="mb-12 text-center">
           <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-            Built around evidence, not opinions.
+            Built on what the numbers say.
           </h2>
         </Reveal>
 
@@ -397,7 +397,7 @@ export default function SystemPage() {
         <Reveal>
           <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-14 text-center text-[var(--color-on-primary)] shadow-[var(--shadow-2)] sm:px-14">
             <h2 className="mx-auto max-w-[640px] font-[family-name:var(--font-display)] text-[clamp(24px,3.6vw,36px)] font-bold leading-[1.15] tracking-[-0.02em]">
-              See where your website is losing customers, for free.
+              See where your site is costing you jobs. Free.
             </h2>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Button

@@ -17,46 +17,46 @@ const paletteOverride = {
 
 const DISCONNECTED_PIECES = [
   {
-    title: "Website company",
-    desc: "Builds it, disappears.",
+    title: "Hire in-house",
+    desc: "£40k+ a year for one person who can't cover ads, SEO, the site and the tracking on their own.",
   },
   {
-    title: "SEO company",
-    desc: "Writes blogs nobody reads.",
+    title: "Juggle freelancers",
+    desc: "A web designer, an SEO, an ads person. Three invoices, three logins, nobody responsible for the number that matters.",
   },
   {
-    title: "Ads company",
-    desc: "Sends traffic to a page that doesn’t convert.",
+    title: "One team, one system",
+    desc: "Ads, SEO, your website and the reporting run together. One point of contact, one dashboard, booked jobs month after month.",
   },
 ];
 
 const ARROW_ITEMS = [
-  "Understand your customers before we touch a line of code",
-  "Remove friction between someone landing and someone enquiring",
-  "Measure performance with real numbers, not vanity metrics",
-  "Improve continuously, well past launch",
+  "Understand how homeowners search before we write a line of copy",
+  "Take out anything between a visitor landing and picking up the phone",
+  "Track calls, forms and jobs back to the pound that brought them in",
+  "Keep improving the site long after launch, so it earns for years",
 ];
 
 const REPLACES_TABLE = [
   {
-    stage: "Traffic",
-    normally: "A separate SEO or ads agency, another invoice to chase",
-    withUs: "Handled as part of the system",
+    stage: "Ads",
+    normally: "A separate PPC freelancer, another invoice, another login",
+    withUs: "Google Ads run and tuned each week",
+  },
+  {
+    stage: "SEO",
+    normally: "An SEO agency writing blogs that don't rank",
+    withUs: "Keyword-focused pages and links from trusted sources",
   },
   {
     stage: "Website",
     normally: "A one-off build, then it's someone else's problem",
-    withUs: "Rebuilt properly, then maintained",
+    withUs: "Rebuilt properly, then maintained as a long-term asset",
   },
   {
-    stage: "Tracking",
-    normally: "Extra software bolted on afterwards, if at all",
-    withUs: "Wired in from day one",
-  },
-  {
-    stage: "Optimisation",
-    normally: "Rarely happens once the invoice is paid",
-    withUs: "Monthly, by default",
+    stage: "Reporting",
+    normally: "GA4 you never open, or spreadsheets once a quarter",
+    withUs: "Live dashboard, so you know where every lead came from",
   },
 ];
 
@@ -71,40 +71,40 @@ const PRINCIPLES = [
   {
     n: 1,
     title: "Understand first",
-    body: "Before we build anything, we learn how your customers think, what they search for, and where they drop off. Strategy without research is guesswork.",
+    body: "Before we build a page or run an ad, we learn how homeowners in your area search and what makes them pick one trade over another. Guesswork is what most agencies charge for.",
   },
   {
     n: 2,
-    title: "Build foundations",
-    body: "Fast, clear, conversion-focused. Every page has a job. Every element earns its place. No filler, no fluff, no “we’ll fix it later.”",
+    title: "Build to convert",
+    body: "Fast, clear, honest. Every page has one job: turn a visitor into a booked call. No filler, no stock hero shots, no clever animations that get in the way.",
   },
   {
     n: 3,
-    title: "Improve continuously",
-    body: "Launch is the starting line, not the finish. We track, test, and refine every month so your system gets better while you focus on running your business.",
+    title: "Keep improving",
+    body: "Launch is day one, not the finish line. We tune ads weekly, add landing pages each quarter, and push you up the rankings month after month. That's how a site becomes a long-term asset.",
   },
 ];
 
 const STANDARDS = [
   {
     n: "01",
-    title: "Diagnose before we sell",
-    body: "We won’t pitch you a package before we understand your problem. Every engagement starts with research.",
+    title: "Look before we sell",
+    body: "No pitch until we've properly gone through your site, your rankings and your ads. If we can't help, we say so on the call.",
   },
   {
     n: "02",
-    title: "Speak plainly",
-    body: "No jargon walls, no inflated promises. If something won’t work, we’ll say so before you spend a penny.",
+    title: "Talk straight",
+    body: "No jargon walls, no inflated promises. If a channel won't pay back for your area or budget, we'll tell you before you spend a penny.",
   },
   {
     n: "03",
-    title: "Measure everything",
-    body: "If we can’t show you the numbers, we haven’t done our job. Every recommendation ties back to a metric you care about.",
+    title: "Show the numbers",
+    body: "If we can't show it in the dashboard, we haven't done the job. Calls, forms and booked jobs, tied back to the ad or keyword that brought them in.",
   },
   {
     n: "04",
     title: "Stay after launch",
-    body: "A website that sits still falls behind. We stay on, optimise monthly, and keep your system earning.",
+    body: "A site that stands still loses ground. We keep tuning, adding pages, and earning links so you stay at the top of the results month after month.",
   },
 ];
 
@@ -126,9 +126,9 @@ export default function AboutPage() {
           </Reveal>
           <Reveal>
             <p className="mx-auto mt-[22px] max-w-[620px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Most trade and service businesses don&apos;t need more marketing.
-              They need the marketing they already pay for to actually work.
-              That&apos;s what we do.
+              Most UK trades don&apos;t need more marketing. They need the ads,
+              the site and the SEO they already pay for to actually turn into
+              booked jobs. That&apos;s what we do.
             </p>
           </Reveal>
         </div>
@@ -139,11 +139,12 @@ export default function AboutPage() {
         <div className="mx-auto max-w-[1060px]">
           <Reveal>
             <h2 className="mb-4 text-center font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              Most businesses are sold disconnected pieces.
+              Most trades are sold the pieces, not the system.
             </h2>
             <p className="mx-auto mb-10 max-w-[560px] text-center text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Three suppliers. Three invoices. Zero coordination. The result?
-              A website that looks fine but doesn&apos;t generate enquiries.
+              Three suppliers, three invoices, nobody joined up. You end up
+              with a smart-looking site that doesn&apos;t bring the phone to
+              life. There are three ways this usually goes.
             </p>
           </Reveal>
 
@@ -168,9 +169,8 @@ export default function AboutPage() {
           <Reveal>
             <div className="mt-8 rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-8 text-center text-[var(--color-on-primary)]">
               <p className="mx-auto max-w-[640px] text-[19px] font-semibold leading-[1.5]">
-                Tandemm exists to bring the pieces together: research, design,
-                development, and ongoing optimisation in one system
-                that&apos;s accountable to one number: enquiries.
+                Tandemm runs ads, SEO, your website and the reporting in one
+                place, held to one number: booked jobs.
               </p>
             </div>
           </Reveal>
@@ -182,11 +182,11 @@ export default function AboutPage() {
         <div className="mx-auto max-w-[900px]">
           <Reveal>
             <h2 className="mb-4 text-center font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              What one system replaces.
+              What one team replaces.
             </h2>
             <p className="mx-auto mb-10 max-w-[520px] text-center text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Everything below usually comes from a different supplier, on a
-              different invoice, on a different schedule.
+              Every line below is usually a different supplier, a different
+              invoice, and a different login. We bring the lot under one roof.
             </p>
           </Reveal>
 
@@ -216,8 +216,8 @@ export default function AboutPage() {
                 </div>
               ))}
               <div className="bg-[var(--color-primary)] px-7 py-5 text-center text-[15px] font-semibold text-[var(--color-on-primary)]">
-                One point of contact. One invoice. One number that matters:
-                enquiries.
+                One point of contact. One invoice. One number that matters,
+                booked jobs.
               </div>
             </div>
           </Reveal>
@@ -238,9 +238,9 @@ export default function AboutPage() {
             <Reveal>
               <div>
                 <h3 className="mb-6 font-[family-name:var(--font-display)] text-[22px] font-bold leading-[1.2]">
-                  A website is a tool for one job:
+                  A site has one job.
                   <br />
-                  getting the phone to ring.
+                  Get the phone to ring.
                 </h3>
                 <div className="flex flex-col gap-4">
                   {ARROW_ITEMS.map((item) => (
@@ -295,11 +295,11 @@ export default function AboutPage() {
         <div className="mx-auto max-w-[1060px]">
           <Reveal>
             <h2 className="mb-4 text-center font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              Three principles we don&apos;t break.
+              Three rules we don&apos;t break.
             </h2>
             <p className="mx-auto mb-12 max-w-[520px] text-center text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Everything we do filters through these. If a decision
-              contradicts one, we don&apos;t do it.
+              Every decision runs through these three. If a job breaks one, we
+              don&apos;t take it.
             </p>
           </Reveal>
 
@@ -331,10 +331,10 @@ export default function AboutPage() {
         <div className="mx-auto max-w-[1060px]">
           <Reveal>
             <h2 className="mb-4 text-center font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              The standards we hold ourselves to.
+              What you get from us, every time.
             </h2>
             <p className="mx-auto mb-12 max-w-[520px] text-center text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Not slogans. These are the rules we actually follow.
+              Not slogans. These are how we actually work, on every account.
             </p>
           </Reveal>
 
@@ -364,7 +364,7 @@ export default function AboutPage() {
           <Reveal>
             <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-14 text-center text-[var(--color-on-primary)] shadow-[var(--shadow-2)]">
               <h2 className="mx-auto max-w-[600px] font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
-                Before making changes, understand where your opportunities are.
+                Before you change anything, see what&apos;s actually costing you jobs.
               </h2>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
                 <Button
