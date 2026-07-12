@@ -21,28 +21,28 @@ const STAGES = [
   {
     num: 1,
     title: "Growth Audit",
-    desc: "We look at your site, your rankings and your ads, then show you where the enquiries are going missing. Free, no hard sell.",
+    desc: "We look at your site, your rankings and your ads, then show you where the jobs are going missing. Free. No pitch.",
     badge: "Free",
     highlight: true,
   },
   {
     num: 2,
     title: "Growth Foundation",
-    desc: "A clean, modern website built to convert visitors into real customers. Fast pages, clear messaging, honest trust signals.",
+    desc: "A site built for one job: turning homeowners into booked calls. Fast pages, plain messaging, real reviews above the fold.",
   },
   {
     num: 3,
     title: "Growth Engine",
-    desc: "One team running ads, SEO and your website together, with a live dashboard so you always know what's working.",
+    desc: "One team running the ads, the SEO and the site together. Live dashboard so you can see the money coming back.",
   },
 ];
 
 const AUDIT_CHECKS = [
-  "Where visitors leave before they call",
-  "What your site says, and what it should say to a homeowner",
-  "Whether your pages load fast enough to hold people",
-  "How you rank for the jobs people actually search for",
-  "What you're tracking, and what's slipping through",
+  "Where homeowners leave the site before they pick up the phone",
+  "What your site says versus what a homeowner needs to hear before they call",
+  "Whether the site loads fast enough on a phone in a driveway",
+  "Where you rank on Google for the jobs homeowners actually search",
+  "Which jobs came from ads, which came from Google, and which came from thin air",
 ];
 
 const SCORECARD = [
@@ -57,22 +57,22 @@ const AUDIT_STEPS = [
   {
     num: 1,
     title: "We look at your site",
-    desc: "Before the call, we go through your pages, speed, SEO and analytics ourselves.",
+    desc: "Before we speak, we go through your pages, speed, SEO and analytics by hand.",
   },
   {
     num: 2,
     title: "We score every area",
-    desc: "Each part gets a clear rating, so nothing comes down to opinion.",
+    desc: "Every check gets a score, so nothing comes down to opinion.",
   },
   {
     num: 3,
     title: "We walk you through it",
-    desc: "A 30-minute call where we show you what we found, in plain English.",
+    desc: "A 30-minute call where we walk you through what we found, in plain English.",
   },
   {
     num: 4,
     title: "You get a one-page plan",
-    desc: "The fixes that matter most, ranked. Act on it with us, or on your own.",
+    desc: "The fixes that matter most, ranked by jobs won. Act on it with us or on your own.",
     dark: true,
   },
 ];
@@ -80,17 +80,17 @@ const AUDIT_STEPS = [
 const PATHS = [
   {
     title: "Do it yourself",
-    desc: "Take the audit and the plan, and get on with it. No strings, no follow-up sell.",
+    desc: "Take the audit and the plan. Get on with it. No strings, no follow-up calls.",
     icon: "📋",
   },
   {
     title: "We rebuild the site",
-    desc: "A clean, modern website built to convert visitors into real customers. Fixed price, then it's yours.",
+    desc: "A site built to turn homeowners into booked calls. Fixed price. Then it's yours.",
     icon: "🔧",
   },
   {
     title: "We run the lot",
-    desc: "Ads, SEO, the website and the reporting in one place, so you get booked jobs month after month.",
+    desc: "We run the ads. We run the SEO. We run the site. You get in the van and quote them.",
     icon: "📈",
   },
 ];
@@ -125,15 +125,15 @@ export default function SystemPage() {
         <div className="mx-auto max-w-[820px]">
           <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              Most agencies start by selling.
-              <br className="hidden sm:inline" /> We start by understanding.
+              Most agencies open with a pitch.
+              <br className="hidden sm:inline" /> We open with a look under the bonnet.
             </h1>
           </Reveal>
           <Reveal>
             <p className="mx-auto mt-[22px] max-w-[600px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
-              A free audit shows you exactly where your website loses
-              customers. Then, if you want us to, we fix it and keep
-              improving, month after month.
+              The 80-point audit shows you exactly where your site loses
+              jobs. Then, if you want us to, we fix it and keep it earning,
+              month after month.
             </p>
           </Reveal>
         </div>
@@ -179,8 +179,8 @@ export default function SystemPage() {
         </Reveal>
         <Reveal>
           <p className="mt-8 text-center text-sm text-[var(--color-ink-muted)]">
-            Most clients move through all three, but you decide how far to go
-            and when. No long-term contracts, one month's notice.
+            Most clients go through all three. You decide how far, and when.
+            No long contracts. One month's notice.
           </p>
         </Reveal>
       </section>
@@ -404,7 +404,7 @@ export default function SystemPage() {
                 href="/book"
                 className="bg-white text-[var(--color-primary)] hover:bg-white/90"
               >
-                Get your free audit
+                Get the 80-point audit
               </Button>
               <a
                 href="mailto:hello@tandemm.co.uk"

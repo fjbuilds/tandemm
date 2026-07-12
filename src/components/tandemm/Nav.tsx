@@ -48,8 +48,8 @@ export function Nav({
             aria-current={active === "book" ? "page" : undefined}
             className="whitespace-nowrap rounded-[var(--radius-pill)] bg-white px-4 py-[11px] text-sm font-semibold text-[var(--color-primary)] no-underline sm:px-5"
           >
-            <span className="sm:hidden">Free audit</span>
-            <span className="hidden sm:inline">Get your free audit</span>
+            <span className="sm:hidden">80-point audit</span>
+            <span className="hidden sm:inline">Get the 80-point audit</span>
           </Link>
         </div>
       </div>

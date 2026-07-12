@@ -656,16 +656,16 @@ export default function HomePage() {
           <Reveal>
             <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
               <h3 className="mb-2 font-[family-name:var(--font-display)] text-lg font-bold">
-                Still not sure?
+                Still weighing it up?
               </h3>
               <p className="mb-5 text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-                Book a free 30-minute audit. No hard sell. We&apos;ll give you
-                a straight answer on whether we can help, and if we can&apos;t,
-                we&apos;ll say so.
+                30 minutes on the phone. We look at your site, your ads and
+                your Google rankings. If we can&apos;t help, we say so before
+                you spend a penny.
               </p>
               <div className="mb-4">
                 <Button href="/book" className="w-full text-center">
-                  Get your free audit
+                  Get the 80-point audit
                 </Button>
               </div>
               <div className="text-center text-sm text-[var(--color-ink-muted)]">
@@ -689,19 +689,19 @@ export default function HomePage() {
         <Reveal>
           <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-11 text-center text-[var(--color-on-primary)] shadow-[var(--shadow-2)] sm:px-14">
             <h2 className="mx-auto max-w-[560px] font-[family-name:var(--font-display)] text-[clamp(24px,3.2vw,34px)] font-extrabold leading-[1.12] tracking-[-0.02em]">
-              Find out where the enquiries are going missing.
+              Find out where the jobs are going missing.
             </h2>
             <p className="mx-auto mt-4 max-w-[480px] text-base leading-[1.6] text-white/70">
-              A free 30-minute call. We look at your site, your ads and your
-              rankings, then tell you what&apos;s costing you jobs. Straight
-              answer, either way.
+              30 minutes on the phone. We look at your site, your ads and
+              your rankings, and tell you what&apos;s costing you work.
+              Straight answer, either way.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button
                 href="/book"
                 className="bg-white text-[var(--color-primary)] hover:bg-white/90"
               >
-                Get your free audit
+                Get the 80-point audit
               </Button>
               <Button href="/results" variant="secondary">
                 See real results

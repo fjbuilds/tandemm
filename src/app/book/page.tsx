@@ -30,10 +30,10 @@ const WEEKDAY_LABELS = ["M", "T", "W", "T", "F", "S", "S"];
 const FRUSTRATIONS = [
   { value: "", label: "Choose one…" },
   { value: "few-enquiries", label: "The phone isn't ringing enough" },
-  { value: "traffic-no-leads", label: "Visitors turn up, but they don't call" },
+  { value: "traffic-no-leads", label: "Homeowners land on the site, but they don't call" },
   { value: "outdated", label: "The site looks dated" },
   { value: "slow", label: "The site is slow or clunky" },
-  { value: "no-tracking", label: "I can't tell which ads pay back" },
+  { value: "no-tracking", label: "I can't tell which ads are earning me money" },
   { value: "other", label: "Something else" },
 ];
 
@@ -48,7 +48,7 @@ const FAQS = [
   },
   {
     q: "What do I need to prepare?",
-    a: "Nothing. We'll have already been through your site before we speak, so you can spend the 30 minutes talking about the business, not briefing us.",
+    a: "Nothing. We'll have been through your site by hand before we speak, so the 30 minutes is you talking about your business, not you briefing us.",
   },
 ];
 
@@ -97,15 +97,15 @@ export default function BookPage() {
           <div className="mx-auto max-w-[820px]">
             <div className="mb-7 inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-white/70 px-3.5 py-[7px] text-[13px] font-semibold tracking-[0.02em] text-[var(--color-ink-muted)]">
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
-              Get your free audit
+              The 80-point audit, free
             </div>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
               A straight read on your website. Free.
             </h1>
             <p className="mx-auto mt-[22px] max-w-[600px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
               30 minutes. No pitch deck, no obligation. We&apos;ll tell you
-              where your enquiries are leaking and whether we can help, even
-              if the answer is &quot;you don&apos;t need us.&quot;
+              where the jobs are leaking, and whether we can help. Even if
+              the answer is &quot;you don&apos;t need us.&quot;
             </p>
           </div>
         </section>
@@ -158,7 +158,7 @@ export default function BookPage() {
                   {
                     n: 2,
                     title: "Where the enquiries go missing",
-                    body: "The gaps in your site, ads and rankings we can already see.",
+                    body: "The gaps in your site, your Google Ads and your Google rankings we can already see.",
                   },
                   {
                     n: 3,
@@ -400,8 +400,8 @@ export default function BookPage() {
                         video link.
                       </div>
                       <div>
-                        2 · We go through your site, ads and rankings before
-                        we speak.
+                        2 · We go through your site, your Google Ads and your
+                        Google rankings by hand before we speak.
                       </div>
                       <div>
                         3 · We call at the agreed time. No prep needed on your
