@@ -214,6 +214,11 @@ export default function HomePage() {
               </div>
             </Reveal>
             <Reveal>
+              <p className="hero-cta-note">
+                We score your business before we pitch anything.
+              </p>
+            </Reveal>
+            <Reveal>
               <div className="hero-mini-trust">
                 <span className="hero-mini-trust-stars" aria-hidden="true">
                   ★★★★★

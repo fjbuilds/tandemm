@@ -80,42 +80,7 @@ function Donut({
 }
 
 /* ------------------------------------------------------------------ */
-/*  Category scorecards                                               */
-/* ------------------------------------------------------------------ */
-const CATEGORIES: {
-  score: number;
-  label: string;
-  note: string;
-  tone: "success" | "warn" | "danger";
-}[] = [
-  {
-    score: 48,
-    label: "Website speed",
-    note: "Loads too slow on 4G",
-    tone: "danger",
-  },
-  {
-    score: 72,
-    label: "Mobile experience",
-    note: "Works, but taps feel fiddly",
-    tone: "warn",
-  },
-  {
-    score: 51,
-    label: "Found on Google",
-    note: "Shows up for name, not services",
-    tone: "warn",
-  },
-  {
-    score: 40,
-    label: "Turns visits into jobs",
-    note: "Enquiry form is buried",
-    tone: "danger",
-  },
-];
-
-/* ------------------------------------------------------------------ */
-/*  Findings                                                          */
+/*  Findings — visibility first, then speed, then conversion          */
 /* ------------------------------------------------------------------ */
 const FINDINGS: {
   severity: "critical" | "warn" | "ok";
@@ -124,13 +89,13 @@ const FINDINGS: {
 }[] = [
   {
     severity: "critical",
-    title: "Site takes 4.2s to load on a phone",
-    desc: "About 6 in 10 visitors leave before the page opens.",
+    title: "8 service pages invisible to Google",
+    desc: "Missing titles and descriptions — search skips past them.",
   },
   {
     severity: "critical",
-    title: "8 service pages invisible to Google",
-    desc: "Missing titles and descriptions — search skips past them.",
+    title: "Site takes 4.2s to load on a phone",
+    desc: "About 6 in 10 visitors leave before the page opens.",
   },
   {
     severity: "warn",
@@ -176,14 +141,25 @@ export function HeroVisual() {
               <div className="audit-brand-role">Growth Audit</div>
             </div>
           </div>
-          <div className="audit-letterhead-meta">
-            <span>Report № TM-2078</span>
-            <span className="audit-dot" aria-hidden="true" />
-            <span>Prepared Nov 2025</span>
-          </div>
         </div>
 
         <div className="audit-rule" />
+
+        {/* Human-voiced margin note — signals a real person looked */}
+        <div className="audit-note">
+          <span className="audit-note-mark" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M2 12 L9 5 L11 7 L4 14 Z M9 5 L10.5 3.5 L12.5 5.5 L11 7 Z"
+                fill="currentColor"
+                opacity="0.85"
+              />
+            </svg>
+          </span>
+          <span className="audit-note-text">
+            Nothing critical. Four quick wins would move the needle.
+          </span>
+        </div>
 
         {/* Cover row: prepared for + overall score */}
         <div className="audit-cover">
@@ -215,40 +191,24 @@ export function HeroVisual() {
             </div>
             <p className="audit-summary">
               A solid base — but visitors are landing and leaving before you
-              hear from them. Fix the four items on the next page and enquiries
-              typically lift 3–4× within 90 days.
+              hear from them. Fix the four items below and enquiries typically
+              lift 3–4× within 90 days.
             </p>
           </div>
 
           <div className="audit-overall">
             <div className="audit-overall-ring">
-              <Donut size={128} stroke={10} score={62} tone="warn" />
+              <Donut size={112} stroke={9} score={62} tone="warn" />
               <div className="audit-overall-value">
                 <span className="audit-overall-num">62</span>
                 <span className="audit-overall-den">/ 100</span>
               </div>
             </div>
             <div className="audit-overall-tag">Growth score</div>
-            <div className="audit-overall-caption">
-              Room to grow · 24 issues found
+            <div className="audit-overall-checks">
+              Scored across 80 checks in 8 categories
             </div>
           </div>
-        </div>
-
-        {/* Category scorecards */}
-        <div className="audit-cats">
-          {CATEGORIES.map((c) => (
-            <div key={c.label} className="audit-cat">
-              <div className="audit-cat-ring">
-                <Donut size={52} stroke={5} score={c.score} tone={c.tone} />
-                <div className="audit-cat-score">{c.score}</div>
-              </div>
-              <div className="audit-cat-body">
-                <div className="audit-cat-label">{c.label}</div>
-                <div className="audit-cat-note">{c.note}</div>
-              </div>
-            </div>
-          ))}
         </div>
 
         {/* Findings */}
@@ -275,14 +235,8 @@ export function HeroVisual() {
                   <div className="audit-finding-title">{f.title}</div>
                   <div className="audit-finding-desc">{f.desc}</div>
                 </div>
-                <span
-                  className={`audit-finding-tag audit-finding-tag--${f.severity}`}
-                >
-                  {f.severity === "critical"
-                    ? "Fix now"
-                    : f.severity === "warn"
-                    ? "Improve"
-                    : "Keep"}
+                <span className="audit-finding-chevron" aria-hidden="true">
+                  ›
                 </span>
               </li>
             ))}
