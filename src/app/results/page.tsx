@@ -19,14 +19,14 @@ const paletteOverride = {
 
 const KPI_CARDS = [
   { label: "Enquiries", value: "▲ 240%", desc: "Average lift across clients in the first 6 months" },
-  { label: "Conversion rate", value: "▲ 3.4x", desc: "From visitor to enquiry, measured end-to-end" },
-  { label: "Page speed", value: "▼ 84%", desc: "Load-time reduction on mobile (LCP)" },
-  { label: "Tracking", value: "Full", desc: "Every click, call and form, attributed to source" },
-  { label: "Search visibility", value: "▲", desc: "Organic impressions and ranking positions" },
+  { label: "Conversion rate", value: "▲ 3.4x", desc: "From visitor to booked job, tracked call to call" },
+  { label: "Page speed", value: "▼ 84%", desc: "Faster load on mobile, so people don't bounce" },
+  { label: "Tracking", value: "Full", desc: "Every call and form tied back to the ad or keyword" },
+  { label: "Search visibility", value: "▲", desc: "Higher rankings on the searches homeowners actually run" },
   {
     label: "Wasted ad spend",
     value: "▼ 41%",
-    desc: "Budget moved from dead clicks to converting keywords",
+    desc: "Budget moved off dead clicks and onto keywords that book jobs",
     navy: true,
   },
 ] as Array<{ label: string; value: string; desc: string; navy?: boolean }>;
@@ -50,30 +50,30 @@ const CASE_STUDIES = [
 ];
 
 const SYSTEM_STEPS = [
-  { n: 1, title: "Traffic", desc: "Get the right people to the site: paid, organic, referral." },
-  { n: 2, title: "Website", desc: "Give them a reason to enquire: speed, copy, layout, trust." },
-  { n: 3, title: "Tracking", desc: "Measure every click, call and form, attributed to source." },
-  { n: 4, title: "Optimisation", desc: "Read the data, run tests, cut waste, double down on what works." },
-  { n: 5, title: "Stronger", desc: "Each cycle compounds. The system gets sharper every month.", navy: true },
+  { n: 1, title: "Traffic", desc: "Bring in high-intent homeowners: Google Ads, local SEO, referrals." },
+  { n: 2, title: "Website", desc: "Fast, clear pages built to convert visitors into real customers." },
+  { n: 3, title: "Tracking", desc: "Every call and form tied back to the ad, keyword or page that earned it." },
+  { n: 4, title: "Optimisation", desc: "Cut what's not paying back, double down on what is. Every week." },
+  { n: 5, title: "Compounding", desc: "Rankings climb, cost per lead drops, the site earns more each month.", navy: true },
 ] as Array<{ n: number; title: string; desc: string; navy?: boolean }>;
 
 const BEFORE_ITEMS = [
-  "Slow page load (6.2 s)",
+  "6.2s page load",
   "No call tracking",
-  "Generic copy",
+  "Generic template copy",
 ];
 
 const DIAGNOSIS_ITEMS = [
-  "73% mobile bounce rate",
-  "CTA below the fold",
-  "No conversion tracking",
+  "73% of mobile visitors bounced",
+  "Call button hidden below the fold",
+  "No way to tell which ads paid back",
 ];
 
 const CHANGES_ITEMS = [
-  "Rebuilt on fast stack",
-  "Rewrote all service pages",
-  "Installed full tracking",
-  "Restructured Google Ads",
+  "Rebuilt the site, fast and mobile-first",
+  "Rewrote every service page to match local search",
+  "Wired in call, form and Google Ads tracking",
+  "Restructured Google Ads onto keywords that book jobs",
 ];
 
 /* ─── Component ─────────────────────────────────────────────────── */
@@ -91,13 +91,13 @@ export default function ResultsPage() {
         <div className="mx-auto max-w-[820px]">
           <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              Results from a system built to generate enquiries.
+              Real numbers. From real UK trades.
             </h1>
           </Reveal>
           <Reveal>
             <p className="mx-auto mt-[22px] max-w-[600px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Not vanity metrics. Real enquiries, tracked end-to-end, from
-              businesses we work with month after month.
+              Not vanity metrics. Booked jobs and tracked calls from trades
+              we&apos;ve worked with month after month.
             </p>
           </Reveal>
         </div>
@@ -201,8 +201,8 @@ export default function ResultsPage() {
         </Reveal>
         <Reveal>
           <p className="mt-4 text-center text-[13px] leading-[1.5] text-[var(--color-ink-faint)]">
-            Representative of the reporting every Tandemm client receives.
-            Figures based on a composite of real accounts.
+            The live dashboard every Tandemm client sees. Figures shown are a
+            composite of real accounts.
           </p>
         </Reveal>
       </section>
@@ -211,7 +211,7 @@ export default function ResultsPage() {
       <section className="mx-auto max-w-[1160px] px-6 pb-8 pt-20">
         <Reveal className="mb-10 text-center">
           <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-            The improvements we create
+            What actually shifts, month one to month six.
           </h2>
         </Reveal>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -251,8 +251,8 @@ export default function ResultsPage() {
         </div>
         <Reveal>
           <p className="mx-auto mt-6 max-w-[600px] text-center text-[13px] leading-[1.5] text-[var(--color-ink-faint)]">
-            Averages across active Tandemm clients. Individual results vary by
-            sector, starting point and budget.
+            Averages across active clients. Your numbers will depend on trade,
+            area and starting point.
           </p>
         </Reveal>
       </section>
@@ -271,7 +271,7 @@ export default function ResultsPage() {
               Marlow &amp; Co Plumbing
             </h2>
             <p className="mx-auto mt-3 max-w-[560px] text-[17px] leading-[1.55] text-[var(--color-ink-muted)]">
-              From 9 enquiries a month to 37, in 12 weeks.
+              From 9 enquiries a month to 37 booked jobs in 12 weeks.
             </p>
           </Reveal>
 
@@ -373,9 +373,9 @@ export default function ResultsPage() {
           <Reveal className="mt-8">
             <div className="mx-auto max-w-[700px] rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
               <p className="text-[17px] leading-[1.6] text-[var(--color-ink)]">
-                &ldquo;We went from crossing our fingers to actually knowing
-                where every call comes from. The phone rings more, and we know
-                why.&rdquo;
+                &ldquo;We used to just cross our fingers with marketing. Now
+                the phone rings more, and I can tell you which ad brought each
+                job in.&rdquo;
               </p>
               <div className="mt-5 flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-primary)] font-[family-name:var(--font-display)] text-sm font-bold text-white">
@@ -433,7 +433,7 @@ export default function ResultsPage() {
       <section className="mx-auto max-w-[1160px] px-6 pb-8 pt-20">
         <Reveal className="mb-10 text-center">
           <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-            No single fix. A system that compounds.
+            No one silver bullet. A system that compounds.
           </h2>
         </Reveal>
         <div className="relative grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
@@ -484,11 +484,11 @@ export default function ResultsPage() {
         <Reveal>
           <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-16 text-center text-[var(--color-on-primary)] shadow-[var(--shadow-2)]">
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              Find out where your website is losing enquiries.
+              See where your site is costing you jobs.
             </h2>
             <p className="mx-auto mt-4 max-w-[500px] text-[17px] leading-[1.55] text-white/70">
-              A free 30-minute call. No obligation, no pitch deck, just a
-              straight read on your site.
+              A free 30-minute call. No hard sell, no pitch deck. Just a
+              straight read on your site, ads and rankings.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Button

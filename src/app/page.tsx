@@ -12,23 +12,23 @@ import { cn } from "@/lib/utils";
 const RESULTS = [
   {
     value: "312%",
-    label: "More Enquiries",
-    sub: "Average lift in monthly enquiries within 90 days.",
+    label: "More enquiries",
+    sub: "Average lift in monthly enquiries inside 90 days.",
   },
   {
     value: "4.6x",
-    label: "Conversion Rate",
+    label: "Conversion rate",
     sub: "Visitors turned into booked jobs, up from 0.8%.",
   },
   {
     value: "47",
-    label: "Leads / Month",
-    sub: "Steady flow — enough to plan the diary weeks ahead.",
+    label: "Leads / month",
+    sub: "Enough to book the diary weeks ahead, month after month.",
   },
   {
     value: "£1.1M",
-    label: "Revenue Generated",
-    sub: "Attributable client revenue across the last 12 months.",
+    label: "Revenue generated",
+    sub: "Client revenue we can tie back to work we did.",
   },
 ];
 
@@ -54,12 +54,12 @@ const HOW_IT_WORKS = [
     tag: null as string | null,
     oneLiner:
       "A proper audit of your site and your online presence, before either of us talks about work.",
-    desc: "We spend 15–30 minutes preparing an audit using a dedicated platform, backed up by manual review. You get a PDF report, and we walk through it with you live on a call. The report is yours to keep, whether you work with us or not.",
+    desc: "We spend 15 to 30 minutes running your site through a dedicated audit platform, then check it by hand. You get a PDF report, and we walk you through it live on a call. The report is yours to keep, whether you hire us or not.",
     items: [
-      "Website performance",
-      "SEO & technical factors",
-      "Local visibility",
-      "On-site issues affecting enquiries",
+      "Site speed and technical health",
+      "SEO and Google visibility",
+      "Local rankings in the areas you cover",
+      "The pages costing you enquiries",
     ],
   },
   {
@@ -67,13 +67,13 @@ const HOW_IT_WORKS = [
     title: "Prevention",
     tag: null as string | null,
     oneLiner:
-      "If the audit shows your website is holding things back, we rebuild it. If it doesn't, we say so.",
-    desc: "We don't assume you need a new site. The audit tells us — and you — whether the site is the bottleneck. If it is, we'll show you a one-page concept. You decide whether to proceed, or take the audit and fix things yourself.",
+      "If the site is what's holding you back, we rebuild it. If it isn't, we tell you.",
+    desc: "We don't assume you need a new site. The audit shows whether it's the bottleneck. If it is, we send you a one-page concept and a fixed price. You either book the rebuild or take the report and fix things yourself.",
     items: [
       "One-page concept, no pressure",
       "Deposit, rebuild, launch",
-      "New audit on the finished site",
-      "Before / after score, side by side",
+      "Fresh audit on the finished site",
+      "Before and after score, side by side",
     ],
   },
   {
@@ -81,15 +81,15 @@ const HOW_IT_WORKS = [
     title: "Cure",
     tag: "Optional",
     oneLiner:
-      "Once the foundation is right, you can hand us the ongoing work — or not.",
-    desc: "Cure is only for clients who want us keeping things moving after the rebuild. It's not required, and it's not part of the audit conversation.",
+      "Once the site is right, you can hand us the ongoing work, or not.",
+    desc: "Cure is for owners who want one team running ads, SEO, and the reporting in one place after the rebuild. No long-term contract, one month's notice, cancel any time.",
     items: [
-      "Google Ads setup & management",
-      "Local SEO & rank tracking",
-      "Unlimited site edits",
-      "One new page per quarter",
-      "Live dashboard, GA4 & monthly summary",
-      "Email support, 2 business days",
+      "Google Ads set up and managed",
+      "Local SEO and rank tracking",
+      "Unlimited edits to the site",
+      "One new landing page per quarter",
+      "Live dashboard so you always know what's working",
+      "Email support, replies inside 2 business days",
     ],
   },
 ];
@@ -124,23 +124,27 @@ const TESTIMONIALS = [
 const FAQS = [
   {
     q: "What kind of businesses do you work with?",
-    a: "Trade and service businesses: electricians, plumbers, builders, landscapers, cleaners, and similar. If your customers find you online and you do the work locally, we're a good fit.",
+    a: "UK trades. Electricians, plumbers, roofers, builders, landscapers, and similar. If homeowners search for you online and you turn up to do the work, you're the right fit.",
   },
   {
     q: "How much does it cost?",
-    a: "It depends on the scope, but most clients invest between £800 and £2,000 per month for the full system. We'll give you a clear number on the discovery call, no surprises.",
+    a: "Most clients spend between £800 and £2,000 a month for the full system, ads, SEO, site, and reporting in one place. You'll get an exact number on the audit call. No surprises later.",
   },
   {
     q: "How long before I see results?",
-    a: "Most clients see a measurable uplift within the first 4–6 weeks. The system compounds over time; month three is always better than month one.",
+    a: "Most clients see enquiries moving inside 4 to 6 weeks. It compounds. Month three is better than month one, and month six is better again.",
   },
   {
     q: "Do I need to do anything?",
-    a: "Very little. We handle the website, the ads, the tracking and the optimisation. You answer the phone when it rings and do the work you’re great at.",
+    a: "Very little. We run the ads, the SEO, the site, and the tracking. You answer the phone and do the work you're actually good at.",
   },
   {
     q: "What if it doesn't work?",
-    a: "We don't lock you into long contracts. If the numbers aren't where they should be after 90 days, you can walk away. But honestly, that hasn't happened yet.",
+    a: "No long-term contracts. One month's notice, cancel any time. If the numbers aren't there after 90 days, you can walk away. So far, nobody has.",
+  },
+  {
+    q: "What about AI search, ChatGPT and Google's AI answers?",
+    a: "Homeowners are starting to ask ChatGPT, Perplexity and Google's AI answers which tradesperson to use. The same content and links that push you up traditional rankings are what get you named in those answers. It's part of what we build.",
   },
 ];
 
@@ -252,13 +256,13 @@ export default function HomePage() {
               How it works
             </div>
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              We diagnose before we sell.
+              We look before we sell.
             </h2>
             <p className="mx-auto mt-4 max-w-[640px] text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Most agencies open with a website pitch or an ads package. We
-              open with a report. If it says your site isn&apos;t the problem,
-              we&apos;ll tell you — and you&apos;ll still have something
-              useful to take away.
+              Every other agency opens with a pitch. We open with a report on
+              your site, your rankings, and where enquiries are going missing.
+              If the site isn&apos;t the problem, we&apos;ll say so. You keep
+              the audit either way.
             </p>
           </Reveal>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -401,8 +405,7 @@ export default function HomePage() {
           </div>
           <Reveal className="mt-10 text-center">
             <p className="mb-5 text-[15px] font-semibold text-[var(--color-ink)]">
-              You keep the audit either way. No obligation, no follow-up sales
-              pitch.
+              You keep the audit either way. No hard sell, no follow-up hassle.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
               <Button href="/book">Book your audit</Button>
@@ -424,12 +427,13 @@ export default function HomePage() {
               Results
             </div>
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              Numbers that show up in the bank.
+              Numbers that turn up in the bank.
             </h2>
             <p className="mx-auto mt-3 max-w-[560px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Averages across the trade and service businesses we work with.
-              Every client gets a monthly report with their own numbers, in
-              plain English.
+              Averages across the UK trade businesses we work with. Every
+              client gets a live dashboard and a monthly report in plain
+              English, so you always know what&apos;s working and where your
+              leads come from.
             </p>
           </Reveal>
 
@@ -458,9 +462,9 @@ export default function HomePage() {
                   month in 90 days.
                 </h3>
                 <p className="mb-5 text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-                  New site, tracked ads, weekly tuning. The diary is now booked
-                  four weeks out — and every job is measured back to the pound
-                  that brought it in.
+                  New site, tracked Google Ads, keyword-focused landing pages,
+                  weekly tuning. The diary is booked four weeks out, and every
+                  job traces back to the pound that brought it in.
                 </p>
                 <div>
                   <Button href="/results" variant="ghost">
@@ -522,7 +526,7 @@ export default function HomePage() {
               What clients say
             </div>
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              Don&apos;t take our word for it
+              Take theirs instead.
             </h2>
           </Reveal>
 
@@ -649,8 +653,9 @@ export default function HomePage() {
                 Still not sure?
               </h3>
               <p className="mb-5 text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-                Get a free 30-minute audit. No pitch, no obligation. We&apos;ll
-                give you a straight answer on whether we can help.
+                Book a free 30-minute audit. No hard sell. We&apos;ll give you
+                a straight answer on whether we can help, and if we can&apos;t,
+                we&apos;ll say so.
               </p>
               <div className="mb-4">
                 <Button href="/book" className="w-full text-center">
@@ -678,11 +683,12 @@ export default function HomePage() {
         <Reveal>
           <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-11 text-center text-[var(--color-on-primary)] shadow-[var(--shadow-2)] sm:px-14">
             <h2 className="mx-auto max-w-[560px] font-[family-name:var(--font-display)] text-[clamp(24px,3.2vw,34px)] font-extrabold leading-[1.12] tracking-[-0.02em]">
-              Let&apos;s find where your business is losing enquiries
+              Find out where the enquiries are going missing.
             </h2>
             <p className="mx-auto mt-4 max-w-[480px] text-base leading-[1.6] text-white/70">
-              A free 30-minute call. We&apos;ll look at your site, show you
-              what&apos;s leaking, and tell you whether we can help.
+              A free 30-minute call. We look at your site, your ads and your
+              rankings, then tell you what&apos;s costing you jobs. Straight
+              answer, either way.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button

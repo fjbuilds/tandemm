@@ -21,8 +21,8 @@ export function Footer() {
               className="h-9 w-auto"
             />
             <p className="my-4 max-w-[340px] text-[17px] leading-[1.5] text-white/70">
-              We build websites that generate enquiries, then keep improving
-              them until the numbers move.
+              One team running ads, SEO, your website and the reporting, so UK
+              trade businesses get booked jobs month after month.
             </p>
             <Button href="/book" variant="secondary">
               Get your free audit
@@ -65,7 +65,7 @@ export function Footer() {
         <div className="flex flex-wrap items-center justify-between gap-3 pt-7">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <span className="text-[13px] text-white/50">
-              &copy; 2026 Tandemm. A London growth studio.
+              &copy; 2026 Tandemm. Growth for UK trade businesses.
             </span>
             <Link
               href="/privacy"
@@ -81,7 +81,7 @@ export function Footer() {
             </Link>
           </div>
           <span className="text-[13px] text-white/50">
-            Measured. Tracked. Improved.
+            Ads. SEO. Website. Reporting.
           </span>
         </div>
       </div>

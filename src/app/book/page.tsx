@@ -29,26 +29,26 @@ const WEEKDAY_LABELS = ["M", "T", "W", "T", "F", "S", "S"];
 
 const FRUSTRATIONS = [
   { value: "", label: "Choose one…" },
-  { value: "few-enquiries", label: "Not enough enquiries" },
-  { value: "traffic-no-leads", label: "Traffic but no leads" },
-  { value: "outdated", label: "Site feels outdated" },
-  { value: "slow", label: "Site is slow / clunky" },
-  { value: "no-tracking", label: "Can't tell what's working" },
+  { value: "few-enquiries", label: "The phone isn't ringing enough" },
+  { value: "traffic-no-leads", label: "Visitors turn up, but they don't call" },
+  { value: "outdated", label: "The site looks dated" },
+  { value: "slow", label: "The site is slow or clunky" },
+  { value: "no-tracking", label: "I can't tell which ads pay back" },
   { value: "other", label: "Something else" },
 ];
 
 const FAQS = [
   {
     q: "Is the call really free?",
-    a: "Completely. It's how we decide whether we're a fit for each other. There's no charge and no obligation to go further.",
+    a: "Yes. It's how we work out whether we can help. No charge, no card, no commitment to book anything after.",
   },
   {
     q: "Will I get a sales pitch?",
-    a: "No. We'll give you a straight read on your site. If we can help, we'll say how. If we can't, we'll say that too.",
+    a: "No hard sell. We give you a straight read on the site, your ads and your rankings. If we can help, we say how. If we can't, we say that too.",
   },
   {
-    q: "What should I prepare?",
-    a: "Nothing. Just show up. We'll have looked at your site beforehand, so you can spend the time talking about your business, not briefing us.",
+    q: "What do I need to prepare?",
+    a: "Nothing. We'll have already been through your site before we speak, so you can spend the 30 minutes talking about the business, not briefing us.",
   },
 ];
 
@@ -115,8 +115,8 @@ export default function BookPage() {
           <div className="flex flex-wrap justify-center gap-4">
             {[
               "30 minutes, video or phone",
-              "No obligation, no hard sell",
-              "Talk to the person doing the work",
+              "No hard sell, one month's notice on anything you take on",
+              "Talk to the person doing the work, not a sales rep",
             ].map((item) => (
               <div
                 key={item}
@@ -153,17 +153,17 @@ export default function BookPage() {
                   {
                     n: 1,
                     title: "Where you are now",
-                    body: "Your business, your goals, your current site.",
+                    body: "Your business, your area, the jobs you want more of.",
                   },
                   {
                     n: 2,
-                    title: "Where enquiries leak",
-                    body: "The obvious gaps we can already see.",
+                    title: "Where the enquiries go missing",
+                    body: "The gaps in your site, ads and rankings we can already see.",
                   },
                   {
                     n: 3,
                     title: "What we'd do next",
-                    body: "A clear, honest recommendation, or none.",
+                    body: "A clear, honest recommendation. Or none, if you don't need us.",
                   },
                 ].map((item) => (
                   <div key={item.n} className="flex items-start gap-3">
@@ -315,7 +315,7 @@ export default function BookPage() {
                     A few quick details
                   </div>
                   <div className="mb-2 text-sm text-[var(--color-ink-muted)]">
-                    So the call is useful from minute one.
+                    So we can look at your site before we speak.
                   </div>
                   <div className="mb-6 text-sm font-semibold text-[var(--color-accent-hover)]">
                     July {selectedDay}, 2026 at {selectedTime} · 30 min
@@ -386,9 +386,9 @@ export default function BookPage() {
                     You&apos;re booked in.
                   </div>
                   <div className="mx-auto mb-6 max-w-[400px] text-base leading-[1.55] text-[var(--color-ink-muted)]">
-                    Your discovery call is confirmed for July {selectedDay},
-                    2026 at {selectedTime} (London time). A confirmation is on
-                    its way to your inbox.
+                    Your audit call is confirmed for July {selectedDay}, 2026
+                    at {selectedTime} (London time). The invite is on its way
+                    to your inbox now.
                   </div>
                   <div className="mx-auto max-w-[420px] rounded-[var(--radius-md)] bg-[var(--color-surface-sunken)] p-5 text-left">
                     <div className="mb-3 text-xs font-bold uppercase tracking-[0.05em] text-[var(--color-ink-muted)]">
@@ -399,10 +399,13 @@ export default function BookPage() {
                         1 · A calendar invite lands in your inbox with the
                         video link.
                       </div>
-                      <div>2 · We take a quick look at your site before we speak.</div>
                       <div>
-                        3 · We call at the agreed time, no prep needed from
-                        you.
+                        2 · We go through your site, ads and rankings before
+                        we speak.
+                      </div>
+                      <div>
+                        3 · We call at the agreed time. No prep needed on your
+                        end.
                       </div>
                     </div>
                   </div>
