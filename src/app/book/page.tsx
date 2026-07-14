@@ -91,7 +91,7 @@ const FAQS = [
     a: "Nothing. We'll have been through your site by hand before we speak, so the 30 minutes is you talking about your business, not you briefing us.",
   },
   {
-    q: "Book a call or do it myself — which should I choose?",
+    q: "Book a call or do it myself, which should I choose?",
     a: "Book a call if you have questions or want to talk it through. Do it yourself if you already know you want in and just want us to get started. Same outcome, either way.",
   },
 ];
@@ -132,9 +132,8 @@ function BookContent() {
       >
         <div className="mx-auto max-w-[820px]">
           <Reveal>
-            <div className="mb-7 inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-white/70 px-3.5 py-[7px] text-[13px] font-semibold tracking-[0.02em] text-[var(--color-ink-muted)]">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
-              Get started — free audit
+            <div className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
+              Get started, free audit
             </div>
           </Reveal>
           <Reveal>
@@ -196,7 +195,7 @@ function BookContent() {
                 : "text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]",
             )}
           >
-            📞 Book a call
+            Book a call
           </button>
           <button
             type="button"
@@ -208,7 +207,7 @@ function BookContent() {
                 : "text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]",
             )}
           >
-            ✍️ Do it yourself
+            Do it yourself
           </button>
         </div>
       </section>
@@ -495,7 +494,7 @@ function BookPath({ prefillWebsite }: { prefillWebsite: string }) {
             </div>
             <div className="mt-7 flex items-center justify-between">
               <ButtonEl variant="ghost" onClick={() => setStep(1)}>
-                ← Back
+                Back
               </ButtonEl>
               <ButtonEl onClick={() => setStep(3)}>Confirm booking</ButtonEl>
             </div>
@@ -504,11 +503,13 @@ function BookPath({ prefillWebsite }: { prefillWebsite: string }) {
 
         {step === 3 && (
           <div className="px-0 py-6 text-center">
-            <div className="mx-auto mb-5 flex h-[60px] w-[60px] items-center justify-center rounded-full bg-[var(--color-success-soft)] text-[30px] text-[var(--color-success)]">
-              ✓
+            <div className="mx-auto mb-5 flex h-[60px] w-[60px] items-center justify-center rounded-full bg-[var(--color-success-soft)] text-[var(--color-success)]">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
             </div>
             <div className="mb-2 font-[family-name:var(--font-display)] text-2xl font-bold">
-              You're booked in.
+              You are booked in.
             </div>
             <div className="mx-auto mb-6 max-w-[400px] text-base leading-[1.55] text-[var(--color-ink-muted)]">
               Your audit call is confirmed for July {selectedDay}, 2026 at{" "}
@@ -520,9 +521,9 @@ function BookPath({ prefillWebsite }: { prefillWebsite: string }) {
                 What happens next
               </div>
               <div className="flex flex-col gap-2.5 text-sm leading-[1.5] text-[var(--color-ink)]">
-                <div>1 · A calendar invite lands in your inbox with the video link.</div>
-                <div>2 · We audit your site, ads and Google rankings by hand before we speak.</div>
-                <div>3 · We call at the agreed time. No prep needed on your end.</div>
+                <div>1. A calendar invite lands in your inbox with the video link.</div>
+                <div>2. We audit your site, ads and Google rankings by hand before we speak.</div>
+                <div>3. We call at the agreed time. No prep needed on your end.</div>
               </div>
             </div>
           </div>
@@ -533,7 +534,7 @@ function BookPath({ prefillWebsite }: { prefillWebsite: string }) {
 }
 
 /* ─────────────────────────────────────────────────────────── */
-/*  Self-serve path (quick form → video → detailed form)       */
+/*  Self-serve path (quick form, video, detailed form)         */
 /* ─────────────────────────────────────────────────────────── */
 
 type SelfStep = 1 | 2 | 3 | 4;
@@ -631,7 +632,7 @@ function SelfPath({ prefillWebsite }: { prefillWebsite: string }) {
           ))}
         </div>
 
-        {/* STEP 1 — quick details */}
+        {/* STEP 1, quick details */}
         {step === 1 && (
           <div>
             <div className="mb-1 font-[family-name:var(--font-display)] text-xl font-bold">
@@ -681,21 +682,21 @@ function SelfPath({ prefillWebsite }: { prefillWebsite: string }) {
                 disabled={!quickOk}
                 onClick={() => quickOk && setStep(2)}
               >
-                Continue to video &rarr;
+                Continue to video
               </ButtonEl>
             </div>
           </div>
         )}
 
-        {/* STEP 2 — video */}
+        {/* STEP 2, video */}
         {step === 2 && (
           <div>
             <div className="mb-1 font-[family-name:var(--font-display)] text-xl font-bold">
               Watch this before you go further
             </div>
             <div className="mb-6 text-sm text-[var(--color-ink-muted)]">
-              2 minutes. How the whole system fits together — site,
-              ads, tracking, dashboard, call handling.
+              2 minutes. How the whole system fits together. Site, ads,
+              tracking, dashboard, call handling.
             </div>
 
             <VideoPlaceholder />
@@ -708,16 +709,16 @@ function SelfPath({ prefillWebsite }: { prefillWebsite: string }) {
 
             <div className="mt-7 flex items-center justify-between">
               <ButtonEl variant="ghost" onClick={() => setStep(1)}>
-                ← Back
+                Back
               </ButtonEl>
               <ButtonEl onClick={() => setStep(3)}>
-                Skip / continue &rarr;
+                Skip and continue
               </ButtonEl>
             </div>
           </div>
         )}
 
-        {/* STEP 3 — detailed form */}
+        {/* STEP 3, detailed form */}
         {step === 3 && (
           <div>
             <div className="mb-1 font-[family-name:var(--font-display)] text-xl font-bold">
@@ -784,7 +785,7 @@ function SelfPath({ prefillWebsite }: { prefillWebsite: string }) {
             </div>
             <div className="mt-7 flex items-center justify-between">
               <ButtonEl variant="ghost" onClick={() => setStep(2)}>
-                ← Back
+                Back
               </ButtonEl>
               <ButtonEl
                 disabled={!detailsOk}
@@ -796,28 +797,30 @@ function SelfPath({ prefillWebsite }: { prefillWebsite: string }) {
           </div>
         )}
 
-        {/* STEP 4 — confirmation */}
+        {/* STEP 4, confirmation */}
         {step === 4 && (
           <div className="px-0 py-6 text-center">
-            <div className="mx-auto mb-5 flex h-[60px] w-[60px] items-center justify-center rounded-full bg-[var(--color-success-soft)] text-[30px] text-[var(--color-success)]">
-              ✓
+            <div className="mx-auto mb-5 flex h-[60px] w-[60px] items-center justify-center rounded-full bg-[var(--color-success-soft)] text-[var(--color-success)]">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
             </div>
             <div className="mb-2 font-[family-name:var(--font-display)] text-2xl font-bold">
-              We've got everything we need.
+              We have everything we need.
             </div>
             <div className="mx-auto mb-6 max-w-[440px] text-base leading-[1.55] text-[var(--color-ink-muted)]">
-              We'll audit your site, ads and Google rankings by hand, and
-              send you the PDF plus a proposal within the week. If you have
-              any questions, we'll call you first.
+              We will audit your site, ads and Google rankings by hand
+              and send you the PDF plus a proposal within the week. If
+              you have any questions, we will call you first.
             </div>
             <div className="mx-auto max-w-[440px] rounded-[var(--radius-md)] bg-[var(--color-surface-sunken)] p-5 text-left">
               <div className="mb-3 text-xs font-bold uppercase tracking-[0.05em] text-[var(--color-ink-muted)]">
                 What happens next
               </div>
               <div className="flex flex-col gap-2.5 text-sm leading-[1.5] text-[var(--color-ink)]">
-                <div>1 · Confirmation email lands in your inbox now.</div>
-                <div>2 · Audit and proposal within the week.</div>
-                <div>3 · You approve, and we start the rebuild.</div>
+                <div>1. Confirmation email lands in your inbox now.</div>
+                <div>2. Audit and proposal within the week.</div>
+                <div>3. You approve, and we start the rebuild.</div>
               </div>
             </div>
           </div>
@@ -846,7 +849,7 @@ function VideoPlaceholder() {
               How Tandemm works, in 2 minutes.
             </div>
             <div className="mt-1 text-[12px] text-white/60">
-              Site → ads → tracking → dashboard → call handling.
+              Site, then ads, then tracking, then dashboard, then call handling.
             </div>
           </div>
         </div>

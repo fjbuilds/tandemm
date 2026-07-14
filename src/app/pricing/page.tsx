@@ -37,24 +37,24 @@ const TIERS: Tier[] = [
     who: "Sole traders, 1 van",
     monthly: 650,
     adSpend: 300,
-    estLeads: "12–18",
+    estLeads: "12 to 18",
   },
   {
     key: "growth",
     name: "Growth",
-    who: "2–5 person team",
+    who: "2 to 5 person team",
     monthly: 950,
     adSpend: 500,
-    estLeads: "20–28",
+    estLeads: "20 to 28",
     highlight: true,
   },
   {
     key: "scale",
     name: "Scale",
-    who: "5–10 person team",
+    who: "5 to 10 person team",
     monthly: 1250,
     adSpend: 750,
-    estLeads: "28–38",
+    estLeads: "28 to 38",
   },
   {
     key: "fleet",
@@ -85,7 +85,7 @@ const INCLUDED = [
   {
     group: "Google Ads",
     items: [
-      "Local Services Ads (LSA) — pay-per-lead, not per click",
+      "Local Services Ads (LSA), pay per lead, not per click",
       "Google Ads (CPC) for the searches LSA does not cover",
       "Keyword and location research",
       "Ad copy, extensions, and negative lists",
@@ -118,7 +118,7 @@ const INCLUDED = [
     group: "Dashboard",
     items: [
       "One inbox for calls, forms, WhatsApp and missed calls",
-      "Lead pipeline: New → Quoting → Booked → Dead",
+      "Lead pipeline (New, Quoting, Booked, Dead)",
       "Notes, callbacks and file storage per lead",
       "Live on desktop, live on your phone",
       "Multi-user access for your team",
@@ -132,31 +132,35 @@ const INCLUDED = [
       "Cost per booked job, per channel",
       "Return on ad spend (ROAS) reporting",
       "Monthly review call and written report",
-      "Full transparency on Google Ads spend — no markup",
+      "Full transparency on Google Ads spend, no markup",
     ],
   },
 ];
 
 /* ─────────────────────────────────────────────────────────── */
-/*  FAQ (10 adapted from GetWork)                              */
+/*  FAQ                                                        */
 /* ─────────────────────────────────────────────────────────── */
 
 const FAQS = [
   {
-    q: "Is there a setup fee?",
-    a: "No. We rebuild your website, set up Google Ads, wire the tracking number and stand up your dashboard as part of onboarding. No upfront cost, no separate build fee.",
+    q: "What am I actually paying for?",
+    a: "The monthly fee covers Cure, the lead generation stage. That is ads managed weekly, SEO built out monthly, the dashboard, the tracking, and the missed-call catcher. The audit and the website rebuild are free (see below).",
+  },
+  {
+    q: "How does the free website rebuild work?",
+    a: "You commit to a three month minimum on Cure. In return, we rebuild the site, wire up the tracking number and widget, and set up your dashboard, at no extra cost. That is what protects us from building a site for someone who is not serious about ads.",
   },
   {
     q: "How does the ad spend work?",
-    a: "The ad spend on each plan goes straight to Google — we do not mark it up. You see exactly what was spent, on which campaigns, on which days. Any unspent budget rolls into the following month.",
+    a: "The ad spend on each plan goes straight to Google. We do not mark it up. You see exactly what was spent, on which campaigns, on which days. Any unspent budget rolls into the following month.",
   },
   {
-    q: "What's the difference between LSA and CPC ads?",
-    a: "LSA (Local Services Ads) sit at the very top of Google and you only pay when a homeowner actually contacts you — not per click. CPC (regular Google Ads) charge every time someone clicks. We run both, and shift spend to whichever is paying back best for your trade and area.",
+    q: "What is the difference between LSA and CPC ads?",
+    a: "LSA (Local Services Ads) sits at the very top of Google and you only pay when a homeowner actually contacts you, not per click. CPC (regular Google Ads) charges every time someone clicks. We run both, and shift spend to whichever is paying back best for your trade and area.",
   },
   {
-    q: "Am I locked into a contract?",
-    a: "No long-term contracts. You give one month's notice and you can leave, no penalty. If it is not working, you walk. That is the trust term.",
+    q: "Am I locked into a long contract?",
+    a: "Three month minimum on Cure (which is the runway for the ads to actually pay back and for the free rebuild to make sense on both sides). After that, one month's notice, cancel any time.",
   },
   {
     q: "Do you work with anyone in my trade and area?",
@@ -164,23 +168,19 @@ const FAQS = [
   },
   {
     q: "How quickly will I see leads?",
-    a: "Most clients see the first LSA leads within 2 to 4 weeks of the site going live. Google Ads typically kick in inside the first month. SEO compounds — month three beats month one, month six beats month three.",
+    a: "Most clients see the first LSA leads within 2 to 4 weeks of the site going live. Google Ads typically kick in inside the first month. SEO compounds, so month three beats month one and month six beats month three.",
   },
   {
     q: "Do I own the website you build?",
-    a: "Yes. The site is yours. If you ever leave, you take the website, the domain and the content with you. We do not hold your business hostage.",
+    a: "Yes. The site is yours. If you leave after the three month term, you take the website, the domain and the content with you. We do not hold your business hostage.",
   },
   {
     q: "What happens if I miss a call?",
-    a: "The tracking number redirects to your mobile. If you don't pick up, the system sends the homeowner an auto-text from your number within 60 seconds. The reply lands in the dashboard as a lead, tagged 'missed call caught'.",
+    a: "The tracking number redirects to your mobile. If you do not pick up, the system sends the homeowner an auto-text from your number within 60 seconds. The reply lands in the dashboard as a lead, tagged missed call caught.",
   },
   {
-    q: "Can I see how my money is being spent?",
-    a: "Yes, 24/7. The dashboard shows every ad campaign, every pound spent, every call and form that came in and which ad drove it. The monthly report ties it all back to booked jobs.",
-  },
-  {
-    q: "What if my trade or area isn't a fit?",
-    a: "We say so before you spend anything. The free audit tells us whether there's enough search demand in your postcode to make it work. If it will not pay back, we tell you.",
+    q: "What if my trade or area is not a fit?",
+    a: "We say so before you spend anything. The free audit tells us whether there is enough search demand in your postcode to make it work. If it will not pay back, we tell you.",
   },
 ];
 
@@ -189,7 +189,7 @@ const FAQS = [
 /* ─────────────────────────────────────────────────────────── */
 
 export default function PricingPage() {
-  const [openTier, setOpenTier] = useState<string | null>("growth");
+  const [openTier, setOpenTier] = useState<string | null>("Website");
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   return (
@@ -203,23 +203,23 @@ export default function PricingPage() {
       <section className="px-6 pb-14 pt-[60px] text-center">
         <div className="mx-auto max-w-[820px]">
           <Reveal>
-            <div className="mb-5 inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-white/70 px-3.5 py-[7px] text-[13px] font-semibold tracking-[0.02em] text-[var(--color-ink-muted)]">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
-              One fee, one process
+            <div className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
+              Cure pricing
             </div>
           </Reveal>
           <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              Simple pricing.
+              Free audit. Free rebuild.
               <br className="hidden sm:inline" />
-              No setup fee. No contract.
+              Then one fee for the ads.
             </h1>
           </Reveal>
           <Reveal>
-            <p className="mx-auto mt-[22px] max-w-[600px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
-              One monthly fee covers the website, the ads, the SEO, the
-              dashboard and the call handling. Google Ad spend is on top
-              and passed through at cost — no markup, ever.
+            <p className="mx-auto mt-[22px] max-w-[620px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
+              You pay when the lead generation stage starts. One monthly
+              fee covers the ads, the SEO, the dashboard and the call
+              handling. Google Ad spend is on top and passed through at
+              cost. Three month minimum, one month notice after that.
             </p>
           </Reveal>
         </div>
@@ -229,16 +229,15 @@ export default function PricingPage() {
       <section className="mx-auto max-w-[1160px] px-6 pb-10">
         <div className="flex flex-wrap justify-center gap-3">
           {[
-            "No setup fee",
-            "No contract, one month's notice",
+            "Free audit, no card",
+            "Free website rebuild when you sign up for Cure",
+            "Three month minimum, then one month notice",
             "Ad spend passed through at cost",
-            "Cancel any time",
           ].map((item) => (
             <div
               key={item}
-              className="flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-[var(--color-surface)] px-[16px] py-2 text-[13px] text-[var(--color-ink)]"
+              className="rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-[var(--color-surface)] px-[16px] py-2 text-[13px] font-medium text-[var(--color-ink)]"
             >
-              <span className="font-bold text-[var(--color-accent-hover)]">✓</span>
               {item}
             </div>
           ))}
@@ -316,7 +315,7 @@ export default function PricingPage() {
 
                 <div className="mt-4 border-t border-[var(--color-hairline-soft)] pt-4 text-center">
                   <div className="text-[12px] font-semibold text-[var(--color-ink-muted)]">
-                    Everything included in every tier
+                    Same features in every tier
                   </div>
                 </div>
               </div>
@@ -326,19 +325,19 @@ export default function PricingPage() {
 
         <Reveal>
           <p className="mx-auto mt-8 max-w-[720px] text-center text-[14px] leading-[1.55] text-[var(--color-ink-muted)]">
-            All tiers include the full system — website, ads, SEO,
-            dashboard, call handling, reporting. Tiers differ only on the
-            recommended monthly ad spend and expected lead volume.
+            All tiers include the full Cure system, the website rebuild
+            and the setup. Tiers differ only on the recommended monthly
+            ad spend and expected lead volume.
           </p>
         </Reveal>
       </section>
 
-      {/* ── WHAT'S INCLUDED, EXPANDABLE ── */}
+      {/* ── WHAT'S INCLUDED ── */}
       <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
         <div className="mx-auto max-w-[900px]">
           <Reveal className="mb-10 text-center">
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              What's in every plan
+              What is in every plan
             </h2>
             <p className="mx-auto mt-3 max-w-[540px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
               Same features, every tier. Tap a section to see the detail.
@@ -381,9 +380,7 @@ export default function PricingPage() {
                             key={item}
                             className="flex items-start gap-2 text-[14px] leading-[1.5] text-[var(--color-ink)]"
                           >
-                            <span className="mt-0.5 font-bold text-[var(--color-accent-hover)]">
-                              ✓
-                            </span>
+                            <span className="mt-[9px] block h-1 w-1 shrink-0 rounded-full bg-[var(--color-ink-muted)]" />
                             <span>{item}</span>
                           </li>
                         ))}
@@ -397,26 +394,26 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* ── TRANSPARENCY BLOCK ── */}
+      {/* ── TRANSPARENCY ── */}
       <section className="mx-auto max-w-[1160px] px-6 py-20">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <Reveal>
             <div>
-              <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-accent)]">
+              <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
                 Where your money goes
               </div>
               <h2 className="mb-4 font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
                 Full transparency on ad spend. No markup, ever.
               </h2>
               <p className="mb-4 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-                Some agencies bury the ad spend inside their fee and pocket
-                the difference. Not here.
+                Some agencies bury the ad spend inside their fee and
+                pocket the difference. Not here.
               </p>
               <p className="mb-6 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-                Your Google Ads budget goes straight to Google. You see it
-                in the dashboard — every pound, every campaign, every day.
-                Any unspent budget rolls to next month. Cancel and the
-                Google account is yours.
+                Your Google Ads budget goes straight to Google. You see
+                it in the dashboard, every pound, every campaign, every
+                day. Any unspent budget rolls to next month. Cancel and
+                the Google account is yours.
               </p>
               <ul className="flex flex-col gap-2.5 text-[15px] leading-[1.55]">
                 {[
@@ -426,7 +423,7 @@ export default function PricingPage() {
                   "Your Google Ads account, in your name",
                 ].map((i) => (
                   <li key={i} className="flex items-start gap-2.5 text-[var(--color-ink)]">
-                    <span className="mt-0.5 font-bold text-[var(--color-accent-hover)]">✓</span>
+                    <span className="mt-[9px] block h-1 w-1 shrink-0 rounded-full bg-[var(--color-ink-muted)]" />
                     {i}
                   </li>
                 ))}
@@ -492,8 +489,8 @@ export default function PricingPage() {
             </h2>
             <p className="mx-auto mt-4 max-w-[500px] text-[17px] leading-[1.55] text-white/70">
               We look at your site, your ads and your rankings. If the
-              numbers won't work in your area, we say so before you sign
-              anything.
+              numbers will not work in your area, we say so before you
+              sign anything.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Button
@@ -523,7 +520,7 @@ function SpendBreakdown() {
   return (
     <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
       <div className="mb-1 text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
-        Sample monthly bill — Growth plan
+        Sample monthly bill, Growth plan
       </div>
       <div className="mb-5 text-sm text-[var(--color-ink-faint)]">
         What lands on your card
@@ -533,10 +530,10 @@ function SpendBreakdown() {
         <div className="flex items-center justify-between rounded-[var(--radius-md)] border border-[var(--color-hairline-soft)] bg-[var(--color-surface-muted)] px-4 py-3">
           <div>
             <div className="text-[14px] font-bold text-[var(--color-ink)]">
-              Tandemm management fee
+              Tandemm Cure fee
             </div>
             <div className="text-[12px] text-[var(--color-ink-muted)]">
-              Site, ads, SEO, dashboard, call handling
+              Ads, SEO, dashboard, call handling
             </div>
           </div>
           <div className="font-[family-name:var(--font-display)] text-[18px] font-bold">
@@ -578,8 +575,8 @@ function SpendBreakdown() {
             <div className="h-full bg-[var(--color-accent)]" style={{ width: "34.5%" }} />
           </div>
           <div className="mt-2 flex items-center justify-between text-[11px] text-white/80">
-            <span>Management · 65%</span>
-            <span>Google Ads · 35%</span>
+            <span>Cure fee, 65%</span>
+            <span>Google Ads, 35%</span>
           </div>
         </div>
       </div>
