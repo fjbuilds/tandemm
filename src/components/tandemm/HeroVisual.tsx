@@ -80,7 +80,7 @@ function Donut({
 }
 
 /* ------------------------------------------------------------------ */
-/*  Findings — visibility first, then speed, then conversion          */
+/*  Findings, visibility first, then speed, then conversion           */
 /* ------------------------------------------------------------------ */
 const FINDINGS: {
   severity: "critical" | "warn" | "ok";
@@ -90,7 +90,7 @@ const FINDINGS: {
   {
     severity: "critical",
     title: "8 service pages invisible to Google",
-    desc: "Missing titles and descriptions — search skips past them.",
+    desc: "Missing titles and descriptions, so search skips past them.",
   },
   {
     severity: "critical",
@@ -126,7 +126,7 @@ export function HeroVisual() {
   const projectedArea = toArea(PROJECTED, CHART_W, CHART_H, CHART_MAX);
 
   return (
-    <div className="audit-report" aria-label="Sample Growth Audit report">
+    <div className="audit-report" aria-label="Sample Diagnosis Audit report">
       {/* Stacked sheets underneath for PDF feel */}
       <div className="audit-sheet-back audit-sheet-back--2" aria-hidden="true" />
       <div className="audit-sheet-back audit-sheet-back--1" aria-hidden="true" />
@@ -138,34 +138,21 @@ export function HeroVisual() {
             <span className="audit-brand-mark" aria-hidden="true" />
             <div>
               <div className="audit-brand-name">Tandemm</div>
-              <div className="audit-brand-role">Growth Audit</div>
+              <div className="audit-brand-role">Diagnosis Audit</div>
             </div>
+          </div>
+          <div className="audit-sample-tag" aria-label="Sample document">
+            Sample
           </div>
         </div>
 
         <div className="audit-rule" />
 
-        {/* Human-voiced margin note — signals a real person looked */}
-        <div className="audit-note">
-          <span className="audit-note-mark" aria-hidden="true">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path
-                d="M2 12 L9 5 L11 7 L4 14 Z M9 5 L10.5 3.5 L12.5 5.5 L11 7 Z"
-                fill="currentColor"
-                opacity="0.85"
-              />
-            </svg>
-          </span>
-          <span className="audit-note-text">
-            Nothing broken. Four quick wins would put the phone back on the ring.
-          </span>
-        </div>
-
         {/* Cover row: prepared for + overall score */}
         <div className="audit-cover">
           <div className="audit-cover-info">
             <div className="audit-eyebrow">Prepared for</div>
-            <div className="audit-company">Marlow &amp; Co Electrical</div>
+            <div className="audit-company">Your business</div>
             <div className="audit-domain">
               <svg
                 width="12"
@@ -187,12 +174,12 @@ export function HeroVisual() {
                   strokeWidth="1"
                 />
               </svg>
-              marlowelectrical.co.uk
+              yourdomain.co.uk
             </div>
             <p className="audit-summary">
-              A solid base, but homeowners are landing and leaving before you
-              hear from them. Fix the four items below and jobs typically lift
-              three to four times inside 90 days.
+              What the Diagnosis Audit looks like: a scored read across
+              visibility, speed, tracking and conversion, with the specific
+              places enquiries are going missing on your site.
             </p>
           </div>
 
@@ -204,9 +191,9 @@ export function HeroVisual() {
                 <span className="audit-overall-den">/ 100</span>
               </div>
             </div>
-            <div className="audit-overall-tag">Growth score</div>
+            <div className="audit-overall-tag">Diagnosis score</div>
             <div className="audit-overall-checks">
-              Scored across 80 checks in 8 categories
+              Scored across visibility, speed, tracking and conversion
             </div>
           </div>
         </div>
@@ -252,8 +239,7 @@ export function HeroVisual() {
                 What happens after we fix this
               </div>
               <div className="audit-block-sub">
-                Based on 40+ trade sites. Jobs per month, 12 weeks after
-                launch.
+                Sample projection. Jobs per month, 12 weeks after Prevention.
               </div>
             </div>
           </div>

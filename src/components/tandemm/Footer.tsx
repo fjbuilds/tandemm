@@ -6,8 +6,11 @@ const pageLinks = [
   { href: "/system", label: "The system" },
   { href: "/results", label: "Results" },
   { href: "/about", label: "About" },
-  { href: "/book", label: "Get the 80-point audit" },
+  { href: "/book", label: "Book a call" },
 ];
+
+// Phone number placeholder until a real line is live.
+const PHONE_DISPLAY = "020 0000 0000";
 
 export function Footer() {
   return (
@@ -21,11 +24,12 @@ export function Footer() {
               className="h-9 w-auto"
             />
             <p className="my-4 max-w-[340px] text-[17px] leading-[1.5] text-white/70">
-              One team running the ads, the SEO and your site. UK electricians
-              and trades get more jobs. That's it.
+              One team running the ads, SEO, the site, the enquiry system and
+              call handling for UK trade businesses. Leads land, we catch them,
+              manage them, and make sure none go cold.
             </p>
             <Button href="/book" variant="secondary">
-              Get the 80-point audit
+              Book a call
             </Button>
           </div>
 
@@ -51,6 +55,7 @@ export function Footer() {
               Get in touch
             </div>
             <div className="flex flex-col gap-3">
+              <span className="text-[15px] text-white/85">{PHONE_DISPLAY}</span>
               <a
                 href="mailto:hello@tandemm.co.uk"
                 className="text-[15px] text-white/85 no-underline"
@@ -65,7 +70,7 @@ export function Footer() {
         <div className="flex flex-wrap items-center justify-between gap-3 pt-7">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <span className="text-[13px] text-white/50">
-              &copy; 2026 Tandemm. Google Ads and SEO for UK trades.
+              &copy; 2026 Tandemm. Growth for UK trade businesses.
             </span>
             <Link
               href="/privacy"
@@ -81,7 +86,7 @@ export function Footer() {
             </Link>
           </div>
           <span className="text-[13px] text-white/50">
-            Ads. SEO. Website. Reporting.
+            Ads. SEO. Site. Enquiry system. Call handling.
           </span>
         </div>
       </div>
