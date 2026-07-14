@@ -3,7 +3,9 @@ import { Button } from "./Button";
 
 const pageLinks = [
   { href: "/", label: "Home" },
-  { href: "/system", label: "The system" },
+  { href: "/features", label: "Features" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/system", label: "How it works" },
   { href: "/results", label: "Results" },
   { href: "/about", label: "About" },
   { href: "/book", label: "Book a call" },

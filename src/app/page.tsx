@@ -1,6 +1,7 @@
 "use client";
 
-import { CSSProperties, useState } from "react";
+import { CSSProperties, FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Nav } from "@/components/tandemm/Nav";
 import { Footer } from "@/components/tandemm/Footer";
 import { Reveal } from "@/components/tandemm/Reveal";
@@ -8,9 +9,6 @@ import { Button } from "@/components/tandemm/Button";
 import { HeroVisual } from "@/components/tandemm/HeroVisual";
 import { DiamondLoader } from "@/components/tandemm/DiamondLoader";
 
-/* ------------------------------------------------------------------ */
-/*  Palette override (matches book page)                              */
-/* ------------------------------------------------------------------ */
 const paletteOverride = {
   "--color-canvas": "#EDEEEA",
   "--color-canvas-deep": "#E1E3DD",
@@ -20,37 +18,33 @@ const paletteOverride = {
   "--color-hairline-soft": "#E1E3DC",
 } as CSSProperties;
 
-/* ------------------------------------------------------------------ */
-/*  Diagnosis / Prevention / Cure cards                               */
-/* ------------------------------------------------------------------ */
+/* ─────────────────────────────────────────────────────────── */
+/*  Diagnosis / Prevention / Cure                              */
+/* ─────────────────────────────────────────────────────────── */
+
 const DPC = [
   {
     step: "01",
     title: "Diagnosis",
     tag: "Free",
     oneLiner:
-      "A scored audit of your site, ad accounts and rankings, so you see where enquiries are going missing.",
-    desc: "We check the pages Google actually indexes, page-speed against a phone, tracking events firing on every form and call, ad account structure, and whether your landing pages match search intent. You get a PDF with the specific findings and a 30-minute walk-through. Yours to keep, whether you hire us or not.",
+      "A scored audit of your site, your ads and your Google rankings, delivered as a PDF you keep.",
     items: [
-      "Indexed pages, meta and schema coverage",
-      "Mobile page-speed and Core Web Vitals",
-      "Form, call and event tracking end-to-end",
-      "Ad account structure and keyword mapping",
-      "Local rank across the postcodes you cover",
+      "Every page checked by hand",
+      "Ad accounts scored on structure and waste",
+      "Local rank across your postcodes",
     ],
   },
   {
     step: "02",
     title: "Prevention",
-    tag: null as string | null,
+    tag: "Included",
     oneLiner:
-      "The fixes that plug the leaks the Diagnosis Audit surfaced. Site, tracking, ad structure, enquiry capture.",
-    desc: "One-page concept and a fixed price. We rebuild the pages that leak, wire in server-side tracking, restructure ad campaigns around the jobs you want, and put the enquiry capture in front of the visitor instead of at the bottom of a menu.",
+      "We rebuild the site, wire in tracking, restructure the ads. All included in the first month.",
     items: [
-      "Landing pages rebuilt for one job: a booked enquiry",
-      "GA4 and conversion API events verified end-to-end",
-      "Ad campaigns restructured by job type and margin",
-      "On-site enquiry capture (form, click-to-call, WhatsApp)",
+      "Website rebuilt, fast and mobile-first",
+      "Tracking phone number and widget installed",
+      "LSA and Google Ads set up from scratch",
     ],
   },
   {
@@ -58,94 +52,119 @@ const DPC = [
     title: "Cure",
     tag: "Ongoing",
     oneLiner:
-      "The ongoing engine. Ads run monthly, SEO built out, enquiries handled, calls answered when you are on the tools.",
-    desc: "Ads and SEO managed month to month, enquiries triaged into one system so nothing sits in an inbox, and a call handling backstop that picks up the phone when you cannot. No long contract, one month's notice.",
+      "The engine keeps running. Ads tuned, SEO built out, enquiries triaged, missed calls caught.",
     items: [
-      "Google Ads managed and tuned weekly",
-      "SEO pages and links built out each month",
-      "Enquiries land in one place, triaged and chased",
-      "Call handling for missed and out-of-hours calls",
-      "Monthly report tied to booked jobs, not clicks",
+      "Ads tuned weekly, SEO built out monthly",
+      "Every enquiry in one dashboard",
+      "Missed calls answered by a UK-based team",
     ],
   },
 ];
 
-/* ------------------------------------------------------------------ */
-/*  What Diagnosis checks, used in place of fabricated proof          */
-/* ------------------------------------------------------------------ */
-const DIAGNOSIS_CATEGORIES = [
+/* ─────────────────────────────────────────────────────────── */
+/*  Signup process (4 steps)                                   */
+/* ─────────────────────────────────────────────────────────── */
+
+const SIGNUP_STEPS = [
   {
-    title: "Visibility",
-    body: "Which of your pages Google can actually see, index and rank for the searches homeowners run.",
+    n: 1,
+    title: "Free audit",
+    desc: "Enter your URL or book a call. We score your site, ads and rankings by hand.",
+    time: "Same week",
   },
   {
-    title: "Speed",
-    body: "How fast pages open on a mid-range phone on 4G, versus the point most homeowners tap back.",
+    n: 2,
+    title: "You decide",
+    desc: "Book a 30-min call, or fill it in yourself. Watch the short video, tell us the details.",
+    time: "30 minutes",
   },
   {
-    title: "Tracking",
-    body: "Whether every form, call, WhatsApp and click-to-call is being recorded and tied back to source.",
+    n: 3,
+    title: "We build",
+    desc: "Website rebuild, tracking number, widget, dashboard, Google Ads — all set up for you.",
+    time: "10–14 days",
   },
   {
-    title: "Ad structure",
-    body: "How your ad accounts are organised, where budget goes to dead clicks, and which jobs pay back.",
-  },
-  {
-    title: "Conversion",
-    body: "The specific pages, forms and above-the-fold moves that turn a visitor into an enquiry.",
-  },
-  {
-    title: "Enquiry handling",
-    body: "What happens after an enquiry lands: where it goes, who chases it, and how quickly.",
+    n: 4,
+    title: "You get calls",
+    desc: "LSA + CPC live. Every enquiry lands in one dashboard. Missed calls caught and texted back.",
+    time: "Ongoing",
   },
 ];
 
-/* ------------------------------------------------------------------ */
-/*  Lead flow, used in place of testimonials                          */
-/* ------------------------------------------------------------------ */
-const LEAD_SOURCES = [
-  { label: "Google Ads", body: "Paid searches for the jobs you want more of" },
-  { label: "SEO", body: "Organic and local pack searches" },
-  { label: "Form", body: "Website enquiry forms" },
-  { label: "Call", body: "Direct phone calls, tracked" },
-  { label: "WhatsApp", body: "Message enquiries and follow-ups" },
+/* ─────────────────────────────────────────────────────────── */
+/*  Feature preview cards                                      */
+/* ─────────────────────────────────────────────────────────── */
+
+const FEATURE_PREVIEW = [
+  {
+    tag: "Website rebuild",
+    title: "A site that turns visitors into booked jobs.",
+    body: "Fast, mobile-first, and built around one goal: get the homeowner into the widget or onto the phone.",
+  },
+  {
+    tag: "LSA + CPC ads",
+    title: "Top of Google, from day one.",
+    body: "Local Services Ads charge only when a homeowner contacts you. Google Ads pick up the slack. Both tuned weekly.",
+  },
+  {
+    tag: "Tracking + widget",
+    title: "Every call and form, in one dashboard.",
+    body: "Dedicated tracking number, on-site widget, missed-call auto-text. Nothing lands in a black hole.",
+  },
+  {
+    tag: "Call handling",
+    title: "Missed calls, caught and texted back.",
+    body: "You can't answer every call. The system texts the homeowner from your number and logs the reply as a lead.",
+  },
 ];
 
-/* ------------------------------------------------------------------ */
-/*  FAQ                                                               */
-/* ------------------------------------------------------------------ */
+/* ─────────────────────────────────────────────────────────── */
+/*  FAQ                                                        */
+/* ─────────────────────────────────────────────────────────── */
+
 const FAQS = [
   {
-    q: "What kind of businesses do you work with?",
-    a: "UK trade businesses. Electricians, plumbers, roofers, builders, landscapers, and similar. If homeowners search for you online and you turn up to do the work, you are the right fit.",
-  },
-  {
     q: "How much does it cost?",
-    a: "Most trade businesses spend between £800 and £2,000 a month with us. That is ads, SEO, site work, the enquiry system and the reporting under one price. You get the exact number after the Diagnosis Audit.",
+    a: "One monthly fee between £650 and £1,650 depending on team size and ad budget. That covers the site, the ads, the SEO, the dashboard and the call handling. Google Ad spend is on top and passed through at cost. See the full pricing on the Pricing page.",
   },
   {
-    q: "How long before I see results?",
-    a: "Most clients see enquiries lift inside 4 to 6 weeks once Prevention is done. It compounds from there. Month three beats month one. Month six beats month three.",
+    q: "Do I have to sign a contract?",
+    a: "No. One month's notice, cancel any time. If it is not working, you walk without penalty.",
   },
   {
-    q: "Do I need to do anything?",
-    a: "Very little. We run ads, SEO, the site, the enquiry system and the call handling. You get in the van and quote the work.",
+    q: "What's the difference between LSA and CPC?",
+    a: "LSA (Local Services Ads) sits at the top of Google and charges you only when a homeowner actually contacts you. CPC (Google Ads) charges per click. We run both.",
   },
   {
-    q: "What if it does not work?",
-    a: "No long-term contracts. One month's notice, cancel any time. Those are the trust terms: if the numbers are not there, you walk without penalty.",
+    q: "Do I own the website you build?",
+    a: "Yes. The website, the domain, the content — all yours. If you leave, you take it with you.",
   },
   {
-    q: "What about AI search, ChatGPT and Google's AI answers?",
-    a: "Homeowners are starting to ask ChatGPT and Google's AI answers who to use. The same pages and links that push you up normal Google are what get you named in those answers. Same job, both places.",
+    q: "How fast will I see leads?",
+    a: "LSA leads inside 2 to 4 weeks. CPC inside the first month. SEO compounds — month three beats month one.",
   },
 ];
 
-/* ------------------------------------------------------------------ */
-/*  Main page                                                         */
-/* ------------------------------------------------------------------ */
+/* ─────────────────────────────────────────────────────────── */
+/*  Component                                                  */
+/* ─────────────────────────────────────────────────────────── */
+
 export default function HomePage() {
+  const router = useRouter();
+  const [url, setUrl] = useState("");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const handleAudit = (e: FormEvent) => {
+    e.preventDefault();
+    const trimmed = url.trim();
+    if (!trimmed) {
+      router.push("/book");
+      return;
+    }
+    const params = new URLSearchParams({ website: trimmed });
+    router.push(`/book?${params.toString()}`);
+  };
 
   return (
     <div
@@ -155,9 +174,7 @@ export default function HomePage() {
       <DiamondLoader />
       <Nav active="home" />
 
-      {/* ============================================================ */}
-      {/*  HERO                                                        */}
-      {/* ============================================================ */}
+      {/* ── HERO ── */}
       <section
         className="hero-split relative box-border px-6 pb-10 pt-[52px]"
         style={{
@@ -168,44 +185,75 @@ export default function HomePage() {
         <div className="hero-split-grid">
           <div className="hero-split-copy">
             <Reveal>
-              <h1 className="hero-title">
-                You&rsquo;re good
-                <br />
-                at the job.
-              </h1>
-            </Reveal>
-            <Reveal>
-              <p className="hero-subtitle">
-                We make sure your phone{" "}
-                <span className="hero-subtitle-em">rings</span>.
-              </p>
-            </Reveal>
-            <Reveal>
-              <p className="hero-desc">
-                We make sure the phone rings. We work with trade businesses
-                across the UK, not just one trade. Over 3.6 million people
-                search Google for a tradesman every month. We make sure the
-                right ones find you, contact you, and end up as booked jobs.
-              </p>
-            </Reveal>
-            <Reveal>
-              <p className="hero-desc">
-                Leads land in one place. We catch them, manage them, and make
-                sure none go cold.
-              </p>
-            </Reveal>
-            <Reveal>
-              <div className="hero-cta">
-                <Button href="/book">Book a call</Button>
-                <Button href="/system" variant="ghost">
-                  See how it works &rarr;
-                </Button>
+              <div className="mb-5 inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-white/70 px-3.5 py-[7px] text-[13px] font-semibold tracking-[0.02em] text-[var(--color-ink-muted)]">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
+                Free website audit
               </div>
             </Reveal>
             <Reveal>
-              <p className="hero-cta-note">
-                Diagnosis Audit is free and yours to keep either way.
+              <h1 className="hero-title">
+                Your phone,
+                <br />
+                <span className="hero-subtitle-em">ringing</span>.
+              </h1>
+            </Reveal>
+            <Reveal>
+              <p className="hero-desc" style={{ marginTop: 22, maxWidth: 480 }}>
+                We rebuild your website, run your ads, capture every lead,
+                and catch the calls you miss. Everything under one roof,
+                one fee, one process.
               </p>
+            </Reveal>
+
+            {/* URL audit form */}
+            <Reveal>
+              <form
+                onSubmit={handleAudit}
+                className="mt-7 flex w-full max-w-[500px] flex-col gap-3 sm:flex-row sm:items-center"
+              >
+                <div className="relative flex-1">
+                  <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[13px] font-semibold text-[var(--color-ink-muted)]">
+                    https://
+                  </span>
+                  <input
+                    type="text"
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)}
+                    placeholder="yourbusiness.co.uk"
+                    aria-label="Your website URL"
+                    className="h-[50px] w-full rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-white pl-[74px] pr-4 text-[15px] font-medium text-[var(--color-ink)] outline-none transition-colors placeholder:text-[var(--color-ink-faint)] focus:border-[var(--color-accent)] focus:shadow-[var(--shadow-focus)]"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="inline-flex h-[50px] shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-[var(--radius-pill)] bg-[var(--color-primary)] px-6 text-[15px] font-semibold text-[var(--color-on-primary)] transition-colors hover:bg-[var(--color-primary-hover)]"
+                >
+                  Get my free audit &rarr;
+                </button>
+              </form>
+            </Reveal>
+
+            <Reveal>
+              <p className="hero-cta-note">
+                No credit card. No obligation. Yours to keep either way.
+              </p>
+            </Reveal>
+
+            <Reveal>
+              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] text-[var(--color-ink-muted)]">
+                <span className="flex items-center gap-1.5">
+                  <span className="font-bold text-[var(--color-accent-hover)]">✓</span>
+                  No setup fee
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="font-bold text-[var(--color-accent-hover)]">✓</span>
+                  One month's notice
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="font-bold text-[var(--color-accent-hover)]">✓</span>
+                  Ad spend at cost
+                </span>
+              </div>
             </Reveal>
           </div>
 
@@ -217,9 +265,9 @@ export default function HomePage() {
                 <div className="hero-glass-fade" aria-hidden="true" />
                 <div className="hero-glass-gate">
                   <span className="hero-glass-gate-copy">
-                    Book a call to see the full diagnosis on your site.
+                    Enter your URL above to get an audit like this on your site.
                   </span>
-                  <Button href="/book">Book a call</Button>
+                  <Button href="/book">Book a call instead</Button>
                 </div>
                 <div className="hero-glass-glow" aria-hidden="true" />
               </div>
@@ -228,52 +276,96 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ============================================================ */}
-      {/*  DIAGNOSIS / PREVENTION / CURE                               */}
-      {/* ============================================================ */}
-      <section className="bg-[var(--color-canvas-deep)] px-6 pb-20 pt-16">
+      {/* ── SIGNUP PROCESS GRAPHIC ── */}
+      <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
         <div className="mx-auto max-w-[1160px]">
-          <Reveal className="mb-10 text-center">
+          <Reveal className="mb-12 text-center">
             <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
               How it works
             </div>
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
+              From audit to booked jobs, in four steps.
+            </h2>
+          </Reveal>
+
+          <Reveal>
+            <div className="relative grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="pointer-events-none absolute left-0 right-0 top-[46px] hidden border-t-2 border-dashed border-[var(--color-hairline)] lg:block" />
+
+              {SIGNUP_STEPS.map((s) => (
+                <div
+                  key={s.n}
+                  className="relative z-10 rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-1)]"
+                >
+                  <div className="mb-4 flex items-center justify-between">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-primary)] text-sm font-bold text-[var(--color-on-primary)]">
+                      {s.n}
+                    </span>
+                    <span className="rounded-full border border-[var(--color-hairline)] bg-[var(--color-canvas)] px-2 py-[3px] text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
+                      {s.time}
+                    </span>
+                  </div>
+                  <h3 className="mb-2 font-[family-name:var(--font-display)] text-[18px] font-bold">
+                    {s.title}
+                  </h3>
+                  <p className="text-[14.5px] leading-[1.55] text-[var(--color-ink-muted)]">
+                    {s.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+
+          <Reveal className="mt-10 text-center">
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <Button href="/book">Get started</Button>
+              <Button href="/system" variant="ghost">
+                See the full process &rarr;
+              </Button>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── DIAGNOSIS / PREVENTION / CURE (compact) ── */}
+      <section className="px-6 py-20">
+        <div className="mx-auto max-w-[1160px]">
+          <Reveal className="mb-10 text-center">
+            <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-accent)]">
+              The model
+            </div>
+            <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
               Diagnosis. Prevention. Cure.
             </h2>
-            <p className="mx-auto mt-4 max-w-[640px] text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Three stages. Each earns its place. The audit shows where you
-              are losing enquiries, Prevention plugs the leaks, Cure is the
-              ongoing engine that keeps the phone ringing.
+            <p className="mx-auto mt-3 max-w-[600px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
+              Not a service you buy. A three-stage process. Each stage
+              earns its place.
             </p>
           </Reveal>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
             {DPC.map((item) => (
               <Reveal key={item.step}>
                 <div className="flex h-full flex-col rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
-                  <div className="mb-1.5 flex items-center gap-2">
-                    <span className="text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-accent)]">
+                  <div className="mb-3 flex items-center gap-2">
+                    <span className="text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-accent)]">
                       Stage {item.step}
                     </span>
-                    {item.tag && (
-                      <span className="rounded-full border border-[var(--color-hairline)] bg-[var(--color-canvas)] px-2 py-[2px] text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
-                        {item.tag}
-                      </span>
-                    )}
+                    <span className="rounded-full border border-[var(--color-hairline)] bg-[var(--color-canvas)] px-2 py-[3px] text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
+                      {item.tag}
+                    </span>
                   </div>
                   <h3 className="mb-2 font-[family-name:var(--font-display)] text-xl font-bold">
                     {item.title}
                   </h3>
-                  <p className="mb-3 text-[15px] font-semibold leading-[1.4] text-[var(--color-ink)]">
+                  <p className="mb-4 text-[14.5px] leading-[1.55] text-[var(--color-ink-muted)]">
                     {item.oneLiner}
                   </p>
-                  <p className="mb-4 text-[14.5px] leading-[1.6] text-[var(--color-ink-muted)]">
-                    {item.desc}
-                  </p>
-                  <ul className="mt-auto flex flex-col gap-1.5 border-t border-[var(--color-hairline-soft)] pt-4">
+                  <ul className="mt-auto flex flex-col gap-2 border-t border-[var(--color-hairline-soft)] pt-4">
                     {item.items.map((it) => (
                       <li
                         key={it}
-                        className="flex items-start gap-2 text-[13.5px] leading-[1.4] text-[var(--color-ink-muted)]"
+                        className="flex items-start gap-2 text-[13.5px] leading-[1.4] text-[var(--color-ink)]"
                       >
                         <span className="mt-[6px] block h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]" />
                         <span>{it}</span>
@@ -284,304 +376,224 @@ export default function HomePage() {
               </Reveal>
             ))}
           </div>
-          <Reveal className="mt-10 text-center">
-            <p className="mb-5 text-[15px] font-semibold text-[var(--color-ink)]">
-              You keep the Diagnosis Audit either way. No hard sell, no chasing
-              calls.
+        </div>
+      </section>
+
+      {/* ── FEATURE PREVIEW ── */}
+      <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
+        <div className="mx-auto max-w-[1160px]">
+          <Reveal className="mb-12 text-center">
+            <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
+              What you get
+            </div>
+            <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
+              Everything you'd normally hire five people for.
+            </h2>
+            <p className="mx-auto mt-3 max-w-[600px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
+              Site, ads, SEO, dashboard, call handling — one team, one
+              price, one number that matters: booked jobs.
             </p>
+          </Reveal>
+
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+            {FEATURE_PREVIEW.map((f) => (
+              <Reveal key={f.tag}>
+                <div className="flex h-full flex-col rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
+                  <span className="mb-3 inline-flex w-fit rounded-full bg-[var(--color-accent-soft)] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--color-accent-hover)]">
+                    {f.tag}
+                  </span>
+                  <h3 className="mb-2 font-[family-name:var(--font-display)] text-[20px] font-bold leading-[1.2]">
+                    {f.title}
+                  </h3>
+                  <p className="text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
+                    {f.body}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+
+          <Reveal className="mt-8 text-center">
+            <Button href="/features" variant="ghost">
+              See every feature &rarr;
+            </Button>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── DASHBOARD MOCK (compact) ── */}
+      <section className="mx-auto max-w-[1160px] px-6 py-20">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_auto]">
+          <Reveal>
+            <div>
+              <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-accent)]">
+                One dashboard
+              </div>
+              <h2 className="mb-4 font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
+                Every enquiry, every source, on your phone.
+              </h2>
+              <p className="mb-6 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
+                We handle the system. You see the outcome. New leads with
+                the source that drove them, one-tap actions, this week's
+                booked jobs, and the missed calls we caught.
+              </p>
+              <ul className="mb-6 flex flex-col gap-2.5 text-[14.5px] leading-[1.55]">
+                {[
+                  "Every call, form, WhatsApp and missed call in one place",
+                  "Source attribution — LSA, CPC, SEO, direct, referral",
+                  "Missed-call auto-text within 60 seconds",
+                  "Reporting tied to booked jobs, not clicks",
+                ].map((i) => (
+                  <li key={i} className="flex items-start gap-2.5 text-[var(--color-ink)]">
+                    <span className="mt-0.5 font-bold text-[var(--color-accent-hover)]">✓</span>
+                    {i}
+                  </li>
+                ))}
+              </ul>
+              <Button href="/features">Explore the dashboard &rarr;</Button>
+            </div>
+          </Reveal>
+
+          <Reveal>
+            <MiniPhoneDashboard />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── PRICING PREVIEW ── */}
+      <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
+        <div className="mx-auto max-w-[1160px]">
+          <Reveal className="mb-10 text-center">
+            <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
+              Pricing
+            </div>
+            <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
+              One monthly fee. Ad spend at cost.
+            </h2>
+            <p className="mx-auto mt-3 max-w-[560px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
+              Four tiers based on team size and ad budget. No setup fee.
+              No contract. Ad spend passed through at cost.
+            </p>
+          </Reveal>
+
+          <Reveal>
+            <div className="mx-auto grid max-w-[900px] grid-cols-1 gap-4 sm:grid-cols-3">
+              {[
+                { name: "Starter", price: 650, who: "Sole traders" },
+                { name: "Growth", price: 950, who: "2–5 team", popular: true },
+                { name: "Scale", price: 1250, who: "5–10 team" },
+              ].map((t) => (
+                <div
+                  key={t.name}
+                  className={`relative rounded-[var(--radius-xl)] border bg-[var(--color-surface)] p-6 shadow-[var(--shadow-1)] ${
+                    t.popular
+                      ? "border-[var(--color-primary)]"
+                      : "border-[var(--color-hairline)]"
+                  }`}
+                >
+                  {t.popular && (
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[var(--color-accent)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-white">
+                      Popular
+                    </span>
+                  )}
+                  <div className="mb-1 font-[family-name:var(--font-display)] text-[18px] font-bold">
+                    {t.name}
+                  </div>
+                  <div className="mb-3 text-[12px] text-[var(--color-ink-muted)]">
+                    {t.who}
+                  </div>
+                  <div className="mb-1 flex items-baseline gap-1">
+                    <span className="font-[family-name:var(--font-display)] text-[32px] font-extrabold leading-none">
+                      £{t.price}
+                    </span>
+                    <span className="text-[12px] text-[var(--color-ink-muted)]">
+                      /mo +VAT
+                    </span>
+                  </div>
+                  <div className="text-[11px] text-[var(--color-ink-faint)]">
+                    Ad spend on top, at cost
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+
+          <Reveal className="mt-8 text-center">
             <div className="flex flex-wrap items-center justify-center gap-3">
-              <Button href="/book">Book a call</Button>
-              <Button href="/system" variant="ghost">
-                See what&apos;s inside &rarr;
+              <Button href="/pricing">See full pricing</Button>
+              <Button href="/book" variant="ghost">
+                Get my free audit &rarr;
               </Button>
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* ============================================================ */}
-      {/*  RESULTS                                                     */}
-      {/* ============================================================ */}
-      <section className="px-6 pb-20 pt-16">
-        <div className="mx-auto max-w-[1160px]">
-          <Reveal className="mb-10 text-center">
-            <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
-              Results
-            </div>
-            <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              More booked jobs. Every source tracked.
-            </h2>
-            <p className="mx-auto mt-3 max-w-[620px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-              What a trade business gets: more of the enquiries that turn into
-              booked work, with every call and form tied back to source. How
-              we do it: ads, SEO, site, enquiry system and call handling
-              under one roof. What makes it different: one team on the hook
-              for the number that matters, not four suppliers pointing at
-              each other.
-            </p>
-          </Reveal>
-
-          <Reveal>
-            <div className="grid grid-cols-1 gap-6 rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)] md:grid-cols-3 md:p-9">
-              <div>
-                <div className="mb-2 text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-accent)]">
-                  Under one roof
-                </div>
-                <h3 className="mb-3 font-[family-name:var(--font-display)] text-[18px] font-bold leading-[1.25]">
-                  Ads, SEO, site, enquiry system, call handling.
-                </h3>
-                <p className="text-[14.5px] leading-[1.6] text-[var(--color-ink-muted)]">
-                  One team runs the lot. No juggling freelancers, no invoices
-                  from four different suppliers, no gap between the ad and
-                  what happens when the phone rings.
-                </p>
-              </div>
-              <div>
-                <div className="mb-2 text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-accent)]">
-                  Trust terms
-                </div>
-                <h3 className="mb-3 font-[family-name:var(--font-display)] text-[18px] font-bold leading-[1.25]">
-                  No long contract. One month&apos;s notice.
-                </h3>
-                <p className="text-[14.5px] leading-[1.6] text-[var(--color-ink-muted)]">
-                  If it is not working, you leave. That is the trust term, not
-                  a stat about who did or did not walk. We hold ourselves to
-                  the number that matters: booked jobs.
-                </p>
-              </div>
-              <div>
-                <div className="mb-2 text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-accent)]">
-                  Reporting
-                </div>
-                <h3 className="mb-3 font-[family-name:var(--font-display)] text-[18px] font-bold leading-[1.25]">
-                  Every call and form tied back to source.
-                </h3>
-                <p className="text-[14.5px] leading-[1.6] text-[var(--color-ink-muted)]">
-                  You see which enquiries came from Google Ads, which from
-                  SEO, which from a missed call we caught. No black box, no
-                  agency spin, no metric that does not translate to jobs.
-                </p>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ============================================================ */}
-      {/*  LEAD FLOW  (replaces testimonials)                          */}
-      {/* ============================================================ */}
-      <section className="bg-[var(--color-canvas-deep)] px-6 pb-20 pt-16">
-        <div className="mx-auto max-w-[1160px]">
-          <Reveal className="mb-10 text-center">
-            <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
-              The system, in one line
-            </div>
-            <h2 className="font-[family-name:var(--font-display)] text-[clamp(30px,3.8vw,44px)] font-extrabold leading-[1.1] tracking-[-0.02em]">
-              Every enquiry into one place. None go cold.
-            </h2>
-          </Reveal>
-
-          <Reveal>
-            <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)] sm:p-10">
-              <div className="grid items-center gap-6 lg:grid-cols-[1fr_auto_1fr_auto_1fr]">
-                {/* Sources */}
-                <div>
-                  <div className="mb-3 text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
-                    Lead sources
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    {LEAD_SOURCES.map((s) => (
-                      <div
-                        key={s.label}
-                        className="flex items-center gap-3 rounded-[var(--radius-md)] border border-[var(--color-hairline-soft)] bg-[var(--color-surface-muted)] px-3 py-2"
-                      >
-                        <span className="font-[family-name:var(--font-display)] text-[13px] font-bold text-[var(--color-ink)]">
-                          {s.label}
-                        </span>
-                        <span className="text-[12px] leading-[1.3] text-[var(--color-ink-muted)]">
-                          {s.body}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="hidden text-2xl font-bold text-[var(--color-accent)] lg:block" aria-hidden="true">
-                  &rarr;
-                </div>
-
-                {/* Enquiry system */}
-                <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] p-6 text-[var(--color-on-primary)] shadow-[var(--shadow-2)]">
-                  <div className="mb-2 text-xs font-bold uppercase tracking-[0.06em] text-white/55">
-                    Enquiry system
-                  </div>
-                  <div className="mb-3 font-[family-name:var(--font-display)] text-[20px] font-bold leading-[1.2]">
-                    One dashboard. Every enquiry.
-                  </div>
-                  <ul className="flex flex-col gap-2 text-[13.5px] leading-[1.4] text-white/85">
-                    <li>Triaged into new, quoting, booked, dead.</li>
-                    <li>Chased when they go quiet.</li>
-                    <li>Missed calls caught by the call handling backstop.</li>
-                    <li>Tied back to the ad or search that brought them in.</li>
-                  </ul>
-                </div>
-
-                <div className="hidden text-2xl font-bold text-[var(--color-accent)] lg:block" aria-hidden="true">
-                  &rarr;
-                </div>
-
-                {/* Outcome */}
-                <div>
-                  <div className="mb-3 text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
-                    Outcome
-                  </div>
-                  <div className="rounded-[var(--radius-md)] border border-[var(--color-hairline-soft)] bg-[var(--color-surface-muted)] px-5 py-5">
-                    <div className="font-[family-name:var(--font-display)] text-[22px] font-extrabold leading-[1.1] text-[var(--color-ink)]">
-                      Booked job.
-                    </div>
-                    <p className="mt-2 text-[13.5px] leading-[1.5] text-[var(--color-ink-muted)]">
-                      Quoted and confirmed. Traceable back to the pound that
-                      brought it in. No enquiry sits in an inbox.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ============================================================ */}
-      {/*  WHAT DIAGNOSIS CHECKS                                       */}
-      {/* ============================================================ */}
-      <section className="px-6 pb-20 pt-16">
-        <div className="mx-auto max-w-[1160px]">
-          <Reveal className="mb-10 text-center">
-            <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
-              Inside the Diagnosis Audit
-            </div>
-            <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              Six categories, scored on your site.
-            </h2>
-            <p className="mx-auto mt-3 max-w-[600px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-              The audit is scored across the six areas below. Everything ranks
-              by impact on booked jobs.
-            </p>
-          </Reveal>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {DIAGNOSIS_CATEGORIES.map((c) => (
-              <Reveal key={c.title}>
-                <div className="h-full rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-6">
-                  <div className="mb-2 font-[family-name:var(--font-display)] text-[17px] font-bold">
-                    {c.title}
-                  </div>
-                  <p className="text-[14.5px] leading-[1.55] text-[var(--color-ink-muted)]">
-                    {c.body}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ============================================================ */}
-      {/*  FAQ                                                         */}
-      {/* ============================================================ */}
-      <section className="mx-auto max-w-[1160px] box-border px-6 pb-20 pt-16">
-        <Reveal className="mb-8 text-center">
+      {/* ── FAQ ── */}
+      <section className="mx-auto max-w-[860px] px-6 py-20">
+        <Reveal className="mb-10 text-center">
           <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
             Frequently asked questions
           </h2>
         </Reveal>
-        <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[1fr_340px]">
-          <div className="flex flex-col gap-3">
-            {FAQS.map((item, i) => {
-              const open = openFaq === i;
-              return (
-                <div
-                  key={item.q}
-                  className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[var(--color-surface)]"
+        <div className="flex flex-col gap-3">
+          {FAQS.map((item, i) => {
+            const open = openFaq === i;
+            return (
+              <div
+                key={item.q}
+                className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[var(--color-surface)]"
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpenFaq(open ? null : i)}
+                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left text-[16px] font-semibold text-[var(--color-ink)] transition-colors"
                 >
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaq(open ? null : i)}
-                    className="flex w-full items-center justify-between gap-4 px-6 py-[22px] text-left text-[17px] font-semibold text-[var(--color-ink)] transition-colors"
-                  >
-                    {item.q}
-                    <span className="text-[22px] text-[var(--color-ink-muted)]">
-                      {open ? "−" : "+"}
-                    </span>
-                  </button>
-                  <div
-                    className="grid transition-[grid-template-rows] duration-200 ease-out"
-                    style={{
-                      gridTemplateRows: open ? "1fr" : "0fr",
-                    }}
-                  >
-                    <div className="overflow-hidden">
-                      <p className="px-6 pb-[22px] text-base leading-[1.6] text-[var(--color-ink-muted)]">
-                        {item.a}
-                      </p>
-                    </div>
+                  {item.q}
+                  <span className="text-[22px] text-[var(--color-ink-muted)]">
+                    {open ? "−" : "+"}
+                  </span>
+                </button>
+                <div
+                  className="grid transition-[grid-template-rows] duration-200 ease-out"
+                  style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
+                >
+                  <div className="overflow-hidden">
+                    <p className="px-6 pb-5 text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
+                      {item.a}
+                    </p>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-
-          <Reveal>
-            <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
-              <h3 className="mb-2 font-[family-name:var(--font-display)] text-lg font-bold">
-                Still weighing it up?
-              </h3>
-              <p className="mb-5 text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-                30 minutes on the phone. We look at your site, your ads and
-                your Google rankings. If we cannot help, we say so before
-                you spend a penny.
-              </p>
-              <div className="mb-4">
-                <Button href="/book" className="w-full text-center">
-                  Book a call
-                </Button>
               </div>
-              <div className="text-center text-sm text-[var(--color-ink-muted)]">
-                or email{" "}
-                <a
-                  href="mailto:hello@tandemm.co.uk"
-                  className="font-semibold text-[var(--color-ink)] no-underline"
-                >
-                  hello@tandemm.co.uk
-                </a>
-              </div>
-            </div>
-          </Reveal>
+            );
+          })}
+        </div>
+        <div className="mt-6 text-center">
+          <Button href="/pricing" variant="ghost">
+            More questions on the Pricing page &rarr;
+          </Button>
         </div>
       </section>
 
-      {/* ============================================================ */}
-      {/*  FINAL CTA                                                   */}
-      {/* ============================================================ */}
-      <section className="mx-auto max-w-[1160px] box-border px-6 pb-16">
+      {/* ── FINAL CTA ── */}
+      <section className="mx-auto max-w-[1160px] px-6 pb-20">
         <Reveal>
-          <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-11 text-center text-[var(--color-on-primary)] shadow-[var(--shadow-2)] sm:px-14">
-            <h2 className="mx-auto max-w-[560px] font-[family-name:var(--font-display)] text-[clamp(24px,3.2vw,34px)] font-extrabold leading-[1.12] tracking-[-0.02em]">
-              Find out where enquiries are going missing.
+          <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-14 text-center text-[var(--color-on-primary)] shadow-[var(--shadow-2)] sm:px-14">
+            <h2 className="mx-auto max-w-[560px] font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
+              Find out where your site is costing you jobs.
             </h2>
-            <p className="mx-auto mt-4 max-w-[480px] text-base leading-[1.6] text-white/70">
-              30 minutes on the phone. We look at your site, your ads and
-              your rankings, and tell you what is costing you work. Straight
-              answer, either way.
+            <p className="mx-auto mt-4 max-w-[480px] text-[17px] leading-[1.55] text-white/70">
+              Free audit. Yours to keep. No hard sell.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button
                 href="/book"
                 className="bg-white text-[var(--color-primary)] hover:bg-white/90"
               >
-                Book a call
+                Get my free audit
               </Button>
-              <Button href="/results" variant="secondary">
-                See how it works
+              <Button href="/features" variant="secondary">
+                See features
               </Button>
             </div>
           </div>
@@ -589,6 +601,87 @@ export default function HomePage() {
       </section>
 
       <Footer />
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/*  Mini phone dashboard for the home page                     */
+/* ─────────────────────────────────────────────────────────── */
+
+function MiniPhoneDashboard() {
+  const newLeads = [
+    { name: "S. Patel", area: "SW11", src: "LSA", note: "Fuse box quote" },
+    { name: "M. Dawson", area: "SE22", src: "CPC", note: "EV charger install" },
+    { name: "J. Reid", area: "SW15", src: "Missed call", note: "Callback, 09:42" },
+  ];
+
+  return (
+    <div className="mx-auto w-full max-w-[280px]">
+      <div className="relative rounded-[38px] border border-[var(--color-hairline)] bg-[#0e1420] p-2.5 shadow-[var(--shadow-2)]">
+        <div className="relative overflow-hidden rounded-[30px] bg-[var(--color-canvas)]">
+          <div className="flex items-center justify-between px-5 pt-3 text-[9px] font-semibold text-[var(--color-ink-muted)]">
+            <span>09:42</span>
+            <div className="absolute left-1/2 top-[10px] h-3.5 w-14 -translate-x-1/2 rounded-b-xl bg-[#0e1420]" />
+            <span>100%</span>
+          </div>
+
+          <div className="px-3 pb-3 pt-2">
+            <div className="mb-2 flex items-center justify-between px-2">
+              <div>
+                <div className="text-[9px] font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
+                  Tandemm
+                </div>
+                <div className="font-[family-name:var(--font-display)] text-[14px] font-bold">
+                  Today
+                </div>
+              </div>
+              <span className="rounded-full bg-[var(--color-primary)] px-2 py-[3px] text-[9px] font-bold text-white">
+                3 new
+              </span>
+            </div>
+
+            <div className="space-y-2">
+              {newLeads.map((l) => (
+                <div
+                  key={l.name}
+                  className="rounded-lg border border-[var(--color-hairline-soft)] bg-[var(--color-surface)] p-2.5"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold">
+                      {l.name} · {l.area}
+                    </span>
+                    <span className="rounded-full bg-[var(--color-surface-sunken)] px-1.5 py-[1px] text-[8px] font-semibold text-[var(--color-ink-muted)]">
+                      {l.src}
+                    </span>
+                  </div>
+                  <div className="mt-0.5 text-[10px] text-[var(--color-ink-muted)]">
+                    {l.note}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-2 rounded-lg bg-[var(--color-primary)] p-2.5 text-white">
+              <div className="text-[9px] uppercase tracking-[0.06em] text-white/60">
+                Booked this week
+              </div>
+              <div className="flex items-baseline justify-between">
+                <span className="font-[family-name:var(--font-display)] text-[18px] font-extrabold">
+                  6 jobs
+                </span>
+                <span className="text-[10px] font-semibold text-white/80">
+                  £4,320
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="pb-2">
+            <div className="mx-auto h-1 w-20 rounded-full bg-[var(--color-hairline)]" />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
