@@ -11,9 +11,6 @@ const pageLinks = [
   { href: "/book", label: "Book a call" },
 ];
 
-// Phone number placeholder until a real line is live.
-const PHONE_DISPLAY = "020 0000 0000";
-
 export function Footer() {
   return (
     <footer className="w-full bg-[var(--color-primary)] font-[family-name:var(--font-body)] text-[var(--color-on-primary)]">
@@ -54,7 +51,6 @@ export function Footer() {
               Get in touch
             </div>
             <div className="flex flex-col gap-3">
-              <span className="text-[15px] text-white/85">{PHONE_DISPLAY}</span>
               <a
                 href="mailto:hello@tandemm.co.uk"
                 className="text-[15px] text-white/85 no-underline"

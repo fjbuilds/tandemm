@@ -5,6 +5,7 @@ import { Nav } from "@/components/tandemm/Nav";
 import { Footer } from "@/components/tandemm/Footer";
 import { Reveal } from "@/components/tandemm/Reveal";
 import { Button } from "@/components/tandemm/Button";
+import { DashboardPhone, DashboardDesktop } from "@/components/tandemm/Dashboard";
 
 const paletteOverride = {
   "--color-canvas": "#EDEEEA",
@@ -21,33 +22,29 @@ const paletteOverride = {
 
 const INCLUDED_PILLARS = [
   { title: "Website rebuild", note: "Fast, mobile-first, yours to keep" },
-  { title: "Found on Google + AI", note: "Top of search and inside AI answers" },
-  { title: "Smart quote assistant", note: "Instant answers on your site, better quotes" },
-  { title: "Lead capture", note: "Widget, tracking number, WhatsApp" },
+  { title: "Found on Google", note: "Ranked where homeowners search" },
+  { title: "Visible on AI", note: "Named when people ask ChatGPT or Claude" },
+  { title: "Smart quote assistant", note: "Answers questions, captures the job" },
   { title: "One dashboard", note: "Every enquiry, every source" },
   { title: "Call handling", note: "Missed calls caught and texted back" },
 ];
 
 const CAPTURE_FEATURES = [
   {
-    title: "On-site enquiry widget",
-    body: "A small widget sits on every page of the new site. A homeowner types their name, number and job. It lands in the dashboard and texts you instantly.",
-  },
-  {
     title: "Smart quote assistant",
-    body: "We add an assistant to your site that answers a homeowner's quick questions on the spot and helps them frame the job. Better quality quotes for you, and fewer people bouncing to the next trade for a fast answer.",
+    body: "Sits on every page. It answers the homeowner's quick questions, helps them describe the job properly, and drops the enquiry straight into your dashboard. They get a fast answer instead of bouncing to the next trade, and you get a quote worth giving.",
   },
   {
     title: "Tracking phone number",
-    body: "The site shows a dedicated number that rings straight through to yours. Every call is recorded against the ad or search that drove it, so you know what paid back.",
+    body: "A dedicated number that rings straight through to yours. Every call is recorded against the ad or search that drove it, so you know what paid back.",
   },
   {
     title: "Missed-call auto-text",
-    body: "If a call goes to voicemail, the homeowner gets a text from your number instantly. Sorry I missed you, quickest way to get me is here. The callback lands in the same dashboard.",
+    body: "If a call goes to voicemail, the homeowner gets a text from your number instantly. The reply lands in the same dashboard as a lead.",
   },
   {
     title: "WhatsApp entry point",
-    body: "One tap on mobile drops the homeowner into a WhatsApp thread with you, pre-filled with the job they clicked on. Threads log against the same lead record.",
+    body: "One tap on mobile drops the homeowner into a WhatsApp thread with you, pre-filled with the job they clicked on. Threads log against the same lead.",
   },
 ];
 
@@ -110,9 +107,9 @@ export default function FeaturesPage() {
           </Reveal>
           <Reveal>
             <p className="mx-auto mt-[22px] max-w-[620px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
-              We rebuild your site, get you found on Google and in AI
-              answers, catch every enquiry and pick up the calls you
-              miss. You get the jobs. We run the machine.
+              We rebuild your site, get you found, catch every enquiry and
+              pick up the calls you miss. You get the jobs. We run the
+              machine.
             </p>
           </Reveal>
         </div>
@@ -197,11 +194,11 @@ export default function FeaturesPage() {
                 A site built to turn visitors into booked jobs.
               </h2>
               <p className="mb-6 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-                Fast, plain, mobile-first, and free when you sign up. Every
-                page has one job: get the homeowner into the widget or onto
-                the phone. We even add a smart quote assistant that answers
-                their quick questions on the spot, so fewer people wander
-                off to the next trade.
+                Fast, mobile-first, and free when you sign up. Every page
+                is built to do one thing: get the homeowner talking to you.
+                The smart quote assistant handles the questions they&apos;d
+                otherwise ring around for, so they stay put and you get a
+                proper job to quote on.
               </p>
               <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                 {WEBSITE_FEATURES.map((f) => (
@@ -229,10 +226,10 @@ export default function FeaturesPage() {
                 Top of Google, and the name AI gives when people ask.
               </h2>
               <p className="mb-6 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-                Homeowners don&apos;t just Google any more, they ask ChatGPT
-                and Gemini &ldquo;who&apos;s a good electrician near me?&rdquo;
-                We get you showing up in both: at the top of the search
-                results, and as the business the AI recommends.
+                Homeowners don&apos;t just Google any more. Plenty of them
+                now ask ChatGPT or Claude who to call. We get you visible in
+                both places: ranked where people search, and named when they
+                ask an AI.
               </p>
               <ul className="flex flex-col gap-3 text-[15px] leading-[1.55] text-[var(--color-ink)]">
                 {[
@@ -274,8 +271,9 @@ export default function FeaturesPage() {
           </Reveal>
 
           <Reveal>
-            <div className="mx-auto mb-12 max-w-[1000px]">
-              <DashboardMock />
+            <div className="mx-auto mb-12 grid max-w-[1060px] grid-cols-1 items-end gap-8 lg:grid-cols-[1.5fr_0.65fr]">
+              <DashboardDesktop caption="Your enquiries on the desktop, for quoting." />
+              <DashboardPhone view="list" caption="Same data on your phone." />
             </div>
           </Reveal>
 
@@ -331,8 +329,12 @@ export default function FeaturesPage() {
         </div>
 
         <Reveal>
-          <div className="mx-auto mt-10 max-w-[840px]">
-            <MissedCallFlow />
+          <div className="mt-12 grid grid-cols-1 items-center gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+            <DashboardPhone
+              view="map"
+              caption="Every live enquiry, pinned across your patch."
+            />
+            <CaughtAndHandled />
           </div>
         </Reveal>
       </section>
@@ -342,7 +344,7 @@ export default function FeaturesPage() {
         <div className="mx-auto max-w-[1160px]">
           <Reveal className="mb-10 text-center">
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              What you would normally hire five people for.
+              What you would normally hire multiple people for.
             </h2>
             <p className="mx-auto mt-3 max-w-[600px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
               Everything below is included in the Cure fee. No upsells,
@@ -867,244 +869,99 @@ function WebsiteMock() {
 }
 
 /* ─────────────────────────────────────────────────────────── */
-/*  Dashboard mock                                             */
+/*  Caught and handled                                         */
 /* ─────────────────────────────────────────────────────────── */
 
-function DashboardMock() {
-  const rows = [
-    { name: "S. Patel", area: "SW11", src: "LSA", job: "Fuse box replacement", val: "£420", stage: "Booked", stageTone: "success" },
-    { name: "M. Dawson", area: "SE22", src: "CPC", job: "EV charger install", val: "£1,180", stage: "Quoting", stageTone: "accent" },
-    { name: "J. Reid", area: "SW15", src: "Missed call", job: "Callback requested", val: "n/a", stage: "New", stageTone: "primary" },
-    { name: "A. Yusuf", area: "SE1", src: "SEO", job: "Full rewire quote", val: "£3,200", stage: "Quoting", stageTone: "accent" },
-    { name: "R. Bell", area: "N16", src: "WhatsApp", job: "Consumer unit swap", val: "£680", stage: "Booked", stageTone: "success" },
+function CaughtAndHandled() {
+  const thread = [
+    {
+      side: "in" as const,
+      t: "7:48 PM",
+      who: "Missed call",
+      body: "James Patterson rang. You were under a floor in Stockport.",
+      kind: "event" as const,
+    },
+    {
+      side: "out" as const,
+      t: "7:48 PM",
+      who: "Sent from your number",
+      body: "Sorry I missed you — I'm on a job. What do you need doing, and whereabouts are you?",
+      kind: "msg" as const,
+    },
+    {
+      side: "in" as const,
+      t: "7:49 PM",
+      who: "James",
+      body: "Consumer unit tripping, no power upstairs. SK4, need someone tomorrow morning.",
+      kind: "msg" as const,
+    },
+    {
+      side: "out" as const,
+      t: "7:50 PM",
+      who: "Quote assistant",
+      body: "Got it. Fault-finding call-out, morning slot. I've booked you in and passed the details on.",
+      kind: "msg" as const,
+    },
+    {
+      side: "in" as const,
+      t: "7:50 PM",
+      who: "Logged",
+      body: "Enquiry created · Emergency repair · Urgent · Call back",
+      kind: "event" as const,
+    },
   ];
 
-  const stageColour = (tone: string) => {
-    if (tone === "success") return "bg-[var(--color-success-soft)] text-[var(--color-success)]";
-    if (tone === "accent") return "bg-[var(--color-accent-soft)] text-[var(--color-accent-hover)]";
-    return "bg-[var(--color-primary)]/10 text-[var(--color-primary)]";
-  };
-
-  return (
-    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.4fr_0.6fr] lg:items-end">
-      {/* Laptop */}
-      <div>
-        <div className="rounded-t-[14px] border border-[var(--color-hairline)] bg-[#0e1420] p-2 shadow-[var(--shadow-2)]">
-          <div className="overflow-hidden rounded-t-[8px] bg-[var(--color-surface)]">
-            <div className="flex items-center gap-2 border-b border-[var(--color-hairline-soft)] px-3 py-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-              <div className="ml-2 flex flex-1 items-center gap-2 rounded-full bg-[var(--color-surface-muted)] px-3 py-1">
-                <span className="text-[10px] text-[var(--color-ink-muted)]">
-                  app.tandemm.co.uk / leads
-                </span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-[140px_1fr]">
-              <div className="border-r border-[var(--color-hairline-soft)] bg-[var(--color-surface-muted)] p-3">
-                <div className="mb-3 flex items-center gap-1.5">
-                  <div className="h-4 w-4 rounded bg-[var(--color-primary)]" />
-                  <span className="font-[family-name:var(--font-display)] text-[10px] font-extrabold">
-                    Tandemm
-                  </span>
-                </div>
-                {["Leads", "Calls", "Ads", "Website", "Reports"].map((it, i) => (
-                  <div
-                    key={it}
-                    className={`mb-1 rounded-md px-2 py-1 text-[10px] font-semibold ${
-                      i === 0
-                        ? "bg-[var(--color-primary)] text-[var(--color-on-primary)]"
-                        : "text-[var(--color-ink-muted)]"
-                    }`}
-                  >
-                    {it}
-                  </div>
-                ))}
-              </div>
-
-              <div className="p-4">
-                <div className="mb-3 flex items-center justify-between">
-                  <div>
-                    <div className="font-[family-name:var(--font-display)] text-[13px] font-bold">
-                      Leads
-                    </div>
-                    <div className="text-[9px] text-[var(--color-ink-muted)]">
-                      5 open, 2 booked this week
-                    </div>
-                  </div>
-                  <div className="flex gap-1">
-                    {["All", "New", "Quoting", "Booked"].map((f, i) => (
-                      <div
-                        key={f}
-                        className={`rounded-md px-2 py-[3px] text-[9px] font-semibold ${
-                          i === 0
-                            ? "bg-[var(--color-ink)] text-white"
-                            : "border border-[var(--color-hairline)] text-[var(--color-ink-muted)]"
-                        }`}
-                      >
-                        {f}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="rounded-md border border-[var(--color-hairline-soft)]">
-                  <div className="grid grid-cols-[1.2fr_0.7fr_1.4fr_0.7fr_0.8fr] gap-2 border-b border-[var(--color-hairline-soft)] bg-[var(--color-surface-muted)] px-3 py-1.5 text-[8px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
-                    <span>Lead</span>
-                    <span>Source</span>
-                    <span>Job</span>
-                    <span>Value</span>
-                    <span>Stage</span>
-                  </div>
-                  {rows.map((r, i) => (
-                    <div
-                      key={r.name}
-                      className={`grid grid-cols-[1.2fr_0.7fr_1.4fr_0.7fr_0.8fr] items-center gap-2 px-3 py-2 text-[10px] text-[var(--color-ink)] ${
-                        i > 0 ? "border-t border-[var(--color-hairline-soft)]" : ""
-                      }`}
-                    >
-                      <span className="font-semibold">
-                        {r.name} · {r.area}
-                      </span>
-                      <span className="text-[var(--color-ink-muted)]">{r.src}</span>
-                      <span className="truncate text-[var(--color-ink-muted)]">
-                        {r.job}
-                      </span>
-                      <span className="font-semibold">{r.val}</span>
-                      <span>
-                        <span
-                          className={`inline-block rounded-full px-2 py-[1px] text-[8px] font-bold ${stageColour(r.stageTone)}`}
-                        >
-                          {r.stage}
-                        </span>
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="mx-auto h-2 w-[95%] rounded-b-[10px] bg-[#0e1420]" />
-        <div className="mx-auto h-1 w-[70%] rounded-b-full bg-[#0e1420]/40" />
-      </div>
-
-      {/* Phone */}
-      <div className="mx-auto w-full max-w-[220px]">
-        <div className="relative rounded-[32px] border border-[var(--color-hairline)] bg-[#0e1420] p-2 shadow-[var(--shadow-2)]">
-          <div className="relative overflow-hidden rounded-[26px] bg-[var(--color-canvas)]">
-            <div className="flex items-center justify-between px-4 pt-2 text-[8px] font-semibold text-[var(--color-ink-muted)]">
-              <span>09:42</span>
-              <div className="absolute left-1/2 top-[8px] h-3 w-12 -translate-x-1/2 rounded-b-xl bg-[#0e1420]" />
-              <span>100%</span>
-            </div>
-
-            <div className="px-3 pb-3 pt-2">
-              <div className="mb-2 flex items-center justify-between">
-                <span className="font-[family-name:var(--font-display)] text-[12px] font-bold">
-                  Today
-                </span>
-                <span className="rounded-full bg-[var(--color-primary)] px-2 py-[1px] text-[8px] font-bold text-white">
-                  3 new
-                </span>
-              </div>
-
-              <div className="mb-2 space-y-1.5">
-                {rows.slice(0, 3).map((r) => (
-                  <div
-                    key={r.name}
-                    className="rounded-md border border-[var(--color-hairline-soft)] bg-[var(--color-surface)] p-2"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-bold">
-                        {r.name}
-                      </span>
-                      <span
-                        className={`rounded-full px-1.5 py-[1px] text-[7px] font-bold ${stageColour(r.stageTone)}`}
-                      >
-                        {r.stage}
-                      </span>
-                    </div>
-                    <div className="mt-0.5 text-[9px] text-[var(--color-ink-muted)]">
-                      {r.src} · {r.job}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="rounded-md bg-[var(--color-primary)] p-2 text-white">
-                <div className="text-[8px] uppercase tracking-[0.06em] text-white/60">
-                  Booked this week
-                </div>
-                <div className="mt-0.5 flex items-baseline justify-between">
-                  <span className="font-[family-name:var(--font-display)] text-[16px] font-extrabold">
-                    6 jobs
-                  </span>
-                  <span className="text-[9px] font-semibold text-white/80">
-                    £4,320
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div className="pb-2">
-              <div className="mx-auto h-1 w-16 rounded-full bg-[var(--color-hairline)]" />
-            </div>
-          </div>
-        </div>
-        <p className="mt-3 text-center text-[10px] text-[var(--color-ink-faint)]">
-          Same data on your phone.
-        </p>
-      </div>
-    </div>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────── */
-/*  Missed-call auto-text flow                                 */
-/* ─────────────────────────────────────────────────────────── */
-
-function MissedCallFlow() {
-  const steps = [
-    { t: "09:42", label: "Homeowner calls", desc: "You are on the tools." },
-    { t: "09:42", label: "Auto-text sent", desc: "Sorry I missed you, quickest way to reach me…" },
-    { t: "09:43", label: "Reply received", desc: "Need a quote for a rewire." },
-    { t: "09:43", label: "Lead in dashboard", desc: "Tagged missed call caught, assigned to you." },
-  ];
   return (
     <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
       <div className="mb-1 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
-        Missed-call auto-text
+        A missed call, caught
       </div>
       <h3 className="mb-1 font-[family-name:var(--font-display)] text-[20px] font-bold">
-        From missed call to booked quote, in under a minute.
+        You were on the tools. It got handled anyway.
       </h3>
       <p className="mb-6 text-[14.5px] leading-[1.55] text-[var(--color-ink-muted)]">
-        You can not answer every call. The system does the follow-up for you.
+        Two minutes, start to finish, without you touching your phone.
       </p>
 
-      <div className="relative grid grid-cols-1 gap-4 sm:grid-cols-4">
-        <div className="pointer-events-none absolute left-0 right-0 top-6 hidden border-t-2 border-dashed border-[var(--color-hairline)] sm:block" />
-        {steps.map((s, i) => (
-          <div
-            key={i}
-            className="relative z-10 flex flex-col items-start rounded-[var(--radius-md)] border border-[var(--color-hairline-soft)] bg-[var(--color-surface-muted)] p-4"
-          >
-            <div className="mb-2 flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-primary)] text-[11px] font-bold text-white">
-              {i + 1}
+      <div className="flex flex-col gap-3">
+        {thread.map((m, i) =>
+          m.kind === "event" ? (
+            <div
+              key={i}
+              className="flex items-center gap-2.5 rounded-[var(--radius-md)] border border-dashed border-[var(--color-hairline)] bg-[var(--color-surface-muted)] px-3.5 py-2.5"
+            >
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]" />
+              <span className="flex-1 text-[13px] leading-[1.45] text-[var(--color-ink)]">
+                <span className="font-bold">{m.who}.</span> {m.body}
+              </span>
+              <span className="shrink-0 text-[11px] text-[var(--color-ink-faint)]">
+                {m.t}
+              </span>
             </div>
-            <div className="mb-0.5 text-[10px] font-bold uppercase tracking-[0.05em] text-[var(--color-ink-muted)]">
-              {s.t}
+          ) : (
+            <div
+              key={i}
+              className={`max-w-[86%] ${m.side === "out" ? "ml-auto" : ""}`}
+            >
+              <div
+                className={`mb-1 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-faint)] ${
+                  m.side === "out" ? "justify-end" : ""
+                }`}
+              >
+                {m.who} · {m.t}
+              </div>
+              <div
+                className={`rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-[1.5] ${
+                  m.side === "out"
+                    ? "rounded-br-sm bg-[var(--color-primary)] text-white"
+                    : "rounded-bl-sm bg-[var(--color-surface-muted)] text-[var(--color-ink)]"
+                }`}
+              >
+                {m.body}
+              </div>
             </div>
-            <div className="font-[family-name:var(--font-display)] text-[13px] font-bold text-[var(--color-ink)]">
-              {s.label}
-            </div>
-            <div className="mt-1 text-[12px] leading-[1.45] text-[var(--color-ink-muted)]">
-              {s.desc}
-            </div>
-          </div>
-        ))}
+          ),
+        )}
       </div>
     </div>
   );

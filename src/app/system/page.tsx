@@ -5,6 +5,7 @@ import { Nav } from "@/components/tandemm/Nav";
 import { Footer } from "@/components/tandemm/Footer";
 import { Reveal } from "@/components/tandemm/Reveal";
 import { Button } from "@/components/tandemm/Button";
+import { DashboardPhone } from "@/components/tandemm/Dashboard";
 
 const paletteOverride = {
   "--color-canvas": "#EDEEEA",
@@ -367,7 +368,15 @@ export default function SystemPage() {
             </Reveal>
 
             <Reveal>
-              <PhoneDashboard />
+              <div className="flex flex-wrap justify-center gap-6">
+                <DashboardPhone view="list" caption="Every enquiry, triaged." />
+                <div className="hidden xl:block">
+                  <DashboardPhone
+                    view="map"
+                    caption="And pinned across your patch."
+                  />
+                </div>
+              </div>
             </Reveal>
           </div>
         </div>
@@ -507,206 +516,6 @@ function DeepDiveBlock({
           </div>
         ))}
       </div>
-    </div>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────── */
-/*  Phone dashboard                                            */
-/* ─────────────────────────────────────────────────────────── */
-
-function PhoneDashboard() {
-  const newLeads = [
-    {
-      name: "S. Patel",
-      area: "SW11",
-      source: "LSA",
-      note: "Fuse box replacement quote",
-    },
-    {
-      name: "M. Dawson",
-      area: "SE22",
-      source: "CPC",
-      note: "EV charger install",
-    },
-    {
-      name: "J. Reid",
-      area: "SW15",
-      source: "Missed call caught",
-      note: "Callback requested, 09:42",
-    },
-  ];
-
-  const trend = [
-    { label: "Feb", leads: 18, booked: 8 },
-    { label: "Mar", leads: 22, booked: 11 },
-    { label: "Apr", leads: 27, booked: 14 },
-    { label: "May", leads: 31, booked: 17 },
-    { label: "Jun", leads: 34, booked: 19 },
-    { label: "Jul", leads: 38, booked: 22 },
-  ];
-  const trendMax = 40;
-
-  return (
-    <div className="mx-auto w-full max-w-[320px]">
-      <div className="relative rounded-[42px] border border-[var(--color-hairline)] bg-[#0e1420] p-2.5 shadow-[var(--shadow-2)]">
-        <div className="relative overflow-hidden rounded-[34px] bg-[var(--color-canvas)]">
-          <div className="flex items-center justify-between px-6 pt-3 text-[10px] font-semibold text-[var(--color-ink-muted)]">
-            <span>09:42</span>
-            <div className="absolute left-1/2 top-[10px] h-4 w-16 -translate-x-1/2 rounded-b-2xl bg-[#0e1420]" />
-            <span>100%</span>
-          </div>
-
-          <div className="flex items-center justify-between px-4 pb-3 pt-3">
-            <div>
-              <div className="text-[10px] font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
-                Tandemm
-              </div>
-              <div className="font-[family-name:var(--font-display)] text-[15px] font-bold text-[var(--color-ink)]">
-                Today
-              </div>
-            </div>
-            <div className="rounded-full bg-[var(--color-primary)] px-2.5 py-[3px] text-[10px] font-bold text-[var(--color-on-primary)]">
-              3 new
-            </div>
-          </div>
-
-          <div className="space-y-3 px-3 pb-4">
-            <div className="rounded-[16px] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-3">
-              <div className="mb-2 flex items-center justify-between">
-                <span className="text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
-                  Today&apos;s leads
-                </span>
-                <span className="text-[10px] text-[var(--color-ink-faint)]">
-                  3 new
-                </span>
-              </div>
-              <div className="space-y-2">
-                {newLeads.map((l, i) => (
-                  <div
-                    key={l.name}
-                    className="rounded-[10px] border border-[var(--color-hairline-soft)] bg-[var(--color-canvas)] p-2.5"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="text-[12px] font-bold text-[var(--color-ink)]">
-                        {l.name} · {l.area}
-                      </span>
-                      <span className="rounded-full bg-[var(--color-surface-sunken)] px-2 py-[1px] text-[9px] font-semibold text-[var(--color-ink-muted)]">
-                        {l.source}
-                      </span>
-                    </div>
-                    <div className="mt-1 text-[11px] leading-[1.4] text-[var(--color-ink-muted)]">
-                      {l.note}
-                    </div>
-                    {i === 0 && (
-                      <div className="mt-2 flex flex-wrap gap-1">
-                        {["Call", "Quoted", "Booked", "Dead"].map((a) => (
-                          <button
-                            key={a}
-                            type="button"
-                            className="rounded-full border border-[var(--color-hairline)] bg-[var(--color-surface)] px-2 py-[3px] text-[10px] font-semibold text-[var(--color-ink)]"
-                          >
-                            {a}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-[16px] bg-[var(--color-primary)] p-3 text-[var(--color-on-primary)]">
-              <div className="mb-1 text-[11px] font-bold uppercase tracking-[0.06em] text-white/60">
-                This week booked
-              </div>
-              <div className="flex items-baseline justify-between">
-                <span className="font-[family-name:var(--font-display)] text-[24px] font-extrabold leading-none">
-                  6 jobs
-                </span>
-                <span className="text-[13px] font-semibold text-white/80">
-                  £4,320 est.
-                </span>
-              </div>
-            </div>
-
-            <div className="rounded-[16px] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-3">
-              <div className="mb-2 flex items-center justify-between">
-                <span className="text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
-                  Missed calls we caught
-                </span>
-                <span className="text-[10px] text-[var(--color-ink-faint)]">
-                  2
-                </span>
-              </div>
-              <div className="space-y-1.5 text-[11px] text-[var(--color-ink)]">
-                <div className="flex justify-between">
-                  <span>J. Reid, SW15</span>
-                  <span className="text-[var(--color-ink-muted)]">09:42</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>A. Yusuf, SE1</span>
-                  <span className="text-[var(--color-ink-muted)]">08:11</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="rounded-[16px] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-3">
-              <div className="mb-2 flex items-center justify-between">
-                <span className="text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
-                  Leads in vs jobs booked
-                </span>
-                <span className="text-[10px] text-[var(--color-ink-faint)]">
-                  6 months
-                </span>
-              </div>
-              <div className="flex h-16 items-end gap-1.5">
-                {trend.map((t) => {
-                  const leadH = (t.leads / trendMax) * 100;
-                  const bookedH = (t.booked / trendMax) * 100;
-                  return (
-                    <div
-                      key={t.label}
-                      className="flex flex-1 flex-col items-center gap-0.5"
-                    >
-                      <div className="relative flex h-full w-full items-end justify-center">
-                        <div
-                          className="w-full rounded-t-[3px] bg-[var(--color-hairline)]"
-                          style={{ height: `${leadH}%` }}
-                        />
-                        <div
-                          className="absolute bottom-0 left-1/2 w-2/3 -translate-x-1/2 rounded-t-[3px] bg-[var(--color-primary)]"
-                          style={{ height: `${bookedH}%` }}
-                        />
-                      </div>
-                      <span className="text-[8px] font-semibold text-[var(--color-ink-faint)]">
-                        {t.label}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="mt-2 flex items-center gap-3 text-[9px] font-semibold text-[var(--color-ink-muted)]">
-                <span className="flex items-center gap-1">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-hairline)]" />
-                  Leads in
-                </span>
-                <span className="flex items-center gap-1">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-primary)]" />
-                  Jobs booked
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="pb-3">
-            <div className="mx-auto h-1 w-24 rounded-full bg-[var(--color-hairline)]" />
-          </div>
-        </div>
-      </div>
-      <p className="mt-4 text-center text-[12px] text-[var(--color-ink-faint)]">
-        Illustrative dashboard view. What a Cure client sees on their phone.
-      </p>
     </div>
   );
 }

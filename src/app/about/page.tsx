@@ -15,34 +15,6 @@ const paletteOverride = {
   "--color-hairline-soft": "#E1E3DC",
 } as CSSProperties;
 
-const REPLACES_TABLE = [
-  {
-    stage: "Ads",
-    normally: "A separate PPC freelancer, another invoice, another login",
-    withUs: "Google Ads run and tuned each week",
-  },
-  {
-    stage: "SEO",
-    normally: "An SEO agency writing blogs that do not rank",
-    withUs: "Keyword-focused pages and links from trusted sources",
-  },
-  {
-    stage: "Website",
-    normally: "A one-off build, then it is someone else's problem",
-    withUs: "Rebuilt properly, then maintained as a long-term asset",
-  },
-  {
-    stage: "Enquiries",
-    normally: "Calls, forms and WhatsApp in three different places, nothing chased",
-    withUs: "One dashboard, triaged and chased. Missed calls caught by our team.",
-  },
-  {
-    stage: "Reporting",
-    normally: "GA4 you never open, or spreadsheets once a quarter",
-    withUs: "One report tied to booked jobs, cost per job, and return on spend",
-  },
-];
-
 const PRINCIPLES = [
   {
     n: 1,
@@ -97,15 +69,8 @@ export default function AboutPage() {
         <div className="mx-auto max-w-[820px]">
           <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              We&rsquo;re the growth team trade businesses can&rsquo;t afford to hire full-time.
+              One team, pointed at one number: booked jobs.
             </h1>
-          </Reveal>
-          <Reveal>
-            <p className="mx-auto mt-[22px] max-w-[620px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Most trade businesses do not need more marketing. They need the
-              website, SEO and ads they already pay for to actually turn into
-              work. That is what we do.
-            </p>
           </Reveal>
         </div>
       </section>
@@ -130,53 +95,6 @@ export default function AboutPage() {
 
           <Reveal>
             <ConvergenceVisual />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── WHAT ONE SYSTEM REPLACES ── */}
-      <section className="px-6 pb-20 pt-20">
-        <div className="mx-auto max-w-[900px]">
-          <Reveal>
-            <h2 className="mb-4 text-center font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              What one team replaces.
-            </h2>
-            <p className="mx-auto mb-10 max-w-[540px] text-center text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Every line below is usually a different supplier, a different
-              invoice, and a different login. We bring the lot under one roof.
-            </p>
-          </Reveal>
-
-          <Reveal>
-            <div className="overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] shadow-[var(--shadow-1)]">
-              <div className="hidden grid-cols-[0.8fr_1.4fr_1.4fr] gap-4 border-b border-[var(--color-hairline)] bg-[var(--color-surface-muted)] px-7 py-3 text-xs font-bold uppercase tracking-[0.05em] text-[var(--color-ink-muted)] sm:grid">
-                <div>Stage</div>
-                <div>Normally</div>
-                <div>With Tandemm</div>
-              </div>
-              {REPLACES_TABLE.map((row, i) => (
-                <div
-                  key={row.stage}
-                  className={`grid grid-cols-1 gap-2 px-7 py-5 sm:grid-cols-[0.8fr_1.4fr_1.4fr] sm:items-center sm:gap-4 ${
-                    i > 0 ? "border-t border-[var(--color-hairline-soft)]" : ""
-                  }`}
-                >
-                  <div className="font-[family-name:var(--font-display)] text-[15px] font-bold">
-                    {row.stage}
-                  </div>
-                  <div className="text-sm leading-[1.5] text-[var(--color-ink-muted)]">
-                    {row.normally}
-                  </div>
-                  <div className="text-sm font-semibold leading-[1.5] text-[var(--color-accent-hover)]">
-                    {row.withUs}
-                  </div>
-                </div>
-              ))}
-              <div className="bg-[var(--color-primary)] px-7 py-5 text-center text-[15px] font-semibold text-[var(--color-on-primary)]">
-                One point of contact. One invoice. One number that matters:
-                booked jobs.
-              </div>
-            </div>
           </Reveal>
         </div>
       </section>
@@ -290,15 +208,46 @@ function ConvergenceVisual() {
     { label: "WhatsApp", y: 340 },
   ];
 
+  const pathFor = (y: number) => `M 190 ${y} C 350 ${y}, 400 190, 545 190`;
+
   return (
-    <div className="mx-auto max-w-[900px] rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-1)] sm:p-8">
+    <div className="mx-auto max-w-[900px] overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-1)] sm:p-8">
       <svg
         viewBox="0 0 900 380"
         preserveAspectRatio="xMidYMid meet"
-        className="w-full"
+        className="convergence w-full"
         role="img"
-        aria-label="Website, Google Ads, SEO, forms, phone and WhatsApp converging into the Tandemm system, which outputs booked jobs."
+        aria-label="Website, Google Ads, SEO, forms, phone and WhatsApp converging into one Tandemm system, which turns them into booked jobs."
       >
+        <style>{`
+          .convergence .flow {
+            stroke-dasharray: 5 7;
+            animation: conv-dash 1.4s linear infinite;
+          }
+          @keyframes conv-dash { to { stroke-dashoffset: -12; } }
+          .convergence .hub-ring {
+            transform-origin: 645px 190px;
+            animation: conv-pulse 2.6s ease-out infinite;
+          }
+          @keyframes conv-pulse {
+            0%   { transform: scale(0.92); opacity: 0.45; }
+            70%  { transform: scale(1.18); opacity: 0; }
+            100% { transform: scale(1.18); opacity: 0; }
+          }
+          .convergence .spark { animation: conv-fade 3.2s ease-in-out infinite; }
+          @keyframes conv-fade {
+            0%, 100% { opacity: 0.25; }
+            50%      { opacity: 1; }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .convergence .flow,
+            .convergence .hub-ring,
+            .convergence .spark,
+            .convergence .bead { animation: none; }
+            .convergence .bead { display: none; }
+          }
+        `}</style>
+
         <defs>
           <marker
             id="about-arrowhead"
@@ -313,17 +262,43 @@ function ConvergenceVisual() {
           </marker>
         </defs>
 
+        {/* Flow lines */}
         {sources.map((s) => (
           <path
             key={s.label}
-            d={`M 190 ${s.y} C 350 ${s.y}, 400 190, 560 190`}
+            className="flow"
+            d={pathFor(s.y)}
             fill="none"
             stroke="var(--color-hairline)"
-            strokeWidth="1.4"
-            strokeDasharray="4 4"
+            strokeWidth="1.6"
           />
         ))}
 
+        {/* Enquiries travelling down each line */}
+        {sources.map((s, i) => (
+          <circle key={`bead-${s.label}`} className="bead" r="4.5" fill="var(--color-accent)">
+            <animateMotion
+              dur="2.8s"
+              begin={`${i * 0.45}s`}
+              repeatCount="indefinite"
+              path={pathFor(s.y)}
+              keyPoints="0;1"
+              keyTimes="0;1"
+              calcMode="spline"
+              keySplines="0.4 0 0.5 1"
+            />
+            <animate
+              attributeName="opacity"
+              dur="2.8s"
+              begin={`${i * 0.45}s`}
+              repeatCount="indefinite"
+              values="0;1;1;0"
+              keyTimes="0;0.12;0.82;1"
+            />
+          </circle>
+        ))}
+
+        {/* Source pills */}
         {sources.map((s) => (
           <g key={`src-${s.label}`}>
             <rect
@@ -339,7 +314,7 @@ function ConvergenceVisual() {
             />
             <text
               x="110"
-              y={s.y + 4}
+              y={s.y + 5}
               textAnchor="middle"
               fontFamily="var(--font-display)"
               fontSize="14"
@@ -351,9 +326,19 @@ function ConvergenceVisual() {
           </g>
         ))}
 
+        {/* Hub */}
+        <circle
+          className="hub-ring"
+          cx="645"
+          cy="190"
+          r="78"
+          fill="none"
+          stroke="var(--color-accent)"
+          strokeWidth="2"
+        />
         <g>
           <rect
-            x="560"
+            x="545"
             y="140"
             rx="20"
             ry="20"
@@ -362,68 +347,81 @@ function ConvergenceVisual() {
             fill="var(--color-primary)"
           />
           <text
-            x="660"
-            y="180"
+            x="645"
+            y="176"
             textAnchor="middle"
             fontFamily="var(--font-display)"
             fontSize="16"
             fontWeight="800"
             fill="var(--color-on-primary)"
           >
-            Tandemm system
+            One system
           </text>
           <text
-            x="660"
-            y="205"
+            x="645"
+            y="200"
             textAnchor="middle"
             fontFamily="var(--font-body)"
             fontSize="12"
             fill="rgba(255,255,255,0.75)"
           >
-            One dashboard.
+            Every enquiry caught,
           </text>
           <text
-            x="660"
-            y="222"
+            x="645"
+            y="218"
             textAnchor="middle"
             fontFamily="var(--font-body)"
             fontSize="12"
             fill="rgba(255,255,255,0.75)"
           >
-            Every enquiry caught.
+            chased and answered.
           </text>
         </g>
 
         <path
-          d="M 760 190 L 810 190"
+          className="flow"
+          d="M 745 190 L 800 190"
           stroke="var(--color-accent)"
-          strokeWidth="2"
+          strokeWidth="2.5"
           fill="none"
           markerEnd="url(#about-arrowhead)"
         />
 
-        <g>
+        {/* Output */}
+        <g className="spark">
           <rect
-            x="820"
-            y="170"
-            rx="10"
-            ry="10"
-            width="60"
-            height="40"
-            fill="var(--color-surface-muted)"
-            stroke="var(--color-hairline)"
-            strokeWidth="1"
+            x="812"
+            y="163"
+            rx="12"
+            ry="12"
+            width="72"
+            height="54"
+            fill="var(--color-accent-soft)"
+            stroke="var(--color-accent)"
+            strokeWidth="1.5"
           />
           <text
-            x="850"
-            y="195"
+            x="848"
+            y="186"
             textAnchor="middle"
             fontFamily="var(--font-display)"
-            fontSize="12"
+            fontSize="15"
             fontWeight="800"
-            fill="var(--color-ink)"
+            fill="var(--color-accent-hover)"
           >
             Booked
+          </text>
+          <text
+            x="848"
+            y="203"
+            textAnchor="middle"
+            fontFamily="var(--font-display)"
+            fontSize="13"
+            fontWeight="700"
+            fill="var(--color-accent-hover)"
+          >
+            jobs
           </text>
         </g>
       </svg>
