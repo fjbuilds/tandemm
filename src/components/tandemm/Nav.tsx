@@ -3,8 +3,9 @@ import { cn } from "@/lib/utils";
 
 const links = [
   { href: "/", label: "Home", key: "home" },
-  { href: "/system", label: "The system", key: "system" },
-  { href: "/results", label: "Results", key: "results" },
+  { href: "/features", label: "Features", key: "features" },
+  { href: "/pricing", label: "Pricing", key: "pricing" },
+  { href: "/system", label: "How it works", key: "system" },
   { href: "/about", label: "About", key: "about" },
 ] as const;
 
@@ -14,7 +15,15 @@ const PHONE_DISPLAY = "020 0000 0000";
 export function Nav({
   active,
 }: {
-  active: "home" | "system" | "results" | "about" | "book" | "legal";
+  active:
+    | "home"
+    | "features"
+    | "pricing"
+    | "system"
+    | "results"
+    | "about"
+    | "book"
+    | "legal";
 }) {
   return (
     <div className="sticky top-0 z-50 w-full p-4 font-[family-name:var(--font-body)]">
