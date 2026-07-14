@@ -43,26 +43,26 @@ const TIERS: Tier[] = [
     key: "growth",
     name: "Growth",
     who: "2 to 5 person team",
-    monthly: 1000,
-    adSpend: 500,
-    estLeads: "20 to 28",
+    monthly: 900,
+    adSpend: 450,
+    estLeads: "18 to 26",
     highlight: true,
   },
   {
     key: "scale",
     name: "Scale",
     who: "5 to 10 person team",
-    monthly: 1500,
-    adSpend: 750,
-    estLeads: "28 to 38",
+    monthly: 1200,
+    adSpend: 600,
+    estLeads: "25 to 34",
   },
   {
     key: "fleet",
     name: "Fleet",
     who: "10+ team, multi-branch",
-    monthly: 2000,
-    adSpend: 1000,
-    estLeads: "40+",
+    monthly: 1500,
+    adSpend: 750,
+    estLeads: "35+",
   },
 ];
 
@@ -542,7 +542,7 @@ function SpendBreakdown() {
             You pay
           </span>
           <span className="font-[family-name:var(--font-display)] text-[30px] font-extrabold leading-none">
-            £1,000<span className="text-[14px] font-semibold text-white/70">/mo</span>
+            £900<span className="text-[14px] font-semibold text-white/70">/mo</span>
           </span>
         </div>
         <div className="mt-3 flex h-2 overflow-hidden rounded-full bg-white/10">
@@ -550,8 +550,8 @@ function SpendBreakdown() {
           <div className="h-full bg-white/80" style={{ width: "50%" }} />
         </div>
         <div className="mt-2 flex items-center justify-between text-[11px] text-white/80">
-          <span>Ad spend, £500</span>
-          <span>Everything else, £500</span>
+          <span>Ad spend, £450</span>
+          <span>Everything else, £450</span>
         </div>
       </div>
 
@@ -592,7 +592,7 @@ function SpendBreakdown() {
             You pay
           </div>
           <div className="font-[family-name:var(--font-display)] text-[24px] font-extrabold text-[var(--color-primary)]">
-            £1,000/mo
+            £900/mo
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ import { Reveal } from "@/components/tandemm/Reveal";
 import { Button } from "@/components/tandemm/Button";
 import { HeroVisual } from "@/components/tandemm/HeroVisual";
 import { DiamondLoader } from "@/components/tandemm/DiamondLoader";
+import { DashboardPhone } from "@/components/tandemm/Dashboard";
 
 const paletteOverride = {
   "--color-canvas": "#EDEEEA",
@@ -56,7 +57,7 @@ const DPC = [
     items: [
       "Google Ads managed and tuned weekly",
       "Every enquiry in one dashboard",
-      "Missed calls answered by a UK-based team",
+      "Missed calls recovered and customers quoted",
     ],
   },
 ];
@@ -72,9 +73,9 @@ const FEATURE_PREVIEW = [
     body: "Fast, mobile-first, and built around one goal: get the homeowner into the widget or onto the phone.",
   },
   {
-    tag: "LSA and CPC ads",
-    title: "Top of Google, from day one.",
-    body: "Local Services Ads charge only when a homeowner contacts you. Google Ads pick up the slack. Both tuned weekly.",
+    tag: "Google Ads",
+    title: "In front of homeowners who are ready to book.",
+    body: "Your ads sit where the work is, on the searches that turn into jobs. Tuned every week, and spend moved to whatever is paying back.",
   },
   {
     tag: "Tracking and widget",
@@ -280,12 +281,12 @@ export default function HomePage() {
               What you get
             </div>
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              Everything you&apos;d normally hire five people for.
+              Everything you would normally hire multiple people for.
             </h2>
             <p className="mx-auto mt-3 max-w-[620px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-              This is the whole thing. The audit and the setup come first,
-              then everyone lands here: site, ads, SEO, dashboard and call
-              handling, all pointed at one number, booked jobs.
+              Your site, your ads, your SEO, your enquiries and your missed
+              calls, all handled by one team and pulling in the same
+              direction. You get on with the work.
             </p>
           </Reveal>
 
@@ -352,7 +353,7 @@ export default function HomePage() {
             </Reveal>
 
             <Reveal>
-              <MiniPhoneDashboard />
+              <DashboardPhone view="list" />
             </Reveal>
           </div>
         </div>
@@ -475,83 +476,3 @@ function DpcArt({ name }: { name: "magnifier" | "wrench" | "pulse" }) {
   );
 }
 
-/* ─────────────────────────────────────────────────────────── */
-/*  Mini phone dashboard                                       */
-/* ─────────────────────────────────────────────────────────── */
-
-function MiniPhoneDashboard() {
-  const newLeads = [
-    { name: "S. Patel", area: "SW11", src: "LSA", note: "Fuse box quote" },
-    { name: "M. Dawson", area: "SE22", src: "CPC", note: "EV charger install" },
-    { name: "J. Reid", area: "SW15", src: "Missed call", note: "Callback, 09:42" },
-  ];
-
-  return (
-    <div className="mx-auto w-full max-w-[280px]">
-      <div className="relative rounded-[38px] border border-[var(--color-hairline)] bg-[#0e1420] p-2.5 shadow-[var(--shadow-2)]">
-        <div className="relative overflow-hidden rounded-[30px] bg-[var(--color-canvas)]">
-          <div className="flex items-center justify-between px-5 pt-3 text-[9px] font-semibold text-[var(--color-ink-muted)]">
-            <span>09:42</span>
-            <div className="absolute left-1/2 top-[10px] h-3.5 w-14 -translate-x-1/2 rounded-b-xl bg-[#0e1420]" />
-            <span>100%</span>
-          </div>
-
-          <div className="px-3 pb-3 pt-2">
-            <div className="mb-2 flex items-center justify-between px-2">
-              <div>
-                <div className="text-[9px] font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
-                  Tandemm
-                </div>
-                <div className="font-[family-name:var(--font-display)] text-[14px] font-bold">
-                  Today
-                </div>
-              </div>
-              <span className="rounded-full bg-[var(--color-primary)] px-2 py-[3px] text-[9px] font-bold text-white">
-                3 new
-              </span>
-            </div>
-
-            <div className="space-y-2">
-              {newLeads.map((l) => (
-                <div
-                  key={l.name}
-                  className="rounded-lg border border-[var(--color-hairline-soft)] bg-[var(--color-surface)] p-2.5"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-bold">
-                      {l.name} · {l.area}
-                    </span>
-                    <span className="rounded-full bg-[var(--color-surface-sunken)] px-1.5 py-[1px] text-[8px] font-semibold text-[var(--color-ink-muted)]">
-                      {l.src}
-                    </span>
-                  </div>
-                  <div className="mt-0.5 text-[10px] text-[var(--color-ink-muted)]">
-                    {l.note}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-2 rounded-lg bg-[var(--color-primary)] p-2.5 text-white">
-              <div className="text-[9px] uppercase tracking-[0.06em] text-white/60">
-                Booked this week
-              </div>
-              <div className="flex items-baseline justify-between">
-                <span className="font-[family-name:var(--font-display)] text-[18px] font-extrabold">
-                  6 jobs
-                </span>
-                <span className="text-[10px] font-semibold text-white/80">
-                  £4,320
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="pb-2">
-            <div className="mx-auto h-1 w-20 rounded-full bg-[var(--color-hairline)]" />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
