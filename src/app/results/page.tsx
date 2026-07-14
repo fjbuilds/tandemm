@@ -319,7 +319,7 @@ export default function ResultsPage() {
                       key={item}
                       className="flex items-start gap-2.5 text-sm leading-[1.45]"
                     >
-                      <span className="mt-0.5 font-bold text-[var(--color-accent-hover)]">&rarr;</span>
+                      <span className="mt-[9px] block h-1 w-1 shrink-0 rounded-full bg-[var(--color-ink-muted)]" />
                       <span className="text-[var(--color-ink)]">{item}</span>
                     </div>
                   ))}

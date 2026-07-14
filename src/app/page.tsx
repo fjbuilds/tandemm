@@ -19,7 +19,7 @@ const paletteOverride = {
 } as CSSProperties;
 
 /* ─────────────────────────────────────────────────────────── */
-/*  Diagnosis / Prevention / Cure                              */
+/*  Diagnosis / Prevention / Cure, the process                 */
 /* ─────────────────────────────────────────────────────────── */
 
 const DPC = [
@@ -28,7 +28,7 @@ const DPC = [
     title: "Diagnosis",
     tag: "Free",
     oneLiner:
-      "A scored audit of your site, your ads and your Google rankings, delivered as a PDF you keep.",
+      "A scored audit of your site, your ads and your Google rankings. Yours to keep, no commitment.",
     items: [
       "Every page checked by hand",
       "Ad accounts scored on structure and waste",
@@ -38,23 +38,23 @@ const DPC = [
   {
     step: "02",
     title: "Prevention",
-    tag: "Included",
+    tag: "Included with Cure",
     oneLiner:
-      "We rebuild the site, wire in tracking, restructure the ads. All included in the first month.",
+      "Website rebuild, tracking number, widget, dashboard. Built for you when you sign up for Cure, at no extra cost.",
     items: [
       "Website rebuilt, fast and mobile-first",
-      "Tracking phone number and widget installed",
-      "LSA and Google Ads set up from scratch",
+      "Tracking phone number and lead widget installed",
+      "Dashboard set up, ads restructured",
     ],
   },
   {
     step: "03",
     title: "Cure",
-    tag: "Ongoing",
+    tag: "The paid stage",
     oneLiner:
-      "The engine keeps running. Ads tuned, SEO built out, enquiries triaged, missed calls caught.",
+      "Where the lead generation happens. One monthly fee, ad spend at cost, and the engine keeps running.",
     items: [
-      "Ads tuned weekly, SEO built out monthly",
+      "Google Ads managed and tuned weekly",
       "Every enquiry in one dashboard",
       "Missed calls answered by a UK-based team",
     ],
@@ -75,19 +75,19 @@ const SIGNUP_STEPS = [
   {
     n: 2,
     title: "You decide",
-    desc: "Book a 30-min call, or fill it in yourself. Watch the short video, tell us the details.",
+    desc: "Book a 30 minute call, or fill it in yourself. Watch the short video, tell us the details.",
     time: "30 minutes",
   },
   {
     n: 3,
     title: "We build",
-    desc: "Website rebuild, tracking number, widget, dashboard, Google Ads — all set up for you.",
-    time: "10–14 days",
+    desc: "Website rebuild, tracking number, widget, dashboard, Google Ads. All set up for you.",
+    time: "10 to 14 days",
   },
   {
     n: 4,
     title: "You get calls",
-    desc: "LSA + CPC live. Every enquiry lands in one dashboard. Missed calls caught and texted back.",
+    desc: "LSA and CPC ads live. Every enquiry lands in one dashboard. Missed calls caught and texted back.",
     time: "Ongoing",
   },
 ];
@@ -103,12 +103,12 @@ const FEATURE_PREVIEW = [
     body: "Fast, mobile-first, and built around one goal: get the homeowner into the widget or onto the phone.",
   },
   {
-    tag: "LSA + CPC ads",
+    tag: "LSA and CPC ads",
     title: "Top of Google, from day one.",
     body: "Local Services Ads charge only when a homeowner contacts you. Google Ads pick up the slack. Both tuned weekly.",
   },
   {
-    tag: "Tracking + widget",
+    tag: "Tracking and widget",
     title: "Every call and form, in one dashboard.",
     body: "Dedicated tracking number, on-site widget, missed-call auto-text. Nothing lands in a black hole.",
   },
@@ -126,11 +126,11 @@ const FEATURE_PREVIEW = [
 const FAQS = [
   {
     q: "How much does it cost?",
-    a: "One monthly fee between £650 and £1,650 depending on team size and ad budget. That covers the site, the ads, the SEO, the dashboard and the call handling. Google Ad spend is on top and passed through at cost. See the full pricing on the Pricing page.",
+    a: "The audit is free. The website rebuild, tracking setup and dashboard are all included when you sign up for the lead generation stage (Cure). That runs between £650 and £1,650 a month depending on team size and ad budget. Google Ad spend is on top and passed through at cost.",
   },
   {
     q: "Do I have to sign a contract?",
-    a: "No. One month's notice, cancel any time. If it is not working, you walk without penalty.",
+    a: "One month's notice on the monthly fee. You commit to a three month minimum on lead generation, which is what the free rebuild is built on. After that, notice period is one month, cancel any time.",
   },
   {
     q: "What's the difference between LSA and CPC?",
@@ -138,11 +138,11 @@ const FAQS = [
   },
   {
     q: "Do I own the website you build?",
-    a: "Yes. The website, the domain, the content — all yours. If you leave, you take it with you.",
+    a: "Yes. The website, the domain, the content are all yours. If you leave after the three month term, you take it with you.",
   },
   {
     q: "How fast will I see leads?",
-    a: "LSA leads inside 2 to 4 weeks. CPC inside the first month. SEO compounds — month three beats month one.",
+    a: "LSA leads inside 2 to 4 weeks of going live. CPC inside the first month. SEO compounds, so month three beats month one.",
   },
 ];
 
@@ -185,23 +185,21 @@ export default function HomePage() {
         <div className="hero-split-grid">
           <div className="hero-split-copy">
             <Reveal>
-              <div className="mb-5 inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-white/70 px-3.5 py-[7px] text-[13px] font-semibold tracking-[0.02em] text-[var(--color-ink-muted)]">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
-                Free website audit
+              <div className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
+                For UK trade businesses
               </div>
             </Reveal>
             <Reveal>
               <h1 className="hero-title">
                 Your phone,
                 <br />
-                <span className="hero-subtitle-em">ringing</span>.
+                ringing.
               </h1>
             </Reveal>
             <Reveal>
               <p className="hero-desc" style={{ marginTop: 22, maxWidth: 480 }}>
-                We rebuild your website, run your ads, capture every lead,
-                and catch the calls you miss. Everything under one roof,
-                one fee, one process.
+                We audit your site, rebuild it, run your ads and catch every
+                enquiry. One process, one fee. You get in the van.
               </p>
             </Reveal>
 
@@ -226,34 +224,17 @@ export default function HomePage() {
                 </div>
                 <button
                   type="submit"
-                  className="inline-flex h-[50px] shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-[var(--radius-pill)] bg-[var(--color-primary)] px-6 text-[15px] font-semibold text-[var(--color-on-primary)] transition-colors hover:bg-[var(--color-primary-hover)]"
+                  className="inline-flex h-[50px] shrink-0 items-center justify-center whitespace-nowrap rounded-[var(--radius-pill)] bg-[var(--color-primary)] px-6 text-[15px] font-semibold text-[var(--color-on-primary)] transition-colors hover:bg-[var(--color-primary-hover)]"
                 >
-                  Get my free audit &rarr;
+                  Get my free audit
                 </button>
               </form>
             </Reveal>
 
             <Reveal>
               <p className="hero-cta-note">
-                No credit card. No obligation. Yours to keep either way.
+                Free, yours to keep. No credit card. No obligation.
               </p>
-            </Reveal>
-
-            <Reveal>
-              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] text-[var(--color-ink-muted)]">
-                <span className="flex items-center gap-1.5">
-                  <span className="font-bold text-[var(--color-accent-hover)]">✓</span>
-                  No setup fee
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <span className="font-bold text-[var(--color-accent-hover)]">✓</span>
-                  One month's notice
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <span className="font-bold text-[var(--color-accent-hover)]">✓</span>
-                  Ad spend at cost
-                </span>
-              </div>
             </Reveal>
           </div>
 
@@ -265,7 +246,7 @@ export default function HomePage() {
                 <div className="hero-glass-fade" aria-hidden="true" />
                 <div className="hero-glass-gate">
                   <span className="hero-glass-gate-copy">
-                    Enter your URL above to get an audit like this on your site.
+                    Enter your URL to get an audit like this on your site.
                   </span>
                   <Button href="/book">Book a call instead</Button>
                 </div>
@@ -276,12 +257,65 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── DPC, the process, not offerings ── */}
+      <section className="px-6 py-20">
+        <div className="mx-auto max-w-[1160px]">
+          <Reveal className="mb-10 text-center">
+            <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
+              What we do
+            </div>
+            <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
+              Diagnosis. Prevention. Cure.
+            </h2>
+            <p className="mx-auto mt-3 max-w-[620px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
+              One process. Everyone starts with the free audit. Everyone
+              gets the site rebuild and the setup for free when they
+              commit to the lead generation stage.
+            </p>
+          </Reveal>
+
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+            {DPC.map((item) => (
+              <Reveal key={item.step}>
+                <div className="flex h-full flex-col rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
+                  <div className="mb-3 flex items-center gap-2">
+                    <span className="text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-accent)]">
+                      Stage {item.step}
+                    </span>
+                    <span className="rounded-full border border-[var(--color-hairline)] bg-[var(--color-canvas)] px-2 py-[3px] text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
+                      {item.tag}
+                    </span>
+                  </div>
+                  <h3 className="mb-2 font-[family-name:var(--font-display)] text-xl font-bold">
+                    {item.title}
+                  </h3>
+                  <p className="mb-4 text-[14.5px] leading-[1.55] text-[var(--color-ink-muted)]">
+                    {item.oneLiner}
+                  </p>
+                  <ul className="mt-auto flex flex-col gap-2 border-t border-[var(--color-hairline-soft)] pt-4">
+                    {item.items.map((it) => (
+                      <li
+                        key={it}
+                        className="flex items-start gap-2 text-[13.5px] leading-[1.4] text-[var(--color-ink)]"
+                      >
+                        <span className="mt-[7px] block h-1 w-1 shrink-0 rounded-full bg-[var(--color-ink-muted)]" />
+                        <span>{it}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── SIGNUP PROCESS GRAPHIC ── */}
       <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
         <div className="mx-auto max-w-[1160px]">
           <Reveal className="mb-12 text-center">
-            <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
-              How it works
+            <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
+              How you start
             </div>
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
               From audit to booked jobs, in four steps.
@@ -320,77 +354,25 @@ export default function HomePage() {
             <div className="flex flex-wrap items-center justify-center gap-3">
               <Button href="/book">Get started</Button>
               <Button href="/system" variant="ghost">
-                See the full process &rarr;
+                See the full process
               </Button>
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* ── DIAGNOSIS / PREVENTION / CURE (compact) ── */}
+      {/* ── FEATURE PREVIEW ── */}
       <section className="px-6 py-20">
         <div className="mx-auto max-w-[1160px]">
-          <Reveal className="mb-10 text-center">
-            <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-accent)]">
-              The model
-            </div>
-            <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              Diagnosis. Prevention. Cure.
-            </h2>
-            <p className="mx-auto mt-3 max-w-[600px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Not a service you buy. A three-stage process. Each stage
-              earns its place.
-            </p>
-          </Reveal>
-
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-            {DPC.map((item) => (
-              <Reveal key={item.step}>
-                <div className="flex h-full flex-col rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
-                  <div className="mb-3 flex items-center gap-2">
-                    <span className="text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-accent)]">
-                      Stage {item.step}
-                    </span>
-                    <span className="rounded-full border border-[var(--color-hairline)] bg-[var(--color-canvas)] px-2 py-[3px] text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
-                      {item.tag}
-                    </span>
-                  </div>
-                  <h3 className="mb-2 font-[family-name:var(--font-display)] text-xl font-bold">
-                    {item.title}
-                  </h3>
-                  <p className="mb-4 text-[14.5px] leading-[1.55] text-[var(--color-ink-muted)]">
-                    {item.oneLiner}
-                  </p>
-                  <ul className="mt-auto flex flex-col gap-2 border-t border-[var(--color-hairline-soft)] pt-4">
-                    {item.items.map((it) => (
-                      <li
-                        key={it}
-                        className="flex items-start gap-2 text-[13.5px] leading-[1.4] text-[var(--color-ink)]"
-                      >
-                        <span className="mt-[6px] block h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]" />
-                        <span>{it}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── FEATURE PREVIEW ── */}
-      <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
-        <div className="mx-auto max-w-[1160px]">
           <Reveal className="mb-12 text-center">
-            <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
-              What you get
+            <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
+              What you get in Cure
             </div>
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
               Everything you'd normally hire five people for.
             </h2>
-            <p className="mx-auto mt-3 max-w-[600px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Site, ads, SEO, dashboard, call handling — one team, one
+            <p className="mx-auto mt-3 max-w-[620px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
+              Site, ads, SEO, dashboard, call handling. One team, one
               price, one number that matters: booked jobs.
             </p>
           </Reveal>
@@ -415,64 +397,67 @@ export default function HomePage() {
 
           <Reveal className="mt-8 text-center">
             <Button href="/features" variant="ghost">
-              See every feature &rarr;
+              See every feature
             </Button>
           </Reveal>
         </div>
       </section>
 
-      {/* ── DASHBOARD MOCK (compact) ── */}
-      <section className="mx-auto max-w-[1160px] px-6 py-20">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_auto]">
-          <Reveal>
-            <div>
-              <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-accent)]">
-                One dashboard
+      {/* ── DASHBOARD PREVIEW ── */}
+      <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
+        <div className="mx-auto max-w-[1160px]">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_auto]">
+            <Reveal>
+              <div>
+                <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
+                  One dashboard
+                </div>
+                <h2 className="mb-4 font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
+                  Every enquiry, every source, on your phone.
+                </h2>
+                <p className="mb-6 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
+                  We handle the system. You see the outcome. New leads with
+                  the source that drove them, one-tap actions, this week's
+                  booked jobs, and the missed calls we caught.
+                </p>
+                <ul className="mb-6 flex flex-col gap-2.5 text-[14.5px] leading-[1.55]">
+                  {[
+                    "Every call, form, WhatsApp and missed call in one place",
+                    "Source attribution across LSA, CPC, SEO, direct and referral",
+                    "Missed-call auto-text within 60 seconds",
+                    "Reporting tied to booked jobs, not clicks",
+                  ].map((i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-[var(--color-ink)]">
+                      <span className="mt-[9px] block h-1 w-1 shrink-0 rounded-full bg-[var(--color-ink-muted)]" />
+                      {i}
+                    </li>
+                  ))}
+                </ul>
+                <Button href="/features">Explore the dashboard</Button>
               </div>
-              <h2 className="mb-4 font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
-                Every enquiry, every source, on your phone.
-              </h2>
-              <p className="mb-6 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-                We handle the system. You see the outcome. New leads with
-                the source that drove them, one-tap actions, this week's
-                booked jobs, and the missed calls we caught.
-              </p>
-              <ul className="mb-6 flex flex-col gap-2.5 text-[14.5px] leading-[1.55]">
-                {[
-                  "Every call, form, WhatsApp and missed call in one place",
-                  "Source attribution — LSA, CPC, SEO, direct, referral",
-                  "Missed-call auto-text within 60 seconds",
-                  "Reporting tied to booked jobs, not clicks",
-                ].map((i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-[var(--color-ink)]">
-                    <span className="mt-0.5 font-bold text-[var(--color-accent-hover)]">✓</span>
-                    {i}
-                  </li>
-                ))}
-              </ul>
-              <Button href="/features">Explore the dashboard &rarr;</Button>
-            </div>
-          </Reveal>
+            </Reveal>
 
-          <Reveal>
-            <MiniPhoneDashboard />
-          </Reveal>
+            <Reveal>
+              <MiniPhoneDashboard />
+            </Reveal>
+          </div>
         </div>
       </section>
 
       {/* ── PRICING PREVIEW ── */}
-      <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
+      <section className="px-6 py-20">
         <div className="mx-auto max-w-[1160px]">
           <Reveal className="mb-10 text-center">
-            <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
-              Pricing
+            <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
+              Cure pricing
             </div>
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
               One monthly fee. Ad spend at cost.
             </h2>
             <p className="mx-auto mt-3 max-w-[560px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Four tiers based on team size and ad budget. No setup fee.
-              No contract. Ad spend passed through at cost.
+              Four tiers based on team size and ad budget. Free audit,
+              free rebuild, no setup fee. Three month minimum on lead
+              generation, one month notice after that.
             </p>
           </Reveal>
 
@@ -480,8 +465,8 @@ export default function HomePage() {
             <div className="mx-auto grid max-w-[900px] grid-cols-1 gap-4 sm:grid-cols-3">
               {[
                 { name: "Starter", price: 650, who: "Sole traders" },
-                { name: "Growth", price: 950, who: "2–5 team", popular: true },
-                { name: "Scale", price: 1250, who: "5–10 team" },
+                { name: "Growth", price: 950, who: "2 to 5 team", popular: true },
+                { name: "Scale", price: 1250, who: "5 to 10 team" },
               ].map((t) => (
                 <div
                   key={t.name}
@@ -522,7 +507,7 @@ export default function HomePage() {
             <div className="flex flex-wrap items-center justify-center gap-3">
               <Button href="/pricing">See full pricing</Button>
               <Button href="/book" variant="ghost">
-                Get my free audit &rarr;
+                Get my free audit
               </Button>
             </div>
           </Reveal>
@@ -570,7 +555,7 @@ export default function HomePage() {
         </div>
         <div className="mt-6 text-center">
           <Button href="/pricing" variant="ghost">
-            More questions on the Pricing page &rarr;
+            More questions on the Pricing page
           </Button>
         </div>
       </section>
@@ -606,7 +591,7 @@ export default function HomePage() {
 }
 
 /* ─────────────────────────────────────────────────────────── */
-/*  Mini phone dashboard for the home page                     */
+/*  Mini phone dashboard                                       */
 /* ─────────────────────────────────────────────────────────── */
 
 function MiniPhoneDashboard() {

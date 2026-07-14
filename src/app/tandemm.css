@@ -209,28 +209,7 @@ body {
   max-width: 460px;
 }
 
-.hero-subtitle-em {
-  position: relative;
-  font-style: italic;
-  color: var(--color-accent-hover);
-  font-size: 1.14em;
-  letter-spacing: -0.01em;
-}
-
-/* Hand-drawn underline curve under the accented word */
-.hero-subtitle-em::after {
-  content: "";
-  position: absolute;
-  left: -2%;
-  right: -2%;
-  bottom: -0.1em;
-  height: 0.22em;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'><path d='M2 6 Q 20 1, 42 4 T 82 3 Q 92 3, 98 6' fill='none' stroke='%23A9551F' stroke-width='1.8' stroke-linecap='round'/></svg>");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  pointer-events: none;
-  opacity: 0.85;
-}
+/* hero-subtitle-em removed — italic + hand-drawn underline read as templated */
 
 .hero-desc {
   margin-top: 16px;
