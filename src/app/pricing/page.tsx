@@ -35,7 +35,7 @@ const TIERS: Tier[] = [
     key: "starter",
     name: "Starter",
     who: "Sole traders, 1 van",
-    monthly: 650,
+    monthly: 600,
     adSpend: 300,
     estLeads: "12 to 18",
   },
@@ -43,7 +43,7 @@ const TIERS: Tier[] = [
     key: "growth",
     name: "Growth",
     who: "2 to 5 person team",
-    monthly: 950,
+    monthly: 1000,
     adSpend: 500,
     estLeads: "20 to 28",
     highlight: true,
@@ -52,7 +52,7 @@ const TIERS: Tier[] = [
     key: "scale",
     name: "Scale",
     who: "5 to 10 person team",
-    monthly: 1250,
+    monthly: 1500,
     adSpend: 750,
     estLeads: "28 to 38",
   },
@@ -60,7 +60,7 @@ const TIERS: Tier[] = [
     key: "fleet",
     name: "Fleet",
     who: "10+ team, multi-branch",
-    monthly: 1650,
+    monthly: 2000,
     adSpend: 1000,
     estLeads: "40+",
   },
@@ -75,6 +75,7 @@ const INCLUDED = [
     group: "Website",
     items: [
       "Full website rebuild (yours to keep)",
+      "Design changes made for you at any time",
       "Hosting, SSL certificate and domain",
       "Mobile-first, sub-2s load times",
       "Above-the-fold enquiry widget on every page",
@@ -144,7 +145,7 @@ const INCLUDED = [
 const FAQS = [
   {
     q: "What am I actually paying for?",
-    a: "The monthly fee covers Cure, the lead generation stage. That is ads managed weekly, SEO built out monthly, the dashboard, the tracking, and the missed-call catcher. The audit and the website rebuild are free (see below).",
+    a: "One monthly fee, everything in. That covers your ad spend, the ads managed weekly, SEO built out monthly, the dashboard, the tracking, and the missed-call catcher. Nothing is bolted on the top. The audit and the website rebuild are free (see below).",
   },
   {
     q: "How does the free website rebuild work?",
@@ -152,7 +153,7 @@ const FAQS = [
   },
   {
     q: "How does the ad spend work?",
-    a: "The ad spend on each plan goes straight to Google. We do not mark it up. You see exactly what was spent, on which campaigns, on which days. Any unspent budget rolls into the following month.",
+    a: "It is included in your fee, and it is exactly half of it. That half goes straight to Google, with no markup. You see exactly what was spent, on which campaigns, on which days. Any unspent budget rolls into the following month.",
   },
   {
     q: "What is the difference between LSA and CPC ads?",
@@ -211,15 +212,15 @@ export default function PricingPage() {
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
               Free audit. Free rebuild.
               <br className="hidden sm:inline" />
-              Then one fee for the ads.
+              Then one fee, everything in.
             </h1>
           </Reveal>
           <Reveal>
             <p className="mx-auto mt-[22px] max-w-[620px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
-              You pay when the lead generation stage starts. One monthly
-              fee covers the ads, the SEO, the dashboard and the call
-              handling. Google Ad spend is on top and passed through at
-              cost. Three month minimum, one month notice after that.
+              You pay when the lead generation starts. One monthly fee
+              covers your ad spend, the ads management, the SEO, the
+              dashboard and the call handling. Nothing bolted on the top.
+              Three month minimum, one month notice after that.
             </p>
           </Reveal>
         </div>
@@ -230,9 +231,9 @@ export default function PricingPage() {
         <div className="flex flex-wrap justify-center gap-3">
           {[
             "Free audit, no card",
-            "Free website rebuild when you sign up for Cure",
+            "Free website rebuild when you sign up",
             "Three month minimum, then one month notice",
-            "Ad spend passed through at cost",
+            "Ad spend included, no markup",
           ].map((item) => (
             <div
               key={item}
@@ -273,20 +274,20 @@ export default function PricingPage() {
 
                 <div className="mb-1 flex items-baseline gap-1">
                   <span className="font-[family-name:var(--font-display)] text-[38px] font-extrabold leading-none tracking-tight">
-                    £{tier.monthly}
+                    £{tier.monthly.toLocaleString("en-GB")}
                   </span>
                   <span className="text-[13px] text-[var(--color-ink-muted)]">
                     /mo + VAT
                   </span>
                 </div>
                 <div className="mb-5 text-[12px] text-[var(--color-ink-faint)]">
-                  Management fee. Ad spend on top.
+                  All in. Ad spend included.
                 </div>
 
                 <div className="mb-5 rounded-[var(--radius-md)] border border-[var(--color-hairline-soft)] bg-[var(--color-surface-muted)] px-4 py-3">
                   <div className="flex items-center justify-between text-[12px]">
                     <span className="text-[var(--color-ink-muted)]">
-                      Recommended ad spend
+                      Ad spend included
                     </span>
                     <span className="font-bold text-[var(--color-ink)]">
                       £{tier.adSpend}/mo
@@ -325,9 +326,9 @@ export default function PricingPage() {
 
         <Reveal>
           <p className="mx-auto mt-8 max-w-[720px] text-center text-[14px] leading-[1.55] text-[var(--color-ink-muted)]">
-            All tiers include the full Cure system, the website rebuild
-            and the setup. Tiers differ only on the recommended monthly
-            ad spend and expected lead volume.
+            Every tier includes the full system, the website rebuild and
+            the setup. Tiers differ only on how much ad spend is included
+            and the leads that come with it.
           </p>
         </Reveal>
       </section>
@@ -403,21 +404,21 @@ export default function PricingPage() {
                 Where your money goes
               </div>
               <h2 className="mb-4 font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
-                Full transparency on ad spend. No markup, ever.
+                Ad spend included. No markup, ever.
               </h2>
               <p className="mb-4 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-                Some agencies bury the ad spend inside their fee and
-                pocket the difference. Not here.
+                Some agencies bolt ad spend on top, then quietly pad it.
+                We do the opposite.
               </p>
               <p className="mb-6 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-                Your Google Ads budget goes straight to Google. You see
-                it in the dashboard, every pound, every campaign, every
-                day. Any unspent budget rolls to next month. Cancel and
-                the Google account is yours.
+                Exactly half your fee is ad spend, and it goes straight to
+                Google. You see it in the dashboard, every pound, every
+                campaign, every day. Any unspent budget rolls to next
+                month. Cancel and the Google account is yours.
               </p>
               <ul className="flex flex-col gap-2.5 text-[15px] leading-[1.55]">
                 {[
-                  "Ad spend billed by Google, not by us",
+                  "Ad spend is exactly half your monthly fee",
                   "Dashboard shows live spend by campaign",
                   "Unspent budget rolls into next month",
                   "Your Google Ads account, in your name",
@@ -517,66 +518,81 @@ export default function PricingPage() {
 /* ─────────────────────────────────────────────────────────── */
 
 function SpendBreakdown() {
+  const value = [
+    { label: "Website build and ongoing changes", worth: "£1,000+" },
+    { label: "Google Ads management", worth: "£600+" },
+    { label: "SEO and content", worth: "£500+" },
+    { label: "Dashboard, tracking and CRM", worth: "£300+" },
+    { label: "Call handling and missed-call catcher", worth: "£400+" },
+  ];
+
   return (
     <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
       <div className="mb-1 text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
-        Sample monthly bill, Growth plan
+        Sample monthly bill
       </div>
       <div className="mb-5 text-sm text-[var(--color-ink-faint)]">
-        What lands on your card
+        One fee, everything in
       </div>
 
-      <div className="space-y-3">
-        <div className="flex items-center justify-between rounded-[var(--radius-md)] border border-[var(--color-hairline-soft)] bg-[var(--color-surface-muted)] px-4 py-3">
-          <div>
-            <div className="text-[14px] font-bold text-[var(--color-ink)]">
-              Tandemm Cure fee
-            </div>
-            <div className="text-[12px] text-[var(--color-ink-muted)]">
-              Ads, SEO, dashboard, call handling
-            </div>
+      {/* The one fee */}
+      <div className="rounded-[var(--radius-md)] bg-[var(--color-primary)] px-5 py-4 text-white">
+        <div className="flex items-baseline justify-between">
+          <span className="font-[family-name:var(--font-display)] text-[15px] font-bold">
+            You pay
+          </span>
+          <span className="font-[family-name:var(--font-display)] text-[30px] font-extrabold leading-none">
+            £1,000<span className="text-[14px] font-semibold text-white/70">/mo</span>
+          </span>
+        </div>
+        <div className="mt-3 flex h-2 overflow-hidden rounded-full bg-white/10">
+          <div className="h-full bg-[var(--color-accent)]" style={{ width: "50%" }} />
+          <div className="h-full bg-white/80" style={{ width: "50%" }} />
+        </div>
+        <div className="mt-2 flex items-center justify-between text-[11px] text-white/80">
+          <span>Ad spend, £500</span>
+          <span>Everything else, £500</span>
+        </div>
+      </div>
+
+      {/* What that covers */}
+      <div className="mt-5 text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
+        What that covers
+      </div>
+      <div className="mt-2 space-y-1.5">
+        {value.map((v) => (
+          <div
+            key={v.label}
+            className="flex items-center justify-between gap-3 text-[13.5px]"
+          >
+            <span className="flex items-start gap-2 text-[var(--color-ink)]">
+              <span className="mt-[7px] block h-1 w-1 shrink-0 rounded-full bg-[var(--color-ink-muted)]" />
+              {v.label}
+            </span>
+            <span className="shrink-0 text-[var(--color-ink-faint)] line-through">
+              {v.worth}
+            </span>
           </div>
-          <div className="font-[family-name:var(--font-display)] text-[18px] font-bold">
-            £950
+        ))}
+      </div>
+
+      <div className="my-4 h-px bg-[var(--color-hairline)]" />
+
+      <div className="flex items-center justify-between">
+        <div>
+          <div className="text-[13px] text-[var(--color-ink-muted)]">
+            Bought separately
+          </div>
+          <div className="font-[family-name:var(--font-display)] text-[20px] font-extrabold text-[var(--color-ink)] line-through decoration-[var(--color-ink-faint)]">
+            £2,800+/mo
           </div>
         </div>
-
-        <div className="flex items-center justify-between rounded-[var(--radius-md)] border border-[var(--color-hairline-soft)] bg-[var(--color-surface-muted)] px-4 py-3">
-          <div>
-            <div className="text-[14px] font-bold text-[var(--color-ink)]">
-              Google Ads spend
-            </div>
-            <div className="text-[12px] text-[var(--color-ink-muted)]">
-              Billed by Google, at cost. No markup.
-            </div>
+        <div className="text-right">
+          <div className="text-[13px] text-[var(--color-ink-muted)]">
+            You pay
           </div>
-          <div className="font-[family-name:var(--font-display)] text-[18px] font-bold">
-            £500
-          </div>
-        </div>
-
-        <div className="my-2 h-px bg-[var(--color-hairline)]" />
-
-        <div className="flex items-center justify-between px-4 py-2">
-          <div className="font-[family-name:var(--font-display)] text-[15px] font-bold">
-            Total monthly investment
-          </div>
-          <div className="font-[family-name:var(--font-display)] text-[22px] font-extrabold text-[var(--color-primary)]">
-            £1,450
-          </div>
-        </div>
-
-        <div className="rounded-[var(--radius-md)] bg-[var(--color-primary)] px-4 py-3 text-white">
-          <div className="text-[11px] uppercase tracking-[0.06em] text-white/60">
-            Where every pound goes
-          </div>
-          <div className="mt-2 flex h-2 overflow-hidden rounded-full bg-white/10">
-            <div className="h-full bg-white/80" style={{ width: "65.5%" }} />
-            <div className="h-full bg-[var(--color-accent)]" style={{ width: "34.5%" }} />
-          </div>
-          <div className="mt-2 flex items-center justify-between text-[11px] text-white/80">
-            <span>Cure fee, 65%</span>
-            <span>Google Ads, 35%</span>
+          <div className="font-[family-name:var(--font-display)] text-[24px] font-extrabold text-[var(--color-primary)]">
+            £1,000/mo
           </div>
         </div>
       </div>

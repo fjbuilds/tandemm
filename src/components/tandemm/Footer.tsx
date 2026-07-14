@@ -25,14 +25,11 @@ export function Footer() {
               alt="Tandemm"
               className="h-9 w-auto"
             />
-            <p className="my-4 max-w-[340px] text-[17px] leading-[1.5] text-white/70">
-              One team running the ads, SEO, the site, the enquiry system and
-              call handling for UK trade businesses. Leads land, we catch them,
-              manage them, and make sure none go cold.
-            </p>
-            <Button href="/book" variant="secondary">
-              Book a call
-            </Button>
+            <div className="mt-5">
+              <Button href="/book" variant="secondary">
+                Book a call
+              </Button>
+            </div>
           </div>
 
           <div>
