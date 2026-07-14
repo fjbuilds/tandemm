@@ -77,6 +77,10 @@ const PREVENTION_DEEP = [
     body: "Fast, mobile-first templates with a single conversion goal per page. No stock heroes, no filler blocks, no wall of copy homeowners scroll past.",
   },
   {
+    title: "Design changes any time",
+    body: "The site stays ours to maintain for you. Want the colours tweaked, a new service page, a photo swapped or the offer reworded? Just ask, we make the change, no dev fee.",
+  },
+  {
     title: "Server-side tracking",
     body: "GA4 and Google Ads conversion API events wired server-side, deduplicated, and verified against real form submissions and call events.",
   },
@@ -119,14 +123,6 @@ const AUDIT_CHECKS = [
   "Whether the site loads fast enough on a mid-range phone on 4G",
   "Where you rank on Google for the jobs homeowners actually search",
   "Which jobs came from ads, which came from SEO, which came from thin air",
-];
-
-const SCORECARD = [
-  { label: "Conversion", score: 4 },
-  { label: "Trust", score: 6 },
-  { label: "Performance", score: 3 },
-  { label: "Visibility", score: 5 },
-  { label: "Tracking", score: 2 },
 ];
 
 const AUDIT_STEPS = [
@@ -200,14 +196,15 @@ export default function SystemPage() {
             {STAGES.map((s) => (
               <div
                 key={s.num}
-                className="relative z-10 rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]"
+                className="relative z-10 overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]"
               >
-                <div className="mb-4 flex items-center justify-between gap-3">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--color-primary)] text-sm font-bold text-[var(--color-on-primary)]">
+                <div className="absolute inset-x-0 top-0 h-1 bg-[var(--color-accent)]" />
+                <div className="mb-4 flex items-center gap-3">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary)] font-[family-name:var(--font-display)] text-[18px] font-extrabold text-[var(--color-on-primary)] shadow-[var(--shadow-1)]">
                     {s.num}
                   </span>
-                  <span className="rounded-full border border-[var(--color-hairline)] bg-[var(--color-canvas)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
-                    {s.price}
+                  <span className="font-[family-name:var(--font-display)] text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
+                    Stage {s.num}
                   </span>
                 </div>
                 <h3 className="mb-2 font-[family-name:var(--font-display)] text-xl font-bold">
@@ -235,10 +232,12 @@ export default function SystemPage() {
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
               Why the site rebuild is free
             </h2>
-            <p className="mx-auto mt-3 max-w-[600px] text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-              We only run good ads on top of a site that converts. So
-              rebuilding the site is not a favour, it is part of the job.
-              Here is how we make sure both sides are serious.
+            <p className="mx-auto mt-3 max-w-[620px] text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
+              Ads only pay back when they land on a site that turns
+              visitors into calls. So we rebuild yours first, at no cost.
+              The deal is simple: you commit to three months of lead
+              generation, and we build knowing the ads have a real chance
+              to work. No separate build fee, fair on both sides.
             </p>
           </Reveal>
 
@@ -282,8 +281,8 @@ export default function SystemPage() {
                 </div>
               ))}
               <div className="border-t border-[var(--color-hairline)] bg-[var(--color-primary)] px-7 py-4 text-center text-[14px] font-semibold text-[var(--color-on-primary)]">
-                Fair on both sides. You get a site that would cost £3,000
-                to £6,000 standalone. We get the runway to make the ads
+                Fair on both sides. You get a site that would cost £1,000
+                to £3,000 standalone. We get the runway to make the ads
                 actually pay back.
               </div>
             </div>
@@ -345,8 +344,8 @@ export default function SystemPage() {
                   One dashboard. Every enquiry. On your phone.
                 </h2>
                 <p className="mb-6 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-                  We handle the system. You see the outcome. Today's new
-                  leads with source, quick actions per lead, this week's
+                  We handle the system. You see the outcome. Today&apos;s new
+                  leads with source, quick actions per lead, this week&apos;s
                   booked jobs, the missed calls we caught, and a simple
                   monthly trend so you know what is coming.
                 </p>
@@ -376,90 +375,23 @@ export default function SystemPage() {
 
       {/* ── DIAGNOSIS AUDIT CENTREPIECE ── */}
       <section className="px-6 py-20">
-        <div className="mx-auto grid max-w-[1160px] grid-cols-1 items-center gap-12 lg:grid-cols-2">
+        <div className="mx-auto max-w-[720px] text-center">
           <Reveal>
-            <div>
-              <div className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
-                Diagnosis audit, free
-              </div>
-              <h2 className="mb-6 font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,42px)] font-bold leading-[1.12] tracking-[-0.02em]">
-                Where is your site costing you jobs?
-              </h2>
-              <ul className="mb-8 flex flex-col gap-3.5">
-                {AUDIT_CHECKS.map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-[15px] leading-[1.55]">
-                    <span className="mt-[9px] block h-1 w-1 shrink-0 rounded-full bg-[var(--color-ink-muted)]" />
-                    <span className="text-[var(--color-ink)]">{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <Button href="/book">Book a call</Button>
+            <div className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
+              Diagnosis audit, free
             </div>
-          </Reveal>
-
-          <Reveal>
-            <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-8 shadow-[var(--shadow-2)]">
-              <div className="mb-1 text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
-                Website scorecard
-              </div>
-              <div className="mb-6 text-sm text-[var(--color-ink-faint)]">
-                Sample audit result
-              </div>
-
-              <div className="mb-8 flex justify-center">
-                <div className="relative h-[140px] w-[140px]">
-                  <svg viewBox="0 0 140 140" className="h-full w-full -rotate-90">
-                    <circle
-                      cx="70"
-                      cy="70"
-                      r="58"
-                      fill="none"
-                      stroke="var(--color-hairline)"
-                      strokeWidth="10"
-                    />
-                    <circle
-                      cx="70"
-                      cy="70"
-                      r="58"
-                      fill="none"
-                      stroke="var(--color-primary)"
-                      strokeWidth="10"
-                      strokeLinecap="round"
-                      strokeDasharray={`${(50 / 100) * 2 * Math.PI * 58} ${2 * Math.PI * 58}`}
-                    />
-                  </svg>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="font-[family-name:var(--font-display)] text-[36px] font-extrabold leading-none">
-                      50
-                    </span>
-                    <span className="text-xs text-[var(--color-ink-faint)]">
-                      / 100
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-4">
-                {SCORECARD.map((cat) => (
-                  <div key={cat.label}>
-                    <div className="mb-1.5 flex items-center justify-between">
-                      <span className="text-sm font-medium text-[var(--color-ink)]">
-                        {cat.label}
-                      </span>
-                      <span className="text-sm font-semibold text-[var(--color-ink-muted)]">
-                        {cat.score}/10
-                      </span>
-                    </div>
-                    <div className="h-2 w-full overflow-hidden rounded-full bg-[var(--color-hairline)]">
-                      <div
-                        className="h-full rounded-full bg-[var(--color-primary)] transition-all duration-500"
-                        style={{ width: `${cat.score * 10}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <h2 className="mb-8 font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,42px)] font-bold leading-[1.12] tracking-[-0.02em]">
+              Where is your site costing you jobs?
+            </h2>
+            <ul className="mx-auto mb-8 flex max-w-[560px] flex-col gap-3.5 text-left">
+              {AUDIT_CHECKS.map((item) => (
+                <li key={item} className="flex items-start gap-3 text-[15px] leading-[1.55]">
+                  <span className="mt-[9px] block h-1 w-1 shrink-0 rounded-full bg-[var(--color-ink-muted)]" />
+                  <span className="text-[var(--color-ink)]">{item}</span>
+                </li>
+              ))}
+            </ul>
+            <Button href="/book">Get my free audit</Button>
           </Reveal>
         </div>
       </section>

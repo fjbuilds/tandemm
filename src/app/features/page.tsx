@@ -19,37 +19,23 @@ const paletteOverride = {
 /*  Data                                                       */
 /* ─────────────────────────────────────────────────────────── */
 
-const AD_TYPES = [
-  {
-    tag: "LSA",
-    name: "Local Services Ads",
-    priceModel: "Pay per lead",
-    body: "Google's Local Services block sits above every other search result. You only get charged when a homeowner contacts you. A call, a message, a form. If nobody bites, you pay nothing.",
-    bullets: [
-      "Sits above regular ads and organic results",
-      "Google Guaranteed badge next to your listing",
-      "Charged only per booked lead, not per click",
-      "We handle vetting, licensing and dispute submission",
-    ],
-  },
-  {
-    tag: "CPC",
-    name: "Google Ads (Search)",
-    priceModel: "Pay per click",
-    body: "The classic pay-per-click ads that sit under LSA and above the map. Best for services where LSA does not yet cover your trade or postcode, and for driving traffic to a specific landing page.",
-    bullets: [
-      "Targets the exact search terms homeowners type",
-      "Landing page matched to the search intent",
-      "Bid, keyword and negative lists tuned weekly",
-      "Conversion tracking wired to a booked job, not a click",
-    ],
-  },
+const INCLUDED_PILLARS = [
+  { title: "Website rebuild", note: "Fast, mobile-first, yours to keep" },
+  { title: "Found on Google + AI", note: "Top of search and inside AI answers" },
+  { title: "Smart quote assistant", note: "Instant answers on your site, better quotes" },
+  { title: "Lead capture", note: "Widget, tracking number, WhatsApp" },
+  { title: "One dashboard", note: "Every enquiry, every source" },
+  { title: "Call handling", note: "Missed calls caught and texted back" },
 ];
 
 const CAPTURE_FEATURES = [
   {
     title: "On-site enquiry widget",
-    body: "A small widget sits on every page of the new site. A homeowner types their name, number and job. It lands in the dashboard and auto-texts you inside 60 seconds.",
+    body: "A small widget sits on every page of the new site. A homeowner types their name, number and job. It lands in the dashboard and texts you instantly.",
+  },
+  {
+    title: "Smart quote assistant",
+    body: "We add an assistant to your site that answers a homeowner's quick questions on the spot and helps them frame the job. Better quality quotes for you, and fewer people bouncing to the next trade for a fast answer.",
   },
   {
     title: "Tracking phone number",
@@ -57,7 +43,7 @@ const CAPTURE_FEATURES = [
   },
   {
     title: "Missed-call auto-text",
-    body: "If a call goes to voicemail, the homeowner gets a text from your number within seconds. Sorry I missed you, quickest way to get me is here. The callback lands in the same dashboard.",
+    body: "If a call goes to voicemail, the homeowner gets a text from your number instantly. Sorry I missed you, quickest way to get me is here. The callback lands in the same dashboard.",
   },
   {
     title: "WhatsApp entry point",
@@ -108,62 +94,79 @@ export default function FeaturesPage() {
       <Nav active="features" />
 
       {/* ── HERO ── */}
-      <section className="px-6 pb-16 pt-[60px] text-center">
+      <section className="px-6 pb-14 pt-[60px] text-center">
         <div className="mx-auto max-w-[820px]">
           <Reveal>
             <div className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
-              What is included in Cure
+              Everything included
             </div>
           </Reveal>
           <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              The site, the ads, the phone, the dashboard.
+              Your whole growth engine.
               <br className="hidden sm:inline" />
-              One fee, one process.
+              One fee, nothing bolted on.
             </h1>
           </Reveal>
           <Reveal>
             <p className="mx-auto mt-[22px] max-w-[620px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Sign up for the lead generation stage and we rebuild your
-              website, wire up the tracking, and set the dashboard up for
-              you. All included. Then the engine runs.
+              We rebuild your site, get you found on Google and in AI
+              answers, catch every enquiry and pick up the calls you
+              miss. You get the jobs. We run the machine.
             </p>
-          </Reveal>
-          <Reveal>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button href="/book">Get my free audit</Button>
-              <Button href="/pricing" variant="ghost">
-                See pricing
-              </Button>
-            </div>
           </Reveal>
         </div>
       </section>
 
-      {/* ── TOP OF GOOGLE MOCKUP ── */}
+      {/* ── EVERYTHING INCLUDED BAND ── */}
       <section className="mx-auto max-w-[1160px] px-6 pb-20">
+        <Reveal>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {INCLUDED_PILLARS.map((p) => (
+              <div
+                key={p.title}
+                className="flex items-start gap-3 rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[var(--color-surface)] px-5 py-4 shadow-[var(--shadow-1)]"
+              >
+                <span className="mt-[3px] flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--color-success-soft)] text-[var(--color-success)]">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                </span>
+                <div>
+                  <div className="font-[family-name:var(--font-display)] text-[15px] font-bold text-[var(--color-ink)]">
+                    {p.title}
+                  </div>
+                  <div className="text-[13px] leading-[1.4] text-[var(--color-ink-muted)]">
+                    {p.note}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+      </section>
+
+      {/* ── FLOW: STEP 01 — AUDIT ── */}
+      <section className="mx-auto max-w-[1160px] px-6 py-20">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <Reveal>
             <div>
-              <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
-                Get seen first
-              </div>
+              <StepEyebrow n="01" label="It starts with an audit" />
               <h2 className="mb-4 font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
-                Put your business at the top of Google when homeowners search.
+                First, we find out exactly where you&apos;re losing jobs.
               </h2>
               <p className="mb-6 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-                We run two ad types side by side. LSA at the very top,
-                where you pay only when a homeowner contacts you. Google
-                Ads underneath, pay per click, best for the searches LSA
-                does not cover. Both landing on pages built for one job:
-                a booked enquiry.
+                Before anything gets built, we score your site, your ads
+                and your rankings by hand. You get a clear picture of
+                what&apos;s leaking work, and it&apos;s yours to keep whether
+                we go further or not.
               </p>
               <ul className="flex flex-col gap-3 text-[15px] leading-[1.55] text-[var(--color-ink)]">
                 {[
-                  "Featured in the Local Services block above every result",
-                  "Google Guaranteed badge for trust",
-                  "Ads matched to landing pages built by us",
-                  "Every call and form tracked back to the search",
+                  "Every page checked for speed and conversion",
+                  "Ad accounts scored on structure and waste",
+                  "Where you rank against the local competition",
+                  "Ranked by impact on booked jobs, not vanity metrics",
                 ].map((i) => (
                   <li key={i} className="flex items-start gap-2.5">
                     <span className="mt-[9px] block h-1 w-1 shrink-0 rounded-full bg-[var(--color-ink-muted)]" />
@@ -175,93 +178,30 @@ export default function FeaturesPage() {
           </Reveal>
 
           <Reveal>
-            <GoogleSerpMock />
+            <AuditMock />
           </Reveal>
         </div>
       </section>
 
-      {/* ── LSA vs CPC ── */}
+      {/* ── FLOW: STEP 02 — WEBSITE REBUILD ── */}
       <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
-        <div className="mx-auto max-w-[1160px]">
-          <Reveal className="mb-12 text-center">
-            <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
-              Two ad types, one goal
-            </div>
-            <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              LSA and CPC, explained in plain English.
-            </h2>
-            <p className="mx-auto mt-3 max-w-[600px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Most trades do not know they can run both. We do. And we
-              shift spend between them based on which is paying back for
-              the jobs you want more of.
-            </p>
-          </Reveal>
-
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            {AD_TYPES.map((ad) => (
-              <Reveal key={ad.tag}>
-                <div className="flex h-full flex-col rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
-                  <div className="mb-4 flex items-center justify-between gap-3">
-                    <span className="rounded-full bg-[var(--color-primary)] px-3 py-[5px] text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--color-on-primary)]">
-                      {ad.tag}
-                    </span>
-                    <span className="rounded-full border border-[var(--color-hairline)] bg-[var(--color-canvas)] px-2.5 py-[3px] text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
-                      {ad.priceModel}
-                    </span>
-                  </div>
-                  <h3 className="mb-2 font-[family-name:var(--font-display)] text-[22px] font-bold leading-[1.2]">
-                    {ad.name}
-                  </h3>
-                  <p className="mb-4 text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-                    {ad.body}
-                  </p>
-                  <ul className="mt-auto flex flex-col gap-2 border-t border-[var(--color-hairline-soft)] pt-4">
-                    {ad.bullets.map((b) => (
-                      <li
-                        key={b}
-                        className="flex items-start gap-2 text-[14px] leading-[1.5] text-[var(--color-ink)]"
-                      >
-                        <span className="mt-[9px] block h-1 w-1 shrink-0 rounded-full bg-[var(--color-ink-muted)]" />
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal>
-            <div className="mx-auto mt-8 max-w-[720px] rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)] px-6 py-4 text-center text-[14.5px] leading-[1.55] text-[var(--color-ink-muted)]">
-              <span className="font-bold text-[var(--color-ink)]">Worth knowing.</span>{" "}
-              With LSA you only pay when a homeowner actually contacts you,
-              not when they click. That is why we lead with it wherever
-              your trade and area qualify.
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── WEBSITE REBUILD ── */}
-      <section className="mx-auto max-w-[1160px] px-6 py-20">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="mx-auto grid max-w-[1160px] grid-cols-1 items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
           <Reveal>
             <WebsiteMock />
           </Reveal>
 
           <Reveal>
             <div>
-              <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
-                Website, rebuilt when you sign up
-              </div>
+              <StepEyebrow n="02" label="Then we rebuild your site" />
               <h2 className="mb-4 font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
-                A site built to turn visitors into booked jobs, not to win awards.
+                A site built to turn visitors into booked jobs.
               </h2>
               <p className="mb-6 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-                We rebuild your website as part of Prevention, at no extra
-                cost, when you commit to the lead generation stage. Fast,
-                plain, mobile-first. Every page has one job: get a
-                homeowner into the widget or onto the phone.
+                Fast, plain, mobile-first, and free when you sign up. Every
+                page has one job: get the homeowner into the widget or onto
+                the phone. We even add a smart quote assistant that answers
+                their quick questions on the spot, so fewer people wander
+                off to the next trade.
               </p>
               <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                 {WEBSITE_FEATURES.map((f) => (
@@ -279,15 +219,53 @@ export default function FeaturesPage() {
         </div>
       </section>
 
-      {/* ── DASHBOARD ── */}
+      {/* ── FLOW: STEP 03 — RANKINGS: GOOGLE + AI ── */}
+      <section className="mx-auto max-w-[1160px] px-6 py-20">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+          <Reveal>
+            <div>
+              <StepEyebrow n="03" label="Then we get you found" />
+              <h2 className="mb-4 font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
+                Top of Google, and the name AI gives when people ask.
+              </h2>
+              <p className="mb-6 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
+                Homeowners don&apos;t just Google any more, they ask ChatGPT
+                and Gemini &ldquo;who&apos;s a good electrician near me?&rdquo;
+                We get you showing up in both: at the top of the search
+                results, and as the business the AI recommends.
+              </p>
+              <ul className="flex flex-col gap-3 text-[15px] leading-[1.55] text-[var(--color-ink)]">
+                {[
+                  "Featured at the top of Google when homeowners search",
+                  "Structured so AI assistants pick you up and recommend you",
+                  "Service and area pages that rank in your postcodes",
+                  "Every call and form tracked back to what drove it",
+                ].map((i) => (
+                  <li key={i} className="flex items-start gap-2.5">
+                    <span className="mt-[9px] block h-1 w-1 shrink-0 rounded-full bg-[var(--color-ink-muted)]" />
+                    <span>{i}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+
+          <Reveal>
+            <div className="space-y-4">
+              <GoogleSerpMock />
+              <AiAnswerMock />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── FLOW: STEP 04 — DASHBOARD ── */}
       <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
         <div className="mx-auto max-w-[1160px]">
           <Reveal className="mb-12 text-center">
-            <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
-              The dashboard
-            </div>
+            <StepEyebrow n="04" label="The work lands here" center />
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              Every enquiry, in one place. Laptop, phone, both.
+              Every enquiry the machine generates, in one place.
             </h2>
             <p className="mx-auto mt-3 max-w-[600px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
               Live on your desktop for quoting, live on your phone when
@@ -318,18 +296,17 @@ export default function FeaturesPage() {
         </div>
       </section>
 
-      {/* ── LEAD CAPTURE ── */}
+      {/* ── FLOW: STEP 05 — ENQUIRIES HANDLED ── */}
       <section className="mx-auto max-w-[1160px] px-6 py-20">
         <Reveal className="mb-12 text-center">
-          <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
-            Lead capture
-          </div>
+          <StepEyebrow n="05" label="And none of it goes cold" center />
           <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-            Nothing lands in a black hole.
+            Every enquiry caught, answered and chased.
           </h2>
           <p className="mx-auto mt-3 max-w-[600px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-            Widget, tracking number, missed-call catcher, WhatsApp. Every
-            path a homeowner takes to reach you feeds the same dashboard.
+            Widget, smart quote assistant, tracking number, missed-call
+            catcher, WhatsApp. Every path a homeowner takes to reach you
+            feeds the same dashboard.
           </p>
         </Reveal>
 
@@ -382,11 +359,11 @@ export default function FeaturesPage() {
                 },
                 {
                   role: "Google Ads specialist",
-                  work: "Set up and tune LSA and CPC campaigns weekly",
+                  work: "Set up and tune your Google Ads campaigns weekly",
                 },
                 {
                   role: "SEO consultant",
-                  work: "Build service and area pages that rank in your area",
+                  work: "Build pages that rank on Google and get picked up by AI",
                 },
                 {
                   role: "CRM setup",
@@ -457,86 +434,183 @@ export default function FeaturesPage() {
 /* ─────────────────────────────────────────────────────────── */
 
 function GoogleSerpMock() {
+  const providers = [
+    {
+      name: "Your Trade Business",
+      rating: "4.9",
+      reviews: "128",
+      meta: "10+ years · Opens 24 hours",
+      you: true,
+    },
+    {
+      name: "Sparks & Sons Electrical",
+      rating: "4.6",
+      reviews: "74",
+      meta: "6 years · Open now",
+      you: false,
+    },
+    {
+      name: "Citywide Electricians Ltd",
+      rating: "4.4",
+      reviews: "203",
+      meta: "12 years · Open now",
+      you: false,
+    },
+  ];
+
   return (
     <div className="mx-auto w-full max-w-[520px]">
-      <div className="rounded-[16px] border border-[var(--color-hairline)] bg-white shadow-[var(--shadow-2)]">
+      <div
+        className="overflow-hidden rounded-[16px] border border-[var(--color-hairline)] bg-white font-[family-name:Arial,sans-serif] shadow-[var(--shadow-2)]"
+      >
         {/* Browser chrome */}
-        <div className="flex items-center gap-2 border-b border-[var(--color-hairline-soft)] px-4 py-3">
+        <div className="flex items-center gap-2 border-b border-[#ebedef] bg-[#f1f3f4] px-4 py-2.5">
           <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
           <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
           <span className="h-3 w-3 rounded-full bg-[#28c840]" />
-          <div className="ml-3 flex flex-1 items-center gap-2 rounded-full bg-[#f1f3f4] px-3 py-1.5">
-            <span className="text-[11px] text-[#5f6368]">google.com</span>
-          </div>
-        </div>
-
-        {/* Search bar */}
-        <div className="border-b border-[var(--color-hairline-soft)] px-5 py-4">
-          <div className="flex items-center gap-3 rounded-full border border-[#dfe1e5] px-4 py-2">
-            <span className="font-[family-name:var(--font-display)] text-[15px] font-bold text-[#4285F4]">G</span>
-            <span className="text-[13px] text-[#202124]">
-              electrician near me
+          <div className="ml-3 flex flex-1 items-center gap-2 rounded-full bg-white px-3 py-1.5">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#5f6368" strokeWidth="2">
+              <rect x="4" y="10" width="16" height="10" rx="2" />
+              <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+            </svg>
+            <span className="truncate text-[11px] text-[#5f6368]">
+              google.com/search?q=emergency+electrician+near+me
             </span>
           </div>
         </div>
 
-        {/* LSA block */}
-        <div className="px-5 py-4">
-          <div className="mb-2 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#5f6368]">
-            <span>Local Services</span>
-            <span className="rounded-sm bg-[#e8f0fe] px-1.5 py-[1px] text-[9px] text-[#1a73e8]">
-              Ad
+        {/* Search header */}
+        <div className="border-b border-[#ebedef] px-4 pb-2 pt-3">
+          <div className="flex items-center gap-3">
+            <span className="font-[family-name:Arial,sans-serif] text-[20px] font-medium tracking-[-0.5px]">
+              <span style={{ color: "#4285F4" }}>G</span>
+              <span style={{ color: "#EA4335" }}>o</span>
+              <span style={{ color: "#FBBC05" }}>o</span>
+              <span style={{ color: "#4285F4" }}>g</span>
+              <span style={{ color: "#34A853" }}>l</span>
+              <span style={{ color: "#EA4335" }}>e</span>
             </span>
-          </div>
-          <div className="rounded-[10px] border-2 border-[var(--color-accent)] bg-[#fff8f2] p-3">
-            <div className="mb-2 flex items-center justify-between gap-3">
-              <span className="font-[family-name:var(--font-display)] text-[14px] font-bold text-[#202124]">
-                Your Trade Business
+            <div className="flex flex-1 items-center gap-2 rounded-full border border-[#dfe1e5] px-4 py-1.5 shadow-[0_1px_4px_rgba(32,33,36,0.08)]">
+              <span className="flex-1 truncate text-[13px] text-[#202124]">
+                emergency electrician near me
               </span>
-              <span className="flex items-center rounded-sm bg-[#0f9d58] px-1.5 py-[1px] text-[9px] font-bold text-white">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3Z" fill="#4285F4" />
+                <path d="M18 11a6 6 0 0 1-12 0M12 17v4" stroke="#4285F4" strokeWidth="2" fill="none" />
+              </svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4285F4" strokeWidth="2">
+                <circle cx="11" cy="11" r="7" />
+                <path d="M21 21l-4-4" />
+              </svg>
+            </div>
+          </div>
+          {/* Tabs */}
+          <div className="mt-2 flex items-center gap-5 text-[12px] text-[#5f6368]">
+            <span className="relative pb-2 font-medium text-[#1a73e8]">
+              All
+              <span className="absolute inset-x-0 bottom-0 h-[3px] rounded-t bg-[#1a73e8]" />
+            </span>
+            <span className="pb-2">Maps</span>
+            <span className="pb-2">Images</span>
+            <span className="pb-2">News</span>
+            <span className="pb-2">Shopping</span>
+          </div>
+        </div>
+
+        <div className="px-4 py-3">
+          <div className="mb-2 text-[11px] text-[#70757a]">
+            About 2,340,000 results (0.48 seconds)
+          </div>
+
+          {/* Local Services Ads block */}
+          <div className="rounded-[8px] border border-[#dadce0] p-3">
+            <div className="mb-2 flex items-center gap-1.5 text-[13px] text-[#202124]">
+              <span className="font-medium">Electricians near you</span>
+              <span className="text-[#70757a]">·</span>
+              <span className="text-[11px] text-[#70757a]">Ad</span>
+              <span className="ml-auto flex items-center gap-1 text-[11px] text-[#1a73e8]">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="#34A853">
+                  <path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z" />
+                  <path d="m9 12 2 2 4-4" stroke="white" strokeWidth="2" fill="none" />
+                </svg>
                 Google Guaranteed
               </span>
             </div>
-            <div className="mb-1 text-[11px] text-[#5f6368]">
-              4.9 rating, 128 Google reviews
-            </div>
-            <div className="text-[11px] text-[#5f6368]">
-              Emergency callouts, rewires, EV chargers
-            </div>
-            <div className="mt-2 inline-flex rounded-sm bg-[#e8f0fe] px-2 py-[3px] text-[10px] font-semibold text-[#1a73e8]">
-              You appear here
+            <div className="divide-y divide-[#ebedef]">
+              {providers.map((p) => (
+                <div
+                  key={p.name}
+                  className={`flex items-center gap-3 py-2 ${p.you ? "-mx-1 rounded-md bg-[#e8f0fe] px-1" : ""}`}
+                >
+                  <div
+                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[13px] font-bold text-white ${p.you ? "bg-[#1a73e8]" : "bg-[#9aa0a6]"}`}
+                  >
+                    {p.name.charAt(0)}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-1">
+                      <span className="truncate text-[13px] font-medium text-[#202124]">
+                        {p.name}
+                      </span>
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="#34A853" className="shrink-0">
+                        <path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z" />
+                        <path d="m9 12 2 2 4-4" stroke="white" strokeWidth="2.5" fill="none" />
+                      </svg>
+                    </div>
+                    <div className="flex items-center gap-1 text-[11px] text-[#70757a]">
+                      <span className="font-medium text-[#202124]">{p.rating}</span>
+                      <span className="text-[#fbbc04]">★★★★★</span>
+                      <span>({p.reviews})</span>
+                    </div>
+                    <div className="truncate text-[11px] text-[#70757a]">{p.meta}</div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Sponsored (CPC) */}
-          <div className="mt-4 space-y-3">
-            <div className="rounded-[8px] border border-[#dfe1e5] p-3">
-              <div className="mb-1 flex items-center gap-2 text-[10px] font-semibold text-[#5f6368]">
-                <span className="rounded-sm bg-[#f1f3f4] px-1.5 py-[1px] text-[9px]">
-                  Sponsored
-                </span>
-                yourbusiness.co.uk
+          {/* Sponsored result */}
+          <div className="mt-3">
+            <div className="flex items-center gap-1.5 text-[12px]">
+              <span className="font-bold text-[#202124]">Sponsored</span>
+            </div>
+            <div className="mt-0.5 flex items-center gap-2">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#f1f3f4] text-[10px] font-bold text-[#5f6368]">
+                Y
               </div>
-              <div className="text-[13px] font-medium text-[#1a0dab]">
-                Local Electrician, Free Quote Today
-              </div>
-              <div className="mt-1 text-[11px] text-[#4d5156]">
-                24/7 callouts. Fully insured. Book online in 30 seconds.
+              <div className="leading-tight">
+                <div className="text-[12px] text-[#202124]">Your Trade Business</div>
+                <div className="text-[11px] text-[#5f6368]">yourbusiness.co.uk</div>
               </div>
             </div>
+            <div className="mt-1 text-[16px] leading-tight text-[#1a0dab]">
+              Emergency Electrician, Free Quote Today
+            </div>
+            <div className="mt-0.5 text-[12px] leading-[1.4] text-[#4d5156]">
+              24/7 callouts across London. Fully insured, NICEIC approved.
+              Book online in 30 seconds.
+            </div>
+          </div>
 
-            <div className="opacity-60">
-              <div className="text-[13px] font-medium text-[#1a0dab]">
-                Checkatrade, Electricians
+          {/* Organic result */}
+          <div className="mt-3">
+            <div className="flex items-center gap-2">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#f1f3f4] text-[10px] font-bold text-[#5f6368]">
+                Y
               </div>
-              <div className="text-[11px] text-[#4d5156]">
-                Directory listing.
+              <div className="leading-tight">
+                <div className="text-[12px] text-[#202124]">Your Trade Business</div>
+                <div className="text-[11px] text-[#5f6368]">
+                  yourbusiness.co.uk › electricians
+                </div>
               </div>
             </div>
-            <div className="opacity-40">
-              <div className="text-[13px] font-medium text-[#1a0dab]">
-                Trustatrader, Electricians in your area
-              </div>
+            <div className="mt-1 text-[16px] leading-tight text-[#1a0dab]">
+              London Electricians | Same-Day Callouts
+            </div>
+            <div className="mt-0.5 text-[12px] leading-[1.4] text-[#4d5156]">
+              Rated 4.9 on Google. Rewires, fault-finding and EV chargers
+              across South London.
             </div>
           </div>
         </div>
@@ -544,6 +618,160 @@ function GoogleSerpMock() {
       <p className="mt-3 text-center text-[12px] text-[var(--color-ink-faint)]">
         Illustrative Google result. Actual position depends on ad spend
         and competition.
+      </p>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/*  Step eyebrow                                               */
+/* ─────────────────────────────────────────────────────────── */
+
+function StepEyebrow({
+  n,
+  label,
+  center,
+}: {
+  n: string;
+  label: string;
+  center?: boolean;
+}) {
+  return (
+    <div
+      className={`mb-3 flex items-center gap-2.5 ${center ? "justify-center" : ""}`}
+    >
+      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--color-primary)] font-[family-name:var(--font-display)] text-[12px] font-extrabold text-[var(--color-on-primary)]">
+        {n}
+      </span>
+      <span className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
+        {label}
+      </span>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/*  Audit mock                                                 */
+/* ─────────────────────────────────────────────────────────── */
+
+function AuditMock() {
+  const rows = [
+    { label: "Conversion", score: 4 },
+    { label: "Site speed", score: 3 },
+    { label: "Google visibility", score: 5 },
+    { label: "Ad account health", score: 2 },
+    { label: "Tracking", score: 2 },
+  ];
+
+  return (
+    <div className="mx-auto w-full max-w-[460px]">
+      <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-2)]">
+        <div className="mb-1 flex items-center justify-between">
+          <span className="text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
+            Website audit
+          </span>
+          <span className="rounded-full bg-[var(--color-success-soft)] px-2.5 py-[3px] text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-success)]">
+            Free
+          </span>
+        </div>
+        <div className="mb-6 text-sm text-[var(--color-ink-faint)]">
+          Sample audit result
+        </div>
+
+        <div className="mb-6 flex items-center gap-5">
+          <div className="relative h-[92px] w-[92px] shrink-0">
+            <svg viewBox="0 0 140 140" className="h-full w-full -rotate-90">
+              <circle cx="70" cy="70" r="58" fill="none" stroke="var(--color-hairline)" strokeWidth="12" />
+              <circle
+                cx="70"
+                cy="70"
+                r="58"
+                fill="none"
+                stroke="var(--color-accent)"
+                strokeWidth="12"
+                strokeLinecap="round"
+                strokeDasharray={`${(48 / 100) * 2 * Math.PI * 58} ${2 * Math.PI * 58}`}
+              />
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <span className="font-[family-name:var(--font-display)] text-[24px] font-extrabold leading-none">
+                48
+              </span>
+              <span className="text-[10px] text-[var(--color-ink-faint)]">/ 100</span>
+            </div>
+          </div>
+          <p className="text-[13.5px] leading-[1.5] text-[var(--color-ink-muted)]">
+            Losing an estimated{" "}
+            <span className="font-bold text-[var(--color-ink)]">6 to 9 jobs</span>{" "}
+            a month to a slow site and thin Google presence.
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-3">
+          {rows.map((cat) => (
+            <div key={cat.label}>
+              <div className="mb-1 flex items-center justify-between">
+                <span className="text-[13px] font-medium text-[var(--color-ink)]">
+                  {cat.label}
+                </span>
+                <span className="text-[13px] font-semibold text-[var(--color-ink-muted)]">
+                  {cat.score}/10
+                </span>
+              </div>
+              <div className="h-2 w-full overflow-hidden rounded-full bg-[var(--color-hairline)]">
+                <div
+                  className={`h-full rounded-full ${cat.score <= 3 ? "bg-[var(--color-accent)]" : "bg-[var(--color-primary)]"}`}
+                  style={{ width: `${cat.score * 10}%` }}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <p className="mt-3 text-center text-[12px] text-[var(--color-ink-faint)]">
+        Illustrative audit. Yours is scored by hand on your real site.
+      </p>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/*  AI answer mock                                             */
+/* ─────────────────────────────────────────────────────────── */
+
+function AiAnswerMock() {
+  return (
+    <div className="mx-auto w-full max-w-[520px]">
+      <div className="rounded-[16px] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-2)]">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-primary)]">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2" />
+              <circle cx="12" cy="12" r="3.5" />
+            </svg>
+          </span>
+          <span className="text-[13px] font-bold text-[var(--color-ink)]">
+            AI Assistant
+          </span>
+        </div>
+
+        <div className="mb-3 ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-sm bg-[var(--color-surface-sunken)] px-3.5 py-2 text-[13px] text-[var(--color-ink)]">
+          Who&apos;s a good emergency electrician near Clapham?
+        </div>
+
+        <div className="rounded-2xl rounded-bl-sm bg-[var(--color-surface-muted)] px-3.5 py-3 text-[13.5px] leading-[1.55] text-[var(--color-ink)]">
+          A well-reviewed option in the Clapham area is{" "}
+          <span className="font-bold">Your Trade Business</span> — rated 4.9
+          on Google, NICEIC approved, and available for 24/7 emergency
+          callouts. You can reach them here:
+          <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-[var(--color-hairline)] bg-[var(--color-surface)] px-3 py-1 text-[12px] font-semibold text-[var(--color-accent-hover)]">
+            yourbusiness.co.uk
+          </div>
+        </div>
+      </div>
+      <p className="mt-3 text-center text-[12px] text-[var(--color-ink-faint)]">
+        Illustrative AI answer. We structure your site so assistants
+        surface and recommend you.
       </p>
     </div>
   );
@@ -891,6 +1119,10 @@ function CaptureIcon({ name }: { name: string }) {
   if (name.includes("widget"))
     return (
       <svg {...common}><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M7 8h10M7 12h6M7 16h8" /></svg>
+    );
+  if (name.includes("Smart quote"))
+    return (
+      <svg {...common}><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z" /><path d="M12 7v2M12 12h.01" /></svg>
     );
   if (name.includes("Tracking phone"))
     return (
