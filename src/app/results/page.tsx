@@ -18,53 +18,49 @@ const paletteOverride = {
 /* ─── Data ──────────────────────────────────────────────────────── */
 
 const KPI_CARDS = [
-  { label: "Jobs enquired", value: "▲ 240%", desc: "Average lift for our electricians in the first 6 months" },
-  { label: "Booked-job rate", value: "▲ 3.4x", desc: "From homeowner landing on the site to booked job, call for call" },
-  { label: "Page speed", value: "▼ 84%", desc: "Faster load on a phone, so homeowners don't tap back to Google" },
-  { label: "Money tracked", value: "Every £", desc: "Every call and form tied back to the ad or keyword that paid for it" },
-  { label: "Google rankings", value: "Up", desc: "Higher on the searches homeowners actually run" },
+  {
+    label: "Enquiry system",
+    value: "One dashboard",
+    desc: "Every lead source in one place, so no enquiry gets missed or sits in an inbox.",
+  },
+  {
+    label: "Enquiry-to-booked rate",
+    value: "Tracked, tuned",
+    desc: "From homeowner landing on the site to booked job, call for call. Reviewed monthly.",
+  },
+  {
+    label: "Page speed",
+    value: "Mobile-first",
+    desc: "Rebuilt for mid-range phones on 4G, so homeowners do not tap back before the page loads.",
+  },
+  {
+    label: "Money tracked",
+    value: "Every £",
+    desc: "Every call, form and WhatsApp tied back to the ad or keyword that paid for it.",
+  },
+  {
+    label: "Google rankings",
+    value: "Built out",
+    desc: "New service and area pages against real search demand, month after month.",
+  },
   {
     label: "Wasted ad spend",
-    value: "▼ 41%",
-    desc: "Budget pulled off dead clicks, poured into keywords that book jobs",
+    value: "Cut back",
+    desc: "Budget pulled off dead clicks, redirected to the ad groups paying back.",
     navy: true,
   },
 ] as Array<{ label: string; value: string; desc: string; navy?: boolean }>;
 
-const CASE_STUDIES = [
-  {
-    name: "Fenwick Roofing",
-    industry: "Roofing contractor, South London",
-    stats: ["+186% enquiries", "2.1 → 5.4% conversion"],
-  },
-  {
-    name: "Aldgate Legal",
-    industry: "Boutique law firm, City of London",
-    stats: ["+140% enquiries", "−54% bounce rate"],
-  },
-  {
-    name: "Northside Electrical",
-    industry: "Domestic electrician, North London",
-    stats: ["+264% enquiries", "4.6x ROI on ad spend"],
-  },
-];
-
 const SYSTEM_STEPS = [
   { n: 1, title: "Get seen", desc: "Bring in homeowners ready to buy: Google Ads, local SEO, referrals." },
-  { n: 2, title: "Site", desc: "Fast, plain pages built to get a homeowner off the fence and on the phone." },
-  { n: 3, title: "Tracking", desc: "Every call and every form, tied back to the pound that brought it in." },
-  { n: 4, title: "Tuning", desc: "Cut what's not paying back. Double down on what is. Every week." },
-  { n: 5, title: "Compounding", desc: "Rankings climb. Cost per job drops. The site earns more every month.", navy: true },
+  { n: 2, title: "Site", desc: "Fast, plain pages built to get a homeowner off the fence and into an enquiry." },
+  { n: 3, title: "Tracking", desc: "Every call, form and WhatsApp, tied back to the pound that brought it in." },
+  { n: 4, title: "Enquiry system", desc: "Every enquiry lands in one dashboard. Triaged, chased, none go cold." },
+  { n: 5, title: "Call handling", desc: "Missed calls answered by a UK-based team and dropped into the same system.", navy: true },
 ] as Array<{ n: number; title: string; desc: string; navy?: boolean }>;
 
-const BEFORE_ITEMS = [
-  "6.2s page load",
-  "No call tracking",
-  "Generic template copy",
-];
-
 const DIAGNOSIS_ITEMS = [
-  "73% of homeowners on a phone tapped back to Google before the page opened",
+  "Google's own research on mobile page loads shows a large share of users leave before a slow page finishes loading",
   "Call button hidden below the fold",
   "No way to tell which ads paid back",
 ];
@@ -73,7 +69,7 @@ const CHANGES_ITEMS = [
   "Rebuilt the site, fast and mobile-first",
   "Rewrote every service page to match local search",
   "Wired in call, form and Google Ads tracking",
-  "Restructured Google Ads round the jobs he actually wanted more of",
+  "Restructured Google Ads around the jobs the trade wanted more of",
 ];
 
 /* ─── Component ─────────────────────────────────────────────────── */
@@ -91,19 +87,20 @@ export default function ResultsPage() {
         <div className="mx-auto max-w-[820px]">
           <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              Real numbers. From real UK electricians.
+              What a Tandemm engagement looks like.
             </h1>
           </Reveal>
           <Reveal>
-            <p className="mx-auto mt-[22px] max-w-[600px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Not vanity metrics. Jobs booked, money banked, and every call
-              tracked back to the ad that earned it.
+            <p className="mx-auto mt-[22px] max-w-[620px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
+              Not vanity metrics. The mechanic: how the system runs across
+              Diagnosis, Prevention and Cure, and what a trade business
+              actually sees month one, month three, month six.
             </p>
           </Reveal>
         </div>
       </section>
 
-      {/* Enquiry Performance Dashboard */}
+      {/* Enquiry Performance Dashboard, no grey box */}
       <section className="mx-auto max-w-[900px] px-6 pb-6 pt-4">
         <Reveal>
           <div className="overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-2)] sm:p-8">
@@ -114,14 +111,11 @@ export default function ResultsPage() {
                 </div>
                 <div className="mt-1 flex items-baseline gap-3">
                   <span className="font-[family-name:var(--font-display)] text-[36px] font-extrabold leading-none tracking-tight">
-                    318
-                  </span>
-                  <span className="text-sm font-semibold text-[var(--color-accent-hover)]">
-                    ▲ 240%
+                    Sample
                   </span>
                 </div>
                 <div className="mt-0.5 text-sm text-[var(--color-ink-muted)]">
-                  jobs booked in 6 months
+                  jobs booked, per month
                 </div>
               </div>
               <div className="flex gap-3 text-xs font-semibold text-[var(--color-ink-muted)]">
@@ -136,14 +130,12 @@ export default function ResultsPage() {
               </div>
             </div>
 
-            {/* SVG line chart */}
             <svg
               viewBox="0 0 640 160"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               className="mb-6 w-full"
             >
-              {/* grid lines */}
               {[0, 40, 80, 120].map((y) => (
                 <line
                   key={y}
@@ -155,14 +147,12 @@ export default function ResultsPage() {
                   strokeWidth="1"
                 />
               ))}
-              {/* previous period */}
               <polyline
                 points="0,120 106,115 213,118 320,112 426,110 533,108 640,106"
                 stroke="var(--color-hairline)"
                 strokeWidth="2"
                 fill="none"
               />
-              {/* current period */}
               <polyline
                 points="0,130 106,105 213,85 320,60 426,38 533,22 640,10"
                 stroke="var(--color-primary)"
@@ -176,7 +166,6 @@ export default function ResultsPage() {
               />
             </svg>
 
-            {/* Source breakdown bars */}
             <div className="flex flex-col gap-3">
               {[
                 { label: "Google Ads", pct: 64 },
@@ -201,8 +190,8 @@ export default function ResultsPage() {
         </Reveal>
         <Reveal>
           <p className="mt-4 text-center text-[13px] leading-[1.5] text-[var(--color-ink-faint)]">
-            The live dashboard every Tandemm customer gets. Figures are a
-            composite of real accounts, not stock demos.
+            Live dashboard view. Sample figures shown for illustration until we
+            publish client results.
           </p>
         </Reveal>
       </section>
@@ -211,8 +200,12 @@ export default function ResultsPage() {
       <section className="mx-auto max-w-[1160px] px-6 pb-8 pt-20">
         <Reveal className="mb-10 text-center">
           <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-            What actually shifts, month one to month six.
+            What we hold ourselves to, month one to month six.
           </h2>
+          <p className="mx-auto mt-3 max-w-[600px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
+            Not claims. The mechanics of the system, and what a trade
+            business should expect to see moving in each area.
+          </p>
         </Reveal>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {KPI_CARDS.map((card) => (
@@ -232,7 +225,7 @@ export default function ResultsPage() {
                   {card.label}
                 </div>
                 <div
-                  className={`mt-2 font-[family-name:var(--font-display)] text-[32px] font-extrabold leading-none tracking-tight ${
+                  className={`mt-2 font-[family-name:var(--font-display)] text-[24px] font-extrabold leading-[1.1] tracking-tight ${
                     card.navy ? "text-white" : ""
                   }`}
                 >
@@ -251,45 +244,42 @@ export default function ResultsPage() {
         </div>
         <Reveal>
           <p className="mx-auto mt-6 max-w-[600px] text-center text-[13px] leading-[1.5] text-[var(--color-ink-faint)]">
-            Averages across live accounts. Your numbers depend on your trade,
-            your area, and where you're starting.
+            No client results published yet. What is shown is the mechanic of
+            the system and what a Tandemm engagement is set up to move.
           </p>
         </Reveal>
       </section>
 
-      {/* ── CASE STUDY: MARLOW & CO ──────────────────────────── */}
+      {/* ── ENGAGEMENT AT A GLANCE ──────────────────────────── */}
       <section className="mt-16 bg-[var(--color-canvas-deep)] py-20">
         <div className="mx-auto max-w-[1160px] px-6">
-          <Reveal className="mb-3 text-center">
-            <div className="inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-white/70 px-3.5 py-[7px] text-[13px] font-semibold tracking-[0.02em] text-[var(--color-ink-muted)]">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
-              Case study
-            </div>
-          </Reveal>
           <Reveal className="mb-10 text-center">
+            <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
+              Illustrative engagement
+            </div>
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              Marlow &amp; Co Plumbing
+              Before, diagnosis, changes, after.
             </h2>
             <p className="mx-auto mt-3 max-w-[560px] text-[17px] leading-[1.55] text-[var(--color-ink-muted)]">
-              From 9 enquiries a month to 37 booked jobs in 12 weeks.
+              A generic view of the shape of a Tandemm engagement, not a
+              specific client. Real client stories will drop in here once
+              published.
             </p>
           </Reveal>
 
-          {/* Journey grid */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {/* Before */}
             <Reveal>
               <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-6">
                 <div className="mb-1 text-xs font-bold uppercase tracking-[0.05em] text-[var(--color-ink-muted)]">
                   Before
                 </div>
-                <div className="mt-2 font-[family-name:var(--font-display)] text-[28px] font-extrabold leading-none">
-                  9
+                <div className="mt-2 font-[family-name:var(--font-display)] text-[18px] font-bold leading-[1.2]">
+                  Enquiries scattered, nothing tracked
                 </div>
-                <div className="mt-1 text-sm text-[var(--color-ink-muted)]">
-                  enquiries / month
-                </div>
-                {/* Mini wireframe */}
+                <p className="mt-2 text-sm leading-[1.5] text-[var(--color-ink-muted)]">
+                  Calls, forms and WhatsApp landing in separate places. No way
+                  to tell which ad or search paid for which job.
+                </p>
                 <div className="mt-5 rounded-[var(--radius-md)] border border-[var(--color-hairline-soft)] bg-[var(--color-surface-sunken)] p-3">
                   <div className="mb-2 h-2 w-3/5 rounded bg-[var(--color-hairline)]" />
                   <div className="mb-1.5 h-1.5 w-full rounded bg-[var(--color-hairline-soft)]" />
@@ -299,7 +289,6 @@ export default function ResultsPage() {
               </div>
             </Reveal>
 
-            {/* Diagnosis */}
             <Reveal>
               <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-6">
                 <div className="mb-1 text-xs font-bold uppercase tracking-[0.05em] text-[var(--color-ink-muted)]">
@@ -319,7 +308,6 @@ export default function ResultsPage() {
               </div>
             </Reveal>
 
-            {/* Changes */}
             <Reveal>
               <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-6">
                 <div className="mb-1 text-xs font-bold uppercase tracking-[0.05em] text-[var(--color-ink-muted)]">
@@ -331,7 +319,7 @@ export default function ResultsPage() {
                       key={item}
                       className="flex items-start gap-2.5 text-sm leading-[1.45]"
                     >
-                      <span className="mt-0.5 font-bold text-[var(--color-accent-hover)]">→</span>
+                      <span className="mt-0.5 font-bold text-[var(--color-accent-hover)]">&rarr;</span>
                       <span className="text-[var(--color-ink)]">{item}</span>
                     </div>
                   ))}
@@ -339,7 +327,6 @@ export default function ResultsPage() {
               </div>
             </Reveal>
 
-            {/* After (navy card) */}
             <Reveal>
               <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] p-6 text-[var(--color-on-primary)] shadow-[var(--shadow-2)]">
                 <div className="mb-1 text-xs font-bold uppercase tracking-[0.05em] text-white/55">
@@ -347,85 +334,33 @@ export default function ResultsPage() {
                 </div>
                 <div className="mt-4 flex flex-col gap-4">
                   <div>
-                    <div className="font-[family-name:var(--font-display)] text-[28px] font-extrabold leading-none">
-                      37
+                    <div className="font-[family-name:var(--font-display)] text-[18px] font-extrabold leading-[1.2]">
+                      One dashboard, every source
                     </div>
-                    <div className="mt-1 text-sm text-white/70">enquiries / month</div>
+                    <div className="mt-1 text-sm text-white/70">
+                      No enquiry gets missed. Nothing sits in an inbox.
+                    </div>
                   </div>
                   <div>
-                    <div className="font-[family-name:var(--font-display)] text-[22px] font-extrabold leading-none">
-                      4.3%
+                    <div className="font-[family-name:var(--font-display)] text-[18px] font-extrabold leading-[1.2]">
+                      Every job traced to source
                     </div>
-                    <div className="mt-1 text-sm text-white/70">conversion rate</div>
+                    <div className="mt-1 text-sm text-white/70">
+                      Ads, SEO and referral all reported against booked jobs.
+                    </div>
                   </div>
                   <div>
-                    <div className="font-[family-name:var(--font-display)] text-[22px] font-extrabold leading-none">
-                      1.1s
+                    <div className="font-[family-name:var(--font-display)] text-[18px] font-extrabold leading-[1.2]">
+                      Missed calls caught
                     </div>
-                    <div className="mt-1 text-sm text-white/70">page load</div>
+                    <div className="mt-1 text-sm text-white/70">
+                      A UK-based team answers when you cannot pick up.
+                    </div>
                   </div>
                 </div>
               </div>
             </Reveal>
           </div>
-
-          {/* Testimonial */}
-          <Reveal className="mt-8">
-            <div className="mx-auto max-w-[700px] rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
-              <p className="text-[17px] leading-[1.6] text-[var(--color-ink)]">
-                &ldquo;We used to just cross our fingers with marketing. Now
-                the phone rings more, and I can tell you which ad brought each
-                job in.&rdquo;
-              </p>
-              <div className="mt-5 flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-primary)] font-[family-name:var(--font-display)] text-sm font-bold text-white">
-                  DM
-                </div>
-                <div>
-                  <div className="text-sm font-semibold text-[var(--color-ink)]">
-                    David Marlow
-                  </div>
-                  <div className="text-sm text-[var(--color-ink-muted)]">
-                    Marlow &amp; Co Plumbing
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── MORE CASE STUDIES ─────────────────────────────────── */}
-      <section className="mx-auto max-w-[1160px] px-6 pb-8 pt-20">
-        <Reveal className="mb-10 text-center">
-          <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-            Different trades. Same pattern.
-          </h2>
-        </Reveal>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {CASE_STUDIES.map((cs) => (
-            <Reveal key={cs.name}>
-              <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 transition-transform duration-200 hover:-translate-y-1">
-                <div className="font-[family-name:var(--font-display)] text-lg font-bold">
-                  {cs.name}
-                </div>
-                <div className="mt-1 text-sm text-[var(--color-ink-muted)]">
-                  {cs.industry}
-                </div>
-                <div className="my-5 h-px bg-[var(--color-hairline)]" />
-                <div className="flex flex-col gap-2">
-                  {cs.stats.map((stat) => (
-                    <div
-                      key={stat}
-                      className="text-[15px] font-semibold text-[var(--color-ink)]"
-                    >
-                      {stat}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-          ))}
         </div>
       </section>
 
@@ -437,7 +372,6 @@ export default function ResultsPage() {
           </h2>
         </Reveal>
         <div className="relative grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {/* Dashed connector line (desktop only) */}
           <div className="pointer-events-none absolute left-0 right-0 top-1/2 hidden -translate-y-1/2 lg:block">
             <div className="mx-12 border-t-2 border-dashed border-[var(--color-hairline)]" />
           </div>
@@ -495,7 +429,7 @@ export default function ResultsPage() {
                 href="/book"
                 className="bg-white text-[var(--color-primary)] hover:bg-white/90"
               >
-                Get the 80-point audit
+                Book a call
               </Button>
               <Button href="/system" variant="secondary">
                 See how it works

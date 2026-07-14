@@ -10,7 +10,7 @@ import { Select } from "@/components/tandemm/Select";
 import { cn } from "@/lib/utils";
 
 // Book page uses a slightly cooler canvas/surface palette than the rest of
-// the Tandemm site — overridden locally to match the source design.
+// the Tandemm site, overridden locally to match the source design.
 const bookPaletteOverride = {
   "--color-canvas": "#EDEEEA",
   "--color-canvas-deep": "#E1E3DD",
@@ -97,14 +97,14 @@ export default function BookPage() {
           <div className="mx-auto max-w-[820px]">
             <div className="mb-7 inline-flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-white/70 px-3.5 py-[7px] text-[13px] font-semibold tracking-[0.02em] text-[var(--color-ink-muted)]">
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
-              The 80-point audit, free
+              The Diagnosis Audit, free
             </div>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
               A straight read on your website. Free.
             </h1>
             <p className="mx-auto mt-[22px] max-w-[600px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
-              30 minutes. No pitch deck, no obligation. We&apos;ll tell you
-              where the jobs are leaking, and whether we can help. Even if
+              30 minutes. No pitch deck, no obligation. We tell you where
+              enquiries are going missing, and whether we can help. Even if
               the answer is &quot;you don&apos;t need us.&quot;
             </p>
           </div>

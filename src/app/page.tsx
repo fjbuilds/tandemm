@@ -1,36 +1,12 @@
 "use client";
 
-import { CSSProperties, useCallback, useState } from "react";
+import { CSSProperties, useState } from "react";
 import { Nav } from "@/components/tandemm/Nav";
 import { Footer } from "@/components/tandemm/Footer";
 import { Reveal } from "@/components/tandemm/Reveal";
-import { Button, ButtonEl } from "@/components/tandemm/Button";
+import { Button } from "@/components/tandemm/Button";
 import { HeroVisual } from "@/components/tandemm/HeroVisual";
 import { DiamondLoader } from "@/components/tandemm/DiamondLoader";
-import { cn } from "@/lib/utils";
-
-const RESULTS = [
-  {
-    value: "312%",
-    label: "More enquiries",
-    sub: "Average lift in monthly enquiries inside 90 days.",
-  },
-  {
-    value: "4.6x",
-    label: "Conversion rate",
-    sub: "Visitors turned into booked jobs, up from 0.8%.",
-  },
-  {
-    value: "47",
-    label: "Jobs / month",
-    sub: "Enough to book the diary six weeks out, month after month.",
-  },
-  {
-    value: "£1.1M",
-    label: "Booked for clients",
-    sub: "Money in customer bank accounts that traces back to our ads.",
-  },
-];
 
 /* ------------------------------------------------------------------ */
 /*  Palette override (matches book page)                              */
@@ -45,21 +21,22 @@ const paletteOverride = {
 } as CSSProperties;
 
 /* ------------------------------------------------------------------ */
-/*  Static data                                                       */
+/*  Diagnosis / Prevention / Cure cards                               */
 /* ------------------------------------------------------------------ */
-const HOW_IT_WORKS = [
+const DPC = [
   {
     step: "01",
     title: "Diagnosis",
-    tag: null as string | null,
+    tag: "Free",
     oneLiner:
-      "A proper audit of your site and your online presence, before either of us talks about work.",
-    desc: "We run your site through an 80-point audit, then check every finding by hand. You get a PDF report and a 30-minute walk-through. Yours to keep whether you hire us or not.",
+      "A scored audit of your site, ad accounts and rankings, so you see where enquiries are going missing.",
+    desc: "We check the pages Google actually indexes, page-speed against a phone, tracking events firing on every form and call, ad account structure, and whether your landing pages match search intent. You get a PDF with the specific findings and a 30-minute walk-through. Yours to keep, whether you hire us or not.",
     items: [
-      "Site speed and technical health",
-      "SEO and Google visibility",
-      "Local rankings in the areas you cover",
-      "The pages costing you jobs",
+      "Indexed pages, meta and schema coverage",
+      "Mobile page-speed and Core Web Vitals",
+      "Form, call and event tracking end-to-end",
+      "Ad account structure and keyword mapping",
+      "Local rank across the postcodes you cover",
     ],
   },
   {
@@ -67,84 +44,100 @@ const HOW_IT_WORKS = [
     title: "Prevention",
     tag: null as string | null,
     oneLiner:
-      "If the site is what's costing you jobs, we rebuild it. If it isn't, we tell you.",
-    desc: "We don't assume you need a new site. The audit shows whether it's the bottleneck. If it is, we send you a one-page concept and a fixed price. You either book the rebuild or take the report and fix things yourself.",
+      "The fixes that plug the leaks the Diagnosis Audit surfaced. Site, tracking, ad structure, enquiry capture.",
+    desc: "One-page concept and a fixed price. We rebuild the pages that leak, wire in server-side tracking, restructure ad campaigns around the jobs you want, and put the enquiry capture in front of the visitor instead of at the bottom of a menu.",
     items: [
-      "One-page concept, no pressure",
-      "Deposit, rebuild, launch",
-      "Fresh audit on the finished site",
-      "Before and after score, side by side",
+      "Landing pages rebuilt for one job: a booked enquiry",
+      "GA4 and conversion API events verified end-to-end",
+      "Ad campaigns restructured by job type and margin",
+      "On-site enquiry capture (form, click-to-call, WhatsApp)",
     ],
   },
   {
     step: "03",
     title: "Cure",
-    tag: "Optional",
+    tag: "Ongoing",
     oneLiner:
-      "Once the site is right, hand us the ads and SEO. Or don't. Cancel any time.",
-    desc: "Cure is for owners who want one team running ads, SEO, and the reporting in one place after the rebuild. No long-term contract, one month's notice, cancel any time.",
+      "The ongoing engine. Ads run monthly, SEO built out, enquiries handled, calls answered when you are on the tools.",
+    desc: "Ads and SEO managed month to month, enquiries triaged into one system so nothing sits in an inbox, and a call handling backstop that picks up the phone when you cannot. No long contract, one month's notice.",
     items: [
-      "Google Ads set up and managed",
-      "Local SEO and rank tracking",
-      "Unlimited edits to the site",
-      "One new landing page per quarter",
-      "Live dashboard so you always know what's working",
-      "Email support, replies inside 2 business days",
+      "Google Ads managed and tuned weekly",
+      "SEO pages and links built out each month",
+      "Enquiries land in one place, triaged and chased",
+      "Call handling for missed and out-of-hours calls",
+      "Monthly report tied to booked jobs, not clicks",
     ],
   },
 ];
 
-const TESTIMONIALS = [
+/* ------------------------------------------------------------------ */
+/*  What Diagnosis checks, used in place of fabricated proof          */
+/* ------------------------------------------------------------------ */
+const DIAGNOSIS_CATEGORIES = [
   {
-    quote: "Within six weeks we had more enquiries than we'd had in the previous six months. The tracking means I can actually see where the work comes from now.",
-    name: "James Marlow",
-    role: "Marlow & Co Electrical",
-    metric: "+312% enquiries",
+    title: "Visibility",
+    body: "Which of your pages Google can actually see, index and rank for the searches homeowners run.",
   },
   {
-    quote: "They didn't just build us a website. They built a system that brings in jobs every single week. I wish I'd found them years ago.",
-    name: "Sarah Chen",
-    role: "ClearView Windows",
-    metric: "47 leads/month",
+    title: "Speed",
+    body: "How fast pages open on a mid-range phone on 4G, versus the point most homeowners tap back.",
   },
   {
-    quote: "I was sceptical about spending on ads, but the numbers don't lie. Every pound I put in comes back fourfold. That's never happened before.",
-    name: "David Okafor",
-    role: "Okafor Plumbing",
-    metric: "4.6x ROAS",
+    title: "Tracking",
+    body: "Whether every form, call, WhatsApp and click-to-call is being recorded and tied back to source.",
   },
   {
-    quote: "The monthly reports are genuinely useful. No waffle, just what's working, what's not, and what they're doing about it. Proper partner.",
-    name: "Emma Watts",
-    role: "Watts Landscaping",
-    metric: "1.1s load time",
+    title: "Ad structure",
+    body: "How your ad accounts are organised, where budget goes to dead clicks, and which jobs pay back.",
+  },
+  {
+    title: "Conversion",
+    body: "The specific pages, forms and above-the-fold moves that turn a visitor into an enquiry.",
+  },
+  {
+    title: "Enquiry handling",
+    body: "What happens after an enquiry lands: where it goes, who chases it, and how quickly.",
   },
 ];
 
+/* ------------------------------------------------------------------ */
+/*  Lead flow, used in place of testimonials                          */
+/* ------------------------------------------------------------------ */
+const LEAD_SOURCES = [
+  { label: "Google Ads", body: "Paid searches for the jobs you want more of" },
+  { label: "SEO", body: "Organic and local pack searches" },
+  { label: "Form", body: "Website enquiry forms" },
+  { label: "Call", body: "Direct phone calls, tracked" },
+  { label: "WhatsApp", body: "Message enquiries and follow-ups" },
+];
+
+/* ------------------------------------------------------------------ */
+/*  FAQ                                                               */
+/* ------------------------------------------------------------------ */
 const FAQS = [
   {
     q: "What kind of businesses do you work with?",
-    a: "UK trades. Electricians, plumbers, roofers, builders, landscapers, and similar. If homeowners search for you online and you turn up to do the work, you're the right fit.",
+    a: "UK trade businesses. Electricians, plumbers, roofers, builders, landscapers, and similar. If homeowners search for you online and you turn up to do the work, you are the right fit.",
   },
   {
     q: "How much does it cost?",
-    a: "Most electricians spend £800 to £2,000 a month with us. That's the ads budget, the SEO, the site work and the reporting, one price. You'll get the exact number on the audit call.",
+    a: "Most trade businesses spend between £800 and £2,000 a month with us. That is ads, SEO, site work, the enquiry system and the reporting under one price. You get the exact number after the Diagnosis Audit.",
   },
   {
     q: "How long before I see results?",
-    a: "Most clients see the phone ringing more inside 4 to 6 weeks. It compounds. Month three beats month one. Month six beats month three.",
+    a: "Most clients see enquiries lift inside 4 to 6 weeks once Prevention is done. It compounds from there. Month three beats month one. Month six beats month three.",
   },
   {
     q: "Do I need to do anything?",
-    a: "Very little. We run the ads, the SEO, the site and the tracking. You get in the van and quote the work.",
+    a: "Very little. We run ads, SEO, the site, the enquiry system and the call handling. You get in the van and quote the work.",
   },
   {
-    q: "What if it doesn't work?",
-    a: "No long-term contracts. One month's notice, cancel any time. If the numbers aren't there after 90 days, you can walk away. So far, nobody has.",
+    q: "What if it does not work?",
+    a: "No long-term contracts. One month's notice, cancel any time. Those are the trust terms: if the numbers are not there, you walk without penalty.",
   },
   {
     q: "What about AI search, ChatGPT and Google's AI answers?",
-    a: "Homeowners are starting to ask ChatGPT and Google's AI answers which electrician to use. The pages and links that push you up normal Google are the same ones that get you named in those answers. Same job, both places.",
+    a: "Homeowners are starting to ask ChatGPT and Google's AI answers who to use. The same pages and links that push you up normal Google are what get you named in those answers. Same job, both places.",
   },
 ];
 
@@ -152,16 +145,6 @@ const FAQS = [
 /*  Main page                                                         */
 /* ------------------------------------------------------------------ */
 export default function HomePage() {
-  /* Testimonial slider */
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
-  const nextTestimonial = useCallback(() => {
-    setActiveTestimonial((prev) => (prev + 1) % TESTIMONIALS.length);
-  }, []);
-  const prevTestimonial = useCallback(() => {
-    setActiveTestimonial((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
-  }, []);
-
-  /* FAQ accordion */
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
@@ -185,12 +168,6 @@ export default function HomePage() {
         <div className="hero-split-grid">
           <div className="hero-split-copy">
             <Reveal>
-              <span className="hero-eyebrow">
-                <span className="hero-eyebrow-dot" aria-hidden="true" />
-                Google Ads and SEO for UK electricians
-              </span>
-            </Reveal>
-            <Reveal>
               <h1 className="hero-title">
                 You&rsquo;re good
                 <br />
@@ -205,38 +182,30 @@ export default function HomePage() {
             </Reveal>
             <Reveal>
               <p className="hero-desc">
-                Over 40,000 people search Google for an electrician in the UK
-                every month. We run the ads, we run the SEO, we send the
-                enquiries straight to your phone. You get in the van and quote
-                them.
+                We make sure the phone rings. We work with trade businesses
+                across the UK, not just one trade. Over 3.6 million people
+                search Google for a tradesman every month. We make sure the
+                right ones find you, contact you, and end up as booked jobs.
+              </p>
+            </Reveal>
+            <Reveal>
+              <p className="hero-desc">
+                Leads land in one place. We catch them, manage them, and make
+                sure none go cold.
               </p>
             </Reveal>
             <Reveal>
               <div className="hero-cta">
-                <Button href="/book">Get the 80-point audit</Button>
-                <Button href="/results" variant="ghost">
-                  See how it works →
+                <Button href="/book">Book a call</Button>
+                <Button href="/system" variant="ghost">
+                  See how it works &rarr;
                 </Button>
               </div>
             </Reveal>
             <Reveal>
               <p className="hero-cta-note">
-                We score your site before you spend a penny.
+                Diagnosis Audit is free and yours to keep either way.
               </p>
-            </Reveal>
-            <Reveal>
-              <div className="hero-mini-trust">
-                <span className="hero-mini-trust-stars" aria-hidden="true">
-                  ★★★★★
-                </span>
-                <span>
-                  <b>47</b> jobs a month
-                </span>
-                <span className="hero-mini-trust-dot" aria-hidden="true" />
-                <span>
-                  <b>£1.1m+</b> booked for clients
-                </span>
-              </div>
             </Reveal>
           </div>
 
@@ -246,6 +215,12 @@ export default function HomePage() {
                 <div className="hero-glass-highlight" aria-hidden="true" />
                 <HeroVisual />
                 <div className="hero-glass-fade" aria-hidden="true" />
+                <div className="hero-glass-gate">
+                  <span className="hero-glass-gate-copy">
+                    Book a call to see the full diagnosis on your site.
+                  </span>
+                  <Button href="/book">Book a call</Button>
+                </div>
                 <div className="hero-glass-glow" aria-hidden="true" />
               </div>
             </Reveal>
@@ -254,7 +229,7 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================ */}
-      {/*  HOW IT WORKS                                                */}
+      {/*  DIAGNOSIS / PREVENTION / CURE                               */}
       {/* ============================================================ */}
       <section className="bg-[var(--color-canvas-deep)] px-6 pb-20 pt-16">
         <div className="mx-auto max-w-[1160px]">
@@ -263,119 +238,18 @@ export default function HomePage() {
               How it works
             </div>
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              We look before we sell.
+              Diagnosis. Prevention. Cure.
             </h2>
             <p className="mx-auto mt-4 max-w-[640px] text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Every other agency opens with a pitch. We open with a report on
-              your site, your rankings, and where jobs are going missing. If
-              the site isn&apos;t the problem, we&apos;ll say so. You keep the
-              audit either way.
+              Three stages. Each earns its place. The audit shows where you
+              are losing enquiries, Prevention plugs the leaks, Cure is the
+              ongoing engine that keeps the phone ringing.
             </p>
           </Reveal>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {HOW_IT_WORKS.map((item) => (
+            {DPC.map((item) => (
               <Reveal key={item.step}>
                 <div className="flex h-full flex-col rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
-                  {/* Mini illustration area */}
-                  <div className="mb-5 rounded-[var(--radius-lg)] bg-[var(--color-surface-sunken)] p-4">
-                    {item.step === "01" && (
-                      /* PDF report mock */
-                      <div className="mx-auto flex w-full max-w-[220px] flex-col gap-2 rounded-[var(--radius-sm)] border border-[var(--color-hairline)] bg-white p-3 shadow-[0_1px_2px_rgba(15,25,35,0.05)]">
-                        <div className="flex items-center justify-between">
-                          <span className="text-[9px] font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
-                            Growth audit · PDF
-                          </span>
-                          <span className="rounded-full bg-[color-mix(in_srgb,var(--color-success)_14%,transparent)] px-1.5 py-[1px] text-[9px] font-bold text-[var(--color-success)]">
-                            96
-                          </span>
-                        </div>
-                        <div className="h-1.5 w-4/5 rounded bg-[var(--color-hairline)]" />
-                        <div className="h-1.5 w-3/5 rounded bg-[var(--color-hairline)]" />
-                        <div className="mt-1 grid grid-cols-4 gap-1">
-                          {[0, 1, 2, 3].map((n) => (
-                            <div
-                              key={n}
-                              className="h-6 rounded-[3px] bg-[var(--color-canvas)]"
-                            />
-                          ))}
-                        </div>
-                        <div className="h-1.5 w-2/3 rounded bg-[var(--color-hairline)]" />
-                        <div className="h-1.5 w-1/2 rounded bg-[var(--color-hairline)]" />
-                      </div>
-                    )}
-                    {item.step === "02" && (
-                      /* Before / after audit score */
-                      <div className="flex items-center justify-around gap-2">
-                        {[
-                          { label: "Before", value: 42, color: "var(--color-danger)" },
-                          { label: "After", value: 96, color: "var(--color-success)" },
-                        ].map((s) => {
-                          const R = 22;
-                          const C = 2 * Math.PI * R;
-                          const dash = (s.value / 100) * C;
-                          return (
-                            <div
-                              key={s.label}
-                              className="flex flex-col items-center gap-1"
-                            >
-                              <div className="relative h-14 w-14">
-                                <svg
-                                  viewBox="0 0 56 56"
-                                  className="h-full w-full"
-                                  aria-hidden="true"
-                                >
-                                  <circle
-                                    cx="28"
-                                    cy="28"
-                                    r={R}
-                                    fill="none"
-                                    stroke="var(--color-hairline)"
-                                    strokeWidth="4"
-                                  />
-                                  <circle
-                                    cx="28"
-                                    cy="28"
-                                    r={R}
-                                    fill="none"
-                                    stroke={s.color}
-                                    strokeWidth="4"
-                                    strokeDasharray={`${dash} ${C}`}
-                                    strokeLinecap="round"
-                                    transform="rotate(-90 28 28)"
-                                  />
-                                </svg>
-                                <div className="pointer-events-none absolute inset-0 flex items-center justify-center font-[family-name:var(--font-display)] text-[15px] font-extrabold text-[var(--color-ink)]">
-                                  {s.value}
-                                </div>
-                              </div>
-                              <span className="text-[9px] font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
-                                {s.label}
-                              </span>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
-                    {item.step === "03" && (
-                      /* Simple included-list mock */
-                      <div className="flex flex-col gap-1.5">
-                        {item.items.slice(0, 4).map((it) => (
-                          <div
-                            key={it}
-                            className="flex items-center gap-2 rounded-[6px] bg-white px-2 py-1.5"
-                          >
-                            <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--color-primary)_14%,transparent)] text-[8px] font-bold text-[var(--color-primary)]">
-                              +
-                            </span>
-                            <span className="text-[10.5px] font-medium text-[var(--color-ink)]">
-                              {it}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
                   <div className="mb-1.5 flex items-center gap-2">
                     <span className="text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-accent)]">
                       Stage {item.step}
@@ -412,12 +286,13 @@ export default function HomePage() {
           </div>
           <Reveal className="mt-10 text-center">
             <p className="mb-5 text-[15px] font-semibold text-[var(--color-ink)]">
-              You keep the audit either way. No hard sell, no chasing calls.
+              You keep the Diagnosis Audit either way. No hard sell, no chasing
+              calls.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
-              <Button href="/book">Get the 80-point audit</Button>
+              <Button href="/book">Book a call</Button>
               <Button href="/system" variant="ghost">
-                See what&apos;s inside →
+                See what&apos;s inside &rarr;
               </Button>
             </div>
           </Reveal>
@@ -434,87 +309,141 @@ export default function HomePage() {
               Results
             </div>
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              Numbers that turn up in the bank.
+              More booked jobs. Every source tracked.
             </h2>
-            <p className="mx-auto mt-3 max-w-[560px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Averages across the electricians, plumbers and roofers we work
-              with. See how much money your ads are making. See which van jobs
-              came from which keyword. See what you spent to get each one.
+            <p className="mx-auto mt-3 max-w-[620px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
+              What a trade business gets: more of the enquiries that turn into
+              booked work, with every call and form tied back to source. How
+              we do it: ads, SEO, site, enquiry system and call handling
+              under one roof. What makes it different: one team on the hook
+              for the number that matters, not four suppliers pointing at
+              each other.
             </p>
           </Reveal>
 
-          {/* Larger result cards */}
           <Reveal>
-            <div className="results-grid">
-              {RESULTS.map((r) => (
-                <div key={r.label} className="result-card">
-                  <div className="result-card-value">{r.value}</div>
-                  <div className="result-card-label">{r.label}</div>
-                  <div className="result-card-sub">{r.sub}</div>
+            <div className="grid grid-cols-1 gap-6 rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)] md:grid-cols-3 md:p-9">
+              <div>
+                <div className="mb-2 text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-accent)]">
+                  Under one roof
                 </div>
-              ))}
+                <h3 className="mb-3 font-[family-name:var(--font-display)] text-[18px] font-bold leading-[1.25]">
+                  Ads, SEO, site, enquiry system, call handling.
+                </h3>
+                <p className="text-[14.5px] leading-[1.6] text-[var(--color-ink-muted)]">
+                  One team runs the lot. No juggling freelancers, no invoices
+                  from four different suppliers, no gap between the ad and
+                  what happens when the phone rings.
+                </p>
+              </div>
+              <div>
+                <div className="mb-2 text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-accent)]">
+                  Trust terms
+                </div>
+                <h3 className="mb-3 font-[family-name:var(--font-display)] text-[18px] font-bold leading-[1.25]">
+                  No long contract. One month&apos;s notice.
+                </h3>
+                <p className="text-[14.5px] leading-[1.6] text-[var(--color-ink-muted)]">
+                  If it is not working, you leave. That is the trust term, not
+                  a stat about who did or did not walk. We hold ourselves to
+                  the number that matters: booked jobs.
+                </p>
+              </div>
+              <div>
+                <div className="mb-2 text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-accent)]">
+                  Reporting
+                </div>
+                <h3 className="mb-3 font-[family-name:var(--font-display)] text-[18px] font-bold leading-[1.25]">
+                  Every call and form tied back to source.
+                </h3>
+                <p className="text-[14.5px] leading-[1.6] text-[var(--color-ink-muted)]">
+                  You see which enquiries came from Google Ads, which from
+                  SEO, which from a missed call we caught. No black box, no
+                  agency spin, no metric that does not translate to jobs.
+                </p>
+              </div>
             </div>
           </Reveal>
+        </div>
+      </section>
 
-          {/* Case study strip with growth chart */}
-          <Reveal className="mt-8">
-            <div className="grid grid-cols-1 gap-6 rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)] md:grid-cols-[1.1fr_1fr] md:p-9">
-              <div className="flex flex-col justify-center">
-                <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-accent)]">
-                  Case study
-                </div>
-                <h3 className="mb-3 font-[family-name:var(--font-display)] text-[22px] font-bold leading-[1.2] tracking-[-0.02em]">
-                  Marlow &amp; Co Electrical went from 12 to 47 jobs a month
-                  in 90 days.
-                </h3>
-                <p className="mb-5 text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-                  New site, Google Ads, landing pages built round the jobs he
-                  wants. Diary booked four weeks out. Every job traces back to
-                  the pound that brought it in.
-                </p>
+      {/* ============================================================ */}
+      {/*  LEAD FLOW  (replaces testimonials)                          */}
+      {/* ============================================================ */}
+      <section className="bg-[var(--color-canvas-deep)] px-6 pb-20 pt-16">
+        <div className="mx-auto max-w-[1160px]">
+          <Reveal className="mb-10 text-center">
+            <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
+              The system, in one line
+            </div>
+            <h2 className="font-[family-name:var(--font-display)] text-[clamp(30px,3.8vw,44px)] font-extrabold leading-[1.1] tracking-[-0.02em]">
+              Every enquiry into one place. None go cold.
+            </h2>
+          </Reveal>
+
+          <Reveal>
+            <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)] sm:p-10">
+              <div className="grid items-center gap-6 lg:grid-cols-[1fr_auto_1fr_auto_1fr]">
+                {/* Sources */}
                 <div>
-                  <Button href="/results" variant="ghost">
-                    Read the full case study →
-                  </Button>
-                </div>
-              </div>
-              <div className="rounded-[var(--radius-lg)] bg-[var(--color-canvas)] p-5">
-                <div className="mb-3 flex items-center justify-between">
-                  <div className="text-[13px] font-semibold text-[var(--color-ink)]">
-                    Jobs booked, monthly
+                  <div className="mb-3 text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
+                    Lead sources
                   </div>
-                  <div className="rounded-full bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] px-2.5 py-0.5 text-[11px] font-bold text-[var(--color-accent)]">
-                    ▲ 4× baseline
-                  </div>
-                </div>
-                <div
-                  className="flex items-end gap-2"
-                  style={{ height: 130 }}
-                  aria-hidden="true"
-                >
-                  {[12, 15, 14, 18, 22, 26, 30, 34, 38, 42, 45, 47].map(
-                    (v, i) => (
+                  <div className="flex flex-col gap-2">
+                    {LEAD_SOURCES.map((s) => (
                       <div
-                        key={i}
-                        className="flex-1 rounded-t-[4px]"
-                        style={{
-                          height: `${(v / 47) * 100}%`,
-                          background:
-                            i < 6
-                              ? "var(--color-hairline)"
-                              : "var(--color-accent)",
-                          opacity: i < 6 ? 1 : 0.85,
-                        }}
-                      />
-                    ),
-                  )}
+                        key={s.label}
+                        className="flex items-center gap-3 rounded-[var(--radius-md)] border border-[var(--color-hairline-soft)] bg-[var(--color-surface-muted)] px-3 py-2"
+                      >
+                        <span className="font-[family-name:var(--font-display)] text-[13px] font-bold text-[var(--color-ink)]">
+                          {s.label}
+                        </span>
+                        <span className="text-[12px] leading-[1.3] text-[var(--color-ink-muted)]">
+                          {s.body}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="mt-2 flex justify-between text-[10.5px] font-medium uppercase tracking-[0.06em] text-[var(--color-ink-faint)]">
-                  <span>Jan</span>
-                  <span>Apr</span>
-                  <span>Jul</span>
-                  <span>Oct</span>
-                  <span>Dec</span>
+
+                <div className="hidden text-2xl font-bold text-[var(--color-accent)] lg:block" aria-hidden="true">
+                  &rarr;
+                </div>
+
+                {/* Enquiry system */}
+                <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] p-6 text-[var(--color-on-primary)] shadow-[var(--shadow-2)]">
+                  <div className="mb-2 text-xs font-bold uppercase tracking-[0.06em] text-white/55">
+                    Enquiry system
+                  </div>
+                  <div className="mb-3 font-[family-name:var(--font-display)] text-[20px] font-bold leading-[1.2]">
+                    One dashboard. Every enquiry.
+                  </div>
+                  <ul className="flex flex-col gap-2 text-[13.5px] leading-[1.4] text-white/85">
+                    <li>Triaged into new, quoting, booked, dead.</li>
+                    <li>Chased when they go quiet.</li>
+                    <li>Missed calls caught by the call handling backstop.</li>
+                    <li>Tied back to the ad or search that brought them in.</li>
+                  </ul>
+                </div>
+
+                <div className="hidden text-2xl font-bold text-[var(--color-accent)] lg:block" aria-hidden="true">
+                  &rarr;
+                </div>
+
+                {/* Outcome */}
+                <div>
+                  <div className="mb-3 text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
+                    Outcome
+                  </div>
+                  <div className="rounded-[var(--radius-md)] border border-[var(--color-hairline-soft)] bg-[var(--color-surface-muted)] px-5 py-5">
+                    <div className="font-[family-name:var(--font-display)] text-[22px] font-extrabold leading-[1.1] text-[var(--color-ink)]">
+                      Booked job.
+                    </div>
+                    <p className="mt-2 text-[13.5px] leading-[1.5] text-[var(--color-ink-muted)]">
+                      Quoted and confirmed. Traceable back to the pound that
+                      brought it in. No enquiry sits in an inbox.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -523,85 +452,35 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================ */}
-      {/*  TESTIMONIALS                                                */}
+      {/*  WHAT DIAGNOSIS CHECKS                                       */}
       {/* ============================================================ */}
-      <section className="bg-[var(--color-canvas-deep)] px-6 pb-20 pt-16">
-        <div className="mx-auto max-w-[800px]">
+      <section className="px-6 pb-20 pt-16">
+        <div className="mx-auto max-w-[1160px]">
           <Reveal className="mb-10 text-center">
             <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
-              What clients say
+              Inside the Diagnosis Audit
             </div>
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              Take theirs instead.
+              Six categories, scored on your site.
             </h2>
+            <p className="mx-auto mt-3 max-w-[600px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
+              The audit is scored across the six areas below. Everything ranks
+              by impact on booked jobs.
+            </p>
           </Reveal>
-
-          <div className="relative">
-            {/* Carousel */}
-            <div className="overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-8 shadow-[var(--shadow-1)] sm:p-10">
-              <div
-                className="flex transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                style={{
-                  transform: `translateX(-${activeTestimonial * 100}%)`,
-                }}
-              >
-                {TESTIMONIALS.map((t) => (
-                  <div key={t.name} className="w-full flex-shrink-0 px-1">
-                    <blockquote className="mb-6 text-[18px] font-medium leading-[1.65] text-[var(--color-ink)]">
-                      &ldquo;{t.quote}&rdquo;
-                    </blockquote>
-                    <div className="flex flex-wrap items-center gap-3">
-                      <div>
-                        <div className="text-[15px] font-semibold text-[var(--color-ink)]">
-                          {t.name}
-                        </div>
-                        <div className="text-sm text-[var(--color-ink-muted)]">
-                          {t.role}
-                        </div>
-                      </div>
-                      <span className="rounded-[var(--radius-pill)] bg-[var(--color-accent)]/10 px-3 py-1 text-xs font-bold text-[var(--color-accent)]">
-                        {t.metric}
-                      </span>
-                    </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {DIAGNOSIS_CATEGORIES.map((c) => (
+              <Reveal key={c.title}>
+                <div className="h-full rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-6">
+                  <div className="mb-2 font-[family-name:var(--font-display)] text-[17px] font-bold">
+                    {c.title}
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Prev / Next */}
-            <div className="mt-6 flex items-center justify-center gap-3">
-              <ButtonEl
-                variant="ghost"
-                onClick={prevTestimonial}
-                className="h-10 w-10 !p-0"
-                aria-label="Previous testimonial"
-              >
-                &larr;
-              </ButtonEl>
-              <div className="flex items-center gap-2">
-                {TESTIMONIALS.map((t, i) => (
-                  <button
-                    key={t.name}
-                    type="button"
-                    onClick={() => setActiveTestimonial(i)}
-                    className={cn(
-                      "h-2 rounded-full transition-all duration-300",
-                      i === activeTestimonial
-                        ? "w-6 bg-[var(--color-primary)]"
-                        : "w-2 bg-[var(--color-hairline)] hover:bg-[var(--color-ink-faint)]",
-                    )}
-                  />
-                ))}
-              </div>
-              <ButtonEl
-                variant="ghost"
-                onClick={nextTestimonial}
-                className="h-10 w-10 !p-0"
-                aria-label="Next testimonial"
-              >
-                &rarr;
-              </ButtonEl>
-            </div>
+                  <p className="text-[14.5px] leading-[1.55] text-[var(--color-ink-muted)]">
+                    {c.body}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
@@ -616,7 +495,6 @@ export default function HomePage() {
           </h2>
         </Reveal>
         <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[1fr_340px]">
-          {/* Left: accordion */}
           <div className="flex flex-col gap-3">
             {FAQS.map((item, i) => {
               const open = openFaq === i;
@@ -652,7 +530,6 @@ export default function HomePage() {
             })}
           </div>
 
-          {/* Right: sidebar */}
           <Reveal>
             <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
               <h3 className="mb-2 font-[family-name:var(--font-display)] text-lg font-bold">
@@ -660,12 +537,12 @@ export default function HomePage() {
               </h3>
               <p className="mb-5 text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
                 30 minutes on the phone. We look at your site, your ads and
-                your Google rankings. If we can&apos;t help, we say so before
+                your Google rankings. If we cannot help, we say so before
                 you spend a penny.
               </p>
               <div className="mb-4">
                 <Button href="/book" className="w-full text-center">
-                  Get the 80-point audit
+                  Book a call
                 </Button>
               </div>
               <div className="text-center text-sm text-[var(--color-ink-muted)]">
@@ -689,22 +566,22 @@ export default function HomePage() {
         <Reveal>
           <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-11 text-center text-[var(--color-on-primary)] shadow-[var(--shadow-2)] sm:px-14">
             <h2 className="mx-auto max-w-[560px] font-[family-name:var(--font-display)] text-[clamp(24px,3.2vw,34px)] font-extrabold leading-[1.12] tracking-[-0.02em]">
-              Find out where the jobs are going missing.
+              Find out where enquiries are going missing.
             </h2>
             <p className="mx-auto mt-4 max-w-[480px] text-base leading-[1.6] text-white/70">
               30 minutes on the phone. We look at your site, your ads and
-              your rankings, and tell you what&apos;s costing you work.
-              Straight answer, either way.
+              your rankings, and tell you what is costing you work. Straight
+              answer, either way.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button
                 href="/book"
                 className="bg-white text-[var(--color-primary)] hover:bg-white/90"
               >
-                Get the 80-point audit
+                Book a call
               </Button>
               <Button href="/results" variant="secondary">
-                See real results
+                See how it works
               </Button>
             </div>
           </div>

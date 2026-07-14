@@ -120,7 +120,7 @@ function HeroCockpit() {
         <div className="alt-chart-head">
           <div>
             <div className="alt-chart-title">Enquiries — last 8 weeks</div>
-            <div className="alt-chart-sub">Steady, week after week</div>
+            <div className="alt-chart-sub">Tandemm, week after week</div>
           </div>
           <div className="alt-chart-tag">▲ 4× baseline</div>
         </div>
@@ -317,7 +317,7 @@ function HeroStack() {
               47 enquiries. £42.8k booked.
             </div>
             <div className="alt-stack-front-sub">
-              3× last quarter · steady week after week
+              3× last quarter · Tandemm week after week
             </div>
           </div>
           <div className="alt-stack-front-badge">
@@ -422,7 +422,7 @@ function PreviewSlot({
               <span className="preview-slot-em">see</span> it.
             </p>
             <p className="preview-slot-desc">
-              More than ads. More than marketing. A steady stream of work,
+              More than ads. More than marketing. A Tandemm stream of work,
               month after month.
             </p>
           </div>
