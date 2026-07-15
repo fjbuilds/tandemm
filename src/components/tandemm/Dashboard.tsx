@@ -1,8 +1,17 @@
+"use client";
+
+import { useState } from "react";
+
 /* ─────────────────────────────────────────────────────────── */
 /*  Product dashboard mockups                                  */
 /*  Mirrors the real Tandemm app UI: enquiry list, map view    */
 /*  and the desktop equivalent.                                */
 /* ─────────────────────────────────────────────────────────── */
+
+// Drop the real app map screenshot in at this path (public/…) and it
+// renders in place of the drawn fallback below. Until the file exists,
+// the faithful SVG map shows and no broken image appears.
+const MAP_IMAGE_SRC = "/brand/dashboard-map.png";
 
 type Stage = "call-back" | "quote-required" | "visit-required" | "quote-sent";
 type Urgency = "urgent" | "asap" | "flexible";
@@ -298,82 +307,161 @@ function EnquiryCard({ e }: { e: Enquiry }) {
 /* ── Stylised map ─────────────────────────────────────────── */
 
 function MapCanvas() {
+  const [imgFailed, setImgFailed] = useState(false);
+
+  // Pins roughly mirror the real screenshot: orange north of centre,
+  // purple centre-left, blue centre-right, blue south-west (Altrincham),
+  // green south-east (Poynton).
   const pins = [
-    { x: 148, y: 96, c: "#E8590C" },
-    { x: 100, y: 132, c: "#9C36B5" },
-    { x: 190, y: 146, c: "#3B5BDB" },
-    { x: 52, y: 186, c: "#3B82C4" },
-    { x: 214, y: 214, c: "#2F9E44" },
+    { x: 138, y: 92, c: "#E8590C" },
+    { x: 96, y: 150, c: "#9C36B5" },
+    { x: 172, y: 166, c: "#3B5BDB" },
+    { x: 60, y: 206, c: "#3B82C4" },
+    { x: 196, y: 236, c: "#2F9E44" },
+  ];
+
+  const labels: [number, number, string, boolean][] = [
+    [96, 40, "Prestwich", false],
+    [50, 66, "Pendlebury", false],
+    [214, 78, "Failsworth", false],
+    [36, 120, "Eccles", false],
+    [120, 138, "Manchester", true],
+    [214, 128, "Droylsden", false],
+    [52, 168, "Stretford", false],
+    [70, 200, "Sale", false],
+    [34, 226, "Altrincham", false],
+    [186, 188, "Stockport", false],
+    [158, 214, "Cheadle", false],
+    [116, 234, "Wythenshawe", false],
+    [92, 258, "Airport", false],
+    [150, 280, "Wilmslow", false],
+    [210, 252, "Poynton", false],
   ];
 
   return (
-    <div className="relative h-full w-full overflow-hidden bg-[#E8EDE4]">
-      <svg viewBox="0 0 260 300" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
-        {/* green space */}
-        <rect x="0" y="0" width="260" height="300" fill="#E9EFE3" />
-        <path d="M0 0h90v70H0z" fill="#DDE7D5" />
-        <path d="M170 230h90v70h-90z" fill="#DDE7D5" />
-        <circle cx="40" cy="250" r="34" fill="#DDE7D5" />
-        <circle cx="230" cy="60" r="26" fill="#DDE7D5" />
+    <div className="relative h-full w-full overflow-hidden bg-[#E9E5DE]">
+      {MAP_IMAGE_SRC && !imgFailed ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={MAP_IMAGE_SRC}
+          alt="Map of enquiries across Greater Manchester"
+          className="h-full w-full object-cover"
+          onError={() => setImgFailed(true)}
+          ref={(el) => {
+            // The error can fire before hydration attaches onError, so
+            // also detect an already-broken image once mounted.
+            if (el && el.complete && el.naturalWidth === 0) setImgFailed(true);
+          }}
+        />
+      ) : (
+        <svg
+          viewBox="0 0 260 300"
+          className="h-full w-full"
+          preserveAspectRatio="xMidYMid slice"
+        >
+          {/* base land */}
+          <rect x="0" y="0" width="260" height="300" fill="#E9E5DE" />
 
-        {/* built-up area */}
-        <path d="M70 70 L200 60 L215 190 L60 205 Z" fill="#E4E4E2" opacity="0.85" />
+          {/* countryside / green edges */}
+          <path d="M0 0 h70 v54 l-70 20 z" fill="#CBDDB0" opacity="0.8" />
+          <path d="M188 0 h72 v96 l-52 -18 z" fill="#CBDDB0" opacity="0.75" />
+          <path d="M0 224 l64 8 l-8 68 h-56 z" fill="#CBDDB0" opacity="0.8" />
+          <path d="M196 236 l64 -14 v78 h-70 z" fill="#CBDDB0" opacity="0.85" />
+          <ellipse cx="150" cy="250" rx="40" ry="30" fill="#CBDDB0" opacity="0.6" />
+          <ellipse cx="60" cy="150" rx="20" ry="16" fill="#C4D9AC" opacity="0.5" />
 
-        {/* water */}
-        <path d="M0 190 C 40 180, 70 210, 110 200 L 110 215 C 70 225, 40 195, 0 205 Z" fill="#CFE0EC" />
+          {/* urban core */}
+          <path
+            d="M64 60 C 120 44, 180 52, 206 96 C 214 150, 190 196, 132 212 C 78 210, 48 168, 46 118 C 46 92, 52 72, 64 60 Z"
+            fill="#E2E0DB"
+          />
+          {/* parks */}
+          <circle cx="118" cy="118" r="10" fill="#C4D9AC" opacity="0.75" />
+          <circle cx="150" cy="150" r="7" fill="#C4D9AC" opacity="0.7" />
 
-        {/* major roads */}
-        {[
-          "M10 120 C 80 100, 160 130, 250 105",
-          "M20 165 C 90 155, 170 175, 250 160",
-          "M130 10 C 120 90, 145 200, 130 295",
-          "M60 10 C 70 100, 55 200, 70 295",
-          "M195 15 C 205 100, 190 210, 200 295",
-        ].map((d, i) => (
-          <path key={i} d={d} stroke="#F6C15B" strokeWidth="3.2" fill="none" strokeLinecap="round" />
-        ))}
+          {/* M60 ring motorway */}
+          <path
+            d="M120 46 C 176 44, 210 84, 208 138 C 206 190, 168 214, 120 214 C 74 214, 44 176, 46 124 C 48 76, 78 48, 120 46 Z"
+            fill="none"
+            stroke="#EBA35B"
+            strokeWidth="4"
+          />
+          {/* radial A-roads */}
+          {[
+            "M120 130 L 128 40",
+            "M120 130 L 214 96",
+            "M120 130 L 224 150",
+            "M120 130 L 196 226",
+            "M120 130 L 120 292",
+            "M120 130 L 44 232",
+            "M120 130 L 20 150",
+            "M120 130 L 40 60",
+          ].map((d, i) => (
+            <path key={i} d={d} stroke="#F0B876" strokeWidth="2.4" fill="none" strokeLinecap="round" />
+          ))}
 
-        {/* minor roads */}
-        {[
-          "M0 90 L260 84",
-          "M0 230 L260 222",
-          "M0 265 L260 258",
-          "M95 10 L92 295",
-          "M160 10 L165 295",
-          "M232 10 L236 295",
-          "M0 45 L260 40",
-        ].map((d, i) => (
-          <path key={`m${i}`} d={d} stroke="#FFFFFF" strokeWidth="1.6" fill="none" opacity="0.9" />
-        ))}
+          {/* minor streets */}
+          {[
+            "M60 100 L200 92",
+            "M52 150 L206 150",
+            "M64 186 L196 190",
+            "M96 60 L104 210",
+            "M150 56 L156 208",
+          ].map((d, i) => (
+            <path key={`m${i}`} d={d} stroke="#FFFFFF" strokeWidth="1.3" fill="none" opacity="0.9" />
+          ))}
 
-        {/* labels */}
-        <text x="128" y="118" fontSize="8" fontWeight="700" fill="#9AA0A6" fontFamily="Arial">
-          Manchester
-        </text>
-        <text x="196" y="176" fontSize="6" fill="#9AA0A6" fontFamily="Arial">
-          Stockport
-        </text>
-        <text x="30" y="196" fontSize="6" fill="#9AA0A6" fontFamily="Arial">
-          Altrincham
-        </text>
-        <text x="196" y="236" fontSize="6" fill="#9AA0A6" fontFamily="Arial">
-          Poynton
-        </text>
+          {/* motorway shields */}
+          {[
+            [92, 150, "M60"],
+            [186, 118, "A6"],
+            [128, 246, "A34"],
+            [150, 288, "A538"],
+          ].map(([x, y, t], i) => (
+            <text
+              key={i}
+              x={x as number}
+              y={y as number}
+              fontSize="6"
+              fontWeight="700"
+              fill="#C58A45"
+              fontFamily="Arial"
+            >
+              {t}
+            </text>
+          ))}
 
-        {/* pins */}
-        {pins.map((p, i) => (
-          <g key={i}>
-            <ellipse cx={p.x} cy={p.y + 10} rx="4" ry="1.6" fill="rgba(0,0,0,0.18)" />
-            <path
-              d={`M${p.x} ${p.y + 9} c -6 -8 -8 -11 -8 -15 a 8 8 0 0 1 16 0 c 0 4 -2 7 -8 15 z`}
-              fill={p.c}
-              stroke="white"
-              strokeWidth="1.2"
-            />
-            <circle cx={p.x} cy={p.y - 6} r="2.8" fill="white" />
-          </g>
-        ))}
-      </svg>
+          {/* place labels */}
+          {labels.map(([x, y, t, bold], i) => (
+            <text
+              key={i}
+              x={x}
+              y={y}
+              fontSize={bold ? 9 : 6.5}
+              fontWeight={bold ? 700 : 400}
+              fill={bold ? "#6B7076" : "#9AA0A6"}
+              fontFamily="Arial"
+              textAnchor="middle"
+            >
+              {t}
+            </text>
+          ))}
+
+          {/* pins */}
+          {pins.map((p, i) => (
+            <g key={i}>
+              <ellipse cx={p.x} cy={p.y + 10} rx="4" ry="1.6" fill="rgba(0,0,0,0.18)" />
+              <path
+                d={`M${p.x} ${p.y + 9} c -6 -8 -8 -11 -8 -15 a 8 8 0 0 1 16 0 c 0 4 -2 7 -8 15 z`}
+                fill={p.c}
+                stroke="white"
+                strokeWidth="1.2"
+              />
+              <circle cx={p.x} cy={p.y - 6} r="2.8" fill="white" />
+            </g>
+          ))}
+        </svg>
+      )}
 
       {/* zoom controls */}
       <div className="absolute left-2 top-2 overflow-hidden rounded-[5px] border border-[#CED4DA] bg-white shadow-sm">
@@ -387,6 +475,10 @@ function MapCanvas() {
 
       <span className="absolute bottom-2 left-2 rounded bg-[#212529] px-2 py-[3px] text-[9px] font-semibold text-white">
         5 pinned
+      </span>
+
+      <span className="absolute bottom-1 right-1 rounded-sm bg-white/80 px-1.5 py-[1px] text-[7px] text-[#5f6368]">
+        Leaflet | © OpenStreetMap
       </span>
     </div>
   );

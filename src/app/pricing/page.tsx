@@ -164,8 +164,8 @@ const FAQS = [
     a: "Three month minimum on Cure (which is the runway for the ads to actually pay back and for the free rebuild to make sense on both sides). After that, one month's notice, cancel any time.",
   },
   {
-    q: "Do you work with anyone in my trade and area?",
-    a: "No. We work with one business per trade, per area. If we take you on, we do not take on your direct competitor down the road.",
+    q: "Will you work with my competitors too?",
+    a: "Fair question, and a common worry. We're not in the business of building two near-identical campaigns to fight each other over the same postcodes, it burns everyone's budget and helps nobody. If taking you on would clash with work we already do nearby, we'll tell you straight before you commit anything.",
   },
   {
     q: "How quickly will I see leads?",
@@ -177,7 +177,7 @@ const FAQS = [
   },
   {
     q: "What happens if I miss a call?",
-    a: "The tracking number redirects to your mobile. If you do not pick up, the system sends the homeowner an auto-text from your number within 60 seconds. The reply lands in the dashboard as a lead, tagged missed call caught.",
+    a: "The tracking number redirects to your mobile. If you don't pick up, the system texts the homeowner from your number instantly, takes them through a quick quoting flow, then lands them in the dashboard as a lead, tagged missed call caught.",
   },
   {
     q: "What if my trade or area is not a fit?",
