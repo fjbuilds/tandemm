@@ -189,37 +189,10 @@ export default function SystemPage() {
       {/* ── THREE STAGES ── */}
       <section className="mx-auto max-w-[1160px] px-6 pb-16 pt-4">
         <Reveal>
-          <div className="relative grid grid-cols-1 gap-6 lg:grid-cols-3">
-            <div className="pointer-events-none absolute left-0 right-0 top-1/2 z-0 hidden -translate-y-1/2 lg:block">
-              <div className="mx-[80px] border-t-2 border-dashed border-[var(--color-hairline)]" />
-            </div>
-
-            {STAGES.map((s) => (
-              <div
-                key={s.num}
-                className="relative z-10 overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]"
-              >
-                <div className="absolute inset-x-0 top-0 h-1 bg-[var(--color-accent)]" />
-                <div className="mb-4 flex items-center gap-3">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[var(--color-primary)] font-[family-name:var(--font-display)] text-[18px] font-extrabold text-[var(--color-on-primary)] shadow-[var(--shadow-1)]">
-                    {s.num}
-                  </span>
-                  <span className="font-[family-name:var(--font-display)] text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
-                    Stage {s.num}
-                  </span>
-                </div>
-                <h3 className="mb-2 font-[family-name:var(--font-display)] text-xl font-bold">
-                  {s.title}
-                </h3>
-                <p className="text-[15px] leading-[1.55] text-[var(--color-ink-muted)]">
-                  {s.desc}
-                </p>
-              </div>
-            ))}
-          </div>
+          <ProcessFlow />
         </Reveal>
         <Reveal>
-          <p className="mt-8 text-center text-sm text-[var(--color-ink-muted)]">
+          <p className="mt-12 text-center text-sm text-[var(--color-ink-muted)]">
             This is the process. Not a menu. Everyone goes through all
             three, in this order.
           </p>
@@ -442,6 +415,116 @@ export default function SystemPage() {
       </section>
 
       <Footer />
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/*  Process flow (Diagnosis / Prevention / Cure)               */
+/* ─────────────────────────────────────────────────────────── */
+
+function ProcessFlow() {
+  return (
+    <div className="process-flow relative">
+      <style>{`
+        .process-flow .flow-line { stroke-dasharray: 5 9; animation: flow-march 2.6s linear infinite; }
+        @keyframes flow-march { to { stroke-dashoffset: -28; } }
+        .process-flow .flow-node-ring { animation: flow-pulse 3s ease-out infinite; }
+        @keyframes flow-pulse {
+          0%   { transform: scale(0.85); opacity: 0.5; }
+          70%  { transform: scale(1.5); opacity: 0; }
+          100% { transform: scale(1.5); opacity: 0; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .process-flow .flow-line, .process-flow .flow-node-ring { animation: none; }
+        }
+      `}</style>
+
+      {/* Desktop: weaving flow */}
+      <div className="relative hidden md:block">
+        <svg
+          className="pointer-events-none absolute left-0 top-0 h-[72px] w-full"
+          viewBox="0 0 1000 72"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <defs>
+            <linearGradient id="flow-grad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="var(--color-accent)" />
+              <stop offset="50%" stopColor="var(--color-accent)" />
+              <stop offset="100%" stopColor="var(--color-primary)" />
+            </linearGradient>
+          </defs>
+          {/* base line */}
+          <path
+            d="M167 36 C 280 66, 388 66, 500 36 C 612 6, 720 6, 833 36"
+            fill="none"
+            stroke="url(#flow-grad)"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            opacity="0.55"
+          />
+          {/* animated flow */}
+          <path
+            className="flow-line"
+            d="M167 36 C 280 66, 388 66, 500 36 C 612 6, 720 6, 833 36"
+            fill="none"
+            stroke="url(#flow-grad)"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
+        </svg>
+
+        <div className="relative grid grid-cols-3 gap-8">
+          {STAGES.map((s, i) => (
+            <div key={s.num} className="flex flex-col items-center px-4 text-center">
+              <div className="relative z-10 mb-6 flex h-[72px] w-[72px] items-center justify-center">
+                <span
+                  className="flow-node-ring absolute inset-0 rounded-full border-2 border-[var(--color-accent)]"
+                  style={{ animationDelay: `${i * 0.8}s` }}
+                />
+                <span className="relative flex h-[72px] w-[72px] items-center justify-center rounded-full bg-[var(--color-primary)] font-[family-name:var(--font-display)] text-[26px] font-extrabold text-[var(--color-on-primary)] shadow-[var(--shadow-2)] ring-[3px] ring-[var(--color-canvas)]">
+                  {s.num}
+                </span>
+              </div>
+              <h3 className="mb-2 font-[family-name:var(--font-display)] text-[22px] font-bold tracking-[-0.01em]">
+                {s.title}
+              </h3>
+              <p className="max-w-[300px] text-[15px] leading-[1.55] text-[var(--color-ink-muted)]">
+                {s.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Mobile: vertical timeline */}
+      <div className="md:hidden">
+        {STAGES.map((s, i) => (
+          <div key={s.num} className="relative flex gap-4 pb-9 last:pb-0">
+            {i < STAGES.length - 1 && (
+              <span className="absolute bottom-2 left-[27px] top-[60px] w-[2px] bg-gradient-to-b from-[var(--color-accent)] to-[var(--color-primary)] opacity-40" />
+            )}
+            <div className="relative flex h-[54px] w-[54px] shrink-0 items-center justify-center">
+              <span
+                className="flow-node-ring absolute inset-0 rounded-full border-2 border-[var(--color-accent)]"
+                style={{ animationDelay: `${i * 0.8}s` }}
+              />
+              <span className="relative flex h-[54px] w-[54px] items-center justify-center rounded-full bg-[var(--color-primary)] font-[family-name:var(--font-display)] text-[20px] font-extrabold text-[var(--color-on-primary)] shadow-[var(--shadow-1)]">
+                {s.num}
+              </span>
+            </div>
+            <div className="pt-1.5">
+              <h3 className="mb-1.5 font-[family-name:var(--font-display)] text-[20px] font-bold">
+                {s.title}
+              </h3>
+              <p className="text-[15px] leading-[1.55] text-[var(--color-ink-muted)]">
+                {s.desc}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
