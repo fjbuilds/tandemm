@@ -441,31 +441,6 @@ export default function SystemPage() {
         </div>
       </section>
 
-      {/* ── FINAL CTA ── */}
-      <section className="mx-auto max-w-[1160px] px-6 py-20">
-        <Reveal>
-          <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-14 text-center text-[var(--color-on-primary)] shadow-[var(--shadow-2)] sm:px-14">
-            <h2 className="mx-auto max-w-[640px] font-[family-name:var(--font-display)] text-[clamp(24px,3.6vw,36px)] font-bold leading-[1.15] tracking-[-0.02em]">
-              See where your site is costing you jobs. Free.
-            </h2>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-              <Button
-                href="/book"
-                className="bg-white text-[var(--color-primary)] hover:bg-white/90"
-              >
-                Book a call
-              </Button>
-              <a
-                href="mailto:hello@tandemm.co.uk"
-                className="inline-flex h-[42px] items-center gap-2 rounded-[var(--radius-pill)] border border-white/25 bg-white/10 px-5 text-[15px] font-semibold text-white no-underline transition-colors hover:bg-white/20"
-              >
-                Email hello@tandemm.co.uk
-              </a>
-            </div>
-          </div>
-        </Reveal>
-      </section>
-
       <Footer />
     </div>
   );

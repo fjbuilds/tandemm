@@ -69,7 +69,7 @@ export default function AboutPage() {
         <div className="mx-auto max-w-[820px]">
           <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              One team, pointed at one number: booked jobs.
+              One team behind your website, your ads and every enquiry that comes in.
             </h1>
           </Reveal>
         </div>
@@ -100,33 +100,36 @@ export default function AboutPage() {
       </section>
 
       {/* ── THREE PRINCIPLES ── */}
-      <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
-        <div className="mx-auto max-w-[1060px]">
+      <section className="bg-[var(--color-canvas-deep)] px-6 py-16 sm:py-20">
+        <div className="mx-auto max-w-[820px]">
           <Reveal>
-            <h2 className="mb-4 text-center font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
+            <div className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
+              How we work
+            </div>
+            <h2 className="max-w-[560px] font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,40px)] font-bold leading-[1.1] tracking-[-0.02em]">
               Three rules we don&rsquo;t break.
             </h2>
-            <p className="mx-auto mb-12 max-w-[520px] text-center text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Every decision runs through these three. If a job breaks one, we
-              do not take it.
+            <p className="mt-3 max-w-[520px] text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
+              Every decision runs through these three. If a job breaks one,
+              we don&rsquo;t take it.
             </p>
           </Reveal>
 
-          <div className="relative grid grid-cols-1 gap-6 sm:grid-cols-3">
-            <div className="pointer-events-none absolute top-[50%] right-0 left-0 hidden h-px border-t border-dashed border-[var(--color-hairline)] sm:block" />
-
+          <div className="mt-10 sm:mt-12">
             {PRINCIPLES.map((p) => (
               <Reveal key={p.n}>
-                <div className="relative rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)] px-7 py-8">
-                  <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-primary)] text-sm font-bold text-[var(--color-on-primary)]">
-                    {p.n}
+                <div className="grid grid-cols-[auto_1fr] items-baseline gap-x-5 gap-y-1 border-t border-[var(--color-hairline)] py-7 first:border-t-0 first:pt-0 sm:gap-x-8 sm:py-9">
+                  <span className="font-[family-name:var(--font-display)] text-[clamp(38px,9vw,64px)] font-extrabold leading-[0.8] tracking-[-0.03em] text-[var(--color-accent)]/25">
+                    {String(p.n).padStart(2, "0")}
+                  </span>
+                  <div className="pt-1">
+                    <h3 className="mb-2 font-[family-name:var(--font-display)] text-[19px] font-bold sm:text-[22px]">
+                      {p.title}
+                    </h3>
+                    <p className="max-w-[520px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)] sm:text-[15.5px]">
+                      {p.body}
+                    </p>
                   </div>
-                  <h3 className="mb-2 font-[family-name:var(--font-display)] text-[19px] font-bold">
-                    {p.title}
-                  </h3>
-                  <p className="text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-                    {p.body}
-                  </p>
                 </div>
               </Reveal>
             ))}

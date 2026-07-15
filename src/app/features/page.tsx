@@ -271,9 +271,15 @@ export default function FeaturesPage() {
           </Reveal>
 
           <Reveal>
-            <div className="mx-auto mb-12 grid max-w-[1060px] grid-cols-1 items-end gap-8 lg:grid-cols-[1.5fr_0.65fr]">
-              <DashboardDesktop caption="Your enquiries on the desktop, for quoting." />
-              <DashboardPhone view="list" caption="Same data on your phone." />
+            {/* Phone only on mobile (the desktop mock is unreadable when shrunk); both side by side from lg up. */}
+            <div className="mx-auto mb-12 flex max-w-[1060px] flex-col items-center gap-8 lg:grid lg:grid-cols-[1.5fr_0.65fr] lg:items-end">
+              <div className="hidden w-full lg:block">
+                <DashboardDesktop caption="Your enquiries on the desktop, for quoting." />
+              </div>
+              <DashboardPhone
+                view="list"
+                caption="Every enquiry, on your phone when you're on the tools."
+              />
             </div>
           </Reveal>
 
