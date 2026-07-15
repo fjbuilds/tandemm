@@ -471,6 +471,29 @@ function MapCanvasFallback() {
   );
 }
 
+// The map area under the app chrome: the real map screenshot (cropped to
+// just the map), falling back to the drawn map if the asset is missing.
+function MapArea() {
+  const [imgFailed, setImgFailed] = useState(false);
+
+  if (!MAP_IMAGE_SRC || imgFailed) return <MapCanvasFallback />;
+
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={MAP_IMAGE_SRC}
+      alt="Enquiries mapped across Greater Manchester"
+      className="absolute inset-0 h-full w-full object-cover object-top"
+      onError={() => setImgFailed(true)}
+      ref={(el) => {
+        // The error can fire before hydration attaches onError, so also
+        // catch an already-broken image once mounted.
+        if (el && el.complete && el.naturalWidth === 0) setImgFailed(true);
+      }}
+    />
+  );
+}
+
 /* ── Phone ────────────────────────────────────────────────── */
 
 export function DashboardPhone({
@@ -480,70 +503,46 @@ export function DashboardPhone({
   view?: "list" | "map";
   caption?: string;
 }) {
-  const [imgFailed, setImgFailed] = useState(false);
-
-  // The map view uses the real app screenshot (it already includes the app
-  // header), so it fills the whole screen. If that asset is missing it
-  // falls back to our rendered chrome plus the drawn map.
-  const useScreenshot = view === "map" && !!MAP_IMAGE_SRC && !imgFailed;
-
   return (
     <div className="mx-auto w-full max-w-[300px]">
       <div className="relative rounded-[40px] border border-[#2b3240] bg-[#0e1420] p-2.5 shadow-[var(--shadow-2)]">
         <div className="relative flex h-[560px] flex-col overflow-hidden rounded-[32px] bg-[#F8F9FA]">
-          {useScreenshot ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={MAP_IMAGE_SRC}
-              alt="Enquiries mapped across Greater Manchester in the Tandemm app"
-              className="absolute inset-0 h-full w-full object-cover object-top"
-              onError={() => setImgFailed(true)}
-              ref={(el) => {
-                // The error can fire before hydration attaches onError, so
-                // also catch an already-broken image once mounted.
-                if (el && el.complete && el.naturalWidth === 0) setImgFailed(true);
-              }}
-            />
+          {/* notch */}
+          <div className="absolute left-1/2 top-0 z-10 h-[22px] w-[110px] -translate-x-1/2 rounded-b-[14px] bg-[#0e1420]" />
+
+          {/* status bar */}
+          <div className="flex items-center justify-between px-5 pt-2 text-[9px] font-semibold text-[#495057]">
+            <span>9:41</span>
+            <span>100%</span>
+          </div>
+
+          <AppChrome view={view} />
+
+          {view === "list" ? (
+            <div className="flex-1 space-y-2.5 overflow-hidden px-3 pt-2.5">
+              {ENQUIRIES.map((e) => {
+                const s = STAGE_META[e.stage];
+                return (
+                  <div key={e.name}>
+                    <div className="mb-1 flex items-center justify-between">
+                      <span className="flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.06em] text-[#868E96]">
+                        <span
+                          className="h-1.5 w-1.5 rounded-full"
+                          style={{ background: s.dot }}
+                        />
+                        {s.label}
+                      </span>
+                      <span className="text-[9px] text-[#ADB5BD]">1</span>
+                    </div>
+                    <EnquiryCard e={e} />
+                  </div>
+                );
+              })}
+            </div>
           ) : (
-            <>
-              {/* notch */}
-              <div className="absolute left-1/2 top-0 z-10 h-[22px] w-[110px] -translate-x-1/2 rounded-b-[14px] bg-[#0e1420]" />
-
-              {/* status bar */}
-              <div className="flex items-center justify-between px-5 pt-2 text-[9px] font-semibold text-[#495057]">
-                <span>9:41</span>
-                <span>100%</span>
-              </div>
-
-              <AppChrome view={view} />
-
-              {view === "list" ? (
-                <div className="flex-1 space-y-2.5 overflow-hidden px-3 pt-2.5">
-                  {ENQUIRIES.map((e) => {
-                    const s = STAGE_META[e.stage];
-                    return (
-                      <div key={e.name}>
-                        <div className="mb-1 flex items-center justify-between">
-                          <span className="flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.06em] text-[#868E96]">
-                            <span
-                              className="h-1.5 w-1.5 rounded-full"
-                              style={{ background: s.dot }}
-                            />
-                            {s.label}
-                          </span>
-                          <span className="text-[9px] text-[#ADB5BD]">1</span>
-                        </div>
-                        <EnquiryCard e={e} />
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <div className="flex-1 overflow-hidden">
-                  <MapCanvasFallback />
-                </div>
-              )}
-            </>
+            <div className="relative flex-1 overflow-hidden">
+              <MapArea />
+            </div>
           )}
         </div>
       </div>
