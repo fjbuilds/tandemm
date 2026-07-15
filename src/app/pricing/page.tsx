@@ -90,7 +90,6 @@ const INCLUDED = [
       "Google Ads (CPC) for the searches LSA does not cover",
       "Keyword and location research",
       "Ad copy, extensions, and negative lists",
-      "Weekly bid tuning by a Google-certified specialist",
       "A/B testing on ads and landing pages",
     ],
   },
@@ -416,19 +415,6 @@ export default function PricingPage() {
                 campaign, every day. Any unspent budget rolls to next
                 month. Cancel and the Google account is yours.
               </p>
-              <ul className="flex flex-col gap-2.5 text-[15px] leading-[1.55]">
-                {[
-                  "Ad spend is exactly half your monthly fee",
-                  "Dashboard shows live spend by campaign",
-                  "Unspent budget rolls into next month",
-                  "Your Google Ads account, in your name",
-                ].map((i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-[var(--color-ink)]">
-                    <span className="mt-[9px] block h-1 w-1 shrink-0 rounded-full bg-[var(--color-ink-muted)]" />
-                    {i}
-                  </li>
-                ))}
-              </ul>
             </div>
           </Reveal>
 

@@ -23,15 +23,15 @@ const paletteOverride = {
 const INCLUDED_PILLARS = [
   { title: "Website rebuild", note: "Fast, mobile-first, yours to keep" },
   { title: "Found on Google", note: "Ranked where homeowners search" },
-  { title: "Visible on AI", note: "Named when people ask ChatGPT or Claude" },
-  { title: "Smart quote assistant", note: "Answers questions, captures the job" },
+  { title: "Visible on AI", note: "Named when people ask an assistant" },
+  { title: "Quote assistant", note: "Answers questions, captures the job" },
   { title: "One dashboard", note: "Every enquiry, every source" },
   { title: "Call handling", note: "Missed calls caught and texted back" },
 ];
 
 const CAPTURE_FEATURES = [
   {
-    title: "Smart quote assistant",
+    title: "Quote assistant",
     body: "Sits on every page. It answers the homeowner's quick questions, helps them describe the job properly, and drops the enquiry straight into your dashboard. They get a fast answer instead of bouncing to the next trade, and you get a quote worth giving.",
   },
   {
@@ -122,7 +122,7 @@ export default function FeaturesPage() {
             {INCLUDED_PILLARS.map((p) => (
               <div
                 key={p.title}
-                className="flex items-start gap-3 rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[var(--color-surface)] px-5 py-4 shadow-[var(--shadow-1)]"
+                className="flex h-full items-center gap-3 rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[var(--color-surface)] px-5 py-4 shadow-[var(--shadow-1)]"
               >
                 <span className="mt-[3px] flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--color-success-soft)] text-[var(--color-success)]">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
@@ -335,12 +335,9 @@ export default function FeaturesPage() {
         </div>
 
         <Reveal>
-          <div className="mt-12 grid grid-cols-1 items-center gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-            <DashboardPhone
-              view="map"
-              caption="Every live enquiry, pinned across your patch."
-            />
+          <div className="mt-12 grid grid-cols-1 items-start gap-6 lg:grid-cols-[1.15fr_0.85fr]">
             <CaughtAndHandled />
+            <LeadCaptured />
           </div>
         </Reveal>
       </section>
@@ -769,7 +766,7 @@ function AiAnswerMock() {
 
         <div className="rounded-2xl rounded-bl-sm bg-[var(--color-surface-muted)] px-3.5 py-3 text-[13.5px] leading-[1.55] text-[var(--color-ink)]">
           A well-reviewed option in the Clapham area is{" "}
-          <span className="font-bold">Your Trade Business</span> — rated 4.9
+          <span className="font-bold">Your Trade Business</span>, rated 4.9
           on Google, NICEIC approved, and available for 24/7 emergency
           callouts. You can reach them here:
           <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-[var(--color-hairline)] bg-[var(--color-surface)] px-3 py-1 text-[12px] font-semibold text-[var(--color-accent-hover)]">
@@ -891,28 +888,34 @@ function CaughtAndHandled() {
       side: "out" as const,
       t: "7:48 PM",
       who: "Sent from your number",
-      body: "Sorry I missed you — I'm on a job. What do you need doing, and whereabouts are you?",
+      body: "Sorry I missed you, I'm on a job. To get you a fast, proper quote, a few quick things:",
+      bullets: [
+        "What's the job? (fault, rewire, EV charger…)",
+        "Whereabouts, and your postcode?",
+        "Emergency, this week, or flexible?",
+        "Anyone home for access, and any photos?",
+      ],
       kind: "msg" as const,
     },
     {
       side: "in" as const,
       t: "7:49 PM",
       who: "James",
-      body: "Consumer unit tripping, no power upstairs. SK4, need someone tomorrow morning.",
+      body: "Consumer unit keeps tripping, no power upstairs. SK4, Stockport. Emergency, need someone tomorrow morning. I'll be in.",
       kind: "msg" as const,
     },
     {
       side: "out" as const,
       t: "7:50 PM",
       who: "Quote assistant",
-      body: "Got it. Fault-finding call-out, morning slot. I've booked you in and passed the details on.",
+      body: "Perfect, thanks James. That's a fault-finding call-out, booked for a morning slot and passed straight to the team.",
       kind: "msg" as const,
     },
     {
       side: "in" as const,
       t: "7:50 PM",
       who: "Logged",
-      body: "Enquiry created · Emergency repair · Urgent · Call back",
+      body: "Fault-finding · Emergency · SK4 · Tomorrow AM",
       kind: "event" as const,
     },
   ];
@@ -926,7 +929,9 @@ function CaughtAndHandled() {
         You were on the tools. It got handled anyway.
       </h3>
       <p className="mb-6 text-[14.5px] leading-[1.55] text-[var(--color-ink-muted)]">
-        Two minutes, start to finish, without you touching your phone.
+        The auto-text asks the same standard questions every time, so the
+        reply comes back as clean, filterable detail, not a vague voicemail
+        you have to chase.
       </p>
 
       <div className="flex flex-col gap-3">
@@ -964,11 +969,76 @@ function CaughtAndHandled() {
                 }`}
               >
                 {m.body}
+                {"bullets" in m && m.bullets && (
+                  <ul className="mt-2 flex flex-col gap-1.5">
+                    {m.bullets.map((b) => (
+                      <li key={b} className="flex items-start gap-2 text-[13px] leading-[1.4]">
+                        <span className="mt-[6px] block h-1 w-1 shrink-0 rounded-full bg-white/70" />
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </div>
           ),
         )}
       </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/*  Lead captured (structured fields carried into dashboard)   */
+/* ─────────────────────────────────────────────────────────── */
+
+function LeadCaptured() {
+  const fields = [
+    { label: "Job type", value: "Fault-finding, consumer unit" },
+    { label: "Category", value: "Emergency repair" },
+    { label: "Area", value: "SK4, Stockport" },
+    { label: "Urgency", value: "Urgent, tomorrow AM" },
+    { label: "Access", value: "Homeowner in" },
+    { label: "Source", value: "Missed call → auto-text" },
+  ];
+
+  return (
+    <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
+      <div className="mb-1 flex items-center justify-between gap-3">
+        <div className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
+          What carries over
+        </div>
+        <span className="rounded-full bg-[var(--color-accent-soft)] px-2.5 py-[3px] text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-accent-hover)]">
+          New lead
+        </span>
+      </div>
+      <h3 className="mb-4 font-[family-name:var(--font-display)] text-[20px] font-bold">
+        The reply, already sorted into fields.
+      </h3>
+
+      <div className="overflow-hidden rounded-[var(--radius-md)] border border-[var(--color-hairline-soft)]">
+        {fields.map((f, i) => (
+          <div
+            key={f.label}
+            className={`flex items-center justify-between gap-3 px-4 py-2.5 ${
+              i > 0 ? "border-t border-[var(--color-hairline-soft)]" : ""
+            } ${i % 2 === 1 ? "bg-[var(--color-surface-muted)]" : "bg-[var(--color-surface)]"}`}
+          >
+            <span className="text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-faint)]">
+              {f.label}
+            </span>
+            <span className="text-right text-[13px] font-semibold text-[var(--color-ink)]">
+              {f.value}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <p className="mt-4 text-[13px] leading-[1.55] text-[var(--color-ink-muted)]">
+        Same questions every time means every enquiry lands as clean data.
+        Filter your whole pipeline by job type, area or urgency, and quote
+        from real detail instead of a name and a number.
+      </p>
     </div>
   );
 }
@@ -983,7 +1053,7 @@ function CaptureIcon({ name }: { name: string }) {
     return (
       <svg {...common}><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M7 8h10M7 12h6M7 16h8" /></svg>
     );
-  if (name.includes("Smart quote"))
+  if (name.includes("Quote"))
     return (
       <svg {...common}><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z" /><path d="M12 7v2M12 12h.01" /></svg>
     );
@@ -999,3 +1069,4 @@ function CaptureIcon({ name }: { name: string }) {
     <svg {...common}><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" /></svg>
   );
 }
+

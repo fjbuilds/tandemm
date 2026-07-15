@@ -83,13 +83,12 @@ export default function AboutPage() {
               How we think about growth
             </div>
             <h2 className="mb-4 font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,40px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              One system out of the things you already pay for separately.
+              One system, not six suppliers.
             </h2>
             <p className="mx-auto max-w-[640px] text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
               Our job is to be the layer that catches every enquiry that would
               otherwise slip. Site, ads, SEO, phone, forms and WhatsApp all
-              converging into one flow. No dropped handoffs, no supplier
-              pointing at another.
+              converging into one flow.
             </p>
           </Reveal>
 
@@ -185,9 +184,6 @@ export default function AboutPage() {
                 >
                   Book a call
                 </Button>
-                <Button href="/results" variant="secondary">
-                  See the results
-                </Button>
               </div>
             </div>
           </Reveal>
@@ -202,232 +198,167 @@ export default function AboutPage() {
 /* ── Converging-flow visual ─────────────────────────────── */
 
 function ConvergenceVisual() {
-  const sources = [
-    { label: "Website", y: 40 },
-    { label: "Google Ads", y: 100 },
-    { label: "SEO", y: 160 },
-    { label: "Forms", y: 220 },
-    { label: "Phone", y: 280 },
-    { label: "WhatsApp", y: 340 },
+  const incoming = [
+    {
+      source: "Missed call",
+      snippet: "Rang while you were under a floor",
+      time: "7:48pm",
+      tone: "accent" as const,
+      live: true,
+    },
+    {
+      source: "WhatsApp",
+      snippet: "Consumer unit tripping, no power upstairs",
+      time: "7:49pm",
+      tone: "success" as const,
+    },
+    {
+      source: "Web form",
+      snippet: "Full rewire quote, 3-bed semi",
+      time: "6:12pm",
+      tone: "primary" as const,
+    },
+    {
+      source: "Google LSA",
+      snippet: "EV charger install, SK4",
+      time: "5:30pm",
+      tone: "primary" as const,
+    },
   ];
 
-  const pathFor = (y: number) => `M 190 ${y} C 350 ${y}, 400 190, 545 190`;
+  const outcomes = [
+    { value: "24", label: "Leads caught this month" },
+    { value: "14", label: "Turned into booked jobs" },
+    { value: "0", label: "Missed and lost" },
+  ];
+
+  const dotClass = (tone: "accent" | "success" | "primary") =>
+    tone === "accent"
+      ? "bg-[var(--color-accent)]"
+      : tone === "success"
+        ? "bg-[var(--color-success)]"
+        : "bg-[var(--color-primary)]";
 
   return (
-    <div className="mx-auto max-w-[900px] overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-1)] sm:p-8">
-      <svg
-        viewBox="0 0 900 380"
-        preserveAspectRatio="xMidYMid meet"
-        className="convergence w-full"
-        role="img"
-        aria-label="Website, Google Ads, SEO, forms, phone and WhatsApp converging into one Tandemm system, which turns them into booked jobs."
-      >
-        <style>{`
-          .convergence .flow {
-            stroke-dasharray: 5 7;
-            animation: conv-dash 1.4s linear infinite;
-          }
-          @keyframes conv-dash { to { stroke-dashoffset: -12; } }
-          .convergence .hub-ring {
-            transform-origin: 645px 190px;
-            animation: conv-pulse 2.6s ease-out infinite;
-          }
-          @keyframes conv-pulse {
-            0%   { transform: scale(0.92); opacity: 0.45; }
-            70%  { transform: scale(1.18); opacity: 0; }
-            100% { transform: scale(1.18); opacity: 0; }
-          }
-          .convergence .spark { animation: conv-fade 3.2s ease-in-out infinite; }
-          @keyframes conv-fade {
-            0%, 100% { opacity: 0.25; }
-            50%      { opacity: 1; }
-          }
-          @media (prefers-reduced-motion: reduce) {
-            .convergence .flow,
-            .convergence .hub-ring,
-            .convergence .spark,
-            .convergence .bead { animation: none; }
-            .convergence .bead { display: none; }
-          }
-        `}</style>
+    <div className="convergence mx-auto max-w-[980px] overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-1)] sm:p-8">
+      <style>{`
+        .convergence .live-dot { position: relative; }
+        .convergence .live-dot::after {
+          content: "";
+          position: absolute;
+          inset: -5px;
+          border-radius: 9999px;
+          border: 2px solid var(--color-accent);
+          animation: conv-ping 2.2s ease-out infinite;
+        }
+        @keyframes conv-ping {
+          0%   { transform: scale(0.7); opacity: 0.7; }
+          70%  { transform: scale(1.7); opacity: 0; }
+          100% { transform: scale(1.7); opacity: 0; }
+        }
+        .convergence .drift { animation: conv-drift 3.4s ease-in-out infinite; }
+        @keyframes conv-drift {
+          0%, 100% { opacity: 0.35; transform: translateX(0); }
+          50%      { opacity: 1; transform: translateX(3px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .convergence .live-dot::after,
+          .convergence .drift { animation: none; }
+        }
+      `}</style>
 
-        <defs>
-          <marker
-            id="about-arrowhead"
-            viewBox="0 0 10 10"
-            refX="8"
-            refY="5"
-            markerWidth="6"
-            markerHeight="6"
-            orient="auto-start-reverse"
-          >
-            <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--color-accent)" />
-          </marker>
-        </defs>
+      <div className="mb-6 flex items-center justify-between gap-4">
+        <div className="flex items-center gap-2.5">
+          <span className="live-dot flex h-2 w-2 shrink-0 rounded-full bg-[var(--color-accent)]" />
+          <span className="text-[13px] font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
+            Every enquiry, one place
+          </span>
+        </div>
+        <span className="rounded-full bg-[var(--color-surface-muted)] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
+          Today
+        </span>
+      </div>
 
-        {/* Flow lines */}
-        {sources.map((s) => (
-          <path
-            key={s.label}
-            className="flow"
-            d={pathFor(s.y)}
-            fill="none"
-            stroke="var(--color-hairline)"
-            strokeWidth="1.6"
-          />
-        ))}
+      <div className="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-[1.1fr_auto_0.95fr]">
+        {/* Coming in */}
+        <div className="rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)] p-4 sm:p-5">
+          <div className="mb-3 text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--color-ink-faint)]">
+            Coming in
+          </div>
+          <div className="flex flex-col gap-2.5">
+            {incoming.map((e) => (
+              <div
+                key={e.source}
+                className="flex items-start gap-3 rounded-[var(--radius-md)] border border-[var(--color-hairline-soft)] bg-[var(--color-surface)] px-3.5 py-3"
+              >
+                <span
+                  className={`mt-[5px] h-2 w-2 shrink-0 rounded-full ${dotClass(e.tone)} ${e.live ? "live-dot" : ""}`}
+                />
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-[13px] font-bold text-[var(--color-ink)]">
+                      {e.source}
+                    </span>
+                    <span className="shrink-0 text-[11px] text-[var(--color-ink-faint)]">
+                      {e.time}
+                    </span>
+                  </div>
+                  <div className="mt-0.5 truncate text-[12.5px] leading-[1.4] text-[var(--color-ink-muted)]">
+                    {e.snippet}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
 
-        {/* Enquiries travelling down each line */}
-        {sources.map((s, i) => (
-          <circle key={`bead-${s.label}`} className="bead" r="4.5" fill="var(--color-accent)">
-            <animateMotion
-              dur="2.8s"
-              begin={`${i * 0.45}s`}
-              repeatCount="indefinite"
-              path={pathFor(s.y)}
-              keyPoints="0;1"
-              keyTimes="0;1"
-              calcMode="spline"
-              keySplines="0.4 0 0.5 1"
-            />
-            <animate
-              attributeName="opacity"
-              dur="2.8s"
-              begin={`${i * 0.45}s`}
-              repeatCount="indefinite"
-              values="0;1;1;0"
-              keyTimes="0;0.12;0.82;1"
-            />
-          </circle>
-        ))}
+        {/* Merge */}
+        <div className="flex flex-row items-center justify-center gap-3 lg:flex-col">
+          <span className="drift text-[var(--color-accent)] lg:rotate-0">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="rotate-90 lg:rotate-0" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </span>
+          <div className="flex flex-col items-center rounded-[var(--radius-lg)] bg-[var(--color-primary)] px-5 py-4 text-center text-[var(--color-on-primary)] shadow-[var(--shadow-1)]">
+            <span className="font-[family-name:var(--font-display)] text-[15px] font-extrabold">
+              One system
+            </span>
+            <span className="mt-1 text-[11px] leading-[1.35] text-white/70">
+              Caught · Chased ·<br />Answered
+            </span>
+          </div>
+          <span className="drift text-[var(--color-accent)]">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="rotate-90 lg:rotate-0" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </span>
+        </div>
 
-        {/* Source pills */}
-        {sources.map((s) => (
-          <g key={`src-${s.label}`}>
-            <rect
-              x="30"
-              y={s.y - 18}
-              rx="18"
-              ry="18"
-              width="160"
-              height="36"
-              fill="var(--color-surface-muted)"
-              stroke="var(--color-hairline)"
-              strokeWidth="1"
-            />
-            <text
-              x="110"
-              y={s.y + 5}
-              textAnchor="middle"
-              fontFamily="var(--font-display)"
-              fontSize="14"
-              fontWeight="700"
-              fill="var(--color-ink)"
+        {/* What you get */}
+        <div className="flex flex-col justify-center gap-3 rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)] p-4 sm:p-5">
+          <div className="mb-1 text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--color-ink-faint)]">
+            What you get
+          </div>
+          {outcomes.map((o) => (
+            <div
+              key={o.label}
+              className="flex items-center gap-3.5 rounded-[var(--radius-md)] border border-[var(--color-hairline-soft)] bg-[var(--color-surface)] px-4 py-3"
             >
-              {s.label}
-            </text>
-          </g>
-        ))}
+              <span className="font-[family-name:var(--font-display)] text-[28px] font-extrabold leading-none text-[var(--color-accent-hover)]">
+                {o.value}
+              </span>
+              <span className="text-[13px] leading-[1.35] text-[var(--color-ink-muted)]">
+                {o.label}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
 
-        {/* Hub */}
-        <circle
-          className="hub-ring"
-          cx="645"
-          cy="190"
-          r="78"
-          fill="none"
-          stroke="var(--color-accent)"
-          strokeWidth="2"
-        />
-        <g>
-          <rect
-            x="545"
-            y="140"
-            rx="20"
-            ry="20"
-            width="200"
-            height="100"
-            fill="var(--color-primary)"
-          />
-          <text
-            x="645"
-            y="176"
-            textAnchor="middle"
-            fontFamily="var(--font-display)"
-            fontSize="16"
-            fontWeight="800"
-            fill="var(--color-on-primary)"
-          >
-            One system
-          </text>
-          <text
-            x="645"
-            y="200"
-            textAnchor="middle"
-            fontFamily="var(--font-body)"
-            fontSize="12"
-            fill="rgba(255,255,255,0.75)"
-          >
-            Every enquiry caught,
-          </text>
-          <text
-            x="645"
-            y="218"
-            textAnchor="middle"
-            fontFamily="var(--font-body)"
-            fontSize="12"
-            fill="rgba(255,255,255,0.75)"
-          >
-            chased and answered.
-          </text>
-        </g>
-
-        <path
-          className="flow"
-          d="M 745 190 L 800 190"
-          stroke="var(--color-accent)"
-          strokeWidth="2.5"
-          fill="none"
-          markerEnd="url(#about-arrowhead)"
-        />
-
-        {/* Output */}
-        <g className="spark">
-          <rect
-            x="812"
-            y="163"
-            rx="12"
-            ry="12"
-            width="72"
-            height="54"
-            fill="var(--color-accent-soft)"
-            stroke="var(--color-accent)"
-            strokeWidth="1.5"
-          />
-          <text
-            x="848"
-            y="186"
-            textAnchor="middle"
-            fontFamily="var(--font-display)"
-            fontSize="15"
-            fontWeight="800"
-            fill="var(--color-accent-hover)"
-          >
-            Booked
-          </text>
-          <text
-            x="848"
-            y="203"
-            textAnchor="middle"
-            fontFamily="var(--font-display)"
-            fontSize="13"
-            fontWeight="700"
-            fill="var(--color-accent-hover)"
-          >
-            jobs
-          </text>
-        </g>
-      </svg>
+      <p className="mt-5 text-center text-[12px] text-[var(--color-ink-faint)]">
+        Illustrative. Every source lands in one dashboard, triaged and
+        chased, so nothing slips.
+      </p>
     </div>
   );
 }
