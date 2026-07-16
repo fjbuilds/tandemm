@@ -83,9 +83,9 @@ const FEATURE_PREVIEW = [
     body: "Dedicated tracking number, on-site widget, missed-call auto-text. Nothing lands in a black hole.",
   },
   {
-    tag: "Call handling",
-    title: "Missed calls, caught and texted back.",
-    body: "You can't answer every call. The system texts the homeowner from your number and logs the reply as a lead.",
+    tag: "Missed-call capture",
+    title: "Missed calls, caught and quoted.",
+    body: "You can't answer every call. The system texts the homeowner from your number, runs them through five qualifying questions, and drops the answers into your dashboard.",
   },
 ];
 
@@ -213,7 +213,7 @@ export default function HomePage() {
                   <span className="hero-glass-gate-copy">
                     Enter your URL to get an audit like this on your site.
                   </span>
-                  <Button href="/book">Book a call instead</Button>
+                  <Button href="/book">Start without a URL</Button>
                 </div>
                 <div className="hero-glass-glow" aria-hidden="true" />
               </div>

@@ -56,7 +56,7 @@ const SYSTEM_STEPS = [
   { n: 2, title: "Site", desc: "Fast, plain pages built to get a homeowner off the fence and into an enquiry." },
   { n: 3, title: "Tracking", desc: "Every call, form and WhatsApp, tied back to the pound that brought it in." },
   { n: 4, title: "Enquiry system", desc: "Every enquiry lands in one dashboard. Triaged, chased, none go cold." },
-  { n: 5, title: "Call handling", desc: "Missed calls answered by a UK-based team and dropped into the same system.", navy: true },
+  { n: 5, title: "Missed-call capture", desc: "Auto-text back qualifies the job with five questions and drops the answers into the same system.", navy: true },
 ] as Array<{ n: number; title: string; desc: string; navy?: boolean }>;
 
 const DIAGNOSIS_ITEMS = [
@@ -354,7 +354,7 @@ export default function ResultsPage() {
                       Missed calls caught
                     </div>
                     <div className="mt-1 text-sm text-white/70">
-                      A UK-based team answers when you cannot pick up.
+                      Auto-text back, five qualifying questions, straight into the dashboard.
                     </div>
                   </div>
                 </div>
