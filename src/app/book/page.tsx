@@ -1,7 +1,8 @@
 "use client";
 
-import { CSSProperties, Suspense, useEffect, useMemo, useState } from "react";
+import { CSSProperties, Suspense, useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import Cal from "@calcom/embed-react";
 import { Nav } from "@/components/tandemm/Nav";
 import { Footer } from "@/components/tandemm/Footer";
 import { Reveal } from "@/components/tandemm/Reveal";
@@ -19,12 +20,7 @@ const bookPaletteOverride = {
   "--color-hairline-soft": "#E1E3DC",
 } as CSSProperties;
 
-const SLOTS = ["09:00", "10:30", "13:00", "15:00", "16:30"];
-const WEEKDAY_LABELS = ["M", "T", "W", "T", "F", "S", "S"];
-const MONTH_NAMES = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
-];
+const CAL_LINK = "tandemm-team-vocijm/audit";
 
 const TRADES = [
   { value: "", label: "Choose your trade" },
@@ -49,7 +45,7 @@ const TEAM_SIZE = [
 
 const FLOW_STEPS = [
   { n: 1, title: "Tell us about you", desc: "Site, trade, area. Under two minutes." },
-  { n: 2, title: "We prep your audit", desc: "48 hours to score your site, ads and rankings by hand." },
+  { n: 2, title: "We prep your audit", desc: "We score your site, ads and rankings by hand." },
   { n: 3, title: "Pick a follow-up slot", desc: "Book the walkthrough on the calendar below." },
   { n: 4, title: "We walk you through it", desc: "30 minutes. Plain English. No pitch until the end." },
 ];
@@ -57,7 +53,7 @@ const FLOW_STEPS = [
 const FAQS = [
   {
     q: "Why can't I book a call straight away?",
-    a: "The 48-hour window is us going through your site, ads and rankings by hand before we speak. That way the follow-up call is a walkthrough of your actual audit, not a discovery chat where you brief us on your business.",
+    a: "We go through your site, ads and rankings by hand before we speak. That way the call is a walkthrough of your actual audit, not a discovery chat where you brief us on your business.",
   },
   {
     q: "Is the audit really free?",
@@ -73,6 +69,15 @@ const FAQS = [
   },
 ];
 
+function PrefillWebsite({ onValue }: { onValue: (v: string) => void }) {
+  const searchParams = useSearchParams();
+  const website = searchParams.get("website") ?? "";
+  useEffect(() => {
+    if (website) onValue(website);
+  }, [website, onValue]);
+  return null;
+}
+
 export default function BookPage() {
   return (
     <div
@@ -80,21 +85,22 @@ export default function BookPage() {
       style={bookPaletteOverride}
     >
       <Nav active="book" />
-      <Suspense fallback={<div className="mx-auto max-w-[1160px] px-6 pt-24 text-center text-[15px] text-[var(--color-ink-muted)]">Loading</div>}>
-        <BookContent />
-      </Suspense>
+      <BookContent />
       <Footer />
     </div>
   );
 }
 
 function BookContent() {
-  const searchParams = useSearchParams();
-  const prefillWebsite = searchParams.get("website") ?? "";
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [prefillWebsite, setPrefillWebsite] = useState("");
+  const handlePrefill = useCallback((v: string) => setPrefillWebsite(v), []);
 
   return (
     <>
+      <Suspense fallback={null}>
+        <PrefillWebsite onValue={handlePrefill} />
+      </Suspense>
       {/* HERO */}
       <section
         className="relative box-border px-6 pb-8 pt-[60px] text-center"
@@ -110,17 +116,33 @@ function BookContent() {
             </div>
           </Reveal>
           <Reveal>
-            <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              One route in.
-              <br className="hidden sm:inline" />
-              Straight to your audit.
+            <h1 className="font-[family-name:var(--font-display)] tracking-[-0.03em]">
+              <span className="block text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04]">
+                You're good at the job.
+              </span>
+              <span className="relative mt-1 inline-block text-[clamp(20px,2.8vw,28px)] font-semibold leading-[1.3] text-[var(--color-ink-muted)]">
+                We make sure the right people know it.
+                <span
+                  className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-[var(--color-accent)]"
+                  aria-hidden="true"
+                />
+              </span>
             </h1>
           </Reveal>
           <Reveal>
-            <p className="mx-auto mt-[22px] max-w-[600px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Tell us your site and trade. We score everything by hand over
-              the next 48 hours. Then you pick the walkthrough slot that
-              suits you.
+            <div className="mx-auto mt-7 flex items-center justify-center gap-3">
+              <span className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,40px)] font-extrabold leading-none tracking-[-0.02em] text-[var(--color-primary)]">
+                3.6m
+              </span>
+              <span className="max-w-[220px] text-left text-[14px] leading-[1.4] text-[var(--color-ink-muted)]">
+                people in the UK search for a tradesman every month
+              </span>
+            </div>
+          </Reveal>
+          <Reveal>
+            <p className="mx-auto mt-5 max-w-[540px] text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
+              Tell us your site and trade. We score everything by hand,
+              then you pick the walkthrough slot that suits you.
             </p>
           </Reveal>
         </div>
@@ -203,10 +225,10 @@ function BookContent() {
 }
 
 /* ─────────────────────────────────────────────────────────── */
-/*  Unified path: details -> calendar -> confirmation          */
+/*  Unified path: details -> Cal.com calendar                  */
 /* ─────────────────────────────────────────────────────────── */
 
-type Step = 1 | 2 | 3;
+type Step = 1 | 2;
 
 function UnifiedPath({ prefillWebsite }: { prefillWebsite: string }) {
   const [step, setStep] = useState<Step>(1);
@@ -222,9 +244,6 @@ function UnifiedPath({ prefillWebsite }: { prefillWebsite: string }) {
     services: "",
     notes: "",
   });
-  const [selectedDay, setSelectedDay] = useState<number | null>(null);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [viewMonth, setViewMonth] = useState<{ year: number; month: number } | null>(null);
 
   useEffect(() => {
     if (prefillWebsite && !details.website) {
@@ -242,63 +261,6 @@ function UnifiedPath({ prefillWebsite }: { prefillWebsite: string }) {
     details.trade &&
     details.teamSize &&
     details.postcodes.trim();
-
-  const canBook = selectedDay !== null && selectedTime !== null;
-
-  /* Calendar: real "now". Block past days + next 48h + weekends. */
-  const now = useMemo(() => new Date(), []);
-  const currentYear = viewMonth?.year ?? now.getFullYear();
-  const currentMonth = viewMonth?.month ?? now.getMonth();
-  const isCurrentRealMonth =
-    currentYear === now.getFullYear() && currentMonth === now.getMonth();
-
-  const CAL_MONTH_LABEL = `${MONTH_NAMES[currentMonth]} ${currentYear}`;
-  const DAYS_IN_MONTH = new Date(currentYear, currentMonth + 1, 0).getDate();
-  /* Mon=0..Sun=6 offset for grid start */
-  const firstWeekday = new Date(currentYear, currentMonth, 1).getDay();
-  const START_OFFSET = (firstWeekday + 6) % 7;
-
-  const firstBookable = useMemo(() => {
-    const d = new Date(now);
-    d.setHours(0, 0, 0, 0);
-    d.setDate(d.getDate() + 2);
-    return d;
-  }, [now]);
-
-  const calendarCells = useMemo(() => {
-    const blanks = Array.from({ length: START_OFFSET }, () => null);
-    const days = Array.from({ length: DAYS_IN_MONTH }, (_, i) => i + 1);
-    return [...blanks, ...days];
-  }, [START_OFFSET, DAYS_IN_MONTH]);
-
-  const isDisabled = (day: number) => {
-    const d = new Date(currentYear, currentMonth, day);
-    const weekday = d.getDay();
-    if (weekday === 0 || weekday === 6) return { disabled: true, prep: false };
-    if (d < firstBookable) {
-      const startOfToday = new Date(now);
-      startOfToday.setHours(0, 0, 0, 0);
-      const prep = d >= startOfToday;
-      return { disabled: true, prep };
-    }
-    return { disabled: false, prep: false };
-  };
-
-  const goPrev = () => {
-    const y = currentMonth === 0 ? currentYear - 1 : currentYear;
-    const m = currentMonth === 0 ? 11 : currentMonth - 1;
-    setViewMonth({ year: y, month: m });
-    setSelectedDay(null);
-    setSelectedTime(null);
-  };
-  const goNext = () => {
-    const y = currentMonth === 11 ? currentYear + 1 : currentYear;
-    const m = currentMonth === 11 ? 0 : currentMonth + 1;
-    setViewMonth({ year: y, month: m });
-    setSelectedDay(null);
-    setSelectedTime(null);
-  };
-  const canGoPrev = !isCurrentRealMonth;
 
   return (
     <div className="grid grid-cols-1 items-start gap-7 lg:grid-cols-[0.85fr_1.15fr]">
@@ -350,7 +312,7 @@ function UnifiedPath({ prefillWebsite }: { prefillWebsite: string }) {
       <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-9 shadow-[var(--shadow-2)]">
         {/* Step indicator */}
         <div className="mb-7 flex items-center gap-2">
-          {[1, 2, 3].map((n, i) => (
+          {[1, 2].map((n, i) => (
             <span key={n} className="flex flex-1 items-center gap-2">
               <span
                 className={cn(
@@ -358,7 +320,7 @@ function UnifiedPath({ prefillWebsite }: { prefillWebsite: string }) {
                   step >= n ? "bg-[var(--color-primary)]" : "bg-[var(--color-hairline)]",
                 )}
               />
-              {i < 2 && <span className="h-px flex-1 bg-[var(--color-hairline)]" />}
+              {i < 1 && <span className="h-px flex-1 bg-[var(--color-hairline)]" />}
             </span>
           ))}
         </div>
@@ -461,267 +423,35 @@ function UnifiedPath({ prefillWebsite }: { prefillWebsite: string }) {
           </div>
         )}
 
-        {/* STEP 2: calendar */}
+        {/* STEP 2: Cal.com calendar */}
         {step === 2 && (
           <div>
             <div className="mb-1 font-[family-name:var(--font-display)] text-xl font-bold">
               Pick your walkthrough slot
             </div>
             <div className="mb-6 text-sm text-[var(--color-ink-muted)]">
-              All times London
+              Choose a date and time that works for you. Confirmation email sent automatically.
             </div>
-            <div className="grid grid-cols-1 gap-7 sm:grid-cols-[1.1fr_0.9fr]">
-              <div>
-                <div className="mb-3 flex items-center justify-between">
-                  <button
-                    type="button"
-                    onClick={goPrev}
-                    disabled={!canGoPrev}
-                    className={cn(
-                      "flex h-8 w-8 items-center justify-center rounded-[var(--radius-sm)] border border-[var(--color-hairline)] text-[var(--color-ink)] transition-colors",
-                      canGoPrev
-                        ? "hover:border-[var(--color-primary)]"
-                        : "cursor-default opacity-40",
-                    )}
-                    aria-label="Previous month"
-                  >
-                    ‹
-                  </button>
-                  <div className="text-sm font-semibold text-[var(--color-ink)]">
-                    {CAL_MONTH_LABEL}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={goNext}
-                    className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-sm)] border border-[var(--color-hairline)] text-[var(--color-ink)] transition-colors hover:border-[var(--color-primary)]"
-                    aria-label="Next month"
-                  >
-                    ›
-                  </button>
-                </div>
-                <div className="mb-2 grid grid-cols-7 gap-1.5">
-                  {WEEKDAY_LABELS.map((d, i) => (
-                    <div
-                      key={i}
-                      className="text-center text-[11px] font-semibold text-[var(--color-ink-faint)]"
-                    >
-                      {d}
-                    </div>
-                  ))}
-                </div>
-                <div className="grid grid-cols-7 gap-1.5">
-                  {calendarCells.map((day, i) => {
-                    if (day === null) return <div key={`blank-${i}`} />;
-                    const { disabled, prep } = isDisabled(day);
-                    const selected = selectedDay === day;
-                    return (
-                      <button
-                        type="button"
-                        key={day}
-                        disabled={disabled}
-                        onClick={() => {
-                          setSelectedDay(day);
-                          setSelectedTime(null);
-                        }}
-                        className={cn(
-                          "relative rounded-[var(--radius-sm)] border border-transparent py-2.5 text-center text-sm font-semibold transition-colors",
-                          disabled && "cursor-default text-[var(--color-ink-faint)] opacity-45",
-                          prep && "bg-[var(--color-surface-muted)]",
-                          !disabled && !selected && "cursor-pointer bg-[var(--color-surface-muted)] text-[var(--color-ink)] hover:border-[var(--color-primary)]",
-                          selected && "cursor-pointer bg-[var(--color-primary)] text-[var(--color-on-primary)]",
-                        )}
-                        aria-label={
-                          prep
-                            ? `${MONTH_NAMES[currentMonth]} ${day}, blocked for audit prep`
-                            : `${MONTH_NAMES[currentMonth]} ${day}`
-                        }
-                      >
-                        {day}
-                      </button>
-                    );
-                  })}
-                </div>
-                <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-[var(--color-ink-muted)]">
-                  <span className="flex items-center gap-1.5">
-                    <span className="h-2 w-2 rounded-sm bg-[var(--color-surface-muted)] opacity-45" />
-                    Blocked for audit prep
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <span className="h-2 w-2 rounded-sm bg-[var(--color-surface-muted)]" />
-                    Available
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <span className="h-2 w-2 rounded-sm bg-[var(--color-primary)]" />
-                    Selected
-                  </span>
-                </div>
-              </div>
-              <div>
-                <div className="mb-3.5 text-xs font-bold uppercase tracking-[0.05em] text-[var(--color-ink-muted)]">
-                  {selectedDay ? `${MONTH_NAMES[currentMonth]} ${selectedDay}` : "Select a date"}
-                </div>
-                <div className="flex flex-col gap-2">
-                  {selectedDay &&
-                    SLOTS.map((t) => (
-                      <button
-                        type="button"
-                        key={t}
-                        onClick={() => setSelectedTime(t)}
-                        className={cn(
-                          "rounded-[var(--radius-sm)] border py-[11px] text-center text-sm font-semibold transition-colors",
-                          selectedTime === t
-                            ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-[var(--color-on-primary)]"
-                            : "border-[var(--color-hairline)] bg-[var(--color-surface)] text-[var(--color-ink)] hover:border-[var(--color-primary)]",
-                        )}
-                      >
-                        {t}
-                      </button>
-                    ))}
-                </div>
-              </div>
+            <div style={{ minHeight: 500 }}>
+              <Cal
+                calLink={CAL_LINK}
+                config={{
+                  name: details.name,
+                  email: details.email,
+                  notes: `Business: ${details.business}\nWebsite: ${details.website}\nTrade: ${details.trade}\nTeam size: ${details.teamSize}\nPostcodes: ${details.postcodes}\nServices: ${details.services}\nNotes: ${details.notes}\nPhone: ${details.phone}`,
+                  theme: "light",
+                  layout: "month_view",
+                }}
+                style={{ width: "100%", height: "100%", overflow: "scroll", minHeight: 500 }}
+              />
             </div>
-            <div className="mt-7 flex items-center justify-between">
+            <div className="mt-5">
               <ButtonEl variant="ghost" onClick={() => setStep(1)}>
                 Back
               </ButtonEl>
-              <ButtonEl
-                disabled={!canBook}
-                onClick={() => canBook && setStep(3)}
-              >
-                Confirm booking
-              </ButtonEl>
             </div>
           </div>
         )}
-
-        {/* STEP 3: confirmation */}
-        {step === 3 && (
-          <div className="py-2">
-            <div className="mb-6 text-center">
-              <div className="mx-auto mb-4 flex h-[60px] w-[60px] items-center justify-center rounded-full bg-[var(--color-success-soft)] text-[var(--color-success)]">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-              </div>
-              <div className="mb-2 font-[family-name:var(--font-display)] text-2xl font-bold">
-                You are booked in.
-              </div>
-              <div className="mx-auto max-w-[440px] text-base leading-[1.55] text-[var(--color-ink-muted)]">
-                Walkthrough locked in for {MONTH_NAMES[currentMonth]} {selectedDay}, {currentYear} at{" "}
-                {selectedTime} (London). Audit prep starts now.
-              </div>
-            </div>
-
-            <ConfirmationEmailPreview
-              to={details.email || "you@yourbusiness.co.uk"}
-              name={details.name || "there"}
-              business={details.business || "your business"}
-              website={details.website || "yourbusiness.co.uk"}
-              day={selectedDay ?? undefined}
-              month={MONTH_NAMES[currentMonth]}
-              year={currentYear}
-              time={selectedTime ?? undefined}
-            />
-
-            <div className="mx-auto mt-6 max-w-[440px] rounded-[var(--radius-md)] bg-[var(--color-surface-sunken)] p-5 text-left">
-              <div className="mb-3 text-xs font-bold uppercase tracking-[0.05em] text-[var(--color-ink-muted)]">
-                What happens next
-              </div>
-              <div className="flex flex-col gap-2.5 text-sm leading-[1.5] text-[var(--color-ink)]">
-                <div>1. Confirmation email in your inbox, right now.</div>
-                <div>2. We score your site, ads and rankings by hand over the next 48 hours.</div>
-                <div>3. Walkthrough on {MONTH_NAMES[currentMonth]} {selectedDay} at {selectedTime}. You keep the audit either way.</div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────── */
-/*  Confirmation email preview                                 */
-/* ─────────────────────────────────────────────────────────── */
-
-function ConfirmationEmailPreview({
-  to,
-  name,
-  business,
-  website,
-  day,
-  month,
-  year,
-  time,
-}: {
-  to: string;
-  name: string;
-  business: string;
-  website: string;
-  day?: number;
-  month: string;
-  year: number;
-  time?: string;
-}) {
-  return (
-    <div className="mx-auto max-w-[520px] overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-white shadow-[var(--shadow-1)]">
-      <div className="flex items-center gap-2 border-b border-[var(--color-hairline-soft)] bg-[var(--color-surface-muted)] px-4 py-2.5">
-        <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-        <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-        <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-        <span className="ml-3 text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
-          Inbox
-        </span>
-      </div>
-      <div className="border-b border-[var(--color-hairline-soft)] px-5 py-4 text-[12px] text-[var(--color-ink-muted)]">
-        <div className="flex items-center justify-between">
-          <div>
-            <span className="font-semibold text-[var(--color-ink)]">Tandemm</span>{" "}
-            &lt;hello@tandemm.co.uk&gt;
-          </div>
-          <span>Just now</span>
-        </div>
-        <div className="mt-1">
-          To: <span className="text-[var(--color-ink)]">{to}</span>
-        </div>
-        <div className="mt-2 font-[family-name:var(--font-display)] text-[15px] font-bold text-[var(--color-ink)]">
-          Your Tandemm audit is booked in
-        </div>
-      </div>
-      <div className="px-5 py-5 text-[14px] leading-[1.6] text-[var(--color-ink)]">
-        <p>Hi {name},</p>
-        <p className="mt-3">
-          Confirming your walkthrough for <strong>{business}</strong>
-          {day && time ? (
-            <>
-              {" "}on <strong>{month} {day}, {year} at {time}</strong> (London).
-            </>
-          ) : (
-            "."
-          )}
-        </p>
-        <p className="mt-3">
-          Between now and then we will be going through {website} by hand,
-          scoring the site, your ads and your Google rankings. You will get
-          the full audit PDF on the call, yours to keep.
-        </p>
-        <div className="mt-4 rounded-[var(--radius-md)] border border-[var(--color-hairline-soft)] bg-[var(--color-surface-muted)] px-4 py-3">
-          <div className="text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
-            Your slot
-          </div>
-          <div className="mt-1 font-[family-name:var(--font-display)] text-[15px] font-bold">
-            {day ? `${month} ${day}, ${year}` : `${month} ${year}`}{time ? ` · ${time}` : ""}
-          </div>
-          <div className="mt-0.5 text-[12px] text-[var(--color-ink-muted)]">
-            30 minutes · Video or phone, your choice
-          </div>
-        </div>
-        <p className="mt-4">Any questions before then, just reply to this email.</p>
-        <p className="mt-3">
-          Speak soon,
-          <br />
-          The Tandemm team
-        </p>
       </div>
     </div>
   );
