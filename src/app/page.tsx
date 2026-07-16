@@ -156,13 +156,43 @@ export default function HomePage() {
           <div className="hero-split-copy">
             <Reveal>
               <h1 className="hero-title">
-                Your phone,
+                You&rsquo;re good
                 <br />
-                ringing.
+                at the job.
               </h1>
             </Reveal>
             <Reveal>
-              <p className="hero-desc" style={{ marginTop: 22, maxWidth: 480 }}>
+              <p className="hero-subtitle" style={{ position: "relative", display: "inline-block" }}>
+                We make sure the right people know it.
+                <span
+                  style={{
+                    position: "absolute",
+                    bottom: -4,
+                    left: 0,
+                    width: "100%",
+                    height: 3,
+                    borderRadius: 99,
+                    background: "var(--color-accent)",
+                  }}
+                  aria-hidden="true"
+                />
+              </p>
+            </Reveal>
+            <Reveal>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 28 }}>
+                <span
+                  className="hero-title"
+                  style={{ fontSize: "clamp(28px, 3.6vw, 40px)", lineHeight: 1, marginTop: 0, color: "var(--color-primary)" }}
+                >
+                  3.6m
+                </span>
+                <span style={{ maxWidth: 220, textAlign: "left", fontSize: 14, lineHeight: 1.4, color: "var(--color-ink-muted)" }}>
+                  people in the UK search for a tradesman every month
+                </span>
+              </div>
+            </Reveal>
+            <Reveal>
+              <p className="hero-desc" style={{ marginTop: 20, maxWidth: 480 }}>
                 We audit your site, rebuild it, run your ads and catch every
                 enquiry. One process, one fee. You get in the van.
               </p>
