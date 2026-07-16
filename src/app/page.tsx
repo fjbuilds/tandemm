@@ -96,7 +96,7 @@ const FEATURE_PREVIEW = [
 const FAQS = [
   {
     q: "How much does it cost?",
-    a: "The audit is free. The website rebuild, tracking setup and dashboard are all included when you sign up for the lead generation stage. From there it's one monthly fee, everything in, starting at £600 and running up to £2,000 depending on team size and how much ad spend you want working for you. Exactly half of the fee is ad spend, at cost.",
+    a: "The audit is free. The website rebuild, tracking setup and dashboard are all included when you sign up for the lead generation stage. From there it's one monthly fee, everything in. You pick how many leads a month you want and the price follows, roughly £40 per lead all in, from around £600 up to £2,000. Exactly half of the fee is ad spend, at cost.",
   },
   {
     q: "Do I have to sign a contract?",

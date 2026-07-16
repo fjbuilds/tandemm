@@ -5,7 +5,6 @@ import { Nav } from "@/components/tandemm/Nav";
 import { Footer } from "@/components/tandemm/Footer";
 import { Reveal } from "@/components/tandemm/Reveal";
 import { Button } from "@/components/tandemm/Button";
-import { cn } from "@/lib/utils";
 
 const paletteOverride = {
   "--color-canvas": "#EDEEEA",
@@ -17,54 +16,23 @@ const paletteOverride = {
 } as CSSProperties;
 
 /* ─────────────────────────────────────────────────────────── */
-/*  Tiers                                                      */
+/*  Slider maths                                               */
 /* ─────────────────────────────────────────────────────────── */
 
-type Tier = {
-  key: string;
-  name: string;
-  who: string;
-  monthly: number;
-  adSpend: number;
-  estLeads: string;
-  highlight?: boolean;
-};
+const LEADS_MIN = 15;
+const LEADS_MAX = 50;
+const LEADS_STEP = 5;
+const PRICE_PER_LEAD = 40;
 
-const TIERS: Tier[] = [
-  {
-    key: "starter",
-    name: "Starter",
-    who: "Sole traders, 1 van",
-    monthly: 600,
-    adSpend: 300,
-    estLeads: "12 to 18",
-  },
-  {
-    key: "growth",
-    name: "Growth",
-    who: "2 to 5 person team",
-    monthly: 900,
-    adSpend: 450,
-    estLeads: "18 to 26",
-    highlight: true,
-  },
-  {
-    key: "scale",
-    name: "Scale",
-    who: "5 to 10 person team",
-    monthly: 1200,
-    adSpend: 600,
-    estLeads: "25 to 34",
-  },
-  {
-    key: "fleet",
-    name: "Fleet",
-    who: "10+ team, multi-branch",
-    monthly: 1500,
-    adSpend: 750,
-    estLeads: "35+",
-  },
-];
+function priceForLeads(leads: number) {
+  const monthly = leads * PRICE_PER_LEAD;
+  return {
+    monthly,
+    adSpend: Math.round(monthly / 2),
+    leadRangeLow: Math.round(leads * 0.85),
+    leadRangeHigh: Math.round(leads * 1.15),
+  };
+}
 
 /* ─────────────────────────────────────────────────────────── */
 /*  What's included (shared across all tiers)                  */
@@ -153,6 +121,10 @@ const FAQS = [
   {
     q: "How does the ad spend work?",
     a: "It is included in your fee, and it is exactly half of it. That half goes straight to Google, with no markup. You see exactly what was spent, on which campaigns, on which days. Any unspent budget rolls into the following month.",
+  },
+  {
+    q: "How is the price actually decided?",
+    a: "Pick the leads you want and the price follows. Roughly £40 per lead all in, half of that is ad spend at cost. Slide up when you're ready for more work, slide back down if you need to. No jumping between tiers, no renegotiation.",
   },
   {
     q: "What is the difference between LSA and CPC ads?",
@@ -244,90 +216,17 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* ── TIER CARDS ── */}
-      <section className="mx-auto max-w-[1240px] px-6 pb-16">
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {TIERS.map((tier) => (
-            <Reveal key={tier.key}>
-              <div
-                className={cn(
-                  "relative flex h-full flex-col rounded-[var(--radius-xl)] border bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)] transition-transform duration-200",
-                  tier.highlight
-                    ? "border-[var(--color-primary)] shadow-[var(--shadow-2)] xl:-translate-y-2"
-                    : "border-[var(--color-hairline)]",
-                )}
-              >
-                {tier.highlight && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className="rounded-full bg-[var(--color-accent)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-white">
-                      Most popular
-                    </span>
-                  </div>
-                )}
-                <div className="mb-1 font-[family-name:var(--font-display)] text-[22px] font-bold">
-                  {tier.name}
-                </div>
-                <div className="mb-5 text-[13px] text-[var(--color-ink-muted)]">
-                  {tier.who}
-                </div>
-
-                <div className="mb-1 flex items-baseline gap-1">
-                  <span className="font-[family-name:var(--font-display)] text-[38px] font-extrabold leading-none tracking-tight">
-                    £{tier.monthly.toLocaleString("en-GB")}
-                  </span>
-                  <span className="text-[13px] text-[var(--color-ink-muted)]">
-                    /mo + VAT
-                  </span>
-                </div>
-                <div className="mb-5 text-[12px] text-[var(--color-ink-faint)]">
-                  All in. Ad spend included.
-                </div>
-
-                <div className="mb-5 rounded-[var(--radius-md)] border border-[var(--color-hairline-soft)] bg-[var(--color-surface-muted)] px-4 py-3">
-                  <div className="flex items-center justify-between text-[12px]">
-                    <span className="text-[var(--color-ink-muted)]">
-                      Ad spend included
-                    </span>
-                    <span className="font-bold text-[var(--color-ink)]">
-                      £{tier.adSpend}/mo
-                    </span>
-                  </div>
-                  <div className="mt-1.5 flex items-center justify-between text-[12px]">
-                    <span className="text-[var(--color-ink-muted)]">
-                      Est. leads / month
-                    </span>
-                    <span className="font-bold text-[var(--color-accent-hover)]">
-                      {tier.estLeads}
-                    </span>
-                  </div>
-                </div>
-
-                <Button
-                  href="/book"
-                  className={cn(
-                    "w-full text-center",
-                    !tier.highlight &&
-                      "bg-[var(--color-surface-muted)] text-[var(--color-ink)] hover:bg-[var(--color-surface-sunken)]",
-                  )}
-                >
-                  Get started
-                </Button>
-
-                <div className="mt-4 border-t border-[var(--color-hairline-soft)] pt-4 text-center">
-                  <div className="text-[12px] font-semibold text-[var(--color-ink-muted)]">
-                    Same features in every tier
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+      {/* ── PRICING SLIDER ── */}
+      <section className="mx-auto max-w-[860px] px-6 pb-16">
+        <Reveal>
+          <PricingSlider />
+        </Reveal>
 
         <Reveal>
-          <p className="mx-auto mt-8 max-w-[720px] text-center text-[14px] leading-[1.55] text-[var(--color-ink-muted)]">
-            Every tier includes the full system, the website rebuild and
-            the setup. Tiers differ only on how much ad spend is included
-            and the leads that come with it.
+          <p className="mx-auto mt-8 max-w-[680px] text-center text-[14px] leading-[1.55] text-[var(--color-ink-muted)]">
+            Same system, same features, same setup at every level. The
+            slider is the only thing that changes: how many leads you
+            want, how much ad spend is working for you.
           </p>
         </Reveal>
       </section>
@@ -495,6 +394,122 @@ export default function PricingPage() {
       </section>
 
       <Footer />
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/*  Pricing slider                                             */
+/* ─────────────────────────────────────────────────────────── */
+
+function PricingSlider() {
+  const [leads, setLeads] = useState(25);
+  const { monthly, adSpend, leadRangeLow, leadRangeHigh } = priceForLeads(leads);
+  const pct = ((leads - LEADS_MIN) / (LEADS_MAX - LEADS_MIN)) * 100;
+
+  return (
+    <div className="relative rounded-[var(--radius-xl)] border border-[var(--color-primary)] bg-[var(--color-surface)] p-8 shadow-[var(--shadow-2)] sm:p-10">
+      <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+        <span className="rounded-full bg-[var(--color-accent)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-white">
+          Build your plan
+        </span>
+      </div>
+
+      {/* Leads label + count */}
+      <div className="mb-1 flex items-baseline justify-between">
+        <div className="text-[13px] font-bold uppercase tracking-[0.12em] text-[var(--color-ink-muted)]">
+          Leads per month
+        </div>
+        <div className="text-[13px] text-[var(--color-ink-faint)]">
+          Estimate ~{leadRangeLow} to {leadRangeHigh}
+        </div>
+      </div>
+      <div className="mb-6 font-[family-name:var(--font-display)] text-[64px] font-extrabold leading-none tracking-tight text-[var(--color-ink)]">
+        {leads}
+        <span className="ml-3 align-middle text-[16px] font-semibold text-[var(--color-ink-muted)]">
+          leads / mo
+        </span>
+      </div>
+
+      {/* Slider */}
+      <div className="relative mb-3">
+        <div className="pointer-events-none absolute inset-x-0 top-1/2 h-2 -translate-y-1/2 rounded-full bg-[var(--color-surface-sunken)]" />
+        <div
+          className="pointer-events-none absolute left-0 top-1/2 h-2 -translate-y-1/2 rounded-full bg-[var(--color-primary)] transition-[width] duration-100"
+          style={{ width: `${pct}%` }}
+        />
+        <input
+          type="range"
+          min={LEADS_MIN}
+          max={LEADS_MAX}
+          step={LEADS_STEP}
+          value={leads}
+          onChange={(e) => setLeads(Number(e.target.value))}
+          aria-label="Leads per month"
+          className="relative z-10 h-8 w-full cursor-pointer appearance-none bg-transparent
+            [&::-webkit-slider-thumb]:appearance-none
+            [&::-webkit-slider-thumb]:h-7
+            [&::-webkit-slider-thumb]:w-7
+            [&::-webkit-slider-thumb]:rounded-full
+            [&::-webkit-slider-thumb]:bg-[var(--color-surface)]
+            [&::-webkit-slider-thumb]:border-[3px]
+            [&::-webkit-slider-thumb]:border-[var(--color-primary)]
+            [&::-webkit-slider-thumb]:shadow-[var(--shadow-1)]
+            [&::-webkit-slider-thumb]:cursor-grab
+            [&::-webkit-slider-thumb]:active:cursor-grabbing
+            [&::-moz-range-thumb]:h-7
+            [&::-moz-range-thumb]:w-7
+            [&::-moz-range-thumb]:rounded-full
+            [&::-moz-range-thumb]:bg-[var(--color-surface)]
+            [&::-moz-range-thumb]:border-[3px]
+            [&::-moz-range-thumb]:border-[var(--color-primary)]
+            [&::-moz-range-thumb]:shadow-[var(--shadow-1)]
+            [&::-moz-range-thumb]:cursor-grab"
+        />
+      </div>
+
+      {/* Tick labels */}
+      <div className="mb-8 flex justify-between text-[11px] font-semibold text-[var(--color-ink-faint)]">
+        <span>{LEADS_MIN}</span>
+        <span>25</span>
+        <span>35</span>
+        <span>{LEADS_MAX}+</span>
+      </div>
+
+      {/* Price */}
+      <div className="mb-6 rounded-[var(--radius-lg)] bg-[var(--color-primary)] p-6 text-white">
+        <div className="mb-1 text-[12px] font-bold uppercase tracking-[0.12em] text-white/70">
+          You pay
+        </div>
+        <div className="flex items-baseline gap-2">
+          <span className="font-[family-name:var(--font-display)] text-[52px] font-extrabold leading-none tracking-tight">
+            £{monthly.toLocaleString("en-GB")}
+          </span>
+          <span className="text-[15px] font-semibold text-white/70">
+            /mo + VAT
+          </span>
+        </div>
+        <div className="mt-4 flex h-2 overflow-hidden rounded-full bg-white/15">
+          <div className="h-full bg-[var(--color-accent)]" style={{ width: "50%" }} />
+          <div className="h-full bg-white/80" style={{ width: "50%" }} />
+        </div>
+        <div className="mt-2 flex items-center justify-between text-[12px] text-white/85">
+          <span>
+            <span className="inline-block h-2 w-2 rounded-full bg-[var(--color-accent)] align-middle" />{" "}
+            Ad spend, £{adSpend.toLocaleString("en-GB")} straight to Google
+          </span>
+          <span>Everything else, £{adSpend.toLocaleString("en-GB")}</span>
+        </div>
+      </div>
+
+      {/* CTA */}
+      <Button href="/book" className="w-full text-center">
+        Get my free audit
+      </Button>
+      <p className="mt-3 text-center text-[12px] text-[var(--color-ink-faint)]">
+        Free audit first. No card. If your postcode won&rsquo;t pay back,
+        we tell you.
+      </p>
     </div>
   );
 }
