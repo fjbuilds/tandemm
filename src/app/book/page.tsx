@@ -10,6 +10,7 @@ import { ButtonEl } from "@/components/tandemm/Button";
 import { Input } from "@/components/tandemm/Input";
 import { Select } from "@/components/tandemm/Select";
 import { cn } from "@/lib/utils";
+import { submitLead } from "./actions";
 
 const bookPaletteOverride = {
   "--color-canvas": "#EDEEEA",
@@ -415,7 +416,11 @@ function UnifiedPath({ prefillWebsite }: { prefillWebsite: string }) {
             <div className="mt-7 flex justify-end">
               <ButtonEl
                 disabled={!detailsOk}
-                onClick={() => detailsOk && setStep(2)}
+                onClick={() => {
+                  if (!detailsOk) return;
+                  setStep(2);
+                  submitLead(details);
+                }}
               >
                 Continue to calendar
               </ButtonEl>
