@@ -20,9 +20,10 @@ const paletteOverride = {
 /* ─────────────────────────────────────────────────────────── */
 
 const LEADS_MIN = 15;
-const LEADS_MAX = 50;
+const LEADS_MAX = 125;
 const LEADS_STEP = 5;
 const PRICE_PER_LEAD = 40;
+const BOOKING_RATE = 0.4;
 
 function priceForLeads(leads: number) {
   const monthly = leads * PRICE_PER_LEAD;
@@ -31,6 +32,7 @@ function priceForLeads(leads: number) {
     adSpend: Math.round(monthly / 2),
     leadRangeLow: Math.round(leads * 0.85),
     leadRangeHigh: Math.round(leads * 1.15),
+    bookedJobs: Math.round(leads * BOOKING_RATE),
   };
 }
 
@@ -404,8 +406,13 @@ export default function PricingPage() {
 
 function PricingSlider() {
   const [leads, setLeads] = useState(25);
-  const { monthly, adSpend, leadRangeLow, leadRangeHigh } = priceForLeads(leads);
+  const [jobValueInput, setJobValueInput] = useState("");
+  const { monthly, adSpend, leadRangeLow, leadRangeHigh, bookedJobs } =
+    priceForLeads(leads);
   const pct = ((leads - LEADS_MIN) / (LEADS_MAX - LEADS_MIN)) * 100;
+  const jobValue = Number(jobValueInput.replace(/[^0-9]/g, ""));
+  const projectedRevenue = jobValue > 0 ? bookedJobs * jobValue : 0;
+  const projectedProfit = projectedRevenue - monthly;
 
   return (
     <div className="relative rounded-[var(--radius-xl)] border border-[var(--color-primary)] bg-[var(--color-surface)] p-8 shadow-[var(--shadow-2)] sm:p-10">
@@ -471,8 +478,8 @@ function PricingSlider() {
       {/* Tick labels */}
       <div className="mb-8 flex justify-between text-[11px] font-semibold text-[var(--color-ink-faint)]">
         <span>{LEADS_MIN}</span>
-        <span>25</span>
-        <span>35</span>
+        <span>50</span>
+        <span>90</span>
         <span>{LEADS_MAX}+</span>
       </div>
 
@@ -489,17 +496,73 @@ function PricingSlider() {
             /mo + VAT
           </span>
         </div>
-        <div className="mt-4 flex h-2 overflow-hidden rounded-full bg-white/15">
-          <div className="h-full bg-[var(--color-accent)]" style={{ width: "50%" }} />
-          <div className="h-full bg-white/80" style={{ width: "50%" }} />
+        <div className="mt-3 text-[13px] text-white/80">
+          £{adSpend.toLocaleString("en-GB")} ad spend included, at cost.
         </div>
-        <div className="mt-2 flex items-center justify-between text-[12px] text-white/85">
-          <span>
-            <span className="inline-block h-2 w-2 rounded-full bg-[var(--color-accent)] align-middle" />{" "}
-            Ad spend, £{adSpend.toLocaleString("en-GB")} straight to Google
+      </div>
+
+      {/* Job value → revenue */}
+      <div className="mb-6 rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)] p-5">
+        <label
+          htmlFor="job-value"
+          className="mb-1 block text-[13px] font-bold uppercase tracking-[0.12em] text-[var(--color-ink-muted)]"
+        >
+          Average job value
+          <span className="ml-2 text-[11px] font-medium normal-case tracking-normal text-[var(--color-ink-faint)]">
+            optional
           </span>
-          <span>Everything else, £{adSpend.toLocaleString("en-GB")}</span>
+        </label>
+        <p className="mb-3 text-[13px] text-[var(--color-ink-muted)]">
+          Add yours to see how this converts to money made.
+        </p>
+        <div className="relative">
+          <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[18px] font-semibold text-[var(--color-ink-muted)]">
+            £
+          </span>
+          <input
+            id="job-value"
+            type="text"
+            inputMode="numeric"
+            value={jobValueInput}
+            onChange={(e) => setJobValueInput(e.target.value)}
+            placeholder="450"
+            className="h-12 w-full rounded-[var(--radius-md)] border border-[var(--color-hairline)] bg-[var(--color-surface)] pl-9 pr-4 text-[16px] font-semibold text-[var(--color-ink)] outline-none focus:border-[var(--color-primary)]"
+          />
         </div>
+
+        {jobValue > 0 && (
+          <div className="mt-4 rounded-[var(--radius-md)] border border-[var(--color-hairline-soft)] bg-[var(--color-surface)] p-4">
+            <div className="mb-2 text-[12px] leading-[1.5] text-[var(--color-ink-muted)]">
+              ~{bookedJobs} booked jobs × £
+              {jobValue.toLocaleString("en-GB")} avg
+            </div>
+            <div className="flex items-baseline justify-between gap-3">
+              <span className="text-[13px] font-bold uppercase tracking-[0.1em] text-[var(--color-ink-muted)]">
+                Est. revenue
+              </span>
+              <span className="font-[family-name:var(--font-display)] text-[32px] font-extrabold leading-none tracking-tight text-[var(--color-ink)]">
+                £{projectedRevenue.toLocaleString("en-GB")}
+                <span className="ml-1 text-[13px] font-semibold text-[var(--color-ink-muted)]">
+                  /mo
+                </span>
+              </span>
+            </div>
+            {projectedProfit > 0 && (
+              <div className="mt-2 flex items-baseline justify-between gap-3 border-t border-[var(--color-hairline-soft)] pt-2">
+                <span className="text-[12px] text-[var(--color-ink-muted)]">
+                  After the £{monthly.toLocaleString("en-GB")} fee
+                </span>
+                <span className="text-[15px] font-bold text-[var(--color-accent-hover)]">
+                  £{projectedProfit.toLocaleString("en-GB")}/mo
+                </span>
+              </div>
+            )}
+            <p className="mt-3 text-[11px] leading-[1.5] text-[var(--color-ink-faint)]">
+              Assumes ~{Math.round(BOOKING_RATE * 100)}% of leads convert to
+              booked jobs. Rough guide, not a guarantee.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* CTA */}

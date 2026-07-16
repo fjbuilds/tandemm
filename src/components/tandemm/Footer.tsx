@@ -22,6 +22,9 @@ export function Footer() {
               alt="Tandemm"
               className="h-9 w-auto"
             />
+            <p className="mt-4 max-w-[260px] font-[family-name:var(--font-display)] text-[17px] font-semibold leading-[1.3] text-white">
+              More booked jobs. Fewer missed calls. One system, plugged in.
+            </p>
             <div className="mt-5">
               <Button href="/book" variant="secondary">
                 Book a call

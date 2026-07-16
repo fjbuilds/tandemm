@@ -173,7 +173,7 @@ export default function SystemPage() {
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.8vw,40px)] font-extrabold leading-[1.1] tracking-[-0.02em]">
               Diagnosis, Prevention, Cure.
               <br className="hidden sm:inline" />
-              One process. Same for every business we work with.
+              One proven process. Plugged into your business.
             </h1>
           </Reveal>
           <Reveal>
