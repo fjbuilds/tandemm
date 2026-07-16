@@ -117,31 +117,14 @@ function BookContent() {
             </div>
           </Reveal>
           <Reveal>
-            <h1 className="font-[family-name:var(--font-display)] tracking-[-0.03em]">
-              <span className="block text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04]">
-                You're good at the job.
-              </span>
-              <span className="relative mt-1 inline-block text-[clamp(20px,2.8vw,28px)] font-semibold leading-[1.3] text-[var(--color-ink-muted)]">
-                We make sure the right people know it.
-                <span
-                  className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-[var(--color-accent)]"
-                  aria-hidden="true"
-                />
-              </span>
+            <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
+              One route in.
+              <br className="hidden sm:inline" />
+              Straight to your audit.
             </h1>
           </Reveal>
           <Reveal>
-            <div className="mx-auto mt-7 flex items-center justify-center gap-3">
-              <span className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,40px)] font-extrabold leading-none tracking-[-0.02em] text-[var(--color-primary)]">
-                3.6m
-              </span>
-              <span className="max-w-[220px] text-left text-[14px] leading-[1.4] text-[var(--color-ink-muted)]">
-                people in the UK search for a tradesman every month
-              </span>
-            </div>
-          </Reveal>
-          <Reveal>
-            <p className="mx-auto mt-5 max-w-[540px] text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
+            <p className="mx-auto mt-[22px] max-w-[600px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
               Tell us your site and trade. We score everything by hand,
               then you pick the walkthrough slot that suits you.
             </p>
