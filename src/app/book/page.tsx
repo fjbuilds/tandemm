@@ -1,6 +1,6 @@
 "use client";
 
-import { CSSProperties, Suspense, useEffect, useMemo, useState } from "react";
+import { CSSProperties, Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Nav } from "@/components/tandemm/Nav";
 import { Footer } from "@/components/tandemm/Footer";
@@ -49,7 +49,7 @@ const TEAM_SIZE = [
 
 const FLOW_STEPS = [
   { n: 1, title: "Tell us about you", desc: "Site, trade, area. Under two minutes." },
-  { n: 2, title: "We prep your audit", desc: "48 hours to score your site, ads and rankings by hand." },
+  { n: 2, title: "We prep your audit", desc: "We score your site, ads and rankings by hand." },
   { n: 3, title: "Pick a follow-up slot", desc: "Book the walkthrough on the calendar below." },
   { n: 4, title: "We walk you through it", desc: "30 minutes. Plain English. No pitch until the end." },
 ];
@@ -57,7 +57,7 @@ const FLOW_STEPS = [
 const FAQS = [
   {
     q: "Why can't I book a call straight away?",
-    a: "The 48-hour window is us going through your site, ads and rankings by hand before we speak. That way the follow-up call is a walkthrough of your actual audit, not a discovery chat where you brief us on your business.",
+    a: "We go through your site, ads and rankings by hand before we speak. That way the call is a walkthrough of your actual audit, not a discovery chat where you brief us on your business.",
   },
   {
     q: "Is the audit really free?",
@@ -73,6 +73,15 @@ const FAQS = [
   },
 ];
 
+function PrefillWebsite({ onValue }: { onValue: (v: string) => void }) {
+  const searchParams = useSearchParams();
+  const website = searchParams.get("website") ?? "";
+  useEffect(() => {
+    if (website) onValue(website);
+  }, [website, onValue]);
+  return null;
+}
+
 export default function BookPage() {
   return (
     <div
@@ -80,21 +89,22 @@ export default function BookPage() {
       style={bookPaletteOverride}
     >
       <Nav active="book" />
-      <Suspense fallback={<div className="mx-auto max-w-[1160px] px-6 pt-24 text-center text-[15px] text-[var(--color-ink-muted)]">Loading</div>}>
-        <BookContent />
-      </Suspense>
+      <BookContent />
       <Footer />
     </div>
   );
 }
 
 function BookContent() {
-  const searchParams = useSearchParams();
-  const prefillWebsite = searchParams.get("website") ?? "";
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [prefillWebsite, setPrefillWebsite] = useState("");
+  const handlePrefill = useCallback((v: string) => setPrefillWebsite(v), []);
 
   return (
     <>
+      <Suspense fallback={null}>
+        <PrefillWebsite onValue={handlePrefill} />
+      </Suspense>
       {/* HERO */}
       <section
         className="relative box-border px-6 pb-8 pt-[60px] text-center"
@@ -110,17 +120,33 @@ function BookContent() {
             </div>
           </Reveal>
           <Reveal>
-            <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              One route in.
-              <br className="hidden sm:inline" />
-              Straight to your audit.
+            <h1 className="font-[family-name:var(--font-display)] tracking-[-0.03em]">
+              <span className="block text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04]">
+                You're good at the job.
+              </span>
+              <span className="relative mt-1 inline-block text-[clamp(20px,2.8vw,28px)] font-semibold leading-[1.3] text-[var(--color-ink-muted)]">
+                We make sure the right people know it.
+                <span
+                  className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-[var(--color-accent)]"
+                  aria-hidden="true"
+                />
+              </span>
             </h1>
           </Reveal>
           <Reveal>
-            <p className="mx-auto mt-[22px] max-w-[600px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Tell us your site and trade. We score everything by hand over
-              the next 48 hours. Then you pick the walkthrough slot that
-              suits you.
+            <div className="mx-auto mt-7 flex items-center justify-center gap-3">
+              <span className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,40px)] font-extrabold leading-none tracking-[-0.02em] text-[var(--color-primary)]">
+                3.6m
+              </span>
+              <span className="max-w-[220px] text-left text-[14px] leading-[1.4] text-[var(--color-ink-muted)]">
+                people in the UK search for a tradesman every month
+              </span>
+            </div>
+          </Reveal>
+          <Reveal>
+            <p className="mx-auto mt-5 max-w-[540px] text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
+              Tell us your site and trade. We score everything by hand,
+              then you pick the walkthrough slot that suits you.
             </p>
           </Reveal>
         </div>
@@ -629,7 +655,7 @@ function UnifiedPath({ prefillWebsite }: { prefillWebsite: string }) {
               </div>
               <div className="flex flex-col gap-2.5 text-sm leading-[1.5] text-[var(--color-ink)]">
                 <div>1. Confirmation email in your inbox, right now.</div>
-                <div>2. We score your site, ads and rankings by hand over the next 48 hours.</div>
+                <div>2. We score your site, ads and rankings by hand before the call.</div>
                 <div>3. Walkthrough on {MONTH_NAMES[currentMonth]} {selectedDay} at {selectedTime}. You keep the audit either way.</div>
               </div>
             </div>
