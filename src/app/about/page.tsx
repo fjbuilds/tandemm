@@ -83,18 +83,16 @@ export default function AboutPage() {
               How we think about growth
             </div>
             <h2 className="mb-4 font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,40px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              One system out of the things you already pay for separately.
+              The work you would otherwise lose.
             </h2>
             <p className="mx-auto max-w-[640px] text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Our job is to be the layer that catches every enquiry that would
-              otherwise slip. Site, ads, SEO, phone, forms and WhatsApp all
-              converging into one flow. No dropped handoffs, no supplier
-              pointing at another.
+              Site, ads, SEO, phone, forms and WhatsApp all feed one system.
+              Here is a sample day for one of our trade clients.
             </p>
           </Reveal>
 
           <Reveal>
-            <ConvergenceVisual />
+            <DayLedger />
           </Reveal>
         </div>
       </section>
@@ -183,10 +181,7 @@ export default function AboutPage() {
                   variant="secondary"
                   className="border-white/25 bg-white text-[var(--color-primary)] hover:bg-white/90"
                 >
-                  Book a call
-                </Button>
-                <Button href="/results" variant="secondary">
-                  See the results
+                  Get my free audit
                 </Button>
               </div>
             </div>
@@ -199,235 +194,107 @@ export default function AboutPage() {
   );
 }
 
-/* ── Converging-flow visual ─────────────────────────────── */
+/* ── One-day ledger visual ───────────────────────────────── */
 
-function ConvergenceVisual() {
-  const sources = [
-    { label: "Website", y: 40 },
-    { label: "Google Ads", y: 100 },
-    { label: "SEO", y: 160 },
-    { label: "Forms", y: 220 },
-    { label: "Phone", y: 280 },
-    { label: "WhatsApp", y: 340 },
+function DayLedger() {
+  const entries = [
+    { t: "07:42", source: "Missed call", detail: "SK4, consumer unit trip. Auto-text sent, five answers back by 08:03.", value: "£640", status: "Booked" },
+    { t: "09:14", source: "Google Ads", detail: "EV charger enquiry, SW11. Widget picked up trade, area and property type.", value: "£1,200", status: "Quoting" },
+    { t: "10:03", source: "WhatsApp", detail: "Repeat customer, kitchen rewire. Thread merged into existing lead.", value: "£3,800", status: "Booked" },
+    { t: "12:31", source: "SEO", detail: "'Emergency electrician SE22'. Landed on service page, called from mobile.", value: "£220", status: "Booked" },
+    { t: "14:17", source: "Missed call", detail: "Voicemail during a job. Auto-text qualified, no callback needed.", value: "£480", status: "Quoting" },
+    { t: "18:52", source: "Form", detail: "After-hours enquiry, landlord. Auto-text booked a callback for 09:00.", value: "£950", status: "Callback" },
   ];
 
-  const pathFor = (y: number) => `M 190 ${y} C 350 ${y}, 400 190, 545 190`;
+  const statusTone: Record<string, string> = {
+    Booked: "bg-[var(--color-success-soft)] text-[var(--color-success)]",
+    Quoting: "bg-[var(--color-accent-soft)] text-[var(--color-accent-hover)]",
+    Callback: "bg-[var(--color-surface-sunken)] text-[var(--color-ink-muted)]",
+  };
 
   return (
-    <div className="mx-auto max-w-[900px] overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-1)] sm:p-8">
-      <svg
-        viewBox="0 0 900 380"
-        preserveAspectRatio="xMidYMid meet"
-        className="convergence w-full"
-        role="img"
-        aria-label="Website, Google Ads, SEO, forms, phone and WhatsApp converging into one Tandemm system, which turns them into booked jobs."
-      >
-        <style>{`
-          .convergence .flow {
-            stroke-dasharray: 5 7;
-            animation: conv-dash 1.4s linear infinite;
-          }
-          @keyframes conv-dash { to { stroke-dashoffset: -12; } }
-          .convergence .hub-ring {
-            transform-origin: 645px 190px;
-            animation: conv-pulse 2.6s ease-out infinite;
-          }
-          @keyframes conv-pulse {
-            0%   { transform: scale(0.92); opacity: 0.45; }
-            70%  { transform: scale(1.18); opacity: 0; }
-            100% { transform: scale(1.18); opacity: 0; }
-          }
-          .convergence .spark { animation: conv-fade 3.2s ease-in-out infinite; }
-          @keyframes conv-fade {
-            0%, 100% { opacity: 0.25; }
-            50%      { opacity: 1; }
-          }
-          @media (prefers-reduced-motion: reduce) {
-            .convergence .flow,
-            .convergence .hub-ring,
-            .convergence .spark,
-            .convergence .bead { animation: none; }
-            .convergence .bead { display: none; }
-          }
-        `}</style>
+    <div className="mx-auto max-w-[920px] overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] shadow-[var(--shadow-1)]">
+      {/* Header strip */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--color-hairline-soft)] bg-[var(--color-surface-muted)] px-6 py-4">
+        <div>
+          <div className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
+            Wednesday · one client · one day
+          </div>
+          <div className="font-[family-name:var(--font-display)] text-[17px] font-bold text-[var(--color-ink)]">
+            Six things that would have slipped, caught.
+          </div>
+        </div>
+        <div className="flex flex-wrap items-center gap-4 text-right">
+          <Stat label="Enquiries" value="6" />
+          <Stat label="Quoted" value="6" />
+          <Stat label="Booked" value="3" tone="accent" />
+          <Stat label="Pipeline" value="£7,290" tone="accent" />
+        </div>
+      </div>
 
-        <defs>
-          <marker
-            id="about-arrowhead"
-            viewBox="0 0 10 10"
-            refX="8"
-            refY="5"
-            markerWidth="6"
-            markerHeight="6"
-            orient="auto-start-reverse"
+      {/* Ledger rows */}
+      <div className="divide-y divide-[var(--color-hairline-soft)]">
+        {entries.map((e) => (
+          <div
+            key={e.t}
+            className="grid grid-cols-[auto_auto_1fr_auto_auto] items-center gap-4 px-6 py-4 sm:gap-6"
           >
-            <path d="M 0 0 L 10 5 L 0 10 Z" fill="var(--color-accent)" />
-          </marker>
-        </defs>
-
-        {/* Flow lines */}
-        {sources.map((s) => (
-          <path
-            key={s.label}
-            className="flow"
-            d={pathFor(s.y)}
-            fill="none"
-            stroke="var(--color-hairline)"
-            strokeWidth="1.6"
-          />
-        ))}
-
-        {/* Enquiries travelling down each line */}
-        {sources.map((s, i) => (
-          <circle key={`bead-${s.label}`} className="bead" r="4.5" fill="var(--color-accent)">
-            <animateMotion
-              dur="2.8s"
-              begin={`${i * 0.45}s`}
-              repeatCount="indefinite"
-              path={pathFor(s.y)}
-              keyPoints="0;1"
-              keyTimes="0;1"
-              calcMode="spline"
-              keySplines="0.4 0 0.5 1"
-            />
-            <animate
-              attributeName="opacity"
-              dur="2.8s"
-              begin={`${i * 0.45}s`}
-              repeatCount="indefinite"
-              values="0;1;1;0"
-              keyTimes="0;0.12;0.82;1"
-            />
-          </circle>
-        ))}
-
-        {/* Source pills */}
-        {sources.map((s) => (
-          <g key={`src-${s.label}`}>
-            <rect
-              x="30"
-              y={s.y - 18}
-              rx="18"
-              ry="18"
-              width="160"
-              height="36"
-              fill="var(--color-surface-muted)"
-              stroke="var(--color-hairline)"
-              strokeWidth="1"
-            />
-            <text
-              x="110"
-              y={s.y + 5}
-              textAnchor="middle"
-              fontFamily="var(--font-display)"
-              fontSize="14"
-              fontWeight="700"
-              fill="var(--color-ink)"
+            <span className="font-mono text-[12px] font-semibold text-[var(--color-ink-muted)]">
+              {e.t}
+            </span>
+            <span className="hidden rounded-full bg-[var(--color-surface-muted)] px-2.5 py-[3px] text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink)] sm:inline">
+              {e.source}
+            </span>
+            <span className="text-[13.5px] leading-[1.5] text-[var(--color-ink)]">
+              <span className="mr-2 inline rounded-full bg-[var(--color-surface-muted)] px-2 py-[2px] text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink)] sm:hidden">
+                {e.source}
+              </span>
+              {e.detail}
+            </span>
+            <span className="font-[family-name:var(--font-display)] text-[14px] font-bold text-[var(--color-ink)]">
+              {e.value}
+            </span>
+            <span
+              className={`rounded-full px-2.5 py-[3px] text-[10px] font-bold uppercase tracking-[0.06em] ${statusTone[e.status] ?? ""}`}
             >
-              {s.label}
-            </text>
-          </g>
+              {e.status}
+            </span>
+          </div>
         ))}
+      </div>
 
-        {/* Hub */}
-        <circle
-          className="hub-ring"
-          cx="645"
-          cy="190"
-          r="78"
-          fill="none"
-          stroke="var(--color-accent)"
-          strokeWidth="2"
-        />
-        <g>
-          <rect
-            x="545"
-            y="140"
-            rx="20"
-            ry="20"
-            width="200"
-            height="100"
-            fill="var(--color-primary)"
-          />
-          <text
-            x="645"
-            y="176"
-            textAnchor="middle"
-            fontFamily="var(--font-display)"
-            fontSize="16"
-            fontWeight="800"
-            fill="var(--color-on-primary)"
-          >
-            One system
-          </text>
-          <text
-            x="645"
-            y="200"
-            textAnchor="middle"
-            fontFamily="var(--font-body)"
-            fontSize="12"
-            fill="rgba(255,255,255,0.75)"
-          >
-            Every enquiry caught,
-          </text>
-          <text
-            x="645"
-            y="218"
-            textAnchor="middle"
-            fontFamily="var(--font-body)"
-            fontSize="12"
-            fill="rgba(255,255,255,0.75)"
-          >
-            chased and answered.
-          </text>
-        </g>
-
-        <path
-          className="flow"
-          d="M 745 190 L 800 190"
-          stroke="var(--color-accent)"
-          strokeWidth="2.5"
-          fill="none"
-          markerEnd="url(#about-arrowhead)"
-        />
-
-        {/* Output */}
-        <g className="spark">
-          <rect
-            x="812"
-            y="163"
-            rx="12"
-            ry="12"
-            width="72"
-            height="54"
-            fill="var(--color-accent-soft)"
-            stroke="var(--color-accent)"
-            strokeWidth="1.5"
-          />
-          <text
-            x="848"
-            y="186"
-            textAnchor="middle"
-            fontFamily="var(--font-display)"
-            fontSize="15"
-            fontWeight="800"
-            fill="var(--color-accent-hover)"
-          >
-            Booked
-          </text>
-          <text
-            x="848"
-            y="203"
-            textAnchor="middle"
-            fontFamily="var(--font-display)"
-            fontSize="13"
-            fontWeight="700"
-            fill="var(--color-accent-hover)"
-          >
-            jobs
-          </text>
-        </g>
-      </svg>
+      <div className="border-t border-[var(--color-hairline)] bg-[var(--color-primary)] px-6 py-4 text-center text-[13.5px] font-semibold text-[var(--color-on-primary)]">
+        Without the system, most of these are a voicemail and a missed
+        text. That is what we are actually selling.
+      </div>
     </div>
   );
 }
+
+function Stat({
+  label,
+  value,
+  tone,
+}: {
+  label: string;
+  value: string;
+  tone?: "accent";
+}) {
+  return (
+    <div>
+      <div className="text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
+        {label}
+      </div>
+      <div
+        className={`font-[family-name:var(--font-display)] text-[18px] font-extrabold ${
+          tone === "accent"
+            ? "text-[var(--color-accent-hover)]"
+            : "text-[var(--color-ink)]"
+        }`}
+      >
+        {value}
+      </div>
+    </div>
+  );
+}
+

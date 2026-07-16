@@ -119,7 +119,7 @@ function HeroCockpit() {
       <div className="alt-chart">
         <div className="alt-chart-head">
           <div>
-            <div className="alt-chart-title">Enquiries — last 8 weeks</div>
+            <div className="alt-chart-title">Enquiries , last 8 weeks</div>
             <div className="alt-chart-sub">Tandemm, week after week</div>
           </div>
           <div className="alt-chart-tag">▲ 4× baseline</div>
@@ -137,7 +137,7 @@ function HeroCockpit() {
       </div>
 
       <div className="alt-workline">
-        <div className="alt-workline-head">Tandemm — working on this week</div>
+        <div className="alt-workline-head">Tandemm , working on this week</div>
         <ul>
           <li>
             <span className="alt-work-dot alt-work-dot--doing" />
@@ -180,12 +180,12 @@ const NOTIFS: Notif[] = [
   {
     channel: "call",
     who: "Missed call · 07923 449 812",
-    msg: "Voicemail: 32s — new build wiring quote",
+    msg: "Voicemail: 32s , new build wiring quote",
     time: "2m ago",
   },
   {
     channel: "site",
-    who: "Website — new enquiry",
+    who: "Website , new enquiry",
     msg: "Chris G. booked a callback for Thu 10am",
     time: "8m ago",
   },
@@ -263,7 +263,7 @@ function HeroPhone() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  C · Hybrid stack — monthly report + audit peek + enquiries feed   */
+/*  C · Hybrid stack , monthly report + audit peek + enquiries feed   */
 /* ------------------------------------------------------------------ */
 function HeroStack() {
   return (
@@ -291,13 +291,13 @@ function HeroStack() {
         </div>
         <ul className="alt-stack-feed">
           <li>
-            <span>💬</span> Sarah T. — fuse box
+            <span>💬</span> Sarah T. , fuse box
           </li>
           <li>
             <span>📞</span> Missed · 07923…
           </li>
           <li>
-            <span>🌐</span> Chris G. — callback
+            <span>🌐</span> Chris G. , callback
           </li>
           <li>
             <span>✉</span> EV charger quote
@@ -372,7 +372,7 @@ export default function PreviewHerosPage() {
     >
       <div className="mx-auto max-w-[820px] px-6 pt-16 pb-10">
         <h1 className="font-[family-name:var(--font-display)] text-4xl font-extrabold tracking-tight">
-          Hero visual — options
+          Hero visual , options
         </h1>
         <p className="mt-3 text-[var(--color-ink-muted)]">
           Same left-hand copy across all four so you can compare the visual on
@@ -380,19 +380,19 @@ export default function PreviewHerosPage() {
         </p>
       </div>
 
-      <PreviewSlot label="0 · Current — Growth Audit PDF">
+      <PreviewSlot label="0 · Current , Growth Audit PDF">
         <HeroVisual />
       </PreviewSlot>
 
-      <PreviewSlot label="A · Growth Cockpit — live client dashboard">
+      <PreviewSlot label="A · Growth Cockpit , live client dashboard">
         <HeroCockpit />
       </PreviewSlot>
 
-      <PreviewSlot label="B · Phone — enquiries buzzing in">
+      <PreviewSlot label="B · Phone , enquiries buzzing in">
         <HeroPhone />
       </PreviewSlot>
 
-      <PreviewSlot label="C · Hybrid stack — report + audit + feed">
+      <PreviewSlot label="C · Hybrid stack , report + audit + feed">
         <HeroStack />
       </PreviewSlot>
     </div>

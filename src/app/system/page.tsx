@@ -109,8 +109,8 @@ const CURE_DEEP = [
     body: "Every enquiry lands in one dashboard, triaged into new, quoting, booked or dead. Chased when they go quiet.",
   },
   {
-    title: "Call handling",
-    body: "Trained UK-based handlers answer calls you cannot pick up, take the details we need, and drop the lead straight into the same dashboard.",
+    title: "Missed-call capture",
+    body: "When a call goes to voicemail, the system texts the homeowner from your number, runs them through five qualifying questions, and drops the parsed answers straight into the dashboard. No physical call handling, no third-party operators.",
   },
   {
     title: "Monthly reporting",
@@ -298,7 +298,7 @@ export default function SystemPage() {
           <DeepDiveBlock
             step="03"
             title="Cure"
-            subtitle="Ongoing. Ads, SEO, enquiry management and call handling. Reporting tied to booked jobs."
+            subtitle="Ongoing. Ads, SEO, enquiry management and missed-call capture. Reporting tied to booked jobs."
             items={CURE_DEEP}
             last
           />

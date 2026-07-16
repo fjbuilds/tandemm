@@ -23,16 +23,16 @@ const paletteOverride = {
 const INCLUDED_PILLARS = [
   { title: "Website rebuild", note: "Fast, mobile-first, yours to keep" },
   { title: "Found on Google", note: "Ranked where homeowners search" },
-  { title: "Visible on AI", note: "Named when people ask ChatGPT or Claude" },
-  { title: "Smart quote assistant", note: "Answers questions, captures the job" },
+  { title: "Visible on AI", note: "Named on ChatGPT and Claude" },
+  { title: "Quote assistant", note: "Qualifies the job, captures the lead" },
   { title: "One dashboard", note: "Every enquiry, every source" },
-  { title: "Call handling", note: "Missed calls caught and texted back" },
+  { title: "Missed calls caught", note: "Auto-text back, quoted, logged" },
 ];
 
 const CAPTURE_FEATURES = [
   {
-    title: "Smart quote assistant",
-    body: "Sits on every page. It answers the homeowner's quick questions, helps them describe the job properly, and drops the enquiry straight into your dashboard. They get a fast answer instead of bouncing to the next trade, and you get a quote worth giving.",
+    title: "Quote assistant",
+    body: "Sits on every page. It qualifies the job with the exact questions you would ask on the phone, so what lands in the dashboard is a proper enquiry, not a name and a shrug.",
   },
   {
     title: "Tracking phone number",
@@ -196,7 +196,7 @@ export default function FeaturesPage() {
               <p className="mb-6 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
                 Fast, mobile-first, and free when you sign up. Every page
                 is built to do one thing: get the homeowner talking to you.
-                The smart quote assistant handles the questions they&apos;d
+                The quote assistant handles the questions they&apos;d
                 otherwise ring around for, so they stay put and you get a
                 proper job to quote on.
               </p>
@@ -308,9 +308,9 @@ export default function FeaturesPage() {
             Every enquiry caught, answered and chased.
           </h2>
           <p className="mx-auto mt-3 max-w-[600px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-            Widget, smart quote assistant, tracking number, missed-call
-            catcher, WhatsApp. Every path a homeowner takes to reach you
-            feeds the same dashboard.
+            Widget, quote assistant, tracking number, missed-call catcher,
+            WhatsApp. Every path a homeowner takes to reach you feeds the
+            same dashboard.
           </p>
         </Reveal>
 
@@ -335,12 +335,9 @@ export default function FeaturesPage() {
         </div>
 
         <Reveal>
-          <div className="mt-12 grid grid-cols-1 items-center gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-            <DashboardPhone
-              view="map"
-              caption="Every live enquiry, pinned across your patch."
-            />
+          <div className="mt-12 grid grid-cols-1 items-start gap-10 lg:grid-cols-[1.05fr_0.95fr]">
             <CaughtAndHandled />
+            <LeadCarryOver />
           </div>
         </Reveal>
       </section>
@@ -378,8 +375,8 @@ export default function FeaturesPage() {
                   work: "Configure the dashboard, tracking and lead pipeline",
                 },
                 {
-                  role: "Call answering service",
-                  work: "Pick up missed and out-of-hours calls, log the lead",
+                  role: "Missed-call capture",
+                  work: "Auto-text every missed call, qualify the job, log the lead",
                 },
                 {
                   role: "Reporting analyst",
@@ -769,7 +766,7 @@ function AiAnswerMock() {
 
         <div className="rounded-2xl rounded-bl-sm bg-[var(--color-surface-muted)] px-3.5 py-3 text-[13.5px] leading-[1.55] text-[var(--color-ink)]">
           A well-reviewed option in the Clapham area is{" "}
-          <span className="font-bold">Your Trade Business</span> — rated 4.9
+          <span className="font-bold">Your Trade Business</span>, rated 4.9
           on Google, NICEIC approved, and available for 24/7 emergency
           callouts. You can reach them here:
           <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-[var(--color-hairline)] bg-[var(--color-surface)] px-3 py-1 text-[12px] font-semibold text-[var(--color-accent-hover)]">
@@ -879,95 +876,155 @@ function WebsiteMock() {
 /* ─────────────────────────────────────────────────────────── */
 
 function CaughtAndHandled() {
-  const thread = [
-    {
-      side: "in" as const,
-      t: "7:48 PM",
-      who: "Missed call",
-      body: "James Patterson rang. You were under a floor in Stockport.",
-      kind: "event" as const,
-    },
-    {
-      side: "out" as const,
-      t: "7:48 PM",
-      who: "Sent from your number",
-      body: "Sorry I missed you — I'm on a job. What do you need doing, and whereabouts are you?",
-      kind: "msg" as const,
-    },
-    {
-      side: "in" as const,
-      t: "7:49 PM",
-      who: "James",
-      body: "Consumer unit tripping, no power upstairs. SK4, need someone tomorrow morning.",
-      kind: "msg" as const,
-    },
-    {
-      side: "out" as const,
-      t: "7:50 PM",
-      who: "Quote assistant",
-      body: "Got it. Fault-finding call-out, morning slot. I've booked you in and passed the details on.",
-      kind: "msg" as const,
-    },
-    {
-      side: "in" as const,
-      t: "7:50 PM",
-      who: "Logged",
-      body: "Enquiry created · Emergency repair · Urgent · Call back",
-      kind: "event" as const,
-    },
-  ];
-
   return (
     <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
       <div className="mb-1 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
         A missed call, caught
       </div>
       <h3 className="mb-1 font-[family-name:var(--font-display)] text-[20px] font-bold">
-        You were on the tools. It got handled anyway.
+        Structured questions, not vague replies.
       </h3>
       <p className="mb-6 text-[14.5px] leading-[1.55] text-[var(--color-ink-muted)]">
-        Two minutes, start to finish, without you touching your phone.
+        The auto-text asks the same five questions every time. That is
+        quote quality control, and it is what makes the dashboard filter
+        cleanly across job type, urgency and area.
       </p>
 
       <div className="flex flex-col gap-3">
-        {thread.map((m, i) =>
-          m.kind === "event" ? (
+        {/* Missed call event */}
+        <div className="flex items-center gap-2.5 rounded-[var(--radius-md)] border border-dashed border-[var(--color-hairline)] bg-[var(--color-surface-muted)] px-3.5 py-2.5">
+          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]" />
+          <span className="flex-1 text-[13px] leading-[1.45] text-[var(--color-ink)]">
+            <span className="font-bold">Missed call.</span> James Patterson
+            rang. You were under a floor.
+          </span>
+          <span className="shrink-0 text-[11px] text-[var(--color-ink-faint)]">
+            7:48 PM
+          </span>
+        </div>
+
+        {/* Auto-text with bullet questions */}
+        <div className="ml-auto max-w-[92%]">
+          <div className="mb-1 flex items-center justify-end gap-2 text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-faint)]">
+            Sent from your number · 7:48 PM
+          </div>
+          <div className="rounded-2xl rounded-br-sm bg-[var(--color-primary)] px-4 py-3 text-[13.5px] leading-[1.55] text-white">
+            <div>Sorry I missed you, on a job. Quick five so we can quote you properly:</div>
+            <ul className="mt-2 flex flex-col gap-1.5 text-[13px] text-white/95">
+              <li className="flex gap-2"><span className="text-[var(--color-accent)]">1.</span> What is the job? (e.g. rewire, fault-find, EV charger)</li>
+              <li className="flex gap-2"><span className="text-[var(--color-accent)]">2.</span> Postcode?</li>
+              <li className="flex gap-2"><span className="text-[var(--color-accent)]">3.</span> How urgent? (emergency / this week / flexible)</li>
+              <li className="flex gap-2"><span className="text-[var(--color-accent)]">4.</span> House, flat or commercial?</li>
+              <li className="flex gap-2"><span className="text-[var(--color-accent)]">5.</span> Best time to call you back?</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Customer reply */}
+        <div className="max-w-[92%]">
+          <div className="mb-1 text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-faint)]">
+            James · 7:49 PM
+          </div>
+          <div className="rounded-2xl rounded-bl-sm bg-[var(--color-surface-muted)] px-4 py-3 text-[13.5px] leading-[1.55] text-[var(--color-ink)]">
+            <div>1. Consumer unit tripping, no power upstairs</div>
+            <div>2. SK4 3RT</div>
+            <div>3. Tomorrow morning if you can</div>
+            <div>4. House, three-bed semi</div>
+            <div>5. After 8pm tonight</div>
+          </div>
+        </div>
+
+        {/* Parsed + logged */}
+        <div className="flex items-center gap-2.5 rounded-[var(--radius-md)] border border-dashed border-[var(--color-hairline)] bg-[var(--color-surface-muted)] px-3.5 py-2.5">
+          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]" />
+          <span className="flex-1 text-[13px] leading-[1.45] text-[var(--color-ink)]">
+            <span className="font-bold">Logged.</span> Parsed into five fields
+            and dropped into the dashboard.
+          </span>
+          <span className="shrink-0 text-[11px] text-[var(--color-ink-faint)]">
+            7:50 PM
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/*  Lead carry-over: what the tradesperson sees in the dashboard */
+/* ─────────────────────────────────────────────────────────── */
+
+function LeadCarryOver() {
+  const fields = [
+    { label: "Job type", value: "Fault-find, consumer unit", filter: "Electrical" },
+    { label: "Postcode", value: "SK4 3RT", filter: "Stockport" },
+    { label: "Urgency", value: "Tomorrow morning", filter: "This week", urgent: true },
+    { label: "Property", value: "House, three-bed semi", filter: "Residential" },
+    { label: "Callback", value: "After 8pm tonight", filter: "Evening" },
+  ];
+
+  return (
+    <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
+      <div className="mb-1 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
+        Straight into the dashboard
+      </div>
+      <h3 className="mb-1 font-[family-name:var(--font-display)] text-[20px] font-bold">
+        What carries over. What you actually need.
+      </h3>
+      <p className="mb-6 text-[14.5px] leading-[1.55] text-[var(--color-ink-muted)]">
+        Same five fields on every lead, parsed the same way. So the
+        dashboard filters cleanly by trade, area, urgency and property.
+      </p>
+
+      {/* Lead card mock */}
+      <div className="rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)] p-5">
+        <div className="mb-4 flex items-center justify-between">
+          <div>
+            <div className="text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
+              New lead · Missed call caught
+            </div>
+            <div className="font-[family-name:var(--font-display)] text-[17px] font-bold text-[var(--color-ink)]">
+              James Patterson
+            </div>
+          </div>
+          <span className="rounded-full bg-[var(--color-accent)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.06em] text-white">
+            Urgent
+          </span>
+        </div>
+
+        <div className="flex flex-col gap-2.5">
+          {fields.map((f) => (
             <div
-              key={i}
-              className="flex items-center gap-2.5 rounded-[var(--radius-md)] border border-dashed border-[var(--color-hairline)] bg-[var(--color-surface-muted)] px-3.5 py-2.5"
+              key={f.label}
+              className="flex items-start justify-between gap-3 border-t border-[var(--color-hairline-soft)] pt-2.5 first:border-t-0 first:pt-0"
             >
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]" />
-              <span className="flex-1 text-[13px] leading-[1.45] text-[var(--color-ink)]">
-                <span className="font-bold">{m.who}.</span> {m.body}
-              </span>
-              <span className="shrink-0 text-[11px] text-[var(--color-ink-faint)]">
-                {m.t}
+              <div>
+                <div className="text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
+                  {f.label}
+                </div>
+                <div className="text-[13.5px] text-[var(--color-ink)]">
+                  {f.value}
+                </div>
+              </div>
+              <span
+                className={
+                  f.urgent
+                    ? "shrink-0 rounded-full bg-[var(--color-accent-soft)] px-2 py-[3px] text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-accent-hover)]"
+                    : "shrink-0 rounded-full bg-[var(--color-surface)] px-2 py-[3px] text-[10px] font-semibold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]"
+                }
+              >
+                {f.filter}
               </span>
             </div>
-          ) : (
-            <div
-              key={i}
-              className={`max-w-[86%] ${m.side === "out" ? "ml-auto" : ""}`}
-            >
-              <div
-                className={`mb-1 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-faint)] ${
-                  m.side === "out" ? "justify-end" : ""
-                }`}
-              >
-                {m.who} · {m.t}
-              </div>
-              <div
-                className={`rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-[1.5] ${
-                  m.side === "out"
-                    ? "rounded-br-sm bg-[var(--color-primary)] text-white"
-                    : "rounded-bl-sm bg-[var(--color-surface-muted)] text-[var(--color-ink)]"
-                }`}
-              >
-                {m.body}
-              </div>
-            </div>
-          ),
-        )}
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-4 rounded-[var(--radius-md)] bg-[var(--color-surface-sunken)] px-4 py-3 text-[12.5px] leading-[1.55] text-[var(--color-ink-muted)]">
+        <span className="font-bold text-[var(--color-ink)]">Why it matters.</span>{" "}
+        Filter the dashboard for "Emergency + Electrical + Stockport" and
+        this lead shows up. No trawling voicemails, no chasing what a
+        vague reply meant.
       </div>
     </div>
   );
@@ -983,7 +1040,7 @@ function CaptureIcon({ name }: { name: string }) {
     return (
       <svg {...common}><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M7 8h10M7 12h6M7 16h8" /></svg>
     );
-  if (name.includes("Smart quote"))
+  if (name.includes("Quote assistant") || name.includes("Smart quote"))
     return (
       <svg {...common}><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V6a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z" /><path d="M12 7v2M12 12h.01" /></svg>
     );

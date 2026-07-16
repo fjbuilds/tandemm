@@ -81,7 +81,7 @@ export function Footer() {
             </Link>
           </div>
           <span className="text-[13px] text-white/50">
-            Ads. SEO. Site. Enquiry system. Call handling.
+            Ads. SEO. Site. Enquiry system. Missed-call capture.
           </span>
         </div>
       </div>

@@ -19,25 +19,11 @@ const bookPaletteOverride = {
   "--color-hairline-soft": "#E1E3DC",
 } as CSSProperties;
 
-const DAYS_IN_MONTH = 31;
-const START_OFFSET = 2;
-const DISABLED_DAYS = new Set([4, 5, 11, 12, 18, 19, 25, 26]);
-const PAST_CUTOFF = 6;
 const SLOTS = ["09:00", "10:30", "13:00", "15:00", "16:30"];
 const WEEKDAY_LABELS = ["M", "T", "W", "T", "F", "S", "S"];
 
-const FRUSTRATIONS = [
-  { value: "", label: "Choose one…" },
-  { value: "few-enquiries", label: "The phone isn't ringing enough" },
-  { value: "traffic-no-leads", label: "Homeowners land on the site, but they don't call" },
-  { value: "outdated", label: "The site looks dated" },
-  { value: "slow", label: "The site is slow or clunky" },
-  { value: "no-tracking", label: "I can't tell which ads are earning me money" },
-  { value: "other", label: "Something else" },
-];
-
 const TRADES = [
-  { value: "", label: "Choose your trade…" },
+  { value: "", label: "Choose your trade" },
   { value: "electrical", label: "Electrical" },
   { value: "plumbing", label: "Plumbing / Heating" },
   { value: "roofing", label: "Roofing" },
@@ -50,37 +36,28 @@ const TRADES = [
 ];
 
 const TEAM_SIZE = [
-  { value: "", label: "Choose one…" },
+  { value: "", label: "Choose one" },
   { value: "1", label: "Just me" },
-  { value: "2-5", label: "2–5 people" },
-  { value: "5-10", label: "5–10 people" },
+  { value: "2-5", label: "2 to 5 people" },
+  { value: "5-10", label: "5 to 10 people" },
   { value: "10+", label: "10+ people" },
 ];
 
-const AD_SPEND = [
-  { value: "", label: "Choose one…" },
-  { value: "none", label: "Nothing yet" },
-  { value: "under-500", label: "Under £500/mo" },
-  { value: "500-1000", label: "£500–£1,000/mo" },
-  { value: "1000-2500", label: "£1,000–£2,500/mo" },
-  { value: "2500+", label: "£2,500+/mo" },
-];
-
-/* ─────────────────────────────────────────────────────────── */
-/*  Signup process steps (shown at top of page)                */
-/* ─────────────────────────────────────────────────────────── */
-
-const SIGNUP_STEPS = [
-  { n: 1, title: "Free audit", desc: "We check your site, ads and rankings by hand.", time: "Same week" },
-  { n: 2, title: "You decide", desc: "Book a call, or fill it in yourself.", time: "30 min" },
-  { n: 3, title: "We build", desc: "Site rebuild, tracking, ads, dashboard.", time: "10–14 days" },
-  { n: 4, title: "Phone rings", desc: "LSA + CPC live. Enquiries in one place.", time: "Ongoing" },
+const FLOW_STEPS = [
+  { n: 1, title: "Tell us about you", desc: "Site, trade, area. Under two minutes." },
+  { n: 2, title: "We prep your audit", desc: "48 hours to score your site, ads and rankings by hand." },
+  { n: 3, title: "Pick a follow-up slot", desc: "Book the walkthrough on the calendar below." },
+  { n: 4, title: "We walk you through it", desc: "30 minutes. Plain English. No pitch until the end." },
 ];
 
 const FAQS = [
   {
+    q: "Why can't I book a call straight away?",
+    a: "The 48-hour window is us going through your site, ads and rankings by hand before we speak. That way the follow-up call is a walkthrough of your actual audit, not a discovery chat where you brief us on your business.",
+  },
+  {
     q: "Is the audit really free?",
-    a: "Yes. It's how we work out whether we can help. No charge, no card, no obligation.",
+    a: "Yes. It is how we work out whether we can help. No charge, no card, no obligation.",
   },
   {
     q: "Will I get a sales pitch?",
@@ -88,15 +65,9 @@ const FAQS = [
   },
   {
     q: "What do I need to prepare?",
-    a: "Nothing. We'll have been through your site by hand before we speak, so the 30 minutes is you talking about your business, not you briefing us.",
-  },
-  {
-    q: "Book a call or do it myself, which should I choose?",
-    a: "Book a call if you have questions or want to talk it through. Do it yourself if you already know you want in and just want us to get started. Same outcome, either way.",
+    a: "Nothing. We have been through your site by hand before we speak, so the 30 minutes is you talking about your business, not you briefing us.",
   },
 ];
-
-type Path = "book" | "self";
 
 export default function BookPage() {
   return (
@@ -105,7 +76,7 @@ export default function BookPage() {
       style={bookPaletteOverride}
     >
       <Nav active="book" />
-      <Suspense fallback={<div className="mx-auto max-w-[1160px] px-6 pt-24 text-center text-[15px] text-[var(--color-ink-muted)]">Loading…</div>}>
+      <Suspense fallback={<div className="mx-auto max-w-[1160px] px-6 pt-24 text-center text-[15px] text-[var(--color-ink-muted)]">Loading</div>}>
         <BookContent />
       </Suspense>
       <Footer />
@@ -116,8 +87,6 @@ export default function BookPage() {
 function BookContent() {
   const searchParams = useSearchParams();
   const prefillWebsite = searchParams.get("website") ?? "";
-
-  const [path, setPath] = useState<Path>("book");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
@@ -138,36 +107,34 @@ function BookContent() {
           </Reveal>
           <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              Two ways to start.
+              One route in.
               <br className="hidden sm:inline" />
-              Same free audit at the end.
+              Straight to your audit.
             </h1>
           </Reveal>
           <Reveal>
             <p className="mx-auto mt-[22px] max-w-[600px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Book 30 minutes with the person doing the work, or fill it in
-              yourself and we'll get everything set up in the background.
+              Tell us your site and trade. We score everything by hand over
+              the next 48 hours. Then you pick the walkthrough slot that
+              suits you.
             </p>
           </Reveal>
         </div>
       </section>
 
-      {/* SIGNUP PROCESS GRAPHIC */}
+      {/* FLOW GRAPHIC */}
       <section className="mx-auto max-w-[1160px] px-6 pb-10 pt-6">
         <Reveal>
           <div className="relative grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div className="pointer-events-none absolute left-0 right-0 top-[26px] hidden border-t-2 border-dashed border-[var(--color-hairline)] lg:block" />
-            {SIGNUP_STEPS.map((s) => (
+            {FLOW_STEPS.map((s) => (
               <div
                 key={s.n}
                 className="relative z-10 rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-1)]"
               >
-                <div className="mb-2 flex items-center justify-between">
+                <div className="mb-2 flex items-center">
                   <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-primary)] text-[11px] font-bold text-white">
                     {s.n}
-                  </span>
-                  <span className="text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-faint)]">
-                    {s.time}
                   </span>
                 </div>
                 <div className="font-[family-name:var(--font-display)] text-[14px] font-bold">
@@ -182,43 +149,9 @@ function BookContent() {
         </Reveal>
       </section>
 
-      {/* PATH TOGGLE */}
-      <section className="mx-auto max-w-[1160px] px-6 pt-4">
-        <div className="mx-auto flex w-fit rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-1 shadow-[var(--shadow-1)]">
-          <button
-            type="button"
-            onClick={() => setPath("book")}
-            className={cn(
-              "rounded-[var(--radius-pill)] px-5 py-2.5 text-[14px] font-semibold transition-colors",
-              path === "book"
-                ? "bg-[var(--color-primary)] text-[var(--color-on-primary)]"
-                : "text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]",
-            )}
-          >
-            Book a call
-          </button>
-          <button
-            type="button"
-            onClick={() => setPath("self")}
-            className={cn(
-              "rounded-[var(--radius-pill)] px-5 py-2.5 text-[14px] font-semibold transition-colors",
-              path === "self"
-                ? "bg-[var(--color-primary)] text-[var(--color-on-primary)]"
-                : "text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]",
-            )}
-          >
-            Do it yourself
-          </button>
-        </div>
-      </section>
-
-      {/* CONTENT */}
-      <section className="mx-auto max-w-[1160px] box-border px-6 pb-20 pt-8">
-        {path === "book" ? (
-          <BookPath prefillWebsite={prefillWebsite} />
-        ) : (
-          <SelfPath prefillWebsite={prefillWebsite} />
-        )}
+      {/* MAIN FLOW */}
+      <section className="mx-auto max-w-[1160px] box-border px-6 pb-20 pt-4">
+        <UnifiedPath prefillWebsite={prefillWebsite} />
       </section>
 
       {/* FAQ */}
@@ -266,31 +199,54 @@ function BookContent() {
 }
 
 /* ─────────────────────────────────────────────────────────── */
-/*  Book-a-call path                                           */
+/*  Unified path: details -> calendar -> confirmation          */
 /* ─────────────────────────────────────────────────────────── */
 
-type BookStep = 1 | 2 | 3;
+type Step = 1 | 2 | 3;
 
-function BookPath({ prefillWebsite }: { prefillWebsite: string }) {
-  const [step, setStep] = useState<BookStep>(1);
-  const [selectedDay, setSelectedDay] = useState<number | null>(null);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [form, setForm] = useState({
+function UnifiedPath({ prefillWebsite }: { prefillWebsite: string }) {
+  const [step, setStep] = useState<Step>(1);
+  const [details, setDetails] = useState({
     name: "",
     business: "",
     email: "",
+    phone: "",
     website: prefillWebsite,
-    frustration: "",
+    trade: "",
+    teamSize: "",
+    postcodes: "",
+    services: "",
+    notes: "",
   });
+  const [selectedDay, setSelectedDay] = useState<number | null>(null);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
   useEffect(() => {
-    if (prefillWebsite && !form.website) {
-      setForm((f) => ({ ...f, website: prefillWebsite }));
+    if (prefillWebsite && !details.website) {
+      setDetails((d) => ({ ...d, website: prefillWebsite }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prefillWebsite]);
 
-  const canContinue = selectedDay !== null && selectedTime !== null;
+  const detailsOk =
+    details.name.trim() &&
+    details.business.trim() &&
+    details.email.trim() &&
+    details.phone.trim() &&
+    details.website.trim() &&
+    details.trade &&
+    details.teamSize &&
+    details.postcodes.trim();
+
+  const canBook = selectedDay !== null && selectedTime !== null;
+
+  /* Calendar: today is 15 July 2026 (Wed). Grey out the next 48h. */
+  const CAL_MONTH_LABEL = "July 2026";
+  const DAYS_IN_MONTH = 31;
+  const START_OFFSET = 2; /* July 1 2026 is a Wednesday */
+  const TODAY = 15;
+  const FIRST_BOOKABLE = 18; /* 48h out */
+  const DISABLED_WEEKENDS = new Set([4, 5, 11, 12, 18, 19, 25, 26]);
 
   const calendarCells = useMemo(() => {
     const blanks = Array.from({ length: START_OFFSET }, () => null);
@@ -300,25 +256,23 @@ function BookPath({ prefillWebsite }: { prefillWebsite: string }) {
 
   return (
     <div className="grid grid-cols-1 items-start gap-7 lg:grid-cols-[0.85fr_1.15fr]">
-      {/* Left */}
+      {/* Left rail: what you get */}
       <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] p-9 text-[var(--color-on-primary)] shadow-[var(--shadow-2)]">
         <div className="mb-[22px] inline-flex items-center gap-2 rounded-[var(--radius-pill)] bg-white/[0.14] px-3.5 py-[7px] text-[11px] font-bold uppercase tracking-[0.06em]">
-          Free · 30 minutes
+          Free · One route
         </div>
         <div className="mb-1.5 font-[family-name:var(--font-display)] text-[22px] font-bold">
-          Discovery call
+          What you get
         </div>
         <div className="mb-7 text-sm text-white/70">
-          30 min · Video or phone, your choice
-        </div>
-        <div className="mb-4 text-xs font-bold uppercase tracking-[0.05em] text-white/55">
-          What we'll cover
+          A scored audit, in your hands, whatever happens next.
         </div>
         <div className="flex flex-col gap-4">
           {[
-            { n: 1, title: "Where you are now", body: "Your business, your area, the jobs you want more of." },
-            { n: 2, title: "Where enquiries go missing", body: "Gaps in your site, ads and Google rankings we can already see." },
-            { n: 3, title: "What we'd do next", body: "A clear, honest recommendation. Or none, if you don't need us." },
+            { n: 1, title: "A scored audit of your site", body: "Speed, conversion, tracking. Ranked by impact on jobs." },
+            { n: 2, title: "A read on your ads", body: "Structure, waste, and where your budget is going." },
+            { n: 3, title: "Local search ranking", body: "Where you sit for the jobs homeowners search in your postcodes." },
+            { n: 4, title: "A 30 minute walkthrough", body: "Plain English. You keep the audit either way." },
           ].map((item) => (
             <div key={item.n} className="flex items-start gap-3">
               <span className="text-base font-bold text-[var(--color-accent)]">
@@ -335,7 +289,7 @@ function BookPath({ prefillWebsite }: { prefillWebsite: string }) {
         </div>
         <div className="my-7 h-px bg-white/[0.16]" />
         <div className="text-sm leading-[1.55] text-white/70">
-          Prefer to talk now? Email{" "}
+          Questions before you start? Email{" "}
           <a
             href="mailto:hello@tandemm.co.uk"
             className="font-semibold text-white"
@@ -346,8 +300,9 @@ function BookPath({ prefillWebsite }: { prefillWebsite: string }) {
         </div>
       </div>
 
-      {/* Right */}
+      {/* Main */}
       <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-9 shadow-[var(--shadow-2)]">
+        {/* Step indicator */}
         <div className="mb-7 flex items-center gap-2">
           {[1, 2, 3].map((n, i) => (
             <span key={n} className="flex flex-1 items-center gap-2">
@@ -357,20 +312,123 @@ function BookPath({ prefillWebsite }: { prefillWebsite: string }) {
                   step >= n ? "bg-[var(--color-primary)]" : "bg-[var(--color-hairline)]",
                 )}
               />
-              {i < 2 && (
-                <span className="h-px flex-1 bg-[var(--color-hairline)]" />
-              )}
+              {i < 2 && <span className="h-px flex-1 bg-[var(--color-hairline)]" />}
             </span>
           ))}
         </div>
 
+        {/* STEP 1: details */}
         {step === 1 && (
           <div>
             <div className="mb-1 font-[family-name:var(--font-display)] text-xl font-bold">
-              Pick a time that suits you
+              Tell us about your business
             </div>
             <div className="mb-6 text-sm text-[var(--color-ink-muted)]">
-              July 2026 · all times London (BST)
+              Everything we need to score your site and prep the walkthrough.
+            </div>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <Input
+                label="Your name"
+                placeholder="Jane Smith"
+                value={details.name}
+                onChange={(e) => setDetails((d) => ({ ...d, name: e.target.value }))}
+              />
+              <Input
+                label="Business name"
+                placeholder="Smith & Co"
+                value={details.business}
+                onChange={(e) => setDetails((d) => ({ ...d, business: e.target.value }))}
+              />
+              <Input
+                label="Email"
+                type="email"
+                placeholder="jane@business.co.uk"
+                value={details.email}
+                onChange={(e) => setDetails((d) => ({ ...d, email: e.target.value }))}
+              />
+              <Input
+                label="Mobile"
+                type="tel"
+                placeholder="07..."
+                value={details.phone}
+                onChange={(e) => setDetails((d) => ({ ...d, phone: e.target.value }))}
+              />
+              <div className="sm:col-span-2">
+                <Input
+                  label="Website"
+                  placeholder="yourbusiness.co.uk"
+                  value={details.website}
+                  onChange={(e) => setDetails((d) => ({ ...d, website: e.target.value }))}
+                />
+              </div>
+              <Select
+                label="Your trade"
+                options={TRADES}
+                value={details.trade}
+                onChange={(e) => setDetails((d) => ({ ...d, trade: e.target.value }))}
+              />
+              <Select
+                label="Team size"
+                options={TEAM_SIZE}
+                value={details.teamSize}
+                onChange={(e) => setDetails((d) => ({ ...d, teamSize: e.target.value }))}
+              />
+              <div className="sm:col-span-2">
+                <Input
+                  label="Postcodes you cover"
+                  placeholder="e.g. SW11, SE22, N16"
+                  value={details.postcodes}
+                  onChange={(e) => setDetails((d) => ({ ...d, postcodes: e.target.value }))}
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <Input
+                  label="Services you offer (optional)"
+                  placeholder="e.g. rewires, EV chargers, emergency callouts"
+                  value={details.services}
+                  onChange={(e) => setDetails((d) => ({ ...d, services: e.target.value }))}
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="flex flex-col gap-1.5">
+                  <span className="text-[13px] font-medium text-[var(--color-ink-muted)]">
+                    Anything else we should know? (optional)
+                  </span>
+                  <textarea
+                    placeholder="Existing agencies, upcoming holidays, jobs you want more or less of..."
+                    value={details.notes}
+                    onChange={(e) => setDetails((d) => ({ ...d, notes: e.target.value }))}
+                    rows={3}
+                    className="rounded-[var(--radius-sm)] border border-[var(--color-hairline)] bg-[var(--color-surface)] px-3 py-2 text-[15px] text-[var(--color-ink)] outline-none transition-colors placeholder:text-[var(--color-ink-faint)] focus:border-[var(--color-accent)] focus:shadow-[var(--shadow-focus)]"
+                  />
+                </label>
+              </div>
+            </div>
+            <div className="mt-7 flex justify-end">
+              <ButtonEl
+                disabled={!detailsOk}
+                onClick={() => detailsOk && setStep(2)}
+              >
+                Continue to calendar
+              </ButtonEl>
+            </div>
+          </div>
+        )}
+
+        {/* STEP 2: calendar */}
+        {step === 2 && (
+          <div>
+            <div className="mb-1 font-[family-name:var(--font-display)] text-xl font-bold">
+              Pick your walkthrough slot
+            </div>
+            <div className="mb-2 text-sm text-[var(--color-ink-muted)]">
+              {CAL_MONTH_LABEL} · all times London (BST)
+            </div>
+            <div className="mb-6 rounded-[var(--radius-md)] border border-[var(--color-hairline-soft)] bg-[var(--color-surface-muted)] px-4 py-3 text-[13px] leading-[1.5] text-[var(--color-ink)]">
+              <span className="font-semibold">The next 48 hours are blocked out.</span>{" "}
+              We use that time to score your site, ads and rankings by hand,
+              so the call is a walkthrough of your actual audit, not a
+              discovery chat.
             </div>
             <div className="grid grid-cols-1 gap-7 sm:grid-cols-[1.1fr_0.9fr]">
               <div>
@@ -387,7 +445,10 @@ function BookPath({ prefillWebsite }: { prefillWebsite: string }) {
                 <div className="grid grid-cols-7 gap-1.5">
                   {calendarCells.map((day, i) => {
                     if (day === null) return <div key={`blank-${i}`} />;
-                    const disabled = DISABLED_DAYS.has(day) || day <= PAST_CUTOFF;
+                    const inPrepWindow = day >= TODAY && day < FIRST_BOOKABLE;
+                    const past = day < TODAY;
+                    const weekend = DISABLED_WEEKENDS.has(day);
+                    const disabled = past || inPrepWindow || weekend;
                     const selected = selectedDay === day;
                     return (
                       <button
@@ -399,16 +460,36 @@ function BookPath({ prefillWebsite }: { prefillWebsite: string }) {
                           setSelectedTime(null);
                         }}
                         className={cn(
-                          "rounded-[var(--radius-sm)] border border-transparent py-2.5 text-center text-sm font-semibold transition-colors",
+                          "relative rounded-[var(--radius-sm)] border border-transparent py-2.5 text-center text-sm font-semibold transition-colors",
                           disabled && "cursor-default text-[var(--color-ink-faint)] opacity-45",
+                          inPrepWindow && "bg-[var(--color-surface-muted)]",
                           !disabled && !selected && "cursor-pointer bg-[var(--color-surface-muted)] text-[var(--color-ink)] hover:border-[var(--color-primary)]",
                           selected && "cursor-pointer bg-[var(--color-primary)] text-[var(--color-on-primary)]",
                         )}
+                        aria-label={
+                          inPrepWindow
+                            ? `July ${day}, blocked for audit prep`
+                            : `July ${day}`
+                        }
                       >
                         {day}
                       </button>
                     );
                   })}
+                </div>
+                <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-[var(--color-ink-muted)]">
+                  <span className="flex items-center gap-1.5">
+                    <span className="h-2 w-2 rounded-sm bg-[var(--color-surface-muted)] opacity-45" />
+                    Blocked for audit prep
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="h-2 w-2 rounded-sm bg-[var(--color-surface-muted)]" />
+                    Available
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="h-2 w-2 rounded-sm bg-[var(--color-primary)]" />
+                    Selected
+                  </span>
                 </div>
               </div>
               <div>
@@ -435,95 +516,55 @@ function BookPath({ prefillWebsite }: { prefillWebsite: string }) {
                 </div>
               </div>
             </div>
-            <div className="mt-7 flex justify-end">
-              <ButtonEl
-                disabled={!canContinue}
-                onClick={() => canContinue && setStep(2)}
-              >
-                Continue
-              </ButtonEl>
-            </div>
-          </div>
-        )}
-
-        {step === 2 && (
-          <div>
-            <div className="mb-1 font-[family-name:var(--font-display)] text-xl font-bold">
-              A few quick details
-            </div>
-            <div className="mb-2 text-sm text-[var(--color-ink-muted)]">
-              So we can look at your site before we speak.
-            </div>
-            <div className="mb-6 text-sm font-semibold text-[var(--color-accent-hover)]">
-              July {selectedDay}, 2026 at {selectedTime} · 30 min
-            </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <Input
-                label="Your name"
-                placeholder="Jane Smith"
-                value={form.name}
-                onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-              />
-              <Input
-                label="Business name"
-                placeholder="Smith & Co"
-                value={form.business}
-                onChange={(e) => setForm((f) => ({ ...f, business: e.target.value }))}
-              />
-              <Input
-                label="Email"
-                type="email"
-                placeholder="jane@business.co.uk"
-                value={form.email}
-                onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-              />
-              <Input
-                label="Website"
-                placeholder="yourbusiness.co.uk"
-                value={form.website}
-                onChange={(e) => setForm((f) => ({ ...f, website: e.target.value }))}
-              />
-            </div>
-            <div className="mt-4">
-              <Select
-                label="What's your biggest frustration right now?"
-                options={FRUSTRATIONS}
-                value={form.frustration}
-                onChange={(e) => setForm((f) => ({ ...f, frustration: e.target.value }))}
-              />
-            </div>
             <div className="mt-7 flex items-center justify-between">
               <ButtonEl variant="ghost" onClick={() => setStep(1)}>
                 Back
               </ButtonEl>
-              <ButtonEl onClick={() => setStep(3)}>Confirm booking</ButtonEl>
+              <ButtonEl
+                disabled={!canBook}
+                onClick={() => canBook && setStep(3)}
+              >
+                Confirm booking
+              </ButtonEl>
             </div>
           </div>
         )}
 
+        {/* STEP 3: confirmation */}
         {step === 3 && (
-          <div className="px-0 py-6 text-center">
-            <div className="mx-auto mb-5 flex h-[60px] w-[60px] items-center justify-center rounded-full bg-[var(--color-success-soft)] text-[var(--color-success)]">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
+          <div className="py-2">
+            <div className="mb-6 text-center">
+              <div className="mx-auto mb-4 flex h-[60px] w-[60px] items-center justify-center rounded-full bg-[var(--color-success-soft)] text-[var(--color-success)]">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </div>
+              <div className="mb-2 font-[family-name:var(--font-display)] text-2xl font-bold">
+                You are booked in.
+              </div>
+              <div className="mx-auto max-w-[440px] text-base leading-[1.55] text-[var(--color-ink-muted)]">
+                Walkthrough locked in for July {selectedDay}, 2026 at{" "}
+                {selectedTime} (London). Audit prep starts now.
+              </div>
             </div>
-            <div className="mb-2 font-[family-name:var(--font-display)] text-2xl font-bold">
-              You are booked in.
-            </div>
-            <div className="mx-auto mb-6 max-w-[400px] text-base leading-[1.55] text-[var(--color-ink-muted)]">
-              Your audit call is confirmed for July {selectedDay}, 2026 at{" "}
-              {selectedTime} (London time). The invite is on its way to your
-              inbox now.
-            </div>
-            <div className="mx-auto max-w-[420px] rounded-[var(--radius-md)] bg-[var(--color-surface-sunken)] p-5 text-left">
+
+            <ConfirmationEmailPreview
+              to={details.email || "you@yourbusiness.co.uk"}
+              name={details.name || "there"}
+              business={details.business || "your business"}
+              website={details.website || "yourbusiness.co.uk"}
+              day={selectedDay ?? undefined}
+              time={selectedTime ?? undefined}
+            />
+
+            <div className="mx-auto mt-6 max-w-[440px] rounded-[var(--radius-md)] bg-[var(--color-surface-sunken)] p-5 text-left">
               <div className="mb-3 text-xs font-bold uppercase tracking-[0.05em] text-[var(--color-ink-muted)]">
                 What happens next
               </div>
               <div className="flex flex-col gap-2.5 text-sm leading-[1.5] text-[var(--color-ink)]">
-                <div>1. A calendar invite lands in your inbox with the video link.</div>
-                <div>2. We audit your site, ads and Google rankings by hand before we speak.</div>
-                <div>3. We call at the agreed time. No prep needed on your end.</div>
+                <div>1. Confirmation email in your inbox, right now.</div>
+                <div>2. We score your site, ads and rankings by hand over the next 48 hours.</div>
+                <div>3. Walkthrough on July {selectedDay} at {selectedTime}. You keep the audit either way.</div>
               </div>
             </div>
           </div>
@@ -534,345 +575,83 @@ function BookPath({ prefillWebsite }: { prefillWebsite: string }) {
 }
 
 /* ─────────────────────────────────────────────────────────── */
-/*  Self-serve path (quick form, video, detailed form)         */
+/*  Confirmation email preview                                 */
 /* ─────────────────────────────────────────────────────────── */
 
-type SelfStep = 1 | 2 | 3 | 4;
-
-function SelfPath({ prefillWebsite }: { prefillWebsite: string }) {
-  const [step, setStep] = useState<SelfStep>(1);
-  const [quick, setQuick] = useState({
-    name: "",
-    business: "",
-    email: "",
-    phone: "",
-    website: prefillWebsite,
-  });
-  const [details, setDetails] = useState({
-    trade: "",
-    teamSize: "",
-    postcodes: "",
-    services: "",
-    adSpend: "",
-    goals: "",
-    notes: "",
-  });
-
-  useEffect(() => {
-    if (prefillWebsite && !quick.website) {
-      setQuick((q) => ({ ...q, website: prefillWebsite }));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [prefillWebsite]);
-
-  const quickOk =
-    quick.name.trim() &&
-    quick.business.trim() &&
-    quick.email.trim() &&
-    quick.phone.trim();
-
-  const detailsOk = details.trade && details.teamSize && details.postcodes.trim();
-
+function ConfirmationEmailPreview({
+  to,
+  name,
+  business,
+  website,
+  day,
+  time,
+}: {
+  to: string;
+  name: string;
+  business: string;
+  website: string;
+  day?: number;
+  time?: string;
+}) {
   return (
-    <div className="grid grid-cols-1 items-start gap-7 lg:grid-cols-[0.85fr_1.15fr]">
-      {/* Left rail */}
-      <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] p-9 text-[var(--color-on-primary)] shadow-[var(--shadow-2)]">
-        <div className="mb-[22px] inline-flex items-center gap-2 rounded-[var(--radius-pill)] bg-white/[0.14] px-3.5 py-[7px] text-[11px] font-bold uppercase tracking-[0.06em]">
-          Free · Self-serve
+    <div className="mx-auto max-w-[520px] overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-white shadow-[var(--shadow-1)]">
+      <div className="flex items-center gap-2 border-b border-[var(--color-hairline-soft)] bg-[var(--color-surface-muted)] px-4 py-2.5">
+        <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+        <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+        <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+        <span className="ml-3 text-[11px] font-semibold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
+          Inbox
+        </span>
+      </div>
+      <div className="border-b border-[var(--color-hairline-soft)] px-5 py-4 text-[12px] text-[var(--color-ink-muted)]">
+        <div className="flex items-center justify-between">
+          <div>
+            <span className="font-semibold text-[var(--color-ink)]">Tandemm</span>{" "}
+            &lt;hello@tandemm.co.uk&gt;
+          </div>
+          <span>Just now</span>
         </div>
-        <div className="mb-1.5 font-[family-name:var(--font-display)] text-[22px] font-bold">
-          Do it yourself
+        <div className="mt-1">
+          To: <span className="text-[var(--color-ink)]">{to}</span>
         </div>
-        <div className="mb-7 text-sm text-white/70">
-          10 minutes · we take it from there
-        </div>
-        <div className="mb-4 text-xs font-bold uppercase tracking-[0.05em] text-white/55">
-          How it works
-        </div>
-        <div className="flex flex-col gap-4">
-          {[
-            { n: 1, title: "Quick details", body: "Name, business, email, phone. Under a minute." },
-            { n: 2, title: "Watch the 2-min video", body: "How the system works, top to bottom." },
-            { n: 3, title: "Tell us the details", body: "Trade, team, postcodes, current ad spend." },
-            { n: 4, title: "We take it from there", body: "Audit within the week. Site build starts on your say-so." },
-          ].map((item) => (
-            <div key={item.n} className="flex items-start gap-3">
-              <span className="text-base font-bold text-[var(--color-accent)]">
-                {item.n}
-              </span>
-              <div>
-                <div className="text-[15px] font-semibold">{item.title}</div>
-                <div className="text-sm leading-[1.5] text-white/70">
-                  {item.body}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="my-7 h-px bg-white/[0.16]" />
-        <div className="text-sm leading-[1.55] text-white/70">
-          Rather talk it through? Switch to <span className="font-semibold text-white">Book a call</span> above.
+        <div className="mt-2 font-[family-name:var(--font-display)] text-[15px] font-bold text-[var(--color-ink)]">
+          Your Tandemm audit is booked in
         </div>
       </div>
-
-      {/* Main */}
-      <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-9 shadow-[var(--shadow-2)]">
-        {/* Step indicator */}
-        <div className="mb-7 flex items-center gap-2">
-          {[1, 2, 3, 4].map((n, i) => (
-            <span key={n} className="flex flex-1 items-center gap-2">
-              <span
-                className={cn(
-                  "h-[9px] w-[9px] rounded-full",
-                  step >= n ? "bg-[var(--color-primary)]" : "bg-[var(--color-hairline)]",
-                )}
-              />
-              {i < 3 && <span className="h-px flex-1 bg-[var(--color-hairline)]" />}
-            </span>
-          ))}
-        </div>
-
-        {/* STEP 1, quick details */}
-        {step === 1 && (
-          <div>
-            <div className="mb-1 font-[family-name:var(--font-display)] text-xl font-bold">
-              Quick details, then the video
-            </div>
-            <div className="mb-6 text-sm text-[var(--color-ink-muted)]">
-              We text you the audit when it's ready.
-            </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <Input
-                label="Your name"
-                placeholder="Jane Smith"
-                value={quick.name}
-                onChange={(e) => setQuick((q) => ({ ...q, name: e.target.value }))}
-              />
-              <Input
-                label="Business name"
-                placeholder="Smith & Co"
-                value={quick.business}
-                onChange={(e) => setQuick((q) => ({ ...q, business: e.target.value }))}
-              />
-              <Input
-                label="Email"
-                type="email"
-                placeholder="jane@business.co.uk"
-                value={quick.email}
-                onChange={(e) => setQuick((q) => ({ ...q, email: e.target.value }))}
-              />
-              <Input
-                label="Mobile"
-                type="tel"
-                placeholder="07…"
-                value={quick.phone}
-                onChange={(e) => setQuick((q) => ({ ...q, phone: e.target.value }))}
-              />
-              <div className="sm:col-span-2">
-                <Input
-                  label="Website (optional)"
-                  placeholder="yourbusiness.co.uk"
-                  value={quick.website}
-                  onChange={(e) => setQuick((q) => ({ ...q, website: e.target.value }))}
-                />
-              </div>
-            </div>
-            <div className="mt-7 flex justify-end">
-              <ButtonEl
-                disabled={!quickOk}
-                onClick={() => quickOk && setStep(2)}
-              >
-                Continue to video
-              </ButtonEl>
-            </div>
+      <div className="px-5 py-5 text-[14px] leading-[1.6] text-[var(--color-ink)]">
+        <p>Hi {name},</p>
+        <p className="mt-3">
+          Confirming your walkthrough for <strong>{business}</strong>
+          {day && time ? (
+            <>
+              {" "}on <strong>July {day}, 2026 at {time}</strong> (London).
+            </>
+          ) : (
+            "."
+          )}
+        </p>
+        <p className="mt-3">
+          Between now and then we will be going through {website} by hand,
+          scoring the site, your ads and your Google rankings. You will get
+          the full audit PDF on the call, yours to keep.
+        </p>
+        <div className="mt-4 rounded-[var(--radius-md)] border border-[var(--color-hairline-soft)] bg-[var(--color-surface-muted)] px-4 py-3">
+          <div className="text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
+            Your slot
           </div>
-        )}
-
-        {/* STEP 2, video */}
-        {step === 2 && (
-          <div>
-            <div className="mb-1 font-[family-name:var(--font-display)] text-xl font-bold">
-              Watch this before you go further
-            </div>
-            <div className="mb-6 text-sm text-[var(--color-ink-muted)]">
-              2 minutes. How the whole system fits together. Site, ads,
-              tracking, dashboard, call handling.
-            </div>
-
-            <VideoPlaceholder />
-
-            <div className="mt-6 rounded-[var(--radius-md)] bg-[var(--color-surface-muted)] p-4 text-[13px] leading-[1.55] text-[var(--color-ink)]">
-              <span className="font-bold">In this video:</span> the audit
-              PDF you get, how we rebuild your site, where the tracking
-              number goes, and what the dashboard looks like on your phone.
-            </div>
-
-            <div className="mt-7 flex items-center justify-between">
-              <ButtonEl variant="ghost" onClick={() => setStep(1)}>
-                Back
-              </ButtonEl>
-              <ButtonEl onClick={() => setStep(3)}>
-                Skip and continue
-              </ButtonEl>
-            </div>
+          <div className="mt-1 font-[family-name:var(--font-display)] text-[15px] font-bold">
+            {day ? `July ${day}, 2026` : "July 2026"}{time ? ` · ${time}` : ""}
           </div>
-        )}
-
-        {/* STEP 3, detailed form */}
-        {step === 3 && (
-          <div>
-            <div className="mb-1 font-[family-name:var(--font-display)] text-xl font-bold">
-              Tell us about your business
-            </div>
-            <div className="mb-6 text-sm text-[var(--color-ink-muted)]">
-              Everything we need to build your audit and pricing.
-            </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <Select
-                label="Your trade"
-                options={TRADES}
-                value={details.trade}
-                onChange={(e) => setDetails((d) => ({ ...d, trade: e.target.value }))}
-              />
-              <Select
-                label="Team size"
-                options={TEAM_SIZE}
-                value={details.teamSize}
-                onChange={(e) => setDetails((d) => ({ ...d, teamSize: e.target.value }))}
-              />
-              <div className="sm:col-span-2">
-                <Input
-                  label="Postcodes you cover"
-                  placeholder="e.g. SW11, SE22, N16"
-                  value={details.postcodes}
-                  onChange={(e) => setDetails((d) => ({ ...d, postcodes: e.target.value }))}
-                />
-              </div>
-              <div className="sm:col-span-2">
-                <Input
-                  label="Services you offer"
-                  placeholder="e.g. rewires, EV chargers, emergency callouts"
-                  value={details.services}
-                  onChange={(e) => setDetails((d) => ({ ...d, services: e.target.value }))}
-                />
-              </div>
-              <Select
-                label="Current monthly ad spend"
-                options={AD_SPEND}
-                value={details.adSpend}
-                onChange={(e) => setDetails((d) => ({ ...d, adSpend: e.target.value }))}
-              />
-              <Input
-                label="Monthly booked-jobs goal"
-                placeholder="e.g. 30 jobs"
-                value={details.goals}
-                onChange={(e) => setDetails((d) => ({ ...d, goals: e.target.value }))}
-              />
-              <div className="sm:col-span-2">
-                <label className="flex flex-col gap-1.5">
-                  <span className="text-[13px] font-medium text-[var(--color-ink-muted)]">
-                    Anything else we should know?
-                  </span>
-                  <textarea
-                    placeholder="Existing agencies, upcoming holidays, specific job types you want more or less of…"
-                    value={details.notes}
-                    onChange={(e) => setDetails((d) => ({ ...d, notes: e.target.value }))}
-                    rows={3}
-                    className="rounded-[var(--radius-sm)] border border-[var(--color-hairline)] bg-[var(--color-surface)] px-3 py-2 text-[15px] text-[var(--color-ink)] outline-none transition-colors placeholder:text-[var(--color-ink-faint)] focus:border-[var(--color-accent)] focus:shadow-[var(--shadow-focus)]"
-                  />
-                </label>
-              </div>
-            </div>
-            <div className="mt-7 flex items-center justify-between">
-              <ButtonEl variant="ghost" onClick={() => setStep(2)}>
-                Back
-              </ButtonEl>
-              <ButtonEl
-                disabled={!detailsOk}
-                onClick={() => detailsOk && setStep(4)}
-              >
-                Submit
-              </ButtonEl>
-            </div>
-          </div>
-        )}
-
-        {/* STEP 4, confirmation */}
-        {step === 4 && (
-          <div className="px-0 py-6 text-center">
-            <div className="mx-auto mb-5 flex h-[60px] w-[60px] items-center justify-center rounded-full bg-[var(--color-success-soft)] text-[var(--color-success)]">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-            </div>
-            <div className="mb-2 font-[family-name:var(--font-display)] text-2xl font-bold">
-              We have everything we need.
-            </div>
-            <div className="mx-auto mb-6 max-w-[440px] text-base leading-[1.55] text-[var(--color-ink-muted)]">
-              We will audit your site, ads and Google rankings by hand
-              and send you the PDF plus a proposal within the week. If
-              you have any questions, we will call you first.
-            </div>
-            <div className="mx-auto max-w-[440px] rounded-[var(--radius-md)] bg-[var(--color-surface-sunken)] p-5 text-left">
-              <div className="mb-3 text-xs font-bold uppercase tracking-[0.05em] text-[var(--color-ink-muted)]">
-                What happens next
-              </div>
-              <div className="flex flex-col gap-2.5 text-sm leading-[1.5] text-[var(--color-ink)]">
-                <div>1. Confirmation email lands in your inbox now.</div>
-                <div>2. Audit and proposal within the week.</div>
-                <div>3. You approve, and we start the rebuild.</div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────── */
-/*  Video placeholder                                          */
-/* ─────────────────────────────────────────────────────────── */
-
-function VideoPlaceholder() {
-  return (
-    <div className="relative aspect-video w-full overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[#0e1420] shadow-[var(--shadow-2)]">
-      {/* Fake video frame contents */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#152438] via-[#0e1420] to-[#1a2438]">
-        <div className="absolute inset-6 flex flex-col justify-between">
-          <div className="flex items-center gap-2 text-[11px] font-semibold text-white/60">
-            <span className="flex h-1.5 w-1.5 rounded-full bg-red-500" />
-            LIVE PREVIEW · TANDEMM
-          </div>
-          <div>
-            <div className="font-[family-name:var(--font-display)] text-[18px] font-bold text-white sm:text-[22px]">
-              How Tandemm works, in 2 minutes.
-            </div>
-            <div className="mt-1 text-[12px] text-white/60">
-              Site, then ads, then tracking, then dashboard, then call handling.
-            </div>
+          <div className="mt-0.5 text-[12px] text-[var(--color-ink-muted)]">
+            30 minutes · Video or phone, your choice
           </div>
         </div>
-      </div>
-
-      {/* Play button */}
-      <button
-        type="button"
-        aria-label="Play video (placeholder)"
-        className="absolute inset-0 m-auto flex h-[72px] w-[72px] items-center justify-center rounded-full bg-white/90 shadow-lg backdrop-blur transition-transform hover:scale-105"
-      >
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="var(--color-primary)" aria-hidden="true">
-          <path d="M8 5v14l11-7z" />
-        </svg>
-      </button>
-
-      {/* Controls bar */}
-      <div className="absolute bottom-0 left-0 right-0 flex items-center gap-3 border-t border-white/10 bg-black/40 px-4 py-2 text-[10px] text-white/70 backdrop-blur">
-        <span>0:00</span>
-        <div className="h-1 flex-1 rounded-full bg-white/20">
-          <div className="h-full w-0 rounded-full bg-[var(--color-accent)]" />
-        </div>
-        <span>2:14</span>
+        <p className="mt-4">Any questions before then, just reply to this email.</p>
+        <p className="mt-3">
+          Speak soon,
+          <br />
+          The Tandemm team
+        </p>
       </div>
     </div>
   );

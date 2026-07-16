@@ -57,7 +57,7 @@ export function Nav({
             aria-current={active === "book" ? "page" : undefined}
             className="whitespace-nowrap rounded-[var(--radius-pill)] bg-white px-4 py-[11px] text-sm font-semibold text-[var(--color-primary)] no-underline sm:px-5"
           >
-            Book a call
+            Get my audit
           </Link>
         </div>
       </div>
