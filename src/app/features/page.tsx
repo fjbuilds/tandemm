@@ -308,34 +308,14 @@ export default function FeaturesPage() {
             Every enquiry caught, answered and chased.
           </h2>
           <p className="mx-auto mt-3 max-w-[600px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-            Widget, quote assistant, tracking number, missed-call catcher,
-            WhatsApp. Every path a homeowner takes to reach you feeds the
-            same dashboard.
+            Quote assistant, tracking number, missed-call catcher, WhatsApp.
+            Every path a homeowner takes to reach you feeds the same
+            dashboard.
           </p>
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {CAPTURE_FEATURES.map((f) => (
-            <Reveal key={f.title}>
-              <div className="flex h-full items-start gap-4 rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-6">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary)] text-[var(--color-on-primary)]">
-                  <CaptureIcon name={f.title} />
-                </div>
-                <div>
-                  <h3 className="mb-2 font-[family-name:var(--font-display)] text-[17px] font-bold">
-                    {f.title}
-                  </h3>
-                  <p className="text-[14.5px] leading-[1.55] text-[var(--color-ink-muted)]">
-                    {f.body}
-                  </p>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-
         <Reveal>
-          <div className="mt-12 grid grid-cols-1 items-start gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[1.05fr_0.95fr]">
             <CaughtAndHandled />
             <LeadCarryOver />
           </div>
@@ -884,11 +864,34 @@ function CaughtAndHandled() {
       <h3 className="mb-1 font-[family-name:var(--font-display)] text-[20px] font-bold">
         Structured questions, not vague replies.
       </h3>
-      <p className="mb-6 text-[14.5px] leading-[1.55] text-[var(--color-ink-muted)]">
+      <p className="mb-5 text-[14.5px] leading-[1.55] text-[var(--color-ink-muted)]">
         The auto-text asks the same five questions every time. That is
         quote quality control, and it is what makes the dashboard filter
         cleanly across job type, urgency and area.
       </p>
+
+      {/* How enquiries get caught */}
+      <div className="mb-6 grid grid-cols-1 gap-2 sm:grid-cols-2">
+        {[
+          { icon: "quote", label: "Quote assistant", note: "Qualifies the job on every page" },
+          { icon: "phone", label: "Tracking number", note: "Every call tied to the ad that drove it" },
+          { icon: "missed", label: "Missed-call auto-text", note: "Instant text back from your number" },
+          { icon: "whatsapp", label: "WhatsApp entry", note: "One-tap thread, logged as a lead" },
+        ].map((c) => (
+          <div
+            key={c.label}
+            className="flex items-start gap-2.5 rounded-[var(--radius-md)] bg-[var(--color-surface-muted)] px-3.5 py-2.5"
+          >
+            <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary)] text-[var(--color-on-primary)]">
+              <CaptureIcon name={c.icon === "quote" ? "Quote assistant" : c.icon === "phone" ? "Tracking phone" : c.icon === "missed" ? "Missed-call" : "WhatsApp"} />
+            </div>
+            <div>
+              <div className="text-[13px] font-semibold text-[var(--color-ink)]">{c.label}</div>
+              <div className="text-[12px] leading-[1.4] text-[var(--color-ink-muted)]">{c.note}</div>
+            </div>
+          </div>
+        ))}
+      </div>
 
       <div className="flex flex-col gap-3">
         {/* Missed call event */}
@@ -956,11 +959,13 @@ function CaughtAndHandled() {
 
 function LeadCarryOver() {
   const fields = [
+    { label: "Phone", value: "07*** ***412", filter: "Mobile" },
     { label: "Job type", value: "Fault-find, consumer unit", filter: "Electrical" },
     { label: "Postcode", value: "SK4 3RT", filter: "Stockport" },
     { label: "Urgency", value: "Tomorrow morning", filter: "This week", urgent: true },
     { label: "Property", value: "House, three-bed semi", filter: "Residential" },
     { label: "Callback", value: "After 8pm tonight", filter: "Evening" },
+    { label: "Source", value: "Missed call → auto-text", filter: "Inbound" },
   ];
 
   return (
