@@ -20,7 +20,7 @@ const paletteOverride = {
 /* ─────────────────────────────────────────────────────────── */
 
 const LEADS_MIN = 15;
-const LEADS_MAX = 50;
+const LEADS_MAX = 125;
 const LEADS_STEP = 5;
 const PRICE_PER_LEAD = 40;
 
@@ -471,8 +471,8 @@ function PricingSlider() {
       {/* Tick labels */}
       <div className="mb-8 flex justify-between text-[11px] font-semibold text-[var(--color-ink-faint)]">
         <span>{LEADS_MIN}</span>
-        <span>25</span>
-        <span>35</span>
+        <span>50</span>
+        <span>90</span>
         <span>{LEADS_MAX}+</span>
       </div>
 
@@ -489,16 +489,8 @@ function PricingSlider() {
             /mo + VAT
           </span>
         </div>
-        <div className="mt-4 flex h-2 overflow-hidden rounded-full bg-white/15">
-          <div className="h-full bg-[var(--color-accent)]" style={{ width: "50%" }} />
-          <div className="h-full bg-white/80" style={{ width: "50%" }} />
-        </div>
-        <div className="mt-2 flex items-center justify-between text-[12px] text-white/85">
-          <span>
-            <span className="inline-block h-2 w-2 rounded-full bg-[var(--color-accent)] align-middle" />{" "}
-            Ad spend, £{adSpend.toLocaleString("en-GB")} straight to Google
-          </span>
-          <span>Everything else, £{adSpend.toLocaleString("en-GB")}</span>
+        <div className="mt-3 text-[13px] text-white/80">
+          £{adSpend.toLocaleString("en-GB")} ad spend included, at cost.
         </div>
       </div>
 
