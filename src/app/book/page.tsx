@@ -21,6 +21,10 @@ const bookPaletteOverride = {
 
 const SLOTS = ["09:00", "10:30", "13:00", "15:00", "16:30"];
 const WEEKDAY_LABELS = ["M", "T", "W", "T", "F", "S", "S"];
+const MONTH_NAMES = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
 
 const TRADES = [
   { value: "", label: "Choose your trade" },
@@ -220,6 +224,7 @@ function UnifiedPath({ prefillWebsite }: { prefillWebsite: string }) {
   });
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [viewMonth, setViewMonth] = useState<{ year: number; month: number } | null>(null);
 
   useEffect(() => {
     if (prefillWebsite && !details.website) {
@@ -240,19 +245,60 @@ function UnifiedPath({ prefillWebsite }: { prefillWebsite: string }) {
 
   const canBook = selectedDay !== null && selectedTime !== null;
 
-  /* Calendar: today is 15 July 2026 (Wed). Grey out the next 48h. */
-  const CAL_MONTH_LABEL = "July 2026";
-  const DAYS_IN_MONTH = 31;
-  const START_OFFSET = 2; /* July 1 2026 is a Wednesday */
-  const TODAY = 15;
-  const FIRST_BOOKABLE = 18; /* 48h out */
-  const DISABLED_WEEKENDS = new Set([4, 5, 11, 12, 18, 19, 25, 26]);
+  /* Calendar: real "now". Block past days + next 48h + weekends. */
+  const now = useMemo(() => new Date(), []);
+  const currentYear = viewMonth?.year ?? now.getFullYear();
+  const currentMonth = viewMonth?.month ?? now.getMonth();
+  const isCurrentRealMonth =
+    currentYear === now.getFullYear() && currentMonth === now.getMonth();
+
+  const CAL_MONTH_LABEL = `${MONTH_NAMES[currentMonth]} ${currentYear}`;
+  const DAYS_IN_MONTH = new Date(currentYear, currentMonth + 1, 0).getDate();
+  /* Mon=0..Sun=6 offset for grid start */
+  const firstWeekday = new Date(currentYear, currentMonth, 1).getDay();
+  const START_OFFSET = (firstWeekday + 6) % 7;
+
+  const firstBookable = useMemo(() => {
+    const d = new Date(now);
+    d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() + 2);
+    return d;
+  }, [now]);
 
   const calendarCells = useMemo(() => {
     const blanks = Array.from({ length: START_OFFSET }, () => null);
     const days = Array.from({ length: DAYS_IN_MONTH }, (_, i) => i + 1);
     return [...blanks, ...days];
-  }, []);
+  }, [START_OFFSET, DAYS_IN_MONTH]);
+
+  const isDisabled = (day: number) => {
+    const d = new Date(currentYear, currentMonth, day);
+    const weekday = d.getDay();
+    if (weekday === 0 || weekday === 6) return { disabled: true, prep: false };
+    if (d < firstBookable) {
+      const startOfToday = new Date(now);
+      startOfToday.setHours(0, 0, 0, 0);
+      const prep = d >= startOfToday;
+      return { disabled: true, prep };
+    }
+    return { disabled: false, prep: false };
+  };
+
+  const goPrev = () => {
+    const y = currentMonth === 0 ? currentYear - 1 : currentYear;
+    const m = currentMonth === 0 ? 11 : currentMonth - 1;
+    setViewMonth({ year: y, month: m });
+    setSelectedDay(null);
+    setSelectedTime(null);
+  };
+  const goNext = () => {
+    const y = currentMonth === 11 ? currentYear + 1 : currentYear;
+    const m = currentMonth === 11 ? 0 : currentMonth + 1;
+    setViewMonth({ year: y, month: m });
+    setSelectedDay(null);
+    setSelectedTime(null);
+  };
+  const canGoPrev = !isCurrentRealMonth;
 
   return (
     <div className="grid grid-cols-1 items-start gap-7 lg:grid-cols-[0.85fr_1.15fr]">
@@ -421,17 +467,38 @@ function UnifiedPath({ prefillWebsite }: { prefillWebsite: string }) {
             <div className="mb-1 font-[family-name:var(--font-display)] text-xl font-bold">
               Pick your walkthrough slot
             </div>
-            <div className="mb-2 text-sm text-[var(--color-ink-muted)]">
-              {CAL_MONTH_LABEL} · all times London (BST)
-            </div>
-            <div className="mb-6 rounded-[var(--radius-md)] border border-[var(--color-hairline-soft)] bg-[var(--color-surface-muted)] px-4 py-3 text-[13px] leading-[1.5] text-[var(--color-ink)]">
-              <span className="font-semibold">The next 48 hours are blocked out.</span>{" "}
-              We use that time to score your site, ads and rankings by hand,
-              so the call is a walkthrough of your actual audit, not a
-              discovery chat.
+            <div className="mb-6 text-sm text-[var(--color-ink-muted)]">
+              All times London
             </div>
             <div className="grid grid-cols-1 gap-7 sm:grid-cols-[1.1fr_0.9fr]">
               <div>
+                <div className="mb-3 flex items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={goPrev}
+                    disabled={!canGoPrev}
+                    className={cn(
+                      "flex h-8 w-8 items-center justify-center rounded-[var(--radius-sm)] border border-[var(--color-hairline)] text-[var(--color-ink)] transition-colors",
+                      canGoPrev
+                        ? "hover:border-[var(--color-primary)]"
+                        : "cursor-default opacity-40",
+                    )}
+                    aria-label="Previous month"
+                  >
+                    ‹
+                  </button>
+                  <div className="text-sm font-semibold text-[var(--color-ink)]">
+                    {CAL_MONTH_LABEL}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={goNext}
+                    className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-sm)] border border-[var(--color-hairline)] text-[var(--color-ink)] transition-colors hover:border-[var(--color-primary)]"
+                    aria-label="Next month"
+                  >
+                    ›
+                  </button>
+                </div>
                 <div className="mb-2 grid grid-cols-7 gap-1.5">
                   {WEEKDAY_LABELS.map((d, i) => (
                     <div
@@ -445,10 +512,7 @@ function UnifiedPath({ prefillWebsite }: { prefillWebsite: string }) {
                 <div className="grid grid-cols-7 gap-1.5">
                   {calendarCells.map((day, i) => {
                     if (day === null) return <div key={`blank-${i}`} />;
-                    const inPrepWindow = day >= TODAY && day < FIRST_BOOKABLE;
-                    const past = day < TODAY;
-                    const weekend = DISABLED_WEEKENDS.has(day);
-                    const disabled = past || inPrepWindow || weekend;
+                    const { disabled, prep } = isDisabled(day);
                     const selected = selectedDay === day;
                     return (
                       <button
@@ -462,14 +526,14 @@ function UnifiedPath({ prefillWebsite }: { prefillWebsite: string }) {
                         className={cn(
                           "relative rounded-[var(--radius-sm)] border border-transparent py-2.5 text-center text-sm font-semibold transition-colors",
                           disabled && "cursor-default text-[var(--color-ink-faint)] opacity-45",
-                          inPrepWindow && "bg-[var(--color-surface-muted)]",
+                          prep && "bg-[var(--color-surface-muted)]",
                           !disabled && !selected && "cursor-pointer bg-[var(--color-surface-muted)] text-[var(--color-ink)] hover:border-[var(--color-primary)]",
                           selected && "cursor-pointer bg-[var(--color-primary)] text-[var(--color-on-primary)]",
                         )}
                         aria-label={
-                          inPrepWindow
-                            ? `July ${day}, blocked for audit prep`
-                            : `July ${day}`
+                          prep
+                            ? `${MONTH_NAMES[currentMonth]} ${day}, blocked for audit prep`
+                            : `${MONTH_NAMES[currentMonth]} ${day}`
                         }
                       >
                         {day}
@@ -494,7 +558,7 @@ function UnifiedPath({ prefillWebsite }: { prefillWebsite: string }) {
               </div>
               <div>
                 <div className="mb-3.5 text-xs font-bold uppercase tracking-[0.05em] text-[var(--color-ink-muted)]">
-                  {selectedDay ? `July ${selectedDay}` : "Select a date"}
+                  {selectedDay ? `${MONTH_NAMES[currentMonth]} ${selectedDay}` : "Select a date"}
                 </div>
                 <div className="flex flex-col gap-2">
                   {selectedDay &&
@@ -543,7 +607,7 @@ function UnifiedPath({ prefillWebsite }: { prefillWebsite: string }) {
                 You are booked in.
               </div>
               <div className="mx-auto max-w-[440px] text-base leading-[1.55] text-[var(--color-ink-muted)]">
-                Walkthrough locked in for July {selectedDay}, 2026 at{" "}
+                Walkthrough locked in for {MONTH_NAMES[currentMonth]} {selectedDay}, {currentYear} at{" "}
                 {selectedTime} (London). Audit prep starts now.
               </div>
             </div>
@@ -554,6 +618,8 @@ function UnifiedPath({ prefillWebsite }: { prefillWebsite: string }) {
               business={details.business || "your business"}
               website={details.website || "yourbusiness.co.uk"}
               day={selectedDay ?? undefined}
+              month={MONTH_NAMES[currentMonth]}
+              year={currentYear}
               time={selectedTime ?? undefined}
             />
 
@@ -564,7 +630,7 @@ function UnifiedPath({ prefillWebsite }: { prefillWebsite: string }) {
               <div className="flex flex-col gap-2.5 text-sm leading-[1.5] text-[var(--color-ink)]">
                 <div>1. Confirmation email in your inbox, right now.</div>
                 <div>2. We score your site, ads and rankings by hand over the next 48 hours.</div>
-                <div>3. Walkthrough on July {selectedDay} at {selectedTime}. You keep the audit either way.</div>
+                <div>3. Walkthrough on {MONTH_NAMES[currentMonth]} {selectedDay} at {selectedTime}. You keep the audit either way.</div>
               </div>
             </div>
           </div>
@@ -584,6 +650,8 @@ function ConfirmationEmailPreview({
   business,
   website,
   day,
+  month,
+  year,
   time,
 }: {
   to: string;
@@ -591,6 +659,8 @@ function ConfirmationEmailPreview({
   business: string;
   website: string;
   day?: number;
+  month: string;
+  year: number;
   time?: string;
 }) {
   return (
@@ -624,7 +694,7 @@ function ConfirmationEmailPreview({
           Confirming your walkthrough for <strong>{business}</strong>
           {day && time ? (
             <>
-              {" "}on <strong>July {day}, 2026 at {time}</strong> (London).
+              {" "}on <strong>{month} {day}, {year} at {time}</strong> (London).
             </>
           ) : (
             "."
@@ -640,7 +710,7 @@ function ConfirmationEmailPreview({
             Your slot
           </div>
           <div className="mt-1 font-[family-name:var(--font-display)] text-[15px] font-bold">
-            {day ? `July ${day}, 2026` : "July 2026"}{time ? ` · ${time}` : ""}
+            {day ? `${month} ${day}, ${year}` : `${month} ${year}`}{time ? ` · ${time}` : ""}
           </div>
           <div className="mt-0.5 text-[12px] text-[var(--color-ink-muted)]">
             30 minutes · Video or phone, your choice
