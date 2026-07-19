@@ -226,11 +226,6 @@ export default function HomePage() {
               </form>
             </Reveal>
 
-            <Reveal>
-              <p className="hero-cta-note">
-                Free, yours to keep.
-              </p>
-            </Reveal>
           </div>
 
           <div className="hero-split-visual">
@@ -240,10 +235,7 @@ export default function HomePage() {
                 <HeroVisual />
                 <div className="hero-glass-fade" aria-hidden="true" />
                 <div className="hero-glass-gate">
-                  <span className="hero-glass-gate-copy">
-                    Enter your URL to get an audit like this on your site.
-                  </span>
-                  <Button href="/book">Start without a URL</Button>
+                  <Button href="/book">Get my free audit</Button>
                 </div>
                 <div className="hero-glass-glow" aria-hidden="true" />
               </div>
@@ -314,9 +306,9 @@ export default function HomePage() {
               Everything you would normally hire multiple people for.
             </h2>
             <p className="mx-auto mt-3 max-w-[620px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Your site, your ads, your SEO, your enquiries and your missed
-              calls, all handled by one team and pulling in the same
-              direction. You get on with the work.
+              One system captures every enquiry — calls, forms, missed
+              calls — so nothing slips through the cracks. You get on
+              with the work.
             </p>
           </Reveal>
 
