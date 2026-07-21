@@ -192,11 +192,16 @@ export default function HomePage() {
               </div>
             </Reveal>
             <Reveal>
-              <p className="hero-desc" style={{ marginTop: 20, maxWidth: 480 }}>
-                Audit. Rebuild. Get&nbsp;found.
-                <br />
-                One place for every enquiry. Nothing&nbsp;missed.
-              </p>
+              <div
+                className="mt-5 inline-block rounded-[var(--radius-xl)] bg-[var(--color-surface-muted)] px-6 py-4"
+                style={{ maxWidth: 480 }}
+              >
+                <p className="hero-desc" style={{ margin: 0 }}>
+                  Audit. Rebuild. Get&nbsp;found.
+                  <br />
+                  One place for every enquiry. Nothing&nbsp;missed.
+                </p>
+              </div>
             </Reveal>
 
             {/* URL audit form */}
