@@ -193,8 +193,9 @@ export default function HomePage() {
             </Reveal>
             <Reveal>
               <p className="hero-desc" style={{ marginTop: 20, maxWidth: 480 }}>
-                We audit your site, rebuild it, run your ads and catch every
-                enquiry. One process, one fee. You get in the van.
+                Audit. Rebuild. Get&nbsp;found.
+                <br />
+                One place for every enquiry. Nothing&nbsp;missed.
               </p>
             </Reveal>
 
