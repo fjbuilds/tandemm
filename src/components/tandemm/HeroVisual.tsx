@@ -135,7 +135,9 @@ export function HeroVisual() {
         {/* Letterhead */}
         <div className="audit-letterhead">
           <div className="audit-brand">
-            <span className="audit-brand-mark" aria-hidden="true" />
+            <svg width="24" height="16" viewBox="110 260 780 480" aria-hidden="true" style={{ flexShrink: 0 }}>
+              <path d="M350,260 L590,500 L350,740 L110,500 Z M650,260 L890,500 L650,740 L410,500 Z" fill="var(--color-primary)" />
+            </svg>
             <div>
               <div className="audit-brand-name">Tandemm</div>
               <div className="audit-brand-role">Diagnosis Audit</div>
