@@ -194,7 +194,7 @@ export default function FeaturesPage() {
                 A site built to turn visitors into booked jobs.
               </h2>
               <p className="mb-6 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-                Fast, mobile-first, and free when you sign up. Every page
+                Fast, mobile-first, and included in your plan. Every page
                 is built to do one thing: get the homeowner talking to you.
                 The quote assistant handles the questions they&apos;d
                 otherwise ring around for, so they stay put and you get a

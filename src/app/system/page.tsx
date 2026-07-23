@@ -30,14 +30,14 @@ const STAGES = [
   {
     num: 2,
     title: "Prevention",
-    desc: "The website rebuild, tracking setup and dashboard. Built for you when you sign up for Cure, at no extra cost.",
-    price: "Included with Cure",
+    desc: "The website rebuild, tracking setup and dashboard. All set up for you and included in your monthly plan.",
+    price: "Included in the plan",
   },
   {
     num: 3,
     title: "Cure",
-    desc: "The paid stage. Ads managed weekly, SEO built out monthly, enquiries triaged in one system, calls answered when you cannot.",
-    price: "From £650/mo",
+    desc: "The engine. Ads managed weekly, SEO built out monthly, enquiries triaged in one system, calls answered when you cannot.",
+    price: "From £197/mo",
   },
 ];
 
@@ -179,8 +179,8 @@ export default function SystemPage() {
           <Reveal>
             <p className="mx-auto mt-[18px] max-w-[620px] text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
               Everyone starts with the free audit. Everyone gets the
-              website rebuild, tracking and dashboard for free when they
-              commit to the lead generation stage. Then the engine runs.
+              website rebuild, tracking and dashboard included when they
+              start the monthly plan. Then the engine runs.
             </p>
           </Reveal>
         </div>
@@ -204,14 +204,13 @@ export default function SystemPage() {
         <div className="mx-auto max-w-[900px]">
           <Reveal className="mb-8 text-center">
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              Why the site rebuild is free
+              Why the rebuild is part of the plan
             </h2>
             <p className="mx-auto mt-3 max-w-[620px] text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Ads only pay back when they land on a site that turns
-              visitors into calls. So we rebuild yours first, at no cost.
-              The deal is simple: you commit to three months of lead
-              generation, and we build knowing the ads have a real chance
-              to work. No separate build fee, fair on both sides.
+              Ads and SEO only pay back when they land on a site that turns
+              visitors into calls. So we rebuild yours first and bundle it
+              into the monthly plan. No separate build fee, one fee that
+              covers the lot.
             </p>
           </Reveal>
 
@@ -223,16 +222,16 @@ export default function SystemPage() {
                   body: "No commitment, no card on file. The audit is yours whether we ever work together or not.",
                 },
                 {
-                  head: "You decide to move to Cure",
-                  body: "You sign up for the lead generation stage on a three month minimum term. That is the commitment.",
+                  head: "You start the monthly plan",
+                  body: "£197 a month covers the whole system. Add paid ads whenever you are ready.",
                 },
                 {
-                  head: "We build the site for free",
+                  head: "We rebuild the site for you",
                   body: "Website rebuild, tracking number, widget, dashboard, ad accounts. All included, no separate build fee.",
                 },
                 {
                   head: "The engine runs",
-                  body: "Ads live from day one, enquiries in one dashboard, missed calls caught. After three months, notice is one month.",
+                  body: "Enquiries land in one dashboard, missed calls caught, ads and SEO working. The plan runs month to month.",
                 },
               ].map((row, i) => (
                 <div

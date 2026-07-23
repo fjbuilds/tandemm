@@ -2055,3 +2055,25 @@ body {
     margin-right: 0;
   }
 }
+
+/* ── Trust partners rotating strip ── */
+.trust-partner-fade {
+  animation: trustPartnerFade 620ms ease-out both;
+}
+
+@keyframes trustPartnerFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trust-partner-fade {
+    animation: none;
+  }
+}
