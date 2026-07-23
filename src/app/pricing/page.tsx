@@ -101,7 +101,7 @@ const INCLUDED = [
       "Cost per booked job, per channel",
       "Return on ad spend (ROAS) reporting",
       "Monthly review call and written report",
-      "Full transparency on Google Ads spend, no markup",
+      "Full transparency on Google Ads spend",
     ],
   },
 ];
@@ -113,19 +113,19 @@ const INCLUDED = [
 const FAQS = [
   {
     q: "What am I actually paying for?",
-    a: "One monthly fee, everything in. That covers your ad spend, the ads managed weekly, SEO built out monthly, the dashboard, the tracking, and the missed-call catcher. Nothing is bolted on the top. The audit and the website rebuild are free (see below).",
+    a: "£197 a month gets you the website, the SEO, the dashboard, the lead tracking, the missed-call catcher and the monthly reporting. If you want to add paid ads, we manage those too for a separate management fee on top of your ad spend. The audit and the website rebuild are free.",
   },
   {
     q: "How does the free website rebuild work?",
-    a: "You commit to a three month minimum on Cure. In return, we rebuild the site, wire up the tracking number and widget, and set up your dashboard, at no extra cost. That is what protects us from building a site for someone who is not serious about ads.",
+    a: "You commit to a three month minimum. In return, we rebuild the site, wire up the tracking number and widget, and set up your dashboard, at no extra cost. That is what protects us from building a site for someone who is not serious about growing.",
   },
   {
     q: "How does the ad spend work?",
-    a: "It is included in your fee, and it is exactly half of it. That half goes straight to Google, with no markup. You see exactly what was spent, on which campaigns, on which days. Any unspent budget rolls into the following month.",
+    a: "Ad spend is separate from the £197 monthly plan. You set a budget, that goes to Google, and we charge a management fee to run the campaigns. You see exactly what was spent, on which campaigns, on which days in the dashboard. Any unspent budget rolls into the following month.",
   },
   {
     q: "How is the price actually decided?",
-    a: "Pick the leads you want and the price follows. Roughly £40 per lead all in, half of that is ad spend at cost. Slide up when you're ready for more work, slide back down if you need to. No jumping between tiers, no renegotiation.",
+    a: "The monthly plan is £197, that is the same for everyone. If you add paid ads, you pick the lead volume you want and the ad spend follows. Scale up when you are ready for more work, scale back down if you need to.",
   },
   {
     q: "What is the difference between LSA and CPC ads?",
@@ -133,7 +133,7 @@ const FAQS = [
   },
   {
     q: "Am I locked into a long contract?",
-    a: "Three month minimum on Cure (which is the runway for the ads to actually pay back and for the free rebuild to make sense on both sides). After that, one month's notice, cancel any time.",
+    a: "Three month minimum, which is the runway for the SEO to gain traction and for the free rebuild to make sense on both sides. After that, one month's notice, cancel any time.",
   },
   {
     q: "Will you work with my competitors too?",
@@ -189,10 +189,9 @@ export default function PricingPage() {
           </Reveal>
           <Reveal>
             <p className="mx-auto mt-[22px] max-w-[620px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
-              You pay when the lead generation starts. One monthly fee
-              covers your ad spend, the ads management, the SEO, the
-              dashboard and the missed-call capture. Nothing bolted on the top.
-              Three month minimum, one month notice after that.
+              £197 a month covers the website, SEO, dashboard, lead
+              tracking and missed-call capture. Add paid ads when you
+              are ready. Three month minimum, one month notice after that.
             </p>
           </Reveal>
         </div>
@@ -205,7 +204,7 @@ export default function PricingPage() {
             "Free audit, no card",
             "Free website rebuild when you sign up",
             "Three month minimum, then one month notice",
-            "Ad spend included, no markup",
+            "Full system from £197/mo",
           ].map((item) => (
             <div
               key={item}
@@ -219,10 +218,11 @@ export default function PricingPage() {
 
       {/* ── PRICING ── */}
       <section className="mx-auto max-w-[1160px] px-6 pb-16">
-        <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[380px_1fr]">
+        <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[380px_1px_1fr]">
           <Reveal>
             <MonthlyPlanCard />
           </Reveal>
+          <div className="h-px w-full bg-[var(--color-hairline)] lg:h-auto lg:w-px" />
           <Reveal>
             <PricingSlider />
           </Reveal>
@@ -297,20 +297,20 @@ export default function PricingPage() {
           <Reveal>
             <div>
               <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
-                Where your money goes
+                What you are getting
               </div>
               <h2 className="mb-4 font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
-                Ad spend included. No markup, ever.
+                One fee. Everything to get found and win work.
               </h2>
               <p className="mb-4 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-                Some agencies bolt ad spend on top, then quietly pad it.
-                We do the opposite.
+                Most agencies charge separately for the site, the SEO, the
+                dashboard, the tracking and the missed-call system. We
+                bundle it into one monthly fee.
               </p>
               <p className="mb-6 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-                Exactly half your fee is ad spend, and it goes straight to
-                Google. You see it in the dashboard, every pound, every
-                campaign, every day. Any unspent budget rolls to next
-                month. Cancel and the Google account is yours.
+                You get the full system from day one — website, SEO, lead
+                capture, dashboard and reporting. If you want to add paid
+                ads later, we manage those too for a separate fee.
               </p>
             </div>
           </Reveal>
@@ -401,12 +401,12 @@ export default function PricingPage() {
 /* ─────────────────────────────────────────────────────────── */
 
 const PLAN_FEATURES = [
-  "Full website, built and managed for you",
+  "Website built to convert, managed for you",
   "SEO to get found on Google",
-  "Every lead captured and tracked",
-  "One dashboard for your whole pipeline",
-  "Missed calls caught automatically",
-  "Monthly reports and review calls",
+  "Every enquiry — phone, site, socials — captured and tracked",
+  "One app for your whole pipeline",
+  "Missed calls caught and quoted automatically",
+  "Monthly reports showing where every lead came from",
 ];
 
 function MonthlyPlanCard() {
@@ -559,7 +559,7 @@ function PricingSlider() {
           </span>
         </div>
         <div className="mt-2 text-[13px] text-[var(--color-ink-muted)]">
-          Goes straight to Google, no markup.
+          Goes straight to Google. Plus management fee.
         </div>
       </div>
 
@@ -646,46 +646,22 @@ function PricingSlider() {
 function SpendBreakdown() {
   const value = [
     { label: "Website build and ongoing changes", worth: "£1,000+" },
-    { label: "Google Ads management", worth: "£600+" },
     { label: "SEO and content", worth: "£500+" },
     { label: "Dashboard, tracking and CRM", worth: "£300+" },
     { label: "Missed-call capture and quote assistant", worth: "£400+" },
+    { label: "Monthly reporting and review calls", worth: "£200+" },
   ];
 
   return (
     <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
       <div className="mb-1 text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
-        Sample monthly bill
+        What £197/mo covers
       </div>
       <div className="mb-5 text-sm text-[var(--color-ink-faint)]">
         One fee, everything in
       </div>
 
-      {/* The one fee */}
-      <div className="rounded-[var(--radius-md)] bg-[var(--color-primary)] px-5 py-4 text-white">
-        <div className="flex items-baseline justify-between">
-          <span className="font-[family-name:var(--font-display)] text-[15px] font-bold">
-            You pay
-          </span>
-          <span className="font-[family-name:var(--font-display)] text-[30px] font-extrabold leading-none">
-            £900<span className="text-[14px] font-semibold text-white/70">/mo</span>
-          </span>
-        </div>
-        <div className="mt-3 flex h-2 overflow-hidden rounded-full bg-white/10">
-          <div className="h-full bg-[var(--color-accent)]" style={{ width: "50%" }} />
-          <div className="h-full bg-white/80" style={{ width: "50%" }} />
-        </div>
-        <div className="mt-2 flex items-center justify-between text-[11px] text-white/80">
-          <span>Ad spend, £450</span>
-          <span>Everything else, £450</span>
-        </div>
-      </div>
-
-      {/* What that covers */}
-      <div className="mt-5 text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
-        What that covers
-      </div>
-      <div className="mt-2 space-y-1.5">
+      <div className="space-y-1.5">
         {value.map((v) => (
           <div
             key={v.label}
@@ -710,7 +686,7 @@ function SpendBreakdown() {
             Bought separately
           </div>
           <div className="font-[family-name:var(--font-display)] text-[20px] font-extrabold text-[var(--color-ink)] line-through decoration-[var(--color-ink-faint)]">
-            £2,800+/mo
+            £2,400+/mo
           </div>
         </div>
         <div className="text-right">
@@ -718,7 +694,7 @@ function SpendBreakdown() {
             You pay
           </div>
           <div className="font-[family-name:var(--font-display)] text-[24px] font-extrabold text-[var(--color-primary)]">
-            £900/mo
+            £197/mo
           </div>
         </div>
       </div>
