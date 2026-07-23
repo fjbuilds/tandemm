@@ -222,7 +222,7 @@ export default function PricingPage() {
           <Reveal>
             <MonthlyPlanCard />
           </Reveal>
-          <div className="h-px w-full bg-[var(--color-hairline)] lg:h-auto lg:w-px" />
+          <div className="mx-auto h-[2px] w-2/3 bg-[#C0C2B9] lg:mx-0 lg:h-auto lg:w-[2px] lg:self-stretch" />
           <Reveal>
             <PricingSlider />
           </Reveal>
@@ -308,7 +308,7 @@ export default function PricingPage() {
                 bundle it into one monthly fee.
               </p>
               <p className="mb-6 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-                You get the full system from day one — website, SEO, lead
+                You get the full system from day one: website, SEO, lead
                 capture, dashboard and reporting. If you want to add paid
                 ads later, we manage those too for a separate fee.
               </p>
@@ -403,7 +403,7 @@ export default function PricingPage() {
 const PLAN_FEATURES = [
   "Website built to convert, managed for you",
   "SEO to get found on Google",
-  "Every enquiry — phone, site, socials — captured and tracked",
+  "Every enquiry (phone, site, socials) captured and tracked",
   "One app for your whole pipeline",
   "Missed calls caught and quoted automatically",
   "Monthly reports showing where every lead came from",

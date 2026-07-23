@@ -312,8 +312,8 @@ export default function HomePage() {
               Everything you would normally hire multiple people for.
             </h2>
             <p className="mx-auto mt-3 max-w-[620px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-              One system captures every enquiry — calls, forms, missed
-              calls — so nothing slips through the cracks. You get on
+              One system captures every enquiry (calls, forms, missed
+              calls) so nothing slips through the cracks. You get on
               with the work.
             </p>
           </Reveal>
