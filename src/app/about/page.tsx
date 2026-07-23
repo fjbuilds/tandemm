@@ -68,31 +68,72 @@ export default function AboutPage() {
       <section className="px-6 pb-16 pt-[60px] text-center">
         <div className="mx-auto max-w-[820px]">
           <Reveal>
+            <div className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
+              About
+            </div>
+          </Reveal>
+          <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              One team behind your website, your ads and every enquiry that comes in.
+              Two of us. One system. Built for tradespeople.
             </h1>
+          </Reveal>
+          <Reveal>
+            <p className="mx-auto mt-[22px] max-w-[620px] text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
+              We ran ads and built sites for other people&rsquo;s
+              agencies for years, watched the same leaks in the same
+              trade accounts, and got tired of not fixing them. So we
+              started this. Small team, close to the work.
+            </p>
           </Reveal>
         </div>
       </section>
 
-      {/* ── PHILOSOPHY: converging into one flow ── */}
+      {/* ── FOUNDERS ── */}
       <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
-        <div className="mx-auto max-w-[1160px]">
-          <Reveal className="mb-8 text-center">
-            <div className="mb-2 text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
-              How we think about growth
+        <div className="mx-auto max-w-[1060px]">
+          <Reveal className="mb-10 text-center">
+            <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
+              The founders
             </div>
-            <h2 className="mb-4 font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,40px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              The work you would otherwise lose.
+            <h2 className="font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
+              You get us. Not an account manager.
             </h2>
-            <p className="mx-auto max-w-[640px] text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Site, ads, SEO, phone, forms and WhatsApp all feed one system.
-              Here is a sample day for one of our trade clients.
+            <p className="mx-auto mt-3 max-w-[560px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
+              When you sign up, the people who built the system are the
+              same ones running your account. No handovers, no juniors,
+              no offshored ticket queue.
             </p>
           </Reveal>
 
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <Reveal>
+              <FounderCard
+                role="Ads & growth"
+                name="The one who lives in ad accounts"
+                blurb="Runs the paid side: Google Ads, LSA, Meta. Spent years managing budget for other agencies before deciding trades deserved a fairer deal. Will tell you straight if your postcode won&rsquo;t pay back."
+                accent="var(--color-accent)"
+                avatar="growth"
+              />
+            </Reveal>
+            <Reveal>
+              <FounderCard
+                role="Build & systems"
+                name="The one who wires it all up"
+                blurb="Builds the sites, the tracking, the dashboard and the missed-call system. Cares more than is healthy about page speed on a mid-range Android. Has strong opinions about hero images."
+                accent="var(--color-primary)"
+                avatar="build"
+              />
+            </Reveal>
+          </div>
+
           <Reveal>
-            <DayLedger />
+            <div className="mx-auto mt-10 max-w-[720px] rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] px-7 py-6 text-center">
+              <p className="text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
+                Between us: over a decade of ads, SEO and build work,
+                mostly for local service businesses. We&rsquo;ve seen
+                what breaks. We built this so it doesn&rsquo;t.
+              </p>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -194,107 +235,128 @@ export default function AboutPage() {
   );
 }
 
-/* ── One-day ledger visual ───────────────────────────────── */
+/* ── Founder card ─────────────────────────────────────────── */
 
-function DayLedger() {
-  const entries = [
-    { t: "07:42", source: "Missed call", detail: "SK4, consumer unit trip. Auto-text sent, five answers back by 08:03.", value: "£640", status: "Booked" },
-    { t: "09:14", source: "Google Ads", detail: "EV charger enquiry, SW11. Widget picked up trade, area and property type.", value: "£1,200", status: "Quoting" },
-    { t: "10:03", source: "WhatsApp", detail: "Repeat customer, kitchen rewire. Thread merged into existing lead.", value: "£3,800", status: "Booked" },
-    { t: "12:31", source: "SEO", detail: "'Emergency electrician SE22'. Landed on service page, called from mobile.", value: "£220", status: "Booked" },
-    { t: "14:17", source: "Missed call", detail: "Voicemail during a job. Auto-text qualified, no callback needed.", value: "£480", status: "Quoting" },
-    { t: "18:52", source: "Form", detail: "After-hours enquiry, landlord. Auto-text booked a callback for 09:00.", value: "£950", status: "Callback" },
-  ];
-
-  const statusTone: Record<string, string> = {
-    Booked: "bg-[var(--color-success-soft)] text-[var(--color-success)]",
-    Quoting: "bg-[var(--color-accent-soft)] text-[var(--color-accent-hover)]",
-    Callback: "bg-[var(--color-surface-sunken)] text-[var(--color-ink-muted)]",
-  };
-
+function FounderCard({
+  role,
+  name,
+  blurb,
+  accent,
+  avatar,
+}: {
+  role: string;
+  name: string;
+  blurb: string;
+  accent: string;
+  avatar: "growth" | "build";
+}) {
   return (
-    <div className="mx-auto max-w-[920px] overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] shadow-[var(--shadow-1)]">
-      {/* Header strip */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--color-hairline-soft)] bg-[var(--color-surface-muted)] px-6 py-4">
-        <div>
-          <div className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
-            Wednesday · one client · one day
-          </div>
-          <div className="font-[family-name:var(--font-display)] text-[17px] font-bold text-[var(--color-ink)]">
-            Six things that would have slipped, caught.
-          </div>
-        </div>
-        <div className="flex flex-wrap items-center gap-4 text-right">
-          <Stat label="Enquiries" value="6" />
-          <Stat label="Quoted" value="6" />
-          <Stat label="Booked" value="3" tone="accent" />
-          <Stat label="Pipeline" value="£7,290" tone="accent" />
-        </div>
+    <div className="flex h-full flex-col overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] shadow-[var(--shadow-1)]">
+      <div
+        className="relative flex h-[160px] items-end justify-center px-6"
+        style={{
+          background: `radial-gradient(120% 90% at 50% 0%, ${accent}22, transparent 70%)`,
+        }}
+      >
+        <FounderAvatar variant={avatar} accent={accent} />
       </div>
-
-      {/* Ledger rows */}
-      <div className="divide-y divide-[var(--color-hairline-soft)]">
-        {entries.map((e) => (
-          <div
-            key={e.t}
-            className="grid grid-cols-[auto_auto_1fr_auto_auto] items-center gap-4 px-6 py-4 sm:gap-6"
-          >
-            <span className="font-mono text-[12px] font-semibold text-[var(--color-ink-muted)]">
-              {e.t}
-            </span>
-            <span className="hidden rounded-full bg-[var(--color-surface-muted)] px-2.5 py-[3px] text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink)] sm:inline">
-              {e.source}
-            </span>
-            <span className="text-[13.5px] leading-[1.5] text-[var(--color-ink)]">
-              <span className="mr-2 inline rounded-full bg-[var(--color-surface-muted)] px-2 py-[2px] text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink)] sm:hidden">
-                {e.source}
-              </span>
-              {e.detail}
-            </span>
-            <span className="font-[family-name:var(--font-display)] text-[14px] font-bold text-[var(--color-ink)]">
-              {e.value}
-            </span>
-            <span
-              className={`rounded-full px-2.5 py-[3px] text-[10px] font-bold uppercase tracking-[0.06em] ${statusTone[e.status] ?? ""}`}
-            >
-              {e.status}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      <div className="border-t border-[var(--color-hairline)] bg-[var(--color-primary)] px-6 py-4 text-center text-[13.5px] font-semibold text-[var(--color-on-primary)]">
-        Without the system, most of these are a voicemail and a missed
-        text. That is what we are actually selling.
+      <div className="flex flex-1 flex-col px-7 py-6">
+        <span
+          className="mb-2 inline-flex w-fit rounded-full px-2.5 py-[3px] text-[10px] font-bold uppercase tracking-[0.08em]"
+          style={{ backgroundColor: `${accent}1F`, color: accent }}
+        >
+          {role}
+        </span>
+        <h3 className="mb-2 font-[family-name:var(--font-display)] text-[19px] font-bold leading-[1.2]">
+          {name}
+        </h3>
+        <p className="text-[14.5px] leading-[1.6] text-[var(--color-ink-muted)]">
+          {blurb}
+        </p>
       </div>
     </div>
   );
 }
 
-function Stat({
-  label,
-  value,
-  tone,
+function FounderAvatar({
+  variant,
+  accent,
 }: {
-  label: string;
-  value: string;
-  tone?: "accent";
+  variant: "growth" | "build";
+  accent: string;
 }) {
   return (
-    <div>
-      <div className="text-[10px] font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
-        {label}
-      </div>
-      <div
-        className={`font-[family-name:var(--font-display)] text-[18px] font-extrabold ${
-          tone === "accent"
-            ? "text-[var(--color-accent-hover)]"
-            : "text-[var(--color-ink)]"
-        }`}
-      >
-        {value}
-      </div>
-    </div>
+    <svg
+      viewBox="0 0 120 130"
+      width="120"
+      height="130"
+      aria-hidden="true"
+      className="drop-shadow-[0_6px_16px_rgba(0,0,0,0.08)]"
+    >
+      {/* Body */}
+      <path
+        d="M12 130 C 14 100, 34 88, 60 88 C 86 88, 106 100, 108 130 Z"
+        fill={accent}
+        opacity="0.85"
+      />
+      {/* Neck */}
+      <rect x="52" y="72" width="16" height="18" rx="4" fill="#F1D3B5" />
+      {/* Head */}
+      <circle cx="60" cy="52" r="26" fill="#F6DEC1" />
+      {/* Hair */}
+      {variant === "growth" ? (
+        <path
+          d="M36 46 C 36 30, 48 22, 60 22 C 76 22, 86 32, 86 46 C 86 40, 78 36, 60 36 C 46 36, 40 40, 36 46 Z"
+          fill="#3A2A1E"
+        />
+      ) : (
+        <path
+          d="M34 50 C 34 28, 50 20, 62 22 C 78 24, 88 34, 88 50 L 82 44 C 78 40, 70 38, 62 38 C 52 38, 44 42, 40 48 Z"
+          fill="#2A2015"
+        />
+      )}
+      {/* Eyes */}
+      <circle cx="51" cy="52" r="2.2" fill="#1E1A16" />
+      <circle cx="69" cy="52" r="2.2" fill="#1E1A16" />
+      {/* Smile */}
+      {variant === "growth" ? (
+        <path
+          d="M50 62 Q 60 70 70 62"
+          stroke="#1E1A16"
+          strokeWidth="2"
+          strokeLinecap="round"
+          fill="none"
+        />
+      ) : (
+        <path
+          d="M52 63 Q 60 68 68 63"
+          stroke="#1E1A16"
+          strokeWidth="2"
+          strokeLinecap="round"
+          fill="none"
+        />
+      )}
+      {/* Prop */}
+      {variant === "growth" ? (
+        // Little upward chart in hand
+        <g transform="translate(78 92)">
+          <rect x="0" y="0" width="26" height="18" rx="3" fill="#FFF" stroke={accent} strokeWidth="1.5" />
+          <polyline points="3,14 9,9 14,12 22,4" fill="none" stroke={accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </g>
+      ) : (
+        // Wrench / spanner
+        <g transform="translate(16 96) rotate(-20)">
+          <path
+            d="M0 8 L 18 8 L 22 4 L 26 8 L 22 12 L 18 8"
+            fill="none"
+            stroke="#FFF"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </g>
+      )}
+    </svg>
   );
 }
 

@@ -177,10 +177,11 @@ export default function SystemPage() {
             </h1>
           </Reveal>
           <Reveal>
-            <p className="mx-auto mt-[18px] max-w-[620px] text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Everyone starts with the free audit. Everyone gets the
-              website rebuild, tracking and dashboard included when they
-              start the monthly plan. Then the engine runs.
+            <p className="mx-auto mt-[18px] max-w-[640px] text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
+              The free audit is the starting point for most. From there,
+              you can take the full system, or just the piece you need.
+              The process below is what we do when we run the lot, end
+              to end.
             </p>
           </Reveal>
         </div>
@@ -192,9 +193,10 @@ export default function SystemPage() {
           <ProcessFlow />
         </Reveal>
         <Reveal>
-          <p className="mt-12 text-center text-sm text-[var(--color-ink-muted)]">
-            This is the process. Not a menu. Everyone goes through all
-            three, in this order.
+          <p className="mx-auto mt-12 max-w-[620px] text-center text-sm leading-[1.6] text-[var(--color-ink-muted)]">
+            When we run the full engine, this is the order it works
+            best in. Diagnosis is always free. The rest, you take as
+            much or as little of as fits your business.
           </p>
         </Reveal>
       </section>
@@ -203,14 +205,18 @@ export default function SystemPage() {
       <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
         <div className="mx-auto max-w-[900px]">
           <Reveal className="mb-8 text-center">
+            <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
+              For clients on the full plan
+            </div>
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              Why the rebuild is part of the plan
+              Why the rebuild is bundled in
             </h2>
-            <p className="mx-auto mt-3 max-w-[620px] text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
+            <p className="mx-auto mt-3 max-w-[640px] text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
               Ads and SEO only pay back when they land on a site that turns
-              visitors into calls. So we rebuild yours first and bundle it
-              into the monthly plan. No separate build fee, one fee that
-              covers the lot.
+              visitors into calls. So when you take the full plan we rebuild
+              yours first and bundle it in, no separate build fee. If you
+              only want the ads side, we can plug into your existing site
+              instead.
             </p>
           </Reveal>
 
