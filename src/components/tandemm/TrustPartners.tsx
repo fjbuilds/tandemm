@@ -204,7 +204,7 @@ export function TrustPartners() {
     <section className="px-6 py-14">
       <div className="mx-auto max-w-[1000px] text-center">
         <p className="mb-9 text-[13px] font-semibold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
-          Just so you know we&rsquo;re legit, we build on
+          The tools we build on
         </p>
         <div
           className="flex flex-wrap items-center justify-center gap-x-10 gap-y-7"
