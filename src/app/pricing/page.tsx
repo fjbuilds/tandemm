@@ -22,17 +22,16 @@ const paletteOverride = {
 const LEADS_MIN = 15;
 const LEADS_MAX = 125;
 const LEADS_STEP = 5;
-const PRICE_PER_LEAD = 40;
-const BOOKING_RATE = 0.4;
+const AD_COST_PER_LEAD = 20;
+const ENQUIRY_RATE = 0.7;
 
 function priceForLeads(leads: number) {
-  const monthly = leads * PRICE_PER_LEAD;
+  const adSpend = leads * AD_COST_PER_LEAD;
   return {
-    monthly,
-    adSpend: Math.round(monthly / 2),
+    adSpend,
     leadRangeLow: Math.round(leads * 0.85),
     leadRangeHigh: Math.round(leads * 1.15),
-    bookedJobs: Math.round(leads * BOOKING_RATE),
+    enquiries: Math.round(leads * ENQUIRY_RATE),
   };
 }
 
@@ -218,19 +217,16 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* ── PRICING SLIDER ── */}
-      <section className="mx-auto max-w-[860px] px-6 pb-16">
-        <Reveal>
-          <PricingSlider />
-        </Reveal>
-
-        <Reveal>
-          <p className="mx-auto mt-8 max-w-[680px] text-center text-[14px] leading-[1.55] text-[var(--color-ink-muted)]">
-            Same system, same features, same setup at every level. The
-            slider is the only thing that changes: how many leads you
-            want, how much ad spend is working for you.
-          </p>
-        </Reveal>
+      {/* ── PRICING ── */}
+      <section className="mx-auto max-w-[1160px] px-6 pb-16">
+        <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[380px_1fr]">
+          <Reveal>
+            <MonthlyPlanCard />
+          </Reveal>
+          <Reveal>
+            <PricingSlider />
+          </Reveal>
+        </div>
       </section>
 
       {/* ── WHAT'S INCLUDED ── */}
@@ -401,24 +397,90 @@ export default function PricingPage() {
 }
 
 /* ─────────────────────────────────────────────────────────── */
+/*  Monthly plan card                                          */
+/* ─────────────────────────────────────────────────────────── */
+
+const PLAN_FEATURES = [
+  "Full website, built and managed for you",
+  "SEO to get found on Google",
+  "Every lead captured and tracked",
+  "One dashboard for your whole pipeline",
+  "Missed calls caught automatically",
+  "Monthly reports and review calls",
+];
+
+function MonthlyPlanCard() {
+  return (
+    <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-8 shadow-[var(--shadow-1)]">
+      <div className="mb-1 text-[13px] font-bold uppercase tracking-[0.12em] text-[var(--color-ink-muted)]">
+        Monthly plan
+      </div>
+      <div className="mb-1 font-[family-name:var(--font-display)] text-[48px] font-extrabold leading-none tracking-tight text-[var(--color-ink)]">
+        £197
+        <span className="ml-1 text-[16px] font-semibold text-[var(--color-ink-muted)]">
+          /mo
+        </span>
+      </div>
+      <p className="mb-6 text-[14px] text-[var(--color-ink-faint)]">
+        + VAT
+      </p>
+
+      <p className="mb-6 text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
+        Everything you need to get found online and capture every enquiry.
+      </p>
+
+      <ul className="mb-8 space-y-3">
+        {PLAN_FEATURES.map((f) => (
+          <li
+            key={f}
+            className="flex items-start gap-2.5 text-[14px] leading-[1.5] text-[var(--color-ink)]"
+          >
+            <svg
+              className="mt-[3px] h-4 w-4 shrink-0 text-[var(--color-primary)]"
+              viewBox="0 0 16 16"
+              fill="none"
+            >
+              <path
+                d="M3 8l3.5 3.5L13 5"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            {f}
+          </li>
+        ))}
+      </ul>
+
+      <Button href="/book" className="w-full text-center">
+        Get started
+      </Button>
+      <p className="mt-3 text-center text-[12px] text-[var(--color-ink-faint)]">
+        Book a call to get set up. No card needed.
+      </p>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────── */
 /*  Pricing slider                                             */
 /* ─────────────────────────────────────────────────────────── */
 
 function PricingSlider() {
   const [leads, setLeads] = useState(25);
   const [jobValueInput, setJobValueInput] = useState("");
-  const { monthly, adSpend, leadRangeLow, leadRangeHigh, bookedJobs } =
+  const { adSpend, leadRangeLow, leadRangeHigh, enquiries } =
     priceForLeads(leads);
   const pct = ((leads - LEADS_MIN) / (LEADS_MAX - LEADS_MIN)) * 100;
   const jobValue = Number(jobValueInput.replace(/[^0-9]/g, ""));
-  const projectedRevenue = jobValue > 0 ? bookedJobs * jobValue : 0;
-  const projectedProfit = projectedRevenue - monthly;
+  const projectedRevenue = jobValue > 0 ? enquiries * jobValue : 0;
 
   return (
     <div className="relative rounded-[var(--radius-xl)] border border-[var(--color-primary)] bg-[var(--color-surface)] p-8 shadow-[var(--shadow-2)] sm:p-10">
       <div className="absolute -top-3 left-1/2 -translate-x-1/2">
         <span className="rounded-full bg-[var(--color-accent)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-white">
-          Build your plan
+          Ads calculator
         </span>
       </div>
 
@@ -483,21 +545,21 @@ function PricingSlider() {
         <span>{LEADS_MAX}+</span>
       </div>
 
-      {/* Price */}
-      <div className="mb-6 rounded-[var(--radius-lg)] bg-[var(--color-primary)] p-6 text-white">
-        <div className="mb-1 text-[12px] font-bold uppercase tracking-[0.12em] text-white/70">
-          You pay
+      {/* Ad spend */}
+      <div className="mb-6 rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)] p-5">
+        <div className="mb-1 text-[12px] font-bold uppercase tracking-[0.12em] text-[var(--color-ink-muted)]">
+          Monthly ad spend
         </div>
         <div className="flex items-baseline gap-2">
-          <span className="font-[family-name:var(--font-display)] text-[52px] font-extrabold leading-none tracking-tight">
-            £{monthly.toLocaleString("en-GB")}
+          <span className="font-[family-name:var(--font-display)] text-[42px] font-extrabold leading-none tracking-tight text-[var(--color-ink)]">
+            £{adSpend.toLocaleString("en-GB")}
           </span>
-          <span className="text-[15px] font-semibold text-white/70">
-            /mo + VAT
+          <span className="text-[15px] font-semibold text-[var(--color-ink-muted)]">
+            /mo
           </span>
         </div>
-        <div className="mt-3 text-[13px] text-white/80">
-          £{adSpend.toLocaleString("en-GB")} ad spend included, at cost.
+        <div className="mt-2 text-[13px] text-[var(--color-ink-muted)]">
+          Goes straight to Google, no markup.
         </div>
       </div>
 
@@ -513,7 +575,7 @@ function PricingSlider() {
           </span>
         </label>
         <p className="mb-3 text-[13px] text-[var(--color-ink-muted)]">
-          Add yours to see how this converts to money made.
+          Add yours to see how your ad spend converts to revenue.
         </p>
         <div className="relative">
           <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[18px] font-semibold text-[var(--color-ink-muted)]">
@@ -533,7 +595,7 @@ function PricingSlider() {
         {jobValue > 0 && (
           <div className="mt-4 rounded-[var(--radius-md)] border border-[var(--color-hairline-soft)] bg-[var(--color-surface)] p-4">
             <div className="mb-2 text-[12px] leading-[1.5] text-[var(--color-ink-muted)]">
-              ~{bookedJobs} booked jobs × £
+              ~{enquiries} enquiries × £
               {jobValue.toLocaleString("en-GB")} avg
             </div>
             <div className="flex items-baseline justify-between gap-3">
@@ -547,19 +609,19 @@ function PricingSlider() {
                 </span>
               </span>
             </div>
-            {projectedProfit > 0 && (
+            {projectedRevenue > adSpend && (
               <div className="mt-2 flex items-baseline justify-between gap-3 border-t border-[var(--color-hairline-soft)] pt-2">
                 <span className="text-[12px] text-[var(--color-ink-muted)]">
-                  After the £{monthly.toLocaleString("en-GB")} fee
+                  Return on £{adSpend.toLocaleString("en-GB")} ad spend
                 </span>
                 <span className="text-[15px] font-bold text-[var(--color-accent-hover)]">
-                  £{projectedProfit.toLocaleString("en-GB")}/mo
+                  {Math.round(projectedRevenue / adSpend)}x
                 </span>
               </div>
             )}
             <p className="mt-3 text-[11px] leading-[1.5] text-[var(--color-ink-faint)]">
-              Assumes ~{Math.round(BOOKING_RATE * 100)}% of leads convert to
-              booked jobs. Rough guide, not a guarantee.
+              Assumes ~{Math.round(ENQUIRY_RATE * 100)}% of leads turn into
+              enquiries. Rough guide, not a guarantee.
             </p>
           </div>
         )}
