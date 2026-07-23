@@ -22,15 +22,48 @@ const paletteOverride = {
 const LEADS_MIN = 15;
 const LEADS_MAX = 125;
 const LEADS_STEP = 5;
-const AD_COST_PER_LEAD = 20;
 const ENQUIRY_RATE = 0.6;
 
+// Piecewise cost-per-lead anchors. Real Google Ads accounts don't scale
+// linearly in a single service area — CPL rises as spend goes up because
+// local demand is finite. We linearly interpolate CPL between anchors,
+// then multiply by lead volume to get monthly spend.
+const CPL_ANCHORS: readonly (readonly [leads: number, cpl: number])[] = [
+  [15, 21],
+  [50, 27],
+  [90, 34],
+  [125, 40],
+] as const;
+
+function cplForLeads(leads: number): number {
+  for (let i = 0; i < CPL_ANCHORS.length - 1; i++) {
+    const [l0, c0] = CPL_ANCHORS[i];
+    const [l1, c1] = CPL_ANCHORS[i + 1];
+    if (leads >= l0 && leads <= l1) {
+      const t = (leads - l0) / (l1 - l0);
+      return c0 + t * (c1 - c0);
+    }
+  }
+  return CPL_ANCHORS[CPL_ANCHORS.length - 1][1];
+}
+
+// Range band widens with volume: bigger campaigns have more variance.
+function bandForLeads(leads: number): number {
+  if (leads <= 50) return 0.16;
+  if (leads >= 90) return 0.2;
+  const t = (leads - 50) / (90 - 50);
+  return 0.16 + t * (0.2 - 0.16);
+}
+
 function priceForLeads(leads: number) {
-  const adSpend = leads * AD_COST_PER_LEAD;
+  const cpl = cplForLeads(leads);
+  const rawSpend = leads * cpl;
+  const adSpend = Math.round(rawSpend / 5) * 5;
+  const band = bandForLeads(leads);
   return {
     adSpend,
-    leadRangeLow: Math.round(leads * 0.85),
-    leadRangeHigh: Math.round(leads * 1.15),
+    leadRangeLow: Math.round(leads * (1 - band)),
+    leadRangeHigh: Math.round(leads * (1 + band)),
     enquiries: Math.round(leads * ENQUIRY_RATE),
   };
 }
@@ -475,6 +508,7 @@ function PricingSlider() {
   const pct = ((leads - LEADS_MIN) / (LEADS_MAX - LEADS_MIN)) * 100;
   const jobValue = Number(jobValueInput.replace(/[^0-9]/g, ""));
   const projectedRevenue = jobValue > 0 ? enquiries * jobValue : 0;
+  const atMax = leads >= LEADS_MAX;
 
   return (
     <div className="relative h-full rounded-[var(--radius-xl)] border-2 border-dashed border-[var(--color-accent)] bg-[var(--color-surface)] p-8 shadow-[var(--shadow-2)] sm:p-10">
@@ -559,22 +593,41 @@ function PricingSlider() {
       </div>
 
       {/* Ad spend */}
-      <div className="mb-6 rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)] p-5">
-        <div className="mb-1 text-[12px] font-bold uppercase tracking-[0.12em] text-[var(--color-ink-muted)]">
-          Monthly ad spend
+      {atMax ? (
+        <div className="mb-6 rounded-[var(--radius-lg)] border border-[var(--color-accent)] bg-[var(--color-accent-soft)] p-5">
+          <div className="mb-1 text-[12px] font-bold uppercase tracking-[0.12em] text-[var(--color-accent-hover)]">
+            Past this point, talk to us
+          </div>
+          <p className="text-[14px] leading-[1.55] text-[var(--color-ink)]">
+            Scaling past ~125 leads a month in one service area usually
+            means running multiple campaigns or expanding your patch.
+            The numbers change enough that a single slider stops being
+            honest &mdash; better to talk it through.
+          </p>
         </div>
-        <div className="flex items-baseline gap-2">
-          <span className="font-[family-name:var(--font-display)] text-[42px] font-extrabold leading-none tracking-tight text-[var(--color-ink)]">
-            £{adSpend.toLocaleString("en-GB")}
-          </span>
-          <span className="text-[15px] font-semibold text-[var(--color-ink-muted)]">
-            /mo
-          </span>
+      ) : (
+        <div className="mb-6 rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)] p-5">
+          <div className="mb-1 text-[12px] font-bold uppercase tracking-[0.12em] text-[var(--color-ink-muted)]">
+            Monthly ad spend
+          </div>
+          <div className="flex items-baseline gap-2">
+            <span className="font-[family-name:var(--font-display)] text-[42px] font-extrabold leading-none tracking-tight text-[var(--color-ink)]">
+              £{adSpend.toLocaleString("en-GB")}
+            </span>
+            <span className="text-[15px] font-semibold text-[var(--color-ink-muted)]">
+              /mo
+            </span>
+          </div>
+          <div className="mt-2 text-[13px] text-[var(--color-ink-muted)]">
+            Goes straight to Google. Plus management fee.
+          </div>
+          <p className="mt-3 border-t border-[var(--color-hairline-soft)] pt-3 text-[11px] leading-[1.5] text-[var(--color-ink-faint)]">
+            Estimates based on typical UK trades Google Ads performance.
+            Actual results depend on your service area and local
+            competition.
+          </p>
         </div>
-        <div className="mt-2 text-[13px] text-[var(--color-ink-muted)]">
-          Goes straight to Google. Plus management fee.
-        </div>
-      </div>
+      )}
 
       {/* Job value → revenue */}
       <div className="mb-6 rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)] p-5">
@@ -642,7 +695,7 @@ function PricingSlider() {
 
       {/* CTA */}
       <Button href="/book" className="w-full text-center">
-        Get my free audit
+        {atMax ? "Let's talk about scaling" : "Get my free audit"}
       </Button>
     </div>
   );
