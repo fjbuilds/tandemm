@@ -23,7 +23,7 @@ const LEADS_MIN = 15;
 const LEADS_MAX = 125;
 const LEADS_STEP = 5;
 const AD_COST_PER_LEAD = 20;
-const ENQUIRY_RATE = 0.7;
+const ENQUIRY_RATE = 0.6;
 
 function priceForLeads(leads: number) {
   const adSpend = leads * AD_COST_PER_LEAD;
@@ -194,15 +194,37 @@ export default function PricingPage() {
 
       {/* ── PRICING ── */}
       <section className="mx-auto max-w-[1160px] px-6 pb-16">
-        <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[380px_1px_1fr]">
+        <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-[380px_auto_1fr]">
           <Reveal>
             <MonthlyPlanCard />
           </Reveal>
-          <div className="mx-auto h-[2px] w-2/3 bg-[#C0C2B9] lg:mx-0 lg:h-auto lg:w-[2px] lg:self-stretch" />
+
+          {/* Bridge: signals the two cards are base + optional add-on */}
+          <div className="relative flex items-center justify-center py-2 lg:py-0">
+            <div className="absolute inset-x-0 top-1/2 mx-auto hidden h-[2px] w-[70%] -translate-y-1/2 bg-[#C0C2B9] lg:block lg:h-full lg:w-[2px] lg:top-0 lg:translate-y-0" />
+            <div className="relative z-10 flex flex-col items-center gap-1 rounded-full border border-[var(--color-hairline)] bg-[var(--color-surface)] px-4 py-2 shadow-[var(--shadow-1)]">
+              <span className="font-[family-name:var(--font-display)] text-[20px] font-extrabold leading-none text-[var(--color-primary)]">
+                +
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
+                Add
+              </span>
+            </div>
+          </div>
+
           <Reveal>
             <PricingSlider />
           </Reveal>
         </div>
+
+        <Reveal>
+          <p className="mx-auto mt-6 max-w-[640px] text-center text-[13px] leading-[1.6] text-[var(--color-ink-muted)]">
+            <span className="font-bold text-[var(--color-ink)]">Base plan on the left</span>{" "}
+            runs the system.{" "}
+            <span className="font-bold text-[var(--color-ink)]">Paid ads on the right</span>{" "}
+            are optional. Bolt them on when you&rsquo;re ready for more work.
+          </p>
+        </Reveal>
       </section>
 
       {/* ── WHAT'S INCLUDED ── */}
@@ -387,7 +409,12 @@ const PLAN_FEATURES = [
 
 function MonthlyPlanCard() {
   return (
-    <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-8 shadow-[var(--shadow-1)]">
+    <div className="relative h-full rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-8 shadow-[var(--shadow-1)]">
+      <div className="absolute -top-3 left-8">
+        <span className="rounded-full bg-[var(--color-primary)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-white">
+          Base plan
+        </span>
+      </div>
       <div className="mb-1 text-[13px] font-bold uppercase tracking-[0.12em] text-[var(--color-ink-muted)]">
         Monthly plan
       </div>
@@ -450,11 +477,24 @@ function PricingSlider() {
   const projectedRevenue = jobValue > 0 ? enquiries * jobValue : 0;
 
   return (
-    <div className="relative rounded-[var(--radius-xl)] border border-[var(--color-primary)] bg-[var(--color-surface)] p-8 shadow-[var(--shadow-2)] sm:p-10">
-      <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+    <div className="relative h-full rounded-[var(--radius-xl)] border-2 border-dashed border-[var(--color-accent)] bg-[var(--color-surface)] p-8 shadow-[var(--shadow-2)] sm:p-10">
+      <div className="absolute -top-3 left-8 flex items-center gap-2">
         <span className="rounded-full bg-[var(--color-accent)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-white">
-          Ads calculator
+          Optional add-on
         </span>
+        <span className="rounded-full border border-[var(--color-hairline)] bg-[var(--color-surface)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-[var(--color-ink-muted)]">
+          Add when ready
+        </span>
+      </div>
+
+      <div className="mb-5 mt-1">
+        <div className="font-[family-name:var(--font-display)] text-[22px] font-extrabold leading-tight tracking-[-0.01em] text-[var(--color-ink)]">
+          Add paid ads when you&rsquo;re ready.
+        </div>
+        <p className="mt-1 text-[13.5px] leading-[1.5] text-[var(--color-ink-muted)]">
+          Drag the slider to see the spend, leads and return. Nothing here
+          is included in the £197 base plan &mdash; this stacks on top.
+        </p>
       </div>
 
       {/* Leads label + count */}
