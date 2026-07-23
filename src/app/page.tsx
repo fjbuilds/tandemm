@@ -9,6 +9,7 @@ import { Button } from "@/components/tandemm/Button";
 import { HeroVisual } from "@/components/tandemm/HeroVisual";
 import { DiamondLoader } from "@/components/tandemm/DiamondLoader";
 import { DashboardPhone } from "@/components/tandemm/Dashboard";
+import { TrustPartners } from "@/components/tandemm/TrustPartners";
 
 const paletteOverride = {
   "--color-canvas": "#EDEEEA",
@@ -41,7 +42,7 @@ const DPC = [
     title: "Prevention",
     art: "wrench" as const,
     oneLiner:
-      "Website rebuild, tracking number, widget, dashboard. Built for you when you sign up, at no extra cost.",
+      "Website rebuild, tracking number, widget, dashboard. All set up for you and included in your monthly plan.",
     items: [
       "Website rebuilt, fast and mobile-first",
       "Tracking phone number and lead widget installed",
@@ -96,11 +97,11 @@ const FEATURE_PREVIEW = [
 const FAQS = [
   {
     q: "How much does it cost?",
-    a: "The audit is free. The website rebuild, tracking setup and dashboard are all included when you sign up for the lead generation stage. From there it's one monthly fee, everything in. You pick how many leads a month you want and the price follows, roughly £40 per lead all in, from around £600 up to £5,000. Exactly half of the fee is ad spend, at cost.",
+    a: "The audit is free. The monthly plan is £197 a month and covers the website rebuild, SEO, dashboard, lead tracking and missed-call capture. If you want to add paid ads, we manage those for a separate fee on top of your ad spend. You pick the lead volume and the ad spend follows.",
   },
   {
     q: "Do I have to sign a contract?",
-    a: "One month's notice on the monthly fee. You commit to a three month minimum on lead generation, which is what the free rebuild is built on. After that, notice period is one month, cancel any time.",
+    a: "No. The monthly plan runs month to month. Cancel whenever it stops working for you.",
   },
   {
     q: "What's the difference between LSA and CPC?",
@@ -108,7 +109,7 @@ const FAQS = [
   },
   {
     q: "Do I own the website you build?",
-    a: "Yes. The website, the domain, the content are all yours. If you leave after the three month term, you take it with you.",
+    a: "Yes. The website, the domain, the content are all yours. If you leave, you take it with you.",
   },
   {
     q: "How fast will I see leads?",
@@ -250,6 +251,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── TRUST PARTNERS ── */}
+      <TrustPartners />
+
       {/* ── DPC, the process, not offerings ── */}
       <section className="px-6 py-20">
         <div className="mx-auto max-w-[1160px]">
@@ -262,8 +266,8 @@ export default function HomePage() {
             </h2>
             <p className="mx-auto mt-3 max-w-[620px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
               What you get: a free audit that&apos;s yours to keep, a
-              rebuilt website and full setup at no cost, then an engine
-              that turns local searches into booked jobs.
+              rebuilt website and full setup included in your plan, then
+              an engine that turns local searches into booked jobs.
             </p>
           </Reveal>
 

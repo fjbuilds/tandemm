@@ -113,11 +113,11 @@ const INCLUDED = [
 const FAQS = [
   {
     q: "What am I actually paying for?",
-    a: "£197 a month gets you the website, the SEO, the dashboard, the lead tracking, the missed-call catcher and the monthly reporting. If you want to add paid ads, we manage those too for a separate management fee on top of your ad spend. The audit and the website rebuild are free.",
+    a: "£197 a month gets you the website, the SEO, the dashboard, the lead tracking, the missed-call catcher and the monthly reporting. If you want to add paid ads, we manage those too for a separate management fee on top of your ad spend. The audit is free before you sign up.",
   },
   {
-    q: "How does the free website rebuild work?",
-    a: "You commit to a three month minimum. In return, we rebuild the site, wire up the tracking number and widget, and set up your dashboard, at no extra cost. That is what protects us from building a site for someone who is not serious about growing.",
+    q: "Is the website rebuild included?",
+    a: "Yes. When you are on the monthly plan we rebuild your site, wire up the tracking number and widget, and set up your dashboard. It is part of the plan, not billed on top.",
   },
   {
     q: "How does the ad spend work?",
@@ -133,7 +133,7 @@ const FAQS = [
   },
   {
     q: "Am I locked into a long contract?",
-    a: "Three month minimum, which is the runway for the SEO to gain traction and for the free rebuild to make sense on both sides. After that, one month's notice, cancel any time.",
+    a: "No. The monthly plan runs month to month. Cancel whenever it stops working for you.",
   },
   {
     q: "Will you work with my competitors too?",
@@ -145,7 +145,7 @@ const FAQS = [
   },
   {
     q: "Do I own the website you build?",
-    a: "Yes. The site is yours. If you leave after the three month term, you take the website, the domain and the content with you. We do not hold your business hostage.",
+    a: "Yes. The site is yours. If you leave, you take the website, the domain and the content with you. We do not hold your business hostage.",
   },
   {
     q: "What happens if I miss a call?",
@@ -176,43 +176,19 @@ export default function PricingPage() {
       <section className="px-6 pb-14 pt-[60px] text-center">
         <div className="mx-auto max-w-[820px]">
           <Reveal>
-            <div className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
-              Cure pricing
-            </div>
-          </Reveal>
-          <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              Free audit. Free rebuild.
+              One monthly fee.
               <br className="hidden sm:inline" />
-              Then one fee, everything in.
+              The whole system, running for you.
             </h1>
           </Reveal>
           <Reveal>
             <p className="mx-auto mt-[22px] max-w-[620px] text-[19px] leading-[1.6] text-[var(--color-ink-muted)]">
               £197 a month covers the website, SEO, dashboard, lead
               tracking and missed-call capture. Add paid ads when you
-              are ready. Three month minimum, one month notice after that.
+              are ready. The audit is free before you commit to anything.
             </p>
           </Reveal>
-        </div>
-      </section>
-
-      {/* ── TRUST BAR ── */}
-      <section className="mx-auto max-w-[1160px] px-6 pb-10">
-        <div className="flex flex-wrap justify-center gap-3">
-          {[
-            "Free audit, no card",
-            "Free website rebuild when you sign up",
-            "Three month minimum, then one month notice",
-            "Full system from £197/mo",
-          ].map((item) => (
-            <div
-              key={item}
-              className="rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-[var(--color-surface)] px-[16px] py-2 text-[13px] font-medium text-[var(--color-ink)]"
-            >
-              {item}
-            </div>
-          ))}
         </div>
       </section>
 
@@ -456,9 +432,6 @@ function MonthlyPlanCard() {
       <Button href="/book" className="w-full text-center">
         Get started
       </Button>
-      <p className="mt-3 text-center text-[12px] text-[var(--color-ink-faint)]">
-        Book a call to get set up. No card needed.
-      </p>
     </div>
   );
 }
@@ -631,10 +604,6 @@ function PricingSlider() {
       <Button href="/book" className="w-full text-center">
         Get my free audit
       </Button>
-      <p className="mt-3 text-center text-[12px] text-[var(--color-ink-faint)]">
-        Free audit first. No card. If your postcode won&rsquo;t pay back,
-        we tell you.
-      </p>
     </div>
   );
 }
