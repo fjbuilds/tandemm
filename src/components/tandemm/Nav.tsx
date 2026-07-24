@@ -6,9 +6,9 @@ import { cn } from "@/lib/utils";
 
 const links = [
   { href: "/", label: "Home", key: "home" },
-  { href: "/features", label: "Features", key: "features" },
-  { href: "/pricing", label: "Pricing", key: "pricing" },
+  { href: "/local-search", label: "Local Search", key: "features" },
   { href: "/system", label: "How it works", key: "system" },
+  { href: "/pricing", label: "Pricing", key: "pricing" },
   { href: "/about", label: "About", key: "about" },
 ] as const;
 
@@ -57,12 +57,23 @@ export function Nav({
         </nav>
 
         <div className="flex shrink-0 items-center gap-2.5">
+          <a
+            href="https://wa.me/447000000000"
+            aria-label="WhatsApp Tandemm"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden h-9 w-9 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/10 hover:text-white sm:inline-flex"
+          >
+            <svg width="18" height="18" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+              <path d="M16 3C9 3 3.4 8.6 3.4 15.6c0 2.5.7 4.9 2 7L3 29l6.6-2.3c2 1.1 4.2 1.6 6.4 1.6 7 0 12.6-5.6 12.6-12.6S23 3 16 3zm5.9 14.8c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.8.2-.2.3-.9 1-1.1 1.2-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.6-1.5-1-.8-1.6-1.9-1.8-2.2-.2-.3 0-.5.1-.7.1-.1.3-.4.5-.6.2-.2.2-.3.3-.5.1-.2.1-.4 0-.5-.1-.2-.7-1.8-1-2.5-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.2.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.9-.8 2.1-1.5.3-.7.3-1.3.2-1.5z" />
+            </svg>
+          </a>
           <Link
             href="/book"
             aria-current={active === "book" ? "page" : undefined}
             className="whitespace-nowrap rounded-[var(--radius-pill)] bg-white px-4 py-[11px] text-sm font-semibold text-[var(--color-primary)] no-underline sm:px-5"
           >
-            Get my audit
+            Check availability
           </Link>
           <button
             type="button"
