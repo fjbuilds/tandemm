@@ -301,13 +301,15 @@ const LEADS = [
   { name: "David R.", src: "Google", job: "Powerflush, SW12", time: "3h", tone: "cool" as const, val: "£420" },
 ];
 
-export function BaseApp({ variant = "inbox" }: { variant?: "inbox" | "day" }) {
+export function BaseApp({ variant = "inbox", withMic = false }: { variant?: "inbox" | "day" | "quotes"; withMic?: boolean }) {
   return (
-    <div className="base-app" role="img" aria-label="Illustrative Tandemm Base app on a phone">
+    <div className={`base-app${withMic ? " base-app--float" : ""}`} role="img" aria-label="Illustrative Tandemm Base app on a phone">
       <div className="base-app-frame">
         <div className="base-app-notch" />
         <div className="base-app-screen">
-          {variant === "inbox" ? <BaseInbox /> : <BaseDay />}
+          {variant === "inbox" && <BaseInbox withMic={withMic} />}
+          {variant === "day" && <BaseDay withMic={withMic} />}
+          {variant === "quotes" && <BaseQuotes withMic={withMic} />}
         </div>
         <div className="base-app-home" />
       </div>
@@ -315,7 +317,7 @@ export function BaseApp({ variant = "inbox" }: { variant?: "inbox" | "day" }) {
   );
 }
 
-function BaseInbox() {
+function BaseInbox({ withMic = false }: { withMic?: boolean }) {
   return (
     <>
       <div className="base-app-status">
@@ -363,17 +365,12 @@ function BaseInbox() {
           </div>
         ))}
       </div>
-      <div className="base-app-tabbar">
-        <span className="is-active">Inbox</span>
-        <span>Diary</span>
-        <span>Quotes</span>
-        <span>Duo</span>
-      </div>
+      <AppTabBar active="Inbox" withMic={withMic} />
     </>
   );
 }
 
-function BaseDay() {
+function BaseDay({ withMic = false }: { withMic?: boolean }) {
   return (
     <>
       <div className="base-app-status">
@@ -421,13 +418,88 @@ function BaseDay() {
           </div>
         </div>
       </div>
-      <div className="base-app-tabbar">
-        <span>Inbox</span>
-        <span className="is-active">Diary</span>
-        <span>Quotes</span>
-        <span>Duo</span>
-      </div>
+      <AppTabBar active="Diary" withMic={withMic} />
     </>
+  );
+}
+
+function BaseQuotes({ withMic = false }: { withMic?: boolean }) {
+  return (
+    <>
+      <div className="base-app-status">
+        <span>9:41</span>
+        <span className="base-app-status-icons">
+          <span className="base-app-signal" />
+          <span className="base-app-wifi" />
+          <span className="base-app-battery" />
+        </span>
+      </div>
+      <div className="base-app-topbar">
+        <div>
+          <div className="base-app-hello">Quotes</div>
+          <div className="base-app-today">3 pending · £12.4k pipeline</div>
+        </div>
+        <div className="base-app-avatar">AH</div>
+      </div>
+      <div className="base-app-section-title">
+        Open quotes
+        <span className="base-app-section-tag">3</span>
+      </div>
+      <div className="base-app-leads">
+        <div className="base-app-lead">
+          <span className="base-app-lead-dot base-app-lead-dot--hot" />
+          <div className="base-app-lead-body">
+            <div className="base-app-lead-name">Sarah W.</div>
+            <div className="base-app-lead-job">Boiler swap · SW11</div>
+            <div className="base-app-lead-meta">Sent 2h ago · Viewed</div>
+          </div>
+          <div className="base-app-lead-val">£2,400</div>
+        </div>
+        <div className="base-app-lead">
+          <span className="base-app-lead-dot base-app-lead-dot--warm" />
+          <div className="base-app-lead-body">
+            <div className="base-app-lead-name">Priya S.</div>
+            <div className="base-app-lead-job">Full bathroom · SW18</div>
+            <div className="base-app-lead-meta">Sent yesterday · Opened</div>
+          </div>
+          <div className="base-app-lead-val">£6,800</div>
+        </div>
+        <div className="base-app-lead">
+          <span className="base-app-lead-dot base-app-lead-dot--cool" />
+          <div className="base-app-lead-body">
+            <div className="base-app-lead-name">Tom B.</div>
+            <div className="base-app-lead-job">Powerflush · SW12</div>
+            <div className="base-app-lead-meta">Sent 3 days ago</div>
+          </div>
+          <div className="base-app-lead-val">£420</div>
+        </div>
+      </div>
+      <div className="base-app-quote-total">
+        <span>Pipeline total</span>
+        <span>£9,620</span>
+      </div>
+      <AppTabBar active="Quotes" withMic={withMic} />
+    </>
+  );
+}
+
+function AppTabBar({ active, withMic }: { active: string; withMic: boolean }) {
+  return (
+    <div className="base-app-tabbar">
+      <span className={active === "Inbox" ? "is-active" : ""}>Inbox</span>
+      <span className={active === "Diary" ? "is-active" : ""}>Diary</span>
+      {withMic && (
+        <span className="base-app-mic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="9" y="2" width="6" height="12" rx="3" />
+            <path d="M5 10a7 7 0 0 0 14 0" />
+            <line x1="12" y1="19" x2="12" y2="22" />
+          </svg>
+        </span>
+      )}
+      <span className={active === "Quotes" ? "is-active" : ""}>Quotes</span>
+      <span className={active === "More" ? "is-active" : ""}>{withMic ? "More" : "Duo"}</span>
+    </div>
   );
 }
 
@@ -573,17 +645,30 @@ export function StepMockSignup() {
 }
 
 export function StepMockCall() {
+  const TEAM_MEMBERS = [
+    { initials: "JM", role: "Your account manager", hue: 200 },
+    { initials: "RS", role: "SEO strategist", hue: 150 },
+    { initials: "KP", role: "Your designer", hue: 340 },
+  ];
   return (
-    <div className="step-mock step-mock-call">
-      <div className="step-mock-call-bubble">Hello, welcome to Tandemm 👋</div>
-      <div className="step-mock-call-avatars">
-        <span className="step-mock-call-av" />
-        <span className="step-mock-call-av step-mock-call-av--mid" />
-        <span className="step-mock-call-av" />
+    <div className="step-mock step-mock-team">
+      <div className="step-mock-team-header">Your Tandemm team</div>
+      <div className="step-mock-team-grid">
+        {TEAM_MEMBERS.map((m) => (
+          <div key={m.initials} className="step-mock-team-member">
+            <span
+              className="step-mock-team-avatar"
+              style={{ background: `linear-gradient(135deg, hsl(${m.hue} 55% 55%), hsl(${m.hue} 50% 42%))` }}
+            >
+              {m.initials}
+            </span>
+            <span className="step-mock-team-role">{m.role}</span>
+          </div>
+        ))}
       </div>
-      <div className="step-mock-call-cta">
-        <span className="step-mock-call-cta-dot" />
-        Live · 24 min
+      <div className="step-mock-team-note">
+        <span className="step-mock-team-note-dot" />
+        Welcome call booked · 24 min
       </div>
     </div>
   );
@@ -591,37 +676,122 @@ export function StepMockCall() {
 
 export function StepMockPhotos() {
   return (
-    <div className="step-mock step-mock-photos">
-      <div className="step-mock-photo step-mock-photo--a" />
-      <div className="step-mock-photo step-mock-photo--b" />
-      <div className="step-mock-photo step-mock-photo--c" />
-      <div className="step-mock-photo-tag">A few photos of your work</div>
+    <div className="step-mock step-mock-photos-real">
+      <div className="step-mock-photos-grid">
+        <div className="step-mock-photo-real step-mock-photo-real--boiler">
+          <span className="step-mock-photo-real-label">Boiler install</span>
+        </div>
+        <div className="step-mock-photo-real step-mock-photo-real--bathroom">
+          <span className="step-mock-photo-real-label">Bathroom refit</span>
+        </div>
+        <div className="step-mock-photo-real step-mock-photo-real--van">
+          <span className="step-mock-photo-real-label">The van</span>
+        </div>
+        <div className="step-mock-photo-real step-mock-photo-real--team">
+          <span className="step-mock-photo-real-label">The team</span>
+        </div>
+      </div>
+      <div className="step-mock-photos-bar">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <circle cx="9" cy="9" r="2" />
+          <path d="M21 15l-5-5-8 8" />
+        </svg>
+        4 photos uploaded
+      </div>
     </div>
   );
 }
 
 export function StepMockPreview() {
   return (
-    <div className="step-mock step-mock-preview">
-      <TradesSite />
-      <div className="step-mock-preview-badge">Preview · your live site in 7 days</div>
+    <div className="step-mock step-mock-site-preview">
+      <div className="step-mock-site-bar">
+        <span className="step-mock-site-dot" />
+        <span className="step-mock-site-dot" />
+        <span className="step-mock-site-dot" />
+        <div className="step-mock-site-url">southwestheating.co.uk</div>
+      </div>
+      <div className="step-mock-site-body">
+        <div className="step-mock-site-nav">
+          <span className="step-mock-site-brand-mark" />
+          <span className="step-mock-site-brand">South West Heating</span>
+          <span className="step-mock-site-phone">020 3856 2211</span>
+        </div>
+        <div className="step-mock-site-hero">
+          <span className="step-mock-site-eyebrow">Battersea · Clapham · Wandsworth</span>
+          <div className="step-mock-site-headline">Boiler back on today,<br/>or the callout is free.</div>
+          <div className="step-mock-site-sub">Gas Safe engineers across South West London. Same-day cover for breakdowns.</div>
+          <div className="step-mock-site-btns">
+            <span className="step-mock-site-btn is-primary">Get a quote</span>
+            <span className="step-mock-site-btn">Call now</span>
+          </div>
+          <div className="step-mock-site-badges">
+            <span>★ 4.9 · 217 reviews</span>
+            <span>Gas Safe</span>
+          </div>
+        </div>
+        <div className="step-mock-site-services">
+          <span>Boiler repair</span>
+          <span>Boiler install</span>
+          <span>Powerflush</span>
+          <span>Bathroom fit</span>
+        </div>
+      </div>
+      <div className="step-mock-preview-badge">Preview ready for review</div>
     </div>
   );
 }
 
 export function StepMockLive() {
   return (
-    <div className="step-mock step-mock-live">
-      <div className="step-mock-live-desktop">
-        <div className="step-mock-live-desktop-screen" />
-        <div className="step-mock-live-desktop-stand" />
+    <div className="step-mock step-mock-three-phones">
+      <div className="step-mock-phone-trio">
+        <div className="step-mock-phone-small">
+          <BaseApp variant="inbox" />
+        </div>
+        <div className="step-mock-phone-small step-mock-phone-small--center">
+          <BaseApp variant="day" />
+        </div>
+        <div className="step-mock-phone-small">
+          <BaseApp variant="quotes" />
+        </div>
       </div>
-      <div className="step-mock-live-mobile">
-        <div className="step-mock-live-mobile-notch" />
-        <div className="step-mock-live-mobile-screen" />
+      <div className="step-mock-three-label">Inbox · Diary · Quotes</div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Boost funnel — leads in → revenue out visualization
+   ───────────────────────────────────────────────────────────── */
+
+const FUNNEL_STAGES = [
+  { label: "Ad spend", value: "£500/mo", width: 100, opacity: 0.2 },
+  { label: "Impressions", value: "8,400", width: 88, opacity: 0.3 },
+  { label: "Clicks", value: "340", width: 72, opacity: 0.45 },
+  { label: "Leads", value: "32", width: 56, opacity: 0.65 },
+  { label: "Booked jobs", value: "9", width: 40, opacity: 0.85 },
+  { label: "Revenue", value: "£4,800", width: 100, opacity: 1 },
+];
+
+export function BoostFunnel() {
+  return (
+    <div className="boost-funnel" role="img" aria-label="Illustrative Boost ad performance funnel">
+      <div className="boost-funnel-track">
+        {FUNNEL_STAGES.map((s, i) => (
+          <div key={s.label} className="boost-funnel-stage">
+            <div
+              className={`boost-funnel-bar${i === FUNNEL_STAGES.length - 1 ? " boost-funnel-bar--result" : ""}`}
+              style={{ width: `${s.width}%`, opacity: s.opacity }}
+            />
+            <div className="boost-funnel-value">{s.value}</div>
+            <div className="boost-funnel-label">{s.label}</div>
+          </div>
+        ))}
       </div>
-      <div className="step-mock-live-app">
-        <BaseApp variant="inbox" />
+      <div className="boost-funnel-note">
+        Illustrative · actual results depend on trade, area and spend
       </div>
     </div>
   );

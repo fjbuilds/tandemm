@@ -1,6 +1,6 @@
 "use client";
 
-import { CSSProperties, FormEvent, useState } from "react";
+import { CSSProperties, FormEvent, Fragment, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Nav } from "@/components/tandemm/Nav";
@@ -12,8 +12,6 @@ import { DiamondLoader } from "@/components/tandemm/DiamondLoader";
 import { TrustPartners } from "@/components/tandemm/TrustPartners";
 import { GuaranteeStrip } from "@/components/tandemm/GuaranteeStrip";
 import { ContactOptions } from "@/components/tandemm/ContactOptions";
-import { AppShowcase } from "@/components/tandemm/AppShowcase";
-import { DuoFeature } from "@/components/tandemm/DuoFeature";
 import {
   GoogleLocalPack,
   TradesSite,
@@ -25,6 +23,7 @@ import {
   StepMockPhotos,
   StepMockPreview,
   StepMockLive,
+  BoostFunnel,
 } from "@/components/tandemm/Mocks";
 
 const paletteOverride = {
@@ -36,8 +35,7 @@ const paletteOverride = {
   "--color-hairline-soft": "#E1E3DC",
 } as CSSProperties;
 
-/* Three spine steps — "From getting found to getting paid" pattern */
-const SPINE_STEPS = [
+const FLOW_STEPS = [
   {
     n: "01",
     title: "Get found",
@@ -48,14 +46,14 @@ const SPINE_STEPS = [
   {
     n: "02",
     title: "Win the visit",
-    body: "Every page is built to turn a visitor into an enquiry, and each one drops straight into the Tandemm Base app with an instant notification. You manage the whole way, from first ping through to a booked-in job, all from one simple app.",
-    bullets: ["Widget on every page", "Instant push to Base", "WhatsApp &amp; tap-to-call"],
+    body: "Every page is built to turn a visitor into an enquiry, and each one drops straight into the app with an instant notification. You manage the whole way, from first ping through to a booked-in job, all from one simple app.",
+    bullets: ["Widget on every page", "Instant push notification", "WhatsApp &amp; tap-to-call"],
     mock: "site" as const,
   },
   {
     n: "03",
     title: "Get booked",
-    body: "Send quotes and invoices in a few taps, straight from the app, and get paid faster. Then the moment an invoice is settled, Tandemm Base automatically asks the customer for a review, so every finished job helps the next one find you.",
+    body: "Send quotes and invoices in a few taps, straight from the app, and get paid faster. Then the moment an invoice is settled, the app automatically asks the customer for a review, so every finished job helps the next one find you.",
     bullets: ["Quote &amp; invoice from the app", "Card payment on the doorstep", "Reviews collected automatically"],
     mock: "base" as const,
   },
@@ -74,12 +72,12 @@ const INCLUDED_GRID = [
   },
   {
     icon: "inbox",
-    title: "Turns visitors into enquiries",
+    title: "Turns visitors into jobs",
     items: [
-      "Enquiry forms with job photos attached",
-      "Instant alert the second a lead lands",
-      "WhatsApp &amp; click-to-call buttons",
-      "Spam protection, only real enquiries",
+      "Enquiry forms &amp; WhatsApp direct",
+      "Instant push the second a lead lands",
+      "Missed call text-back, automatic",
+      "Spam filtered, only real enquiries",
     ],
   },
   {
@@ -93,13 +91,43 @@ const INCLUDED_GRID = [
     ],
   },
   {
-    icon: "trust",
-    title: "Builds trust so they pick you",
+    icon: "tools",
+    title: "Runs the business",
     items: [
-      "Your Google reviews on the site",
-      "Trade badges, Gas Safe, Which?, MCS",
-      "Meet the team, real faces &amp; names",
-      "Social media linked up",
+      "Quote &amp; invoice from the van",
+      "Card payments on the doorstep",
+      "Auto-chase deposits, auto-collect reviews",
+      "Full diary, pipeline &amp; CRM",
+    ],
+  },
+];
+
+const APP_FEATURES = [
+  {
+    title: "Every job in one place",
+    items: [
+      "Leads land straight from your website",
+      "Every job, enquiry to paid, in one line",
+      "Pipeline, jobs, appointments at a glance",
+      "All contacts, tap to call or text",
+    ],
+  },
+  {
+    title: "Quote, invoice &amp; get paid",
+    items: [
+      "Send quotes &amp; invoices in a few taps",
+      "Track every job through to Paid",
+      "Auto-asks for a review once paid",
+      "Card payment on the doorstep",
+    ],
+  },
+  {
+    title: "Plan your day, get there faster",
+    items: [
+      "Today&rsquo;s jobs pinned on a map",
+      "One-tap navigation &amp; live drive times",
+      "Full diary &amp; appointments in one place",
+      "Log arrival, hand over notes in one tap",
     ],
   },
 ];
@@ -137,7 +165,7 @@ const GETTING_STARTED = [
     n: "5",
     when: "Live &amp; ongoing",
     title: "Your business goes live",
-    body: "Everything goes live as one connected system: your website tied into the Tandemm Base app, your quotes and invoices. We set you up with the SEO foundation, then keep working on it every month so Google keeps sending people your way.",
+    body: "Everything goes live as one connected system: your website tied into the app, your quotes and invoices. We set you up with the SEO foundation, then keep working on it every month so Google keeps sending people your way.",
     Mock: StepMockLive,
   },
 ];
@@ -145,7 +173,7 @@ const GETTING_STARTED = [
 const FAQS = [
   {
     q: "What does the plan actually cost?",
-    a: "£197 a month + VAT. That covers your rebuilt site, ongoing SEO with Tandemm Local, the Tandemm Base app, Duo, tracking and the enquiry widget. Tandemm Boost (paid ads) is an optional add-on, priced against your spend.",
+    a: "£197 a month + VAT. That covers your rebuilt site, ongoing SEO with Tandemm Local, the app to run enquiries and jobs, Duo voice assistant, tracking and the enquiry widget. Tandemm Boost (paid ads) is an optional add-on, priced against your spend.",
   },
   {
     q: "Am I tied into a contract?",
@@ -197,7 +225,7 @@ export default function HomePage() {
             <Reveal>
               <p className="v2-hero-sub">
                 A website built for your trade, hands-on SEO every month so
-                you show up on Google, and the Tandemm Base app to run
+                you show up on Google, and the Tandemm app to run
                 enquiries and jobs from your phone. One plan, one team, one bill.
               </p>
             </Reveal>
@@ -245,56 +273,74 @@ export default function HomePage() {
       {/* ── TRUST STRIP ─────────────────────────────────────────── */}
       <TrustPartners />
 
-      {/* ── SPINE: FROM GETTING FOUND TO BOOKED ────────────────── */}
-      <section className="v2-spine">
-        <div className="v2-spine-inner">
+      {/* ── FLOW: FROM GETTING FOUND TO BOOKED (curved line) ───── */}
+      <section className="v2-flow">
+        <div className="v2-flow-inner">
           <Reveal className="v2-eyebrow-head">
             <span className="v2-eyebrow">How it all works together</span>
             <h2 className="v2-h2">
               From strangers on Google<br />to booked jobs on the diary.
             </h2>
             <p className="v2-lede">
-              Your website, your Tandemm Local SEO, and the Tandemm Base app
+              Your website, your Tandemm Local SEO, and the app
               aren&rsquo;t three separate tools. They&rsquo;re one system that
               takes you from a local Google search to money in the bank.
             </p>
           </Reveal>
 
-          <div className="v2-spine-track">
-            <div className="v2-spine-line" aria-hidden="true" />
-            {SPINE_STEPS.map((s, i) => {
+          <div className="v2-flow-steps">
+            {FLOW_STEPS.map((s, i) => {
               const flip = i % 2 === 1;
               return (
-                <Reveal key={s.n} className="v2-spine-row-outer">
-                  <div className={`v2-spine-row ${flip ? "is-flip" : ""}`}>
-                    <div className="v2-spine-copy">
-                      <div className="v2-spine-step">Step {s.n}</div>
-                      <h3 className="v2-spine-title">{s.title}</h3>
-                      <p
-                        className="v2-spine-body"
-                        dangerouslySetInnerHTML={{ __html: s.body }}
-                      />
-                      <ul className="v2-spine-bullets">
-                        {s.bullets.map((b) => (
-                          <li key={b}>
-                            <span className="v2-tick" aria-hidden="true">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M5 12l5 5 9-11" />
-                              </svg>
-                            </span>
-                            <span dangerouslySetInnerHTML={{ __html: b }} />
-                          </li>
-                        ))}
-                      </ul>
+                <Fragment key={s.n}>
+                  {i > 0 && (
+                    <div className={`v2-flow-connector ${flip ? "v2-flow-connector--right" : "v2-flow-connector--left"}`} aria-hidden="true">
+                      <svg viewBox="0 0 120 80" fill="none" preserveAspectRatio="xMidYMid meet">
+                        <path
+                          d={flip
+                            ? "M60,0 C60,25 95,30 95,40 C95,50 60,55 60,80"
+                            : "M60,0 C60,25 25,30 25,40 C25,50 60,55 60,80"}
+                          stroke="var(--color-accent)"
+                          strokeWidth="1.5"
+                          strokeDasharray="6 5"
+                          opacity="0.35"
+                        />
+                      </svg>
+                      <span className="v2-flow-diamond-node" />
                     </div>
-                    <div className="v2-spine-visual">
-                      {s.mock === "google" && <GoogleLocalPack />}
-                      {s.mock === "site" && <TradesSite />}
-                      {s.mock === "base" && <BaseApp variant="inbox" />}
+                  )}
+                  <Reveal className="v2-flow-step-outer">
+                    <div className={`v2-flow-step ${flip ? "is-flip" : ""}`}>
+                      <div className="v2-flow-step-copy">
+                        <div className="v2-flow-step-num">
+                          <span className="v2-flow-diamond">{s.n}</span>
+                        </div>
+                        <h3 className="v2-flow-step-title">{s.title}</h3>
+                        <p
+                          className="v2-flow-step-body"
+                          dangerouslySetInnerHTML={{ __html: s.body }}
+                        />
+                        <ul className="v2-flow-step-bullets">
+                          {s.bullets.map((b) => (
+                            <li key={b}>
+                              <span className="v2-tick" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M5 12l5 5 9-11" />
+                                </svg>
+                              </span>
+                              <span dangerouslySetInnerHTML={{ __html: b }} />
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="v2-flow-step-visual">
+                        {s.mock === "google" && <GoogleLocalPack />}
+                        {s.mock === "site" && <TradesSite />}
+                        {s.mock === "base" && <BaseApp variant="inbox" />}
+                      </div>
                     </div>
-                    <span className="v2-spine-node" aria-hidden="true" />
-                  </div>
-                </Reveal>
+                  </Reveal>
+                </Fragment>
               );
             })}
           </div>
@@ -319,8 +365,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── DARK SUBSCRIPTION CTA ───────────────────────────────── */}
-      <section className="v2-subs">
+      {/* ── DARK CTA WITH GLOW ──────────────────────────────────── */}
+      <section className="v2-subs v2-subs--glow">
         <div className="v2-subs-inner">
           <Reveal>
             <div className="v2-subs-eyebrow">Ready when you are</div>
@@ -332,7 +378,7 @@ export default function HomePage() {
           </Reveal>
           <Reveal>
             <p className="v2-subs-sub">
-              Your website, Tandemm Local and the Tandemm Base app, working
+              Your website, Tandemm Local and the app, working
               as one system to win the work and run the business, while you
               stay on the tools.
             </p>
@@ -361,97 +407,166 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── SITE SHOWCASE ───────────────────────────────────────── */}
-      <section className="v2-showcase">
-        <div className="v2-showcase-inner">
-          <div className="v2-showcase-head">
-            <div>
-              <Reveal><span className="v2-eyebrow">Your website does the selling</span></Reveal>
-              <Reveal>
-                <h2 className="v2-h2 v2-h2--left">
-                  Show up, look great,<br />get booked.
-                </h2>
-              </Reveal>
-              <Reveal>
-                <p className="v2-lede v2-lede--left">
-                  A premium site built for your trade, by us, and run for you
-                  every month. Below are illustrative site styles, your
-                  finished site is written from your work, your area and
-                  your tone of voice.
-                </p>
-              </Reveal>
-            </div>
+      {/* ── EVERYTHING YOUR PLAN GIVES YOU ──────────────────────── */}
+      <section className="v2-included">
+        <div className="v2-included-inner">
+          <Reveal className="v2-eyebrow-head">
+            <span className="v2-eyebrow">What&rsquo;s included</span>
+            <h2 className="v2-h2">Everything your plan gives you.</h2>
+            <p className="v2-lede">
+              A rebuilt website, hands-on SEO every month, the app to run
+              enquiries and jobs, and a real person managing it for you.
+              Here&rsquo;s what that actually means.
+            </p>
+          </Reveal>
+
+          <div className="v2-included-websites">
             <Reveal>
-              <div className="v2-showcase-badge">
-                <div className="v2-showcase-badge-num">90+</div>
-                <div>
-                  <div className="v2-showcase-badge-title">Google PageSpeed</div>
-                  <div className="v2-showcase-badge-sub">on every site</div>
+              <h3 className="v2-h3">Show up, look great, get booked.</h3>
+              <p className="v2-sub">
+                A premium site built for your trade, by us, and run for you
+                every month. Below are illustrative site styles, your
+                finished site is written from your work, your area and
+                your tone of voice.
+              </p>
+            </Reveal>
+            <Reveal>
+              <div className="v2-included-showcase-wrap">
+                <SiteShowcase />
+                <div className="v2-included-badge">
+                  <div className="v2-included-badge-num">90+</div>
+                  <div>
+                    <div className="v2-included-badge-title">Google PageSpeed</div>
+                    <div className="v2-included-badge-sub">on every site</div>
+                  </div>
                 </div>
               </div>
             </Reveal>
           </div>
 
-          <Reveal>
-            <SiteShowcase />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── FEATURE 2x2 GRID ─────────────────────────────────────── */}
-      <section className="v2-feature-grid">
-        <div className="v2-feature-grid-inner">
-          {INCLUDED_GRID.map((f) => (
-            <Reveal key={f.title}>
-              <div className="v2-feature-cell">
-                <div className={`v2-feature-icon v2-feature-icon--${f.icon}`}>
-                  <FeatureIcon name={f.icon} />
+          <div className="v2-included-grid">
+            {INCLUDED_GRID.map((f) => (
+              <Reveal key={f.title}>
+                <div className="v2-included-cell">
+                  <div className={`v2-included-icon v2-included-icon--${f.icon}`}>
+                    <FeatureIcon name={f.icon} />
+                  </div>
+                  <h4 className="v2-included-title">{f.title}</h4>
+                  <ul className="v2-included-list">
+                    {f.items.map((item) => (
+                      <li key={item}>
+                        <span className="v2-tick v2-tick--sm" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M5 12l5 5 9-11" />
+                          </svg>
+                        </span>
+                        <span dangerouslySetInnerHTML={{ __html: item }} />
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <h3 className="v2-feature-title">{f.title}</h3>
-                <ul className="v2-feature-list">
-                  {f.items.map((i) => (
-                    <li key={i}>
-                      <span className="v2-tick v2-tick--sm" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M5 12l5 5 9-11" />
-                        </svg>
-                      </span>
-                      <span dangerouslySetInnerHTML={{ __html: i }} />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-        <div className="v2-feature-feeds">
-          <span>Feeds straight into</span>
-          <span className="v2-feature-feeds-arrow" aria-hidden="true">↓</span>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ── DARK BASE APP SECTION ───────────────────────────────── */}
-      <section className="v2-base-dark">
-        <div className="v2-base-dark-inner">
-          <Reveal>
-            <div className="v2-base-dark-eyebrow">The Tandemm Base app</div>
-          </Reveal>
-          <Reveal>
-            <h2 className="v2-base-dark-title">
-              Win it, do it, get paid.<br />All from your pocket.
-            </h2>
-          </Reveal>
-          <Reveal>
-            <p className="v2-base-dark-sub">
-              Every lead from your website lands straight in your pocket.
-              It&rsquo;s your CRM, your jobs, your quotes and invoices, your
-              reviews, the whole business, run from your phone by voice.
-            </p>
-          </Reveal>
-          <AppShowcase />
-        </div>
-        <div className="v2-base-dark-inner v2-base-dark-inner--duo">
-          <DuoFeature />
+      {/* ── APP CARD (rounded, not full-width) ──────────────────── */}
+      <section className="v2-app-section">
+        <div className="v2-app-section-inner">
+          <div className="v2-app-card">
+            <div className="v2-app-card-top">
+              <div className="v2-app-card-content">
+                <Reveal>
+                  <span className="v2-eyebrow v2-eyebrow--on-dark">Run it all from your pocket</span>
+                </Reveal>
+                <Reveal>
+                  <h2 className="v2-h2 v2-h2--on-dark">
+                    Win it, do it, get paid.<br />All from your pocket.
+                  </h2>
+                </Reveal>
+                <Reveal>
+                  <p className="v2-lede v2-lede--on-dark">
+                    Every lead from your website lands straight in your pocket.
+                    Your CRM, your jobs, your quotes and invoices, your
+                    reviews. The whole business, run from your phone.
+                  </p>
+                </Reveal>
+
+                <div className="v2-app-features">
+                  {APP_FEATURES.map((f) => (
+                    <Reveal key={f.title}>
+                      <div className="v2-app-feature">
+                        <h4
+                          className="v2-app-feature-title"
+                          dangerouslySetInnerHTML={{ __html: f.title }}
+                        />
+                        <ul className="v2-app-feature-list">
+                          {f.items.map((item) => (
+                            <li key={item} dangerouslySetInnerHTML={{ __html: item }} />
+                          ))}
+                        </ul>
+                      </div>
+                    </Reveal>
+                  ))}
+                </div>
+              </div>
+
+              <div className="v2-app-card-visual">
+                <Reveal>
+                  <div className="v2-app-phone-float">
+                    <BaseApp variant="inbox" withMic />
+                  </div>
+                </Reveal>
+              </div>
+            </div>
+
+            {/* Voice / Duo section inside the card */}
+            <div className="v2-app-voice">
+              <div className="v2-app-voice-header">
+                <Reveal>
+                  <span className="v2-app-voice-eyebrow">
+                    <span className="v2-app-voice-dot" />
+                    Talk to Duo · voice-first
+                  </span>
+                </Reveal>
+                <Reveal>
+                  <h3 className="v2-app-voice-title">
+                    Just talk. Duo does the typing.
+                  </h3>
+                </Reveal>
+                <Reveal>
+                  <p className="v2-app-voice-sub">
+                    Hands on the tools, paperwork off your plate. Talk to Duo
+                    the way you&rsquo;d talk to a good office manager.
+                  </p>
+                </Reveal>
+              </div>
+
+              <div className="v2-app-voice-panels">
+                <Reveal>
+                  <div className="v2-app-voice-panel v2-app-voice-panel--user">
+                    <div className="v2-app-voice-label">You say</div>
+                    <p>&ldquo;Log the job at 42 Oak Rise. Boiler swap, quoted at 2,400.&rdquo;</p>
+                  </div>
+                </Reveal>
+                <Reveal>
+                  <div className="v2-app-voice-panel v2-app-voice-panel--duo">
+                    <div className="v2-app-voice-label">Duo handles it</div>
+                    <p>&ldquo;Logged. Homeowner is Sarah, deposit invoice going out now. I&rsquo;ll block Thursday morning.&rdquo;</p>
+                  </div>
+                </Reveal>
+              </div>
+
+              <Reveal>
+                <ul className="v2-app-voice-list">
+                  <li>Log jobs and notes without unlocking your phone</li>
+                  <li>Send quotes and invoices while you drive</li>
+                  <li>Book calls, chase deposits and update the diary by voice</li>
+                </ul>
+              </Reveal>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -498,12 +613,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── BOOST ADD-ON STRIP ──────────────────────────────────── */}
+      {/* ── BOOST ADD-ON WITH GRAPHIC ──────────────────────────── */}
       <section className="v2-addon">
         <div className="v2-addon-inner">
           <Reveal>
             <div className="v2-addon-card">
-              <div>
+              <div className="v2-addon-copy">
                 <span className="v2-addon-tag">Optional add-on</span>
                 <div className="v2-addon-title">
                   Need volume this week? Add Tandemm Boost.
@@ -513,8 +628,11 @@ export default function HomePage() {
                   Turn on for volume, off when the diary&rsquo;s full. Priced
                   against your spend, not a flat retainer.
                 </div>
+                <Button href="/boost" variant="ghost">See how Boost works</Button>
               </div>
-              <Button href="/boost" variant="ghost">See how Boost works</Button>
+              <div className="v2-addon-visual">
+                <BoostFunnel />
+              </div>
             </div>
           </Reveal>
         </div>
@@ -541,8 +659,8 @@ export default function HomePage() {
               £197<span>/mo + VAT</span>
             </div>
             <p className="v2-lede">
-              Your website, hands-on SEO with Tandemm Local, the Tandemm
-              Base app, Duo, tracking and the enquiry widget. Most trades
+              Your website, hands-on SEO with Tandemm Local, the app,
+              Duo, tracking and the enquiry widget. Most trades
               earn it back inside a single extra job.
             </p>
           </Reveal>
@@ -612,10 +730,6 @@ export default function HomePage() {
   );
 }
 
-/* ─────────────────────────────────────────────────────────── */
-/*  Icons for the 2x2 feature grid                             */
-/* ─────────────────────────────────────────────────────────── */
-
 function FeatureIcon({ name }: { name: string }) {
   const common = {
     width: 24,
@@ -647,6 +761,13 @@ function FeatureIcon({ name }: { name: string }) {
         <rect x="3" y="4" width="18" height="16" rx="2" />
         <circle cx="9" cy="10" r="2" />
         <path d="M21 16l-5-5-8 8" />
+      </svg>
+    );
+  if (name === "tools")
+    return (
+      <svg {...common}>
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a3 3 0 0 1-4.2 4.2L7.5 19.5a2.1 2.1 0 0 1-3-3l9.8-9.8a3 3 0 0 1 4.2 4.2" />
+        <path d="M5 3l4 4" />
       </svg>
     );
   return (
