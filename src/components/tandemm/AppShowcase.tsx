@@ -23,19 +23,19 @@ export function AppShowcase() {
         <Reveal>
           <div className="app-showcase-eyebrow">
             <span className="app-showcase-dot" />
-            The Tandemm App · included
+            Tandemm Base · included
           </div>
         </Reveal>
         <Reveal>
-          <h2 className="section-title">
-            A premium field app,<br />bundled with your plan.
+          <h2 className="section-title section-title--on-dark">
+            Your workshop for<br />the office side of the job.
           </h2>
         </Reveal>
         <Reveal>
-          <p className="section-lede">
-            Most agencies stop at a website. Tandemm gives you the software your
-            competitors pay a subscription for, and wires it into the same
-            plan you already have.
+          <p className="section-lede section-lede--on-dark">
+            Tandemm Base is the app your competitors pay a separate subscription
+            for, wired into the same plan you already have. Every enquiry,
+            every quote, every invoice, one place. Yours the moment you sign up.
           </p>
         </Reveal>
 
@@ -49,8 +49,8 @@ export function AppShowcase() {
                   </svg>
                 </span>
                 <div>
-                  <div className="app-showcase-title">{f.title}</div>
-                  <div className="app-showcase-body">{f.body}</div>
+                  <div className="app-showcase-title app-showcase-title--on-dark">{f.title}</div>
+                  <div className="app-showcase-body app-showcase-body--on-dark">{f.body}</div>
                 </div>
               </li>
             </Reveal>

@@ -26,19 +26,19 @@ export function DuoFeature() {
         <Reveal>
           <div className="duo-feature-eyebrow">
             <span className="duo-feature-dot" />
-            Meet Duo
+            Meet Duo · your voice-first pair
           </div>
         </Reveal>
         <Reveal>
-          <h2 className="section-title">
-            The second half of your day,<br />on voice command.
+          <h2 className="section-title section-title--on-dark">
+            Talk to Duo.<br />Get on with the job.
           </h2>
         </Reveal>
         <Reveal>
-          <p className="section-lede">
-            Duo is the voice-first side of the Tandemm app. Hands on the tools,
-            paperwork off your plate. Talk to it like you&rsquo;d talk to a
-            good office manager, then get on with the job.
+          <p className="section-lede section-lede--on-dark">
+            Duo is the voice side of Tandemm Base. Hands on the tools, paperwork
+            off your plate. Talk to it the way you&rsquo;d talk to a good office
+            manager. It logs, quotes, chases, replies. You keep going.
           </p>
         </Reveal>
 

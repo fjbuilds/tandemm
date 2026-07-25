@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils";
 
 const links = [
   { href: "/", label: "Home", key: "home" },
-  { href: "/local-search", label: "Local Search", key: "features" },
-  { href: "/system", label: "How it works", key: "system" },
+  { href: "/local-search", label: "Tandemm Local", key: "features" },
+  { href: "/boost", label: "Tandemm Boost", key: "system" },
   { href: "/pricing", label: "Pricing", key: "pricing" },
   { href: "/about", label: "About", key: "about" },
 ] as const;

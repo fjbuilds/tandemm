@@ -10,7 +10,7 @@ export function GuaranteeStrip({
           <path d="M12 2l8 4v6c0 5-3.5 9.5-8 10-4.5-.5-8-5-8-10V6l8-4z" />
           <path d="M9 12l2 2 4-4" />
         </svg>
-        90 day money back guarantee
+        The 90 Day Tandemm Promise
       </span>
     );
   }
@@ -24,9 +24,10 @@ export function GuaranteeStrip({
           </svg>
         </span>
         <div>
-          <div className="guarantee-strip-title">90 day money back guarantee</div>
+          <div className="guarantee-strip-title">The 90 Day Tandemm Promise</div>
           <div className="guarantee-strip-sub">
-            If Tandemm hasn&rsquo;t earned its place inside 90 days, we refund the plan. No forms, no debate.
+            If Tandemm hasn&rsquo;t earned its place inside 90 days, the plan
+            refunds in full. No forms, no debate, no small print.
           </div>
         </div>
       </div>
