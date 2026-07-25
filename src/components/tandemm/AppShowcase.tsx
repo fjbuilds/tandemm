@@ -65,7 +65,7 @@ export function AppShowcase() {
               <DashboardPhone view="list" />
             </div>
             <div className="app-showcase-phone app-showcase-phone--front">
-              <DashboardPhone view="lead" />
+              <DashboardPhone view="map" />
             </div>
           </div>
         </Reveal>

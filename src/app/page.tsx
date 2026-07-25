@@ -12,10 +12,20 @@ import { DiamondLoader } from "@/components/tandemm/DiamondLoader";
 import { TrustPartners } from "@/components/tandemm/TrustPartners";
 import { GuaranteeStrip } from "@/components/tandemm/GuaranteeStrip";
 import { ContactOptions } from "@/components/tandemm/ContactOptions";
-import { StepTimeline } from "@/components/tandemm/StepTimeline";
 import { AppShowcase } from "@/components/tandemm/AppShowcase";
 import { DuoFeature } from "@/components/tandemm/DuoFeature";
-import { GoogleLocalPack, TradesSite, BaseApp, GrowthReport } from "@/components/tandemm/Mocks";
+import {
+  GoogleLocalPack,
+  TradesSite,
+  SiteShowcase,
+  BaseApp,
+  TeamRow,
+  StepMockSignup,
+  StepMockCall,
+  StepMockPhotos,
+  StepMockPreview,
+  StepMockLive,
+} from "@/components/tandemm/Mocks";
 
 const paletteOverride = {
   "--color-canvas": "#EDEEEA",
@@ -26,55 +36,128 @@ const paletteOverride = {
   "--color-hairline-soft": "#E1E3DC",
 } as CSSProperties;
 
-/* Three big numbered feature blocks — mirrors the BFT
- * "From getting found to getting paid" pattern, but the mockup for each
- * is a real-feeling piece of UI: Google local pack, trades website,
- * Base app.
- */
-const JOURNEY = [
+/* Three spine steps — "From getting found to getting paid" pattern */
+const SPINE_STEPS = [
   {
     n: "01",
-    tag: "Get found",
-    title: "First name they see, first name they call.",
-    body: "Tandemm Local pushes you into the top three of Google&rsquo;s map pack for every postcode you work. Homeowners looking for a tradesman today land on your listing, not the guy round the corner.",
-    mock: "found" as const,
+    title: "Get found",
+    body: "Showing up on Google isn&rsquo;t an overnight switch. It&rsquo;s ongoing work, and that&rsquo;s our job. Every month we tune your Google Business Profile and local pages so more of the right people nearby find you over time.",
+    bullets: ["Lightning-fast website", "Monthly SEO by hand", "Google Business Profile tuning"],
+    mock: "google" as const,
   },
   {
     n: "02",
-    tag: "Get chosen",
-    title: "A site that closes the visit in one go.",
-    body: "Fast on a phone. Clear on a laptop. Every service page written for the exact search they just typed, with the widget and call button never more than a thumb away.",
-    mock: "chosen" as const,
+    title: "Win the visit",
+    body: "Every page is built to turn a visitor into an enquiry, and each one drops straight into the Tandemm Base app with an instant notification. You manage the whole way, from first ping through to a booked-in job, all from one simple app.",
+    bullets: ["Widget on every page", "Instant push to Base", "WhatsApp &amp; tap-to-call"],
+    mock: "site" as const,
   },
   {
     n: "03",
-    tag: "Get booked",
-    title: "Every enquiry lands in Tandemm Base.",
-    body: "Calls, forms, WhatsApp and missed calls. All tagged, all triaged, all quoted from the van. Nothing sits in a voicemail box while you&rsquo;re on the tools.",
-    mock: "booked" as const,
+    title: "Get booked",
+    body: "Send quotes and invoices in a few taps, straight from the app, and get paid faster. Then the moment an invoice is settled, Tandemm Base automatically asks the customer for a review, so every finished job helps the next one find you.",
+    bullets: ["Quote &amp; invoice from the app", "Card payment on the doorstep", "Reviews collected automatically"],
+    mock: "base" as const,
+  },
+];
+
+const INCLUDED_GRID = [
+  {
+    icon: "search",
+    title: "Gets you found on Google",
+    items: [
+      "Ranks when locals search your trade",
+      "A page for every service &amp; area you cover",
+      "Fast pages Google loves",
+      "Monthly SEO working in the background",
+    ],
+  },
+  {
+    icon: "inbox",
+    title: "Turns visitors into enquiries",
+    items: [
+      "Enquiry forms with job photos attached",
+      "Instant alert the second a lead lands",
+      "WhatsApp &amp; click-to-call buttons",
+      "Spam protection, only real enquiries",
+    ],
+  },
+  {
+    icon: "gallery",
+    title: "Shows off your work",
+    items: [
+      "Project pages &amp; photo galleries",
+      "Before &amp; after sliders",
+      "Your own videos on the site",
+      "Every job a page you can share",
+    ],
+  },
+  {
+    icon: "trust",
+    title: "Builds trust so they pick you",
+    items: [
+      "Your Google reviews on the site",
+      "Trade badges, Gas Safe, Which?, MCS",
+      "Meet the team, real faces &amp; names",
+      "Social media linked up",
+    ],
+  },
+];
+
+const GETTING_STARTED = [
+  {
+    n: "1",
+    when: "Day one · 2 minutes",
+    title: "You sign up online",
+    body: "No setup fees, no contract. A few details about the website and you&rsquo;re in. Honestly, it&rsquo;s the hardest part of the whole thing, and it takes about two minutes.",
+    Mock: StepMockSignup,
+  },
+  {
+    n: "2",
+    when: "Within 24 hours",
+    title: "We call to get you set up",
+    body: "Within a day, one of the team gives you a welcome call. We get to know your trade, the jobs you want more of, and the areas you want to win, then tell you exactly what happens next. A real person, not a ticket queue.",
+    Mock: StepMockCall,
+  },
+  {
+    n: "3",
+    when: "A quick 5 minutes",
+    title: "You send us a few bits",
+    body: "After your call, we send over one short form. Add a few photos, your work, your van, your team, and the bits that make you different. That&rsquo;s everything we need to build a site that&rsquo;s properly yours.",
+    Mock: StepMockPhotos,
+  },
+  {
+    n: "4",
+    when: "Within 7 days",
+    title: "Your website preview lands",
+    body: "Within seven days we send you the real thing to review, every word written and every page designed, not a rough wireframe. Want changes? Tell us, and we keep tweaking until you&rsquo;re happy.",
+    Mock: StepMockPreview,
+  },
+  {
+    n: "5",
+    when: "Live &amp; ongoing",
+    title: "Your business goes live",
+    body: "Everything goes live as one connected system: your website tied into the Tandemm Base app, your quotes and invoices. We set you up with the SEO foundation, then keep working on it every month so Google keeps sending people your way.",
+    Mock: StepMockLive,
   },
 ];
 
 const FAQS = [
   {
-    q: "What does Tandemm actually cost?",
-    a: "The Tandemm Diagnosis is free. The monthly plan covers your rebuilt site, Tandemm Local, Tandemm Base and Duo, tracking, and the enquiry widget. Tandemm Boost (paid ads) sits on top as an accelerator when you want it, priced against your spend.",
+    q: "What does the plan actually cost?",
+    a: "£197 a month + VAT. That covers your rebuilt site, ongoing SEO with Tandemm Local, the Tandemm Base app, Duo, tracking and the enquiry widget. Tandemm Boost (paid ads) is an optional add-on, priced against your spend.",
   },
   {
     q: "Am I tied into a contract?",
-    a: "No. Month to month, cancel any time. The 90 Day Tandemm Promise sits over the top: if it hasn’t earned its keep in 90 days, the plan refunds.",
-  },
-  {
-    q: "Where do the leads actually come from?",
-    a: "Tandemm Local is the foundation. Your Google Business Profile, rebuilt site and postcode-level service pages are set up to win the map pack. Tandemm Boost is the accelerator, useful when you want diary volume this week or a fresh area warmed up fast.",
+    a: "No. Month to month, cancel any time. The 90 Day Tandemm Promise sits over the top: if it hasn&rsquo;t earned its keep in 90 days, the plan refunds in full.",
   },
   {
     q: "Do I own the website?",
-    a: "The domain and content are yours. The site itself sits inside the Tandemm system, which is what keeps the SEO, tracking, widget and app talking to each other. Most owners don’t think about the wiring, they just pick up the phone when it rings.",
+    a: "The domain and content are yours. The site itself runs inside the Tandemm system, which is what keeps the SEO, tracking, widget and app talking to each other. Most owners don&rsquo;t think about the wiring, they just pick up the phone when it rings.",
   },
   {
     q: "How fast will the phone start ringing?",
-    a: "Tandemm Boost feeds the diary inside the first month. Tandemm Local compounds week on week, so month three is ahead of month one, and month six is a different business.",
+    a: "SEO compounds week on week, so month three is ahead of month one and month six is a different business. If you want faster, Tandemm Boost (paid ads) can start feeding the diary inside the first month.",
   },
 ];
 
@@ -85,12 +168,8 @@ export default function HomePage() {
 
   const handleAudit = (e: FormEvent) => {
     e.preventDefault();
-    const trimmed = url.trim();
-    router.push(
-      trimmed
-        ? `/book?${new URLSearchParams({ website: trimmed }).toString()}`
-        : "/book",
-    );
+    const t = url.trim();
+    router.push(t ? `/book?${new URLSearchParams({ website: t }).toString()}` : "/book");
   };
 
   return (
@@ -102,102 +181,59 @@ export default function HomePage() {
       <Nav active="home" />
 
       {/* ── HERO ────────────────────────────────────────────────── */}
-      <section
-        className="hero-split relative box-border px-6 pb-10 pt-[52px]"
-        style={{
-          background:
-            "radial-gradient(70% 55% at 60% 0%, rgba(226,229,222,0.9), transparent 74%)",
-        }}
-      >
-        <div className="hero-split-grid">
-          <div className="hero-split-copy">
+      <section className="v2-hero">
+        <div className="v2-hero-inner">
+          <div className="v2-hero-copy">
             <Reveal>
-              <h1 className="hero-title">
-                You&rsquo;re good
-                <br />
-                at the job.
+              <span className="v2-hero-tag">
+                Tandemm plan · from £197/mo + VAT
+              </span>
+            </Reveal>
+            <Reveal>
+              <h1 className="v2-hero-title">
+                Everything you need to win<br />work and run the business.
               </h1>
             </Reveal>
             <Reveal>
-              <p
-                className="hero-subtitle"
-                style={{ position: "relative", display: "inline-block" }}
-              >
-                We make sure the right people know it.
-                <span
-                  style={{
-                    position: "absolute",
-                    bottom: -4,
-                    left: 0,
-                    width: "100%",
-                    height: 3,
-                    borderRadius: 99,
-                    background: "var(--color-accent)",
-                  }}
-                  aria-hidden="true"
-                />
+              <p className="v2-hero-sub">
+                A website built for your trade, hands-on SEO every month so
+                you show up on Google, and the Tandemm Base app to run
+                enquiries and jobs from your phone. One plan, one team, one bill.
               </p>
             </Reveal>
-
             <Reveal>
-              <div
-                className="mt-6 inline-block rounded-[var(--radius-xl)] bg-[var(--color-surface-muted)] px-6 py-4"
-                style={{ maxWidth: 520 }}
-              >
-                <p className="hero-desc" style={{ margin: 0 }}>
-                  Site, SEO and Tandemm Base in one monthly plan.
-                  <br />
-                  Every enquiry accounted for. Nothing missed.
-                </p>
-              </div>
-            </Reveal>
-
-            <Reveal>
-              <form
-                onSubmit={handleAudit}
-                className="mt-7 flex w-full max-w-[500px] flex-col gap-3 sm:flex-row sm:items-center"
-              >
-                <div className="relative flex-1">
-                  <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[13px] font-semibold text-[var(--color-ink-muted)]">
-                    https://
-                  </span>
+              <form onSubmit={handleAudit} className="v2-hero-form">
+                <div className="v2-hero-input">
+                  <span>https://</span>
                   <input
                     type="text"
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     placeholder="yourbusiness.co.uk"
                     aria-label="Your website URL"
-                    className="h-[50px] w-full rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-white pl-[74px] pr-4 text-[15px] font-medium text-[var(--color-ink)] outline-none transition-colors placeholder:text-[var(--color-ink-faint)] focus:border-[var(--color-accent)] focus:shadow-[var(--shadow-focus)]"
                   />
                 </div>
-                <button
-                  type="submit"
-                  className="inline-flex h-[50px] shrink-0 items-center justify-center whitespace-nowrap rounded-[var(--radius-pill)] bg-[var(--color-primary)] px-6 text-[15px] font-semibold text-[var(--color-on-primary)] transition-colors hover:bg-[var(--color-primary-hover)]"
-                >
+                <button type="submit" className="v2-hero-btn">
                   Get my Tandemm Diagnosis
                 </button>
               </form>
             </Reveal>
-
             <Reveal>
-              <div className="hero-trust-row">
+              <div className="v2-hero-guarantee">
                 <GuaranteeStrip variant="inline" />
-                <span className="hero-trust-sep" aria-hidden="true" />
-                <span className="hero-trust-copy">
-                  <b>3.6m</b> UK homeowners search for a tradesman every month
-                </span>
+                <span>Full refund, no debate</span>
               </div>
             </Reveal>
           </div>
 
-          <div className="hero-split-visual">
+          <div className="v2-hero-visual">
             <Reveal>
-              <div className="hero-glass">
+              <div className="hero-glass v2-hero-glass">
                 <div className="hero-glass-highlight" aria-hidden="true" />
                 <HeroVisual />
                 <div className="hero-glass-fade" aria-hidden="true" />
                 <div className="hero-glass-gate">
-                  <Button href="/book">Get my Tandemm Diagnosis</Button>
+                  <Button href="/book">Get my Diagnosis</Button>
                 </div>
                 <div className="hero-glass-glow" aria-hidden="true" />
               </div>
@@ -209,357 +245,366 @@ export default function HomePage() {
       {/* ── TRUST STRIP ─────────────────────────────────────────── */}
       <TrustPartners />
 
-      {/* ── JOURNEY: three big numbered blocks (BFT pattern) ────── */}
-      <section className="journey">
-        <div className="journey-inner">
-          <Reveal className="journey-head">
-            <span className="section-eyebrow">How Tandemm works</span>
-            <h2 className="section-title">From strangers on Google<br />to booked jobs on your diary.</h2>
-            <p className="section-lede">
-              Three moving parts, one monthly plan. Bought separately, three
-              subscriptions and three suppliers. Here, one bill and one team
-              that knows your business.
+      {/* ── SPINE: FROM GETTING FOUND TO BOOKED ────────────────── */}
+      <section className="v2-spine">
+        <div className="v2-spine-inner">
+          <Reveal className="v2-eyebrow-head">
+            <span className="v2-eyebrow">How it all works together</span>
+            <h2 className="v2-h2">
+              From strangers on Google<br />to booked jobs on the diary.
+            </h2>
+            <p className="v2-lede">
+              Your website, your Tandemm Local SEO, and the Tandemm Base app
+              aren&rsquo;t three separate tools. They&rsquo;re one system that
+              takes you from a local Google search to money in the bank.
             </p>
           </Reveal>
 
-          <div className="journey-blocks">
-            {JOURNEY.map((j) => (
-              <Reveal key={j.n}>
-                <article className="journey-block journey-block--tall">
-                  <div className="journey-block-num" aria-hidden="true">{j.n}</div>
-                  <div className="journey-block-body">
-                    <span className="journey-block-tag">{j.tag}</span>
-                    <h3 className="journey-block-title">{j.title}</h3>
-                    <p
-                      className="journey-block-copy"
-                      dangerouslySetInnerHTML={{ __html: j.body }}
-                    />
+          <div className="v2-spine-track">
+            <div className="v2-spine-line" aria-hidden="true" />
+            {SPINE_STEPS.map((s, i) => {
+              const flip = i % 2 === 1;
+              return (
+                <Reveal key={s.n} className="v2-spine-row-outer">
+                  <div className={`v2-spine-row ${flip ? "is-flip" : ""}`}>
+                    <div className="v2-spine-copy">
+                      <div className="v2-spine-step">Step {s.n}</div>
+                      <h3 className="v2-spine-title">{s.title}</h3>
+                      <p
+                        className="v2-spine-body"
+                        dangerouslySetInnerHTML={{ __html: s.body }}
+                      />
+                      <ul className="v2-spine-bullets">
+                        {s.bullets.map((b) => (
+                          <li key={b}>
+                            <span className="v2-tick" aria-hidden="true">
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M5 12l5 5 9-11" />
+                              </svg>
+                            </span>
+                            <span dangerouslySetInnerHTML={{ __html: b }} />
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="v2-spine-visual">
+                      {s.mock === "google" && <GoogleLocalPack />}
+                      {s.mock === "site" && <TradesSite />}
+                      {s.mock === "base" && <BaseApp variant="inbox" />}
+                    </div>
+                    <span className="v2-spine-node" aria-hidden="true" />
                   </div>
-                  <div className="journey-block-mock">
-                    <JourneyMock kind={j.mock} />
-                  </div>
-                </article>
-              </Reveal>
-            ))}
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* ── DARK BREAK: proof / trust cluster ───────────────────── */}
-      <section className="dark-break">
-        <div className="dark-break-inner">
+      {/* ── TEAM ROW ────────────────────────────────────────────── */}
+      <section className="v2-team">
+        <div className="v2-team-inner">
           <Reveal>
-            <div className="dark-break-tag">A real team, on the tools with you</div>
+            <div className="v2-team-eyebrow">Managed by the Tandemm team</div>
           </Reveal>
           <Reveal>
-            <h2 className="dark-break-title">
-              A real person on WhatsApp, email or the phone.<br />Never a ticket queue.
+            <TeamRow />
+          </Reveal>
+          <Reveal>
+            <p className="v2-team-copy">
+              A real person on call, email or WhatsApp, never a ticket queue.
+              Unlimited changes, no extra charge, ever.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── DARK SUBSCRIPTION CTA ───────────────────────────────── */}
+      <section className="v2-subs">
+        <div className="v2-subs-inner">
+          <Reveal>
+            <div className="v2-subs-eyebrow">Ready when you are</div>
+          </Reveal>
+          <Reveal>
+            <h2 className="v2-subs-title">
+              Found, won and booked,<br />all from one Tandemm plan.
             </h2>
           </Reveal>
-          <div className="dark-break-stats">
-            <Reveal>
-              <div>
-                <div className="dark-break-stat">Under 1hr</div>
-                <div className="dark-break-stat-label">first reply on WhatsApp during working hours</div>
-              </div>
-            </Reveal>
-            <Reveal>
-              <div>
-                <div className="dark-break-stat">7 days</div>
-                <div className="dark-break-stat-label">from URL to a live site preview, in your hands</div>
-              </div>
-            </Reveal>
-            <Reveal>
-              <div>
-                <div className="dark-break-stat">90 days</div>
-                <div className="dark-break-stat-label">Tandemm Promise. Full refund, no debate.</div>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* ── TANDEMM LOCAL (Google local pack front and centre) ─── */}
-      <section className="feature-slab">
-        <div className="feature-slab-inner">
-          <div className="feature-slab-copy">
-            <Reveal><span className="section-eyebrow">Tandemm Local</span></Reveal>
-            <Reveal>
-              <h2 className="section-title">
-                Rank #1 in the map pack<br />for the postcodes you work.
-              </h2>
-            </Reveal>
-            <Reveal>
-              <p className="section-lede">
-                The map pack is where homeowners look first. Tandemm Local is
-                the weekly work that puts you in the top three and holds you
-                there. Compounds every month. Never bills per click.
-              </p>
-            </Reveal>
-            <ul className="feature-slab-list">
-              {[
-                "Google Business Profile tuned every week",
-                "Rank tracked postcode by postcode, in plain English",
-                "Service pages that earn their spot on page one",
-                "Leads that keep coming with or without ads on top",
-              ].map((i) => (
-                <Reveal key={i}><li>{i}</li></Reveal>
-              ))}
-            </ul>
-            <Reveal>
-              <div className="feature-slab-cta">
-                <Button href="/local-search">Full Tandemm Local walkthrough</Button>
-              </div>
-            </Reveal>
-          </div>
-
           <Reveal>
-            <div className="feature-slab-visual feature-slab-visual--wide">
-              <GoogleLocalPack />
+            <p className="v2-subs-sub">
+              Your website, Tandemm Local and the Tandemm Base app, working
+              as one system to win the work and run the business, while you
+              stay on the tools.
+            </p>
+          </Reveal>
+          <Reveal>
+            <div className="v2-subs-cta">
+              <Button
+                href="/book"
+                className="bg-white text-[var(--color-primary)] hover:bg-white/90"
+              >
+                Check availability
+              </Button>
+              <Button href="/book" variant="secondary">Talk to us first</Button>
+            </div>
+          </Reveal>
+          <Reveal>
+            <div className="v2-subs-note">
+              £197/mo + VAT · No setup fees · Cancel any time
+            </div>
+          </Reveal>
+          <Reveal>
+            <div className="v2-subs-guarantee">
+              <GuaranteeStrip variant="inline" />
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* ── TANDEMM SITES (real trades site preview) ──────────── */}
-      <section className="feature-slab feature-slab--flip">
-        <div className="feature-slab-inner">
-          <div className="feature-slab-copy">
-            <Reveal><span className="section-eyebrow">Tandemm Sites</span></Reveal>
+      {/* ── SITE SHOWCASE ───────────────────────────────────────── */}
+      <section className="v2-showcase">
+        <div className="v2-showcase-inner">
+          <div className="v2-showcase-head">
+            <div>
+              <Reveal><span className="v2-eyebrow">Your website does the selling</span></Reveal>
+              <Reveal>
+                <h2 className="v2-h2 v2-h2--left">
+                  Show up, look great,<br />get booked.
+                </h2>
+              </Reveal>
+              <Reveal>
+                <p className="v2-lede v2-lede--left">
+                  A premium site built for your trade, by us, and run for you
+                  every month. Below are illustrative site styles, your
+                  finished site is written from your work, your area and
+                  your tone of voice.
+                </p>
+              </Reveal>
+            </div>
             <Reveal>
-              <h2 className="section-title">
-                A website written to close<br />the enquiry, first visit.
-              </h2>
+              <div className="v2-showcase-badge">
+                <div className="v2-showcase-badge-num">90+</div>
+                <div>
+                  <div className="v2-showcase-badge-title">Google PageSpeed</div>
+                  <div className="v2-showcase-badge-sub">on every site</div>
+                </div>
+              </div>
             </Reveal>
-            <Reveal>
-              <p className="section-lede">
-                Fast on a phone. Clear on a laptop. Every service page written
-                for the exact search they just typed, with the widget, call
-                button and WhatsApp never more than a thumb away.
-              </p>
-            </Reveal>
-            <ul className="feature-slab-list">
-              {[
-                "90+ Google PageSpeed on every service page",
-                "Widget, tap-to-call and WhatsApp on every screen",
-                "Written in your voice, not agency filler",
-                "Live inside 7 days from the day you sign",
-              ].map((i) => (
-                <Reveal key={i}><li>{i}</li></Reveal>
-              ))}
-            </ul>
           </div>
 
           <Reveal>
-            <div className="feature-slab-visual feature-slab-visual--wide">
-              <TradesSite />
-            </div>
+            <SiteShowcase />
           </Reveal>
         </div>
       </section>
 
-      {/* ── DARK PANEL: TANDEMM BASE + DUO ─────────────────────── */}
-      <section className="product-slab">
-        <div className="product-slab-inner">
-          <div className="product-slab-tag-row">
-            <Reveal>
-              <span className="product-slab-tag">Tandemm Base · included in every plan</span>
+      {/* ── FEATURE 2x2 GRID ─────────────────────────────────────── */}
+      <section className="v2-feature-grid">
+        <div className="v2-feature-grid-inner">
+          {INCLUDED_GRID.map((f) => (
+            <Reveal key={f.title}>
+              <div className="v2-feature-cell">
+                <div className={`v2-feature-icon v2-feature-icon--${f.icon}`}>
+                  <FeatureIcon name={f.icon} />
+                </div>
+                <h3 className="v2-feature-title">{f.title}</h3>
+                <ul className="v2-feature-list">
+                  {f.items.map((i) => (
+                    <li key={i}>
+                      <span className="v2-tick v2-tick--sm" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M5 12l5 5 9-11" />
+                        </svg>
+                      </span>
+                      <span dangerouslySetInnerHTML={{ __html: i }} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </Reveal>
-          </div>
+          ))}
+        </div>
+        <div className="v2-feature-feeds">
+          <span>Feeds straight into</span>
+          <span className="v2-feature-feeds-arrow" aria-hidden="true">↓</span>
+        </div>
+      </section>
+
+      {/* ── DARK BASE APP SECTION ───────────────────────────────── */}
+      <section className="v2-base-dark">
+        <div className="v2-base-dark-inner">
+          <Reveal>
+            <div className="v2-base-dark-eyebrow">The Tandemm Base app</div>
+          </Reveal>
+          <Reveal>
+            <h2 className="v2-base-dark-title">
+              Win it, do it, get paid.<br />All from your pocket.
+            </h2>
+          </Reveal>
+          <Reveal>
+            <p className="v2-base-dark-sub">
+              Every lead from your website lands straight in your pocket.
+              It&rsquo;s your CRM, your jobs, your quotes and invoices, your
+              reviews, the whole business, run from your phone by voice.
+            </p>
+          </Reveal>
           <AppShowcase />
         </div>
-        <div className="product-slab-inner product-slab-inner--duo">
+        <div className="v2-base-dark-inner v2-base-dark-inner--duo">
           <DuoFeature />
         </div>
       </section>
 
-      {/* ── GROWTH PROOF (single big report, replaces standalone Boost slab) ── */}
-      <section className="feature-slab feature-slab--tinted">
-        <div className="feature-slab-inner feature-slab-inner--stack">
-          <Reveal className="section-head">
-            <span className="section-eyebrow">The monthly report</span>
-            <h2 className="section-title">
-              What twelve months in Tandemm<br />actually looks like.
-            </h2>
-            <p className="section-lede">
-              Every plan gets a plain-English report each month. Ranking
-              postcodes, booked jobs, cost per job. What moved and what did
-              it. No dashboards to log into and figure out.
+      {/* ── GETTING STARTED (5-step) ────────────────────────────── */}
+      <section className="v2-steps">
+        <div className="v2-steps-inner">
+          <Reveal className="v2-eyebrow-head">
+            <span className="v2-eyebrow">How it works</span>
+            <h2 className="v2-h2">Getting started is easy.</h2>
+            <p className="v2-lede">
+              No long forms, no chasing, and a real person with you from day
+              one. Here&rsquo;s exactly how it goes.
             </p>
           </Reveal>
-          <Reveal>
-            <div className="feature-slab-visual feature-slab-visual--full">
-              <GrowthReport />
-            </div>
-          </Reveal>
+
+          <div className="v2-steps-list">
+            {GETTING_STARTED.map((s, i) => {
+              const flip = i % 2 === 1;
+              return (
+                <Reveal key={s.n} className="v2-step-outer">
+                  <div className={`v2-step ${flip ? "is-flip" : ""}`}>
+                    <div className="v2-step-visual">
+                      <s.Mock />
+                    </div>
+                    <div className="v2-step-copy">
+                      <div className="v2-step-badge">
+                        <span className="v2-step-badge-num">{s.n}</span>
+                        <span
+                          className="v2-step-badge-when"
+                          dangerouslySetInnerHTML={{ __html: s.when }}
+                        />
+                      </div>
+                      <h3 className="v2-step-title">{s.title}</h3>
+                      <p
+                        className="v2-step-body"
+                        dangerouslySetInnerHTML={{ __html: s.body }}
+                      />
+                    </div>
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      {/* ── TANDEMM BOOST (small add-on line, not a full section) ── */}
-      <section className="addon-strip">
-        <div className="addon-strip-inner">
+      {/* ── BOOST ADD-ON STRIP ──────────────────────────────────── */}
+      <section className="v2-addon">
+        <div className="v2-addon-inner">
           <Reveal>
-            <div className="addon-strip-card">
+            <div className="v2-addon-card">
               <div>
-                <span className="addon-strip-tag">Optional add-on</span>
-                <div className="addon-strip-title">
-                  Need the phone ringing this week? Add Tandemm Boost.
+                <span className="v2-addon-tag">Optional add-on</span>
+                <div className="v2-addon-title">
+                  Need volume this week? Add Tandemm Boost.
                 </div>
-                <div className="addon-strip-sub">
-                  Paid ads sit on top of Tandemm Local as an accelerator. Turn
-                  on for volume, off when the diary&rsquo;s full. Priced against
-                  your spend, not a flat retainer.
+                <div className="v2-addon-sub">
+                  Paid ads sit on top of Tandemm Local as an accelerator.
+                  Turn on for volume, off when the diary&rsquo;s full. Priced
+                  against your spend, not a flat retainer.
                 </div>
               </div>
-              <div className="addon-strip-cta">
-                <Button href="/boost" variant="ghost">See how Boost works</Button>
-              </div>
+              <Button href="/boost" variant="ghost">See how Boost works</Button>
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* ── GETTING STARTED ─────────────────────────────────────── */}
-      <section className="getting-started">
-        <div className="getting-started-inner">
-          <Reveal className="section-head">
-            <span className="section-eyebrow">Getting started is easy</span>
-            <h2 className="section-title">
-              From URL to live,<br />in a week.
-            </h2>
-            <p className="section-lede">
-              Five short steps. Every one has a name, a timeframe, and a real
-              deliverable at the end. You&rsquo;ll always know what&rsquo;s
-              next.
-            </p>
-          </Reveal>
-          <StepTimeline />
-        </div>
-      </section>
-
-      {/* ── CONTACT OPTIONS ─────────────────────────────────────── */}
-      <section className="contact-section">
-        <div className="contact-section-inner">
-          <Reveal className="section-head">
-            <span className="section-eyebrow">Talk to a human</span>
-            <h2 className="section-title">Three ways in.</h2>
-            <p className="section-lede">
-              A real person picks up. No ticket queue, no chatbot loop, no
-              hard sell.
-            </p>
+      {/* ── CONTACT ─────────────────────────────────────────────── */}
+      <section className="v2-contact">
+        <div className="v2-contact-inner">
+          <Reveal className="v2-eyebrow-head">
+            <span className="v2-eyebrow">Talk to a human</span>
+            <h2 className="v2-h2">Three ways in.</h2>
           </Reveal>
           <ContactOptions />
         </div>
       </section>
 
       {/* ── PRICING ─────────────────────────────────────────────── */}
-      <section className="px-6 py-24">
-        <div className="mx-auto max-w-[760px]">
-          <Reveal className="mb-8 text-center">
-            <span className="section-eyebrow">One plan · one price</span>
-            <h2 className="section-title">Everything above,<br />in one monthly figure.</h2>
+      <section className="v2-price">
+        <div className="v2-price-inner">
+          <Reveal className="v2-price-head">
+            <span className="v2-eyebrow">Simple pricing</span>
+            <h2 className="v2-h2">One price. That&rsquo;s the lot.</h2>
+            <div className="v2-price-num">
+              £197<span>/mo + VAT</span>
+            </div>
+            <p className="v2-lede">
+              Your website, hands-on SEO with Tandemm Local, the Tandemm
+              Base app, Duo, tracking and the enquiry widget. Most trades
+              earn it back inside a single extra job.
+            </p>
           </Reveal>
           <Reveal>
-            <div className="price-card">
-              <div className="price-card-head">
-                <div>
-                  <div className="price-card-tag">The Tandemm plan</div>
-                  <div className="price-card-num">
-                    £197<span>/mo</span>
-                  </div>
-                  <div className="price-card-note">+ VAT · month to month</div>
-                </div>
-                <GuaranteeStrip variant="inline" />
-              </div>
-              <ul className="price-card-list">
-                <li>Tandemm Sites, rebuilt and hosted</li>
-                <li>Tandemm Local, weekly SEO work</li>
-                <li>Tandemm Base app with Duo voice</li>
-                <li>Tracking number and enquiry widget</li>
-                <li>Missed-call capture and auto-quote</li>
-                <li>A real person on WhatsApp and email</li>
-              </ul>
-              <div className="price-card-cta">
-                <Button href="/book">Check availability</Button>
-                <Link href="/pricing" className="price-card-link">
-                  Full pricing breakdown
-                </Link>
-              </div>
-              <p className="price-card-fine">
-                Tandemm Boost (paid ads) sits on top as an accelerator, priced
-                against your spend. Tandemm Local runs underneath either way.
-              </p>
+            <div className="v2-price-row">
+              <span>One flat fee</span>
+              <span className="v2-price-dot" />
+              <span>No setup fees</span>
+              <span className="v2-price-dot" />
+              <span>No contract</span>
+              <span className="v2-price-dot" />
+              <span>Cancel any time</span>
+            </div>
+          </Reveal>
+          <Reveal>
+            <div className="v2-price-cta">
+              <Button href="/book">Check availability</Button>
+              <Link href="/pricing" className="v2-price-link">
+                Full pricing breakdown →
+              </Link>
+            </div>
+          </Reveal>
+          <Reveal>
+            <div className="v2-price-guarantee">
+              <GuaranteeStrip variant="inline" />
             </div>
           </Reveal>
         </div>
       </section>
 
       {/* ── FAQ ─────────────────────────────────────────────────── */}
-      <section className="mx-auto max-w-[860px] px-6 pb-20">
-        <Reveal className="mb-10 text-center">
-          <h2 className="section-title">Questions owners ask<br />before they sign.</h2>
-        </Reveal>
-        <div className="flex flex-col gap-3">
-          {FAQS.map((item, i) => {
-            const open = openFaq === i;
-            return (
-              <div
-                key={item.q}
-                className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[var(--color-surface)]"
-              >
-                <button
-                  type="button"
-                  onClick={() => setOpenFaq(open ? null : i)}
-                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left text-[16px] font-semibold text-[var(--color-ink)] transition-colors"
-                >
-                  {item.q}
-                  <span className="text-[22px] text-[var(--color-ink-muted)]">
-                    {open ? "−" : "+"}
-                  </span>
-                </button>
-                <div
-                  className="grid transition-[grid-template-rows] duration-200 ease-out"
-                  style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
-                >
-                  <div className="overflow-hidden">
-                    <p className="px-6 pb-5 text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-                      {item.a}
-                    </p>
+      <section className="v2-faq">
+        <div className="v2-faq-inner">
+          <Reveal>
+            <h2 className="v2-h2 v2-h2--center">Questions.</h2>
+          </Reveal>
+          <div className="v2-faq-list">
+            {FAQS.map((item, i) => {
+              const open = openFaq === i;
+              return (
+                <div key={item.q} className="v2-faq-item">
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq(open ? null : i)}
+                    className="v2-faq-btn"
+                  >
+                    {item.q}
+                    <span>{open ? "−" : "+"}</span>
+                  </button>
+                  <div
+                    className="v2-faq-body-wrap"
+                    style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
+                  >
+                    <div className="v2-faq-body">
+                      <p dangerouslySetInnerHTML={{ __html: item.a }} />
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* ── FINAL CTA ───────────────────────────────────────────── */}
-      <section className="mx-auto max-w-[1160px] px-6 pb-24">
-        <Reveal>
-          <div className="final-cta">
-            <h2 className="section-title final-cta-title">
-              Find out where your site<br />is costing you jobs.
-            </h2>
-            <p className="final-cta-sub">
-              The Tandemm Diagnosis is free, yours to keep, and comes back
-              inside 24 hours. No hard sell, no obligation.
-            </p>
-            <div className="final-cta-buttons">
-              <Button
-                href="/book"
-                className="bg-white text-[var(--color-primary)] hover:bg-white/90"
-              >
-                Get my Tandemm Diagnosis
-              </Button>
-              <Button href="/local-search" variant="secondary">
-                Explore Tandemm Local
-              </Button>
-            </div>
-            <div className="final-cta-guarantee">
-              <GuaranteeStrip variant="inline" />
-            </div>
+              );
+            })}
           </div>
-        </Reveal>
+        </div>
       </section>
 
       <Footer />
@@ -568,176 +613,46 @@ export default function HomePage() {
 }
 
 /* ─────────────────────────────────────────────────────────── */
-/*  Small illustrative UI mocks for the three journey blocks   */
+/*  Icons for the 2x2 feature grid                             */
 /* ─────────────────────────────────────────────────────────── */
 
-function JourneyMock({ kind }: { kind: "found" | "chosen" | "booked" }) {
-  if (kind === "found") return <GoogleLocalPack />;
-  if (kind === "chosen") return <TradesSite />;
-  return <BaseApp variant="inbox" />;
-}
-
-function MockBrowser() {
+function FeatureIcon({ name }: { name: string }) {
+  const common = {
+    width: 24,
+    height: 24,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.8,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+  };
+  if (name === "search")
+    return (
+      <svg {...common}>
+        <circle cx="11" cy="11" r="7" />
+        <path d="M21 21l-4.3-4.3" />
+      </svg>
+    );
+  if (name === "inbox")
+    return (
+      <svg {...common}>
+        <path d="M22 12h-6l-2 3h-4l-2-3H2" />
+        <path d="M5 4h14l3 8v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8l3-8z" />
+      </svg>
+    );
+  if (name === "gallery")
+    return (
+      <svg {...common}>
+        <rect x="3" y="4" width="18" height="16" rx="2" />
+        <circle cx="9" cy="10" r="2" />
+        <path d="M21 16l-5-5-8 8" />
+      </svg>
+    );
   return (
-    <div className="mock-browser">
-      <div className="mock-browser-bar">
-        <span /> <span /> <span />
-        <div className="mock-browser-url">yourbusiness.co.uk</div>
-      </div>
-      <div className="mock-browser-body">
-        <div className="mock-browser-nav">
-          <span className="mock-brand" />
-          <span className="mock-cta" />
-        </div>
-        <div className="mock-hero">
-          <div className="mock-hero-title">
-            <span style={{ width: "85%" }} />
-            <span style={{ width: "60%" }} />
-          </div>
-          <div className="mock-hero-cta">Get a quote</div>
-        </div>
-        <div className="mock-cards">
-          <div className="mock-card" />
-          <div className="mock-card" />
-          <div className="mock-card" />
-        </div>
-        <div className="mock-badge">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true">
-            <path d="M5 12l5 5 9-11" />
-          </svg>
-          PageSpeed 97
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function MockMap({ compact = false }: { compact?: boolean }) {
-  return (
-    <div className={`mock-map ${compact ? "mock-map--compact" : ""}`}>
-      <div className="mock-map-bg" />
-      <div className="mock-map-pin mock-map-pin--1">1</div>
-      <div className="mock-map-pin mock-map-pin--2">2</div>
-      <div className="mock-map-pin mock-map-pin--3">3</div>
-      <div className="mock-map-panel">
-        <div className="mock-map-row is-you">
-          <span className="mock-map-rank">1</span>
-          <div>
-            <div className="mock-map-name">Your business</div>
-            <div className="mock-map-meta">4.9 · 128 reviews · Open now</div>
-          </div>
-          <span className="mock-map-cta">Call</span>
-        </div>
-        <div className="mock-map-row">
-          <span className="mock-map-rank">2</span>
-          <div>
-            <div className="mock-map-name">A competitor</div>
-            <div className="mock-map-meta">4.7 · 84 reviews</div>
-          </div>
-        </div>
-        <div className="mock-map-row">
-          <span className="mock-map-rank">3</span>
-          <div>
-            <div className="mock-map-name">Another local</div>
-            <div className="mock-map-meta">4.6 · 42 reviews</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function MockInbox() {
-  const rows = [
-    { name: "Sarah, SW11", src: "Widget", tone: "hot", note: "Boiler swap · quoted £2,400" },
-    { name: "Mike, SW12", src: "Missed call", tone: "warm", note: "Auto-texted, 5 questions answered" },
-    { name: "David, SW4", src: "WhatsApp", tone: "hot", note: "Bathroom refit · site visit booked" },
-    { name: "Anya, SW8", src: "Google Ads", tone: "cool", note: "Powerflush enquiry" },
-  ];
-  return (
-    <div className="mock-inbox">
-      <div className="mock-inbox-head">
-        <span className="mock-inbox-title">Tandemm Base · today</span>
-        <span className="mock-inbox-count">4 new</span>
-      </div>
-      {rows.map((r, i) => (
-        <div key={i} className="mock-inbox-row">
-          <span className={`mock-inbox-dot mock-inbox-dot--${r.tone}`} />
-          <div className="mock-inbox-body">
-            <div className="mock-inbox-name">
-              {r.name} <span className="mock-inbox-src">via {r.src}</span>
-            </div>
-            <div className="mock-inbox-note">{r.note}</div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function MockGrowth() {
-  const bars = [22, 28, 34, 33, 41, 48, 55, 62, 68, 74, 82, 91];
-  return (
-    <div className="mock-growth">
-      <div className="mock-growth-head">
-        <div>
-          <div className="mock-growth-title">Booked jobs · last 12 months</div>
-          <div className="mock-growth-sub">Tandemm Local + Tandemm Base + Duo</div>
-        </div>
-        <div className="mock-growth-delta">+314%</div>
-      </div>
-      <div className="mock-growth-chart">
-        {bars.map((b, i) => (
-          <span
-            key={i}
-            className="mock-growth-bar"
-            style={{ height: `${b}%` }}
-          />
-        ))}
-      </div>
-      <div className="mock-growth-axis">
-        <span>Jan</span>
-        <span>Apr</span>
-        <span>Jul</span>
-        <span>Oct</span>
-      </div>
-    </div>
-  );
-}
-
-function MockBoost() {
-  return (
-    <div className="mock-boost">
-      <div className="mock-boost-head">
-        <div className="mock-boost-title">Tandemm Boost · this week</div>
-        <span className="mock-boost-status">Live</span>
-      </div>
-      <div className="mock-boost-metrics">
-        <div>
-          <div className="mock-boost-num">28</div>
-          <div className="mock-boost-label">calls this week</div>
-        </div>
-        <div>
-          <div className="mock-boost-num">£38</div>
-          <div className="mock-boost-label">cost per booked job</div>
-        </div>
-        <div>
-          <div className="mock-boost-num">14</div>
-          <div className="mock-boost-label">jobs on the diary</div>
-        </div>
-      </div>
-      <div className="mock-boost-lines">
-        <div className="mock-boost-line">
-          <span>Local Services Ads</span>
-          <span className="mock-boost-line-bar"><span style={{ width: "78%" }} /></span>
-          <span className="mock-boost-line-val">18 leads</span>
-        </div>
-        <div className="mock-boost-line">
-          <span>Google Search</span>
-          <span className="mock-boost-line-bar"><span style={{ width: "52%" }} /></span>
-          <span className="mock-boost-line-val">10 leads</span>
-        </div>
-      </div>
-    </div>
+    <svg {...common}>
+      <path d="M12 2l8 4v6c0 5-3.5 9.5-8 10-4.5-.5-8-5-8-10V6l8-4z" />
+      <path d="M9 12l2 2 4-4" />
+    </svg>
   );
 }
