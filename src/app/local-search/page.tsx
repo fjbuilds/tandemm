@@ -8,6 +8,7 @@ import { Button } from "@/components/tandemm/Button";
 import { DiamondLoader } from "@/components/tandemm/DiamondLoader";
 import { GuaranteeStrip } from "@/components/tandemm/GuaranteeStrip";
 import { ContactOptions } from "@/components/tandemm/ContactOptions";
+import { GoogleLocalPack, GrowthReport } from "@/components/tandemm/Mocks";
 
 const paletteOverride = {
   "--color-canvas": "#EDEEEA",
@@ -116,22 +117,65 @@ export default function LocalSearchPage() {
         </div>
       </section>
 
-      {/* Postcode table */}
+      {/* Big Google local pack — the payoff */}
+      <section className="feature-slab feature-slab--tinted">
+        <div className="feature-slab-inner feature-slab-inner--stack">
+          <Reveal className="section-head">
+            <span className="section-eyebrow">What the payoff looks like</span>
+            <h2 className="section-title">
+              Top of the map pack,<br />in every postcode you work.
+            </h2>
+            <p className="section-lede">
+              This is what homeowners see when they type your trade plus a
+              postcode. Tandemm Local is the weekly work that puts you in the
+              top three and keeps you there.
+            </p>
+          </Reveal>
+          <Reveal>
+            <div className="feature-slab-visual feature-slab-visual--full">
+              <GoogleLocalPack />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Big growth report */}
       <section className="feature-slab">
+        <div className="feature-slab-inner feature-slab-inner--stack">
+          <Reveal className="section-head">
+            <span className="section-eyebrow">The monthly report</span>
+            <h2 className="section-title">
+              Twelve months in Tandemm Local,<br />in one page.
+            </h2>
+            <p className="section-lede">
+              Not a dashboard to log into. Not a spreadsheet to read. A plain
+              English report each month showing exactly what moved, why, and
+              what&rsquo;s next.
+            </p>
+          </Reveal>
+          <Reveal>
+            <div className="feature-slab-visual feature-slab-visual--full">
+              <GrowthReport />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Postcode table — supporting detail */}
+      <section className="feature-slab feature-slab--tinted">
         <div className="feature-slab-inner">
           <div className="feature-slab-copy">
-            <Reveal><span className="section-eyebrow">What Tandemm Local reports</span></Reveal>
+            <Reveal><span className="section-eyebrow">What Tandemm Local tracks</span></Reveal>
             <Reveal>
               <h2 className="section-title">
-                A live report,<br />postcode by postcode.
+                Postcode by postcode,<br />not vanity keywords.
               </h2>
             </Reveal>
             <Reveal>
               <p className="section-lede">
-                Vanity rankings for &ldquo;best plumber&rdquo; don&rsquo;t pay
-                wages. What matters is where you sit for the searches
-                homeowners in your postcodes actually type. That&rsquo;s the
-                only thing we track.
+                Ranking for &ldquo;best plumber&rdquo; doesn&rsquo;t pay wages.
+                What matters is where you sit for the exact searches
+                homeowners in your postcodes actually type.
               </p>
             </Reveal>
             <ul className="feature-slab-list">

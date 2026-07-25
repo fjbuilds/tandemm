@@ -15,6 +15,7 @@ import { ContactOptions } from "@/components/tandemm/ContactOptions";
 import { StepTimeline } from "@/components/tandemm/StepTimeline";
 import { AppShowcase } from "@/components/tandemm/AppShowcase";
 import { DuoFeature } from "@/components/tandemm/DuoFeature";
+import { GoogleLocalPack, TradesSite, BaseApp, GrowthReport } from "@/components/tandemm/Mocks";
 
 const paletteOverride = {
   "--color-canvas": "#EDEEEA",
@@ -25,28 +26,32 @@ const paletteOverride = {
   "--color-hairline-soft": "#E1E3DC",
 } as CSSProperties;
 
-/* Three big numbered feature blocks — the BFT "From getting found to getting paid" pattern. */
+/* Three big numbered feature blocks — mirrors the BFT
+ * "From getting found to getting paid" pattern, but the mockup for each
+ * is a real-feeling piece of UI: Google local pack, trades website,
+ * Base app.
+ */
 const JOURNEY = [
   {
     n: "01",
     tag: "Get found",
     title: "First name they see, first name they call.",
-    body: "Tandemm Local wins your postcodes in the map pack, and your rebuilt site turns the click into a call.",
+    body: "Tandemm Local pushes you into the top three of Google&rsquo;s map pack for every postcode you work. Homeowners looking for a tradesman today land on your listing, not the guy round the corner.",
     mock: "found" as const,
   },
   {
     n: "02",
-    tag: "Win the work",
-    title: "Every enquiry lands in Tandemm Base.",
-    body: "Calls, forms and WhatsApp all land in one dashboard, tagged by source. Quote from the van, book with a tap.",
-    mock: "win" as const,
+    tag: "Get chosen",
+    title: "A site that closes the visit in one go.",
+    body: "Fast on a phone. Clear on a laptop. Every service page written for the exact search they just typed, with the widget and call button never more than a thumb away.",
+    mock: "chosen" as const,
   },
   {
     n: "03",
-    tag: "Keep growing",
-    title: "The system compounds while you work.",
-    body: "SEO gets stronger every week. Missed calls come back as booked jobs. Duo handles the noise while you handle the tools.",
-    mock: "grow" as const,
+    tag: "Get booked",
+    title: "Every enquiry lands in Tandemm Base.",
+    body: "Calls, forms, WhatsApp and missed calls. All tagged, all triaged, all quoted from the van. Nothing sits in a voicemail box while you&rsquo;re on the tools.",
+    mock: "booked" as const,
   },
 ];
 
@@ -220,12 +225,15 @@ export default function HomePage() {
           <div className="journey-blocks">
             {JOURNEY.map((j) => (
               <Reveal key={j.n}>
-                <article className="journey-block">
+                <article className="journey-block journey-block--tall">
                   <div className="journey-block-num" aria-hidden="true">{j.n}</div>
                   <div className="journey-block-body">
                     <span className="journey-block-tag">{j.tag}</span>
                     <h3 className="journey-block-title">{j.title}</h3>
-                    <p className="journey-block-copy">{j.body}</p>
+                    <p
+                      className="journey-block-copy"
+                      dangerouslySetInnerHTML={{ __html: j.body }}
+                    />
                   </div>
                   <div className="journey-block-mock">
                     <JourneyMock kind={j.mock} />
@@ -271,66 +279,29 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── TANDEMM SITES ──────────────────────────────────────── */}
+      {/* ── TANDEMM LOCAL (Google local pack front and centre) ─── */}
       <section className="feature-slab">
-        <div className="feature-slab-inner">
-          <div className="feature-slab-copy">
-            <Reveal><span className="section-eyebrow">Tandemm Sites</span></Reveal>
-            <Reveal>
-              <h2 className="section-title">
-                A site that closes<br />the homeowner in one visit.
-              </h2>
-            </Reveal>
-            <Reveal>
-              <p className="section-lede">
-                Fast on a phone. Clear on a laptop. Every page written to
-                answer the exact question they just typed into Google, then
-                get them into the widget or on the phone.
-              </p>
-            </Reveal>
-            <ul className="feature-slab-list">
-              {[
-                "90+ Google PageSpeed on every service page",
-                "Widget, tap-to-call and WhatsApp on every screen",
-                "Copy in your voice, not agency filler",
-                "Live inside 7 days from the day you sign",
-              ].map((i) => (
-                <Reveal key={i}><li>{i}</li></Reveal>
-              ))}
-            </ul>
-          </div>
-
-          <Reveal>
-            <div className="feature-slab-visual">
-              <MockBrowser />
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── TANDEMM LOCAL ──────────────────────────────────────── */}
-      <section className="feature-slab feature-slab--flip">
         <div className="feature-slab-inner">
           <div className="feature-slab-copy">
             <Reveal><span className="section-eyebrow">Tandemm Local</span></Reveal>
             <Reveal>
               <h2 className="section-title">
-                Ranking is the engine.<br />Ads are the accelerator.
+                Rank #1 in the map pack<br />for the postcodes you work.
               </h2>
             </Reveal>
             <Reveal>
               <p className="section-lede">
-                Homeowners trust the map pack. It&rsquo;s the first thing they
-                see, and they call the top three. Tandemm Local is the weekly
-                work that puts you there and holds you there.
+                The map pack is where homeowners look first. Tandemm Local is
+                the weekly work that puts you in the top three and holds you
+                there. Compounds every month. Never bills per click.
               </p>
             </Reveal>
             <ul className="feature-slab-list">
               {[
                 "Google Business Profile tuned every week",
-                "Rank tracked postcode by postcode, not vanity keywords",
+                "Rank tracked postcode by postcode, in plain English",
                 "Service pages that earn their spot on page one",
-                "Leads that keep coming after you pause ads",
+                "Leads that keep coming with or without ads on top",
               ].map((i) => (
                 <Reveal key={i}><li>{i}</li></Reveal>
               ))}
@@ -343,8 +314,45 @@ export default function HomePage() {
           </div>
 
           <Reveal>
-            <div className="feature-slab-visual">
-              <MockMap />
+            <div className="feature-slab-visual feature-slab-visual--wide">
+              <GoogleLocalPack />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── TANDEMM SITES (real trades site preview) ──────────── */}
+      <section className="feature-slab feature-slab--flip">
+        <div className="feature-slab-inner">
+          <div className="feature-slab-copy">
+            <Reveal><span className="section-eyebrow">Tandemm Sites</span></Reveal>
+            <Reveal>
+              <h2 className="section-title">
+                A website written to close<br />the enquiry, first visit.
+              </h2>
+            </Reveal>
+            <Reveal>
+              <p className="section-lede">
+                Fast on a phone. Clear on a laptop. Every service page written
+                for the exact search they just typed, with the widget, call
+                button and WhatsApp never more than a thumb away.
+              </p>
+            </Reveal>
+            <ul className="feature-slab-list">
+              {[
+                "90+ Google PageSpeed on every service page",
+                "Widget, tap-to-call and WhatsApp on every screen",
+                "Written in your voice, not agency filler",
+                "Live inside 7 days from the day you sign",
+              ].map((i) => (
+                <Reveal key={i}><li>{i}</li></Reveal>
+              ))}
+            </ul>
+          </div>
+
+          <Reveal>
+            <div className="feature-slab-visual feature-slab-visual--wide">
+              <TradesSite />
             </div>
           </Reveal>
         </div>
@@ -365,43 +373,47 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── TANDEMM BOOST (Ads as accelerator, links to /boost) ── */}
-      <section className="feature-slab">
-        <div className="feature-slab-inner">
-          <div className="feature-slab-copy">
-            <Reveal><span className="section-eyebrow">Tandemm Boost</span></Reveal>
-            <Reveal>
-              <h2 className="section-title">
-                When you need the phone<br />ringing this week.
-              </h2>
-            </Reveal>
-            <Reveal>
-              <p className="section-lede">
-                Tandemm Boost is the paid ads accelerator that sits on top of
-                Tandemm Local. Useful when you want diary volume now, a new
-                postcode warmed up fast, or a seasonal push. Not a replacement
-                for the foundation, an amplifier.
-              </p>
-            </Reveal>
-            <ul className="feature-slab-list">
-              {[
-                "Local Services Ads and Google Ads, managed weekly",
-                "Every click tied back to a booked job, not a vanity metric",
-                "Spend follows what actually pays, weekly",
-                "Turn on when you want volume, off when the diary&rsquo;s full",
-              ].map((i) => (
-                <Reveal key={i}><li dangerouslySetInnerHTML={{ __html: i }} /></Reveal>
-              ))}
-            </ul>
-            <Reveal>
-              <div className="feature-slab-cta">
-                <Button href="/boost">Full Tandemm Boost walkthrough</Button>
-              </div>
-            </Reveal>
-          </div>
+      {/* ── GROWTH PROOF (single big report, replaces standalone Boost slab) ── */}
+      <section className="feature-slab feature-slab--tinted">
+        <div className="feature-slab-inner feature-slab-inner--stack">
+          <Reveal className="section-head">
+            <span className="section-eyebrow">The monthly report</span>
+            <h2 className="section-title">
+              What twelve months in Tandemm<br />actually looks like.
+            </h2>
+            <p className="section-lede">
+              Every plan gets a plain-English report each month. Ranking
+              postcodes, booked jobs, cost per job. What moved and what did
+              it. No dashboards to log into and figure out.
+            </p>
+          </Reveal>
           <Reveal>
-            <div className="feature-slab-visual">
-              <MockBoost />
+            <div className="feature-slab-visual feature-slab-visual--full">
+              <GrowthReport />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── TANDEMM BOOST (small add-on line, not a full section) ── */}
+      <section className="addon-strip">
+        <div className="addon-strip-inner">
+          <Reveal>
+            <div className="addon-strip-card">
+              <div>
+                <span className="addon-strip-tag">Optional add-on</span>
+                <div className="addon-strip-title">
+                  Need the phone ringing this week? Add Tandemm Boost.
+                </div>
+                <div className="addon-strip-sub">
+                  Paid ads sit on top of Tandemm Local as an accelerator. Turn
+                  on for volume, off when the diary&rsquo;s full. Priced against
+                  your spend, not a flat retainer.
+                </div>
+              </div>
+              <div className="addon-strip-cta">
+                <Button href="/boost" variant="ghost">See how Boost works</Button>
+              </div>
             </div>
           </Reveal>
         </div>
@@ -559,10 +571,10 @@ export default function HomePage() {
 /*  Small illustrative UI mocks for the three journey blocks   */
 /* ─────────────────────────────────────────────────────────── */
 
-function JourneyMock({ kind }: { kind: "found" | "win" | "grow" }) {
-  if (kind === "found") return <MockMap compact />;
-  if (kind === "win") return <MockInbox />;
-  return <MockGrowth />;
+function JourneyMock({ kind }: { kind: "found" | "chosen" | "booked" }) {
+  if (kind === "found") return <GoogleLocalPack />;
+  if (kind === "chosen") return <TradesSite />;
+  return <BaseApp variant="inbox" />;
 }
 
 function MockBrowser() {
