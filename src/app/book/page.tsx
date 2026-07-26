@@ -1,6 +1,7 @@
 "use client";
 
-import { CSSProperties, useCallback, useEffect, useRef, useState } from "react";
+import { CSSProperties, Suspense, useCallback, useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Nav } from "@/components/tandemm/Nav";
 import { Footer } from "@/components/tandemm/Footer";
 import { cn } from "@/lib/utils";
@@ -39,7 +40,9 @@ export default function BookPage() {
       style={bookPaletteOverride}
     >
       <Nav active="book" />
-      <ScanTool />
+      <Suspense>
+        <ScanTool />
+      </Suspense>
       <Footer />
     </div>
   );
@@ -61,9 +64,15 @@ function ScanTool() {
   const [submitting, setSubmitting] = useState(false);
   const [progressPct, setProgressPct] = useState(0);
   const scanDataRef = useRef<{ findings: Finding[]; failCount: number; scanId: string | null } | null>(null);
+  const autoStarted = useRef(false);
+  const searchParams = useSearchParams();
 
-  const startScan = useCallback(async () => {
+  const startScan = useCallback(() => {
     if (!url.trim()) return;
+    runScan(url.trim());
+  }, [url]);
+
+  const runScan = useCallback(async (scanUrl: string) => {
     setStep("scanning");
     setProgressPct(0);
     setCheckStates(Object.fromEntries(CHECKS.map((c) => [c.id, "waiting" as const])));
@@ -72,7 +81,7 @@ function ScanTool() {
     const fetchPromise = fetch("/api/scan", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ url: url.trim() }),
+      body: JSON.stringify({ url: scanUrl }),
     })
       .then(async (res) => {
         if (!res.ok) throw new Error("Scan failed");
@@ -111,7 +120,16 @@ function ScanTool() {
 
     setStep("results");
     window.scrollTo({ top: 0, behavior: "instant" });
-  }, [url]);
+  }, []);
+
+  useEffect(() => {
+    const paramUrl = searchParams.get("url");
+    if (paramUrl && !autoStarted.current) {
+      autoStarted.current = true;
+      setUrl(paramUrl);
+      runScan(paramUrl.trim());
+    }
+  }, [searchParams, runScan]);
 
   const submitContact = useCallback(async () => {
     if (!contactName.trim() || !contactPhone.trim()) return;

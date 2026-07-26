@@ -7,6 +7,7 @@ import { Nav } from "@/components/tandemm/Nav";
 import { Footer } from "@/components/tandemm/Footer";
 import { Reveal } from "@/components/tandemm/Reveal";
 import { Button } from "@/components/tandemm/Button";
+import { ScanInput } from "@/components/tandemm/ScanInput";
 import { HeroVisual } from "@/components/tandemm/HeroVisual";
 import { DiamondLoader } from "@/components/tandemm/DiamondLoader";
 import { TrustPartners } from "@/components/tandemm/TrustPartners";
@@ -197,7 +198,7 @@ export default function HomePage() {
   const handleAudit = (e: FormEvent) => {
     e.preventDefault();
     const t = url.trim();
-    router.push(t ? `/book?${new URLSearchParams({ website: t }).toString()}` : "/book");
+    router.push(t ? `/book?url=${encodeURIComponent(t)}` : "/book");
   };
 
   return (
@@ -242,7 +243,7 @@ export default function HomePage() {
                   />
                 </div>
                 <button type="submit" className="v2-hero-btn">
-                  Get my Tandemm Diagnosis
+                  Scan my site
                 </button>
               </form>
             </Reveal>
@@ -261,7 +262,7 @@ export default function HomePage() {
                 <HeroVisual />
                 <div className="hero-glass-fade" aria-hidden="true" />
                 <div className="hero-glass-gate">
-                  <Button href="/book">Find out what&apos;s costing you jobs</Button>
+                  <ScanInput />
                 </div>
                 <div className="hero-glass-glow" aria-hidden="true" />
               </div>
@@ -385,13 +386,7 @@ export default function HomePage() {
           </Reveal>
           <Reveal>
             <div className="v2-subs-cta">
-              <Button
-                href="/book"
-                className="bg-white text-[var(--color-primary)] hover:bg-white/90"
-              >
-                Find out what&apos;s costing you jobs
-              </Button>
-              <Button href="/book" variant="secondary">Scan my site</Button>
+              <ScanInput variant="dark" />
             </div>
           </Reveal>
           <Reveal>
@@ -677,7 +672,7 @@ export default function HomePage() {
           </Reveal>
           <Reveal>
             <div className="v2-price-cta">
-              <Button href="/book">Find out what&apos;s costing you jobs</Button>
+              <ScanInput />
               <Link href="/pricing" className="v2-price-link">
                 Full pricing breakdown →
               </Link>

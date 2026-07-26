@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "./Button";
+import { ScanInput } from "./ScanInput";
 
 const pageLinks = [
   { href: "/", label: "Home" },
@@ -28,9 +28,7 @@ export function Footer() {
               One place for every enquiry. Nothing&nbsp;missed.
             </p>
             <div className="mt-5">
-              <Button href="/book" variant="secondary">
-                Find out what&apos;s costing you jobs
-              </Button>
+              <ScanInput variant="dark" />
             </div>
           </div>
 
