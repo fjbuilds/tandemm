@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 const links = [
   { href: "/", label: "Home", key: "home" },
-  { href: "/local-search", label: "Tandemm Local", key: "features" },
+  { href: "/local-search", label: "Tandemm Reach", key: "features" },
   { href: "/pricing", label: "Pricing", key: "pricing" },
   { href: "/about", label: "About", key: "about" },
 ] as const;
@@ -72,7 +72,7 @@ export function Nav({
             aria-current={active === "book" ? "page" : undefined}
             className="whitespace-nowrap rounded-[var(--radius-pill)] bg-white px-4 py-[11px] text-sm font-semibold text-[var(--color-primary)] no-underline sm:px-5"
           >
-            Scan my site
+            Free site scan
           </Link>
           <button
             type="button"
@@ -123,7 +123,7 @@ export function Nav({
               onClick={() => setMenuOpen(false)}
               className="mt-1 rounded-[var(--radius-pill)] bg-white px-4 py-3 text-center text-[15px] font-semibold text-[var(--color-primary)] no-underline"
             >
-              Scan my site
+              Free site scan
             </Link>
           </nav>
         </div>

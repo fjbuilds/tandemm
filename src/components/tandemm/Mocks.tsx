@@ -291,7 +291,7 @@ export function SiteShowcase() {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   4. BaseApp — phone with realistic Tandemm Base UI
+   4. BaseApp — phone with realistic Tandemm Deck UI
    ───────────────────────────────────────────────────────────── */
 
 const LEADS = [
@@ -303,7 +303,7 @@ const LEADS = [
 
 export function BaseApp({ variant = "inbox", withMic = false }: { variant?: "inbox" | "day" | "quotes"; withMic?: boolean }) {
   return (
-    <div className={`base-app${withMic ? " base-app--float" : ""}`} role="img" aria-label="Illustrative Tandemm Base app on a phone">
+    <div className={`base-app${withMic ? " base-app--float" : ""}`} role="img" aria-label="Illustrative Tandemm Deck app on a phone">
       <div className="base-app-frame">
         <div className="base-app-notch" />
         <div className="base-app-screen">
@@ -554,7 +554,7 @@ export function ReportCard() {
       <div className="report-card-chart">
         <div className="report-card-legend">
           <span><span className="report-card-swatch report-card-swatch--now" /> Baseline · before Tandemm</span>
-          <span><span className="report-card-swatch report-card-swatch--proj" /> With Tandemm Local + Base</span>
+          <span><span className="report-card-swatch report-card-swatch--proj" /> With Tandemm Reach + Base</span>
         </div>
         <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" aria-hidden="true">
           <defs>

@@ -54,7 +54,7 @@ export default function LocalSearchPage() {
       <section className="v2-local-hero">
         <div className="v2-local-hero-inner">
           <Reveal>
-            <span className="v2-eyebrow v2-eyebrow--on-dark">Tandemm Local</span>
+            <span className="v2-eyebrow v2-eyebrow--on-dark">Tandemm Reach</span>
           </Reveal>
           <Reveal>
             <h1 className="v2-local-hero-title">
@@ -127,7 +127,7 @@ export default function LocalSearchPage() {
               Everyone else scrolls past.
             </h2>
             <p className="v2-lede">
-              This is what a nearby search actually looks like. Tandemm Local
+              This is what a nearby search actually looks like. Tandemm Reach
               is the monthly work that moves your listing up the pack over
               time, so more of the searches near you land on your phone.
             </p>
@@ -146,7 +146,7 @@ export default function LocalSearchPage() {
           <Reveal className="v2-eyebrow-head">
             <span className="v2-eyebrow">Illustrative results</span>
             <h2 className="v2-h2">
-              What six months in Tandemm Local<br />looks like on the map.
+              What six months in Tandemm Reach<br />looks like on the map.
             </h2>
             <p className="v2-lede">
               Postcode by postcode, service by service. This is a
@@ -187,7 +187,7 @@ export default function LocalSearchPage() {
       <section className="v2-do">
         <div className="v2-do-inner">
           <Reveal className="v2-eyebrow-head">
-            <span className="v2-eyebrow">What Tandemm Local actually does</span>
+            <span className="v2-eyebrow">What Tandemm Reach actually does</span>
             <h2 className="v2-h2">We make you the first name they find.</h2>
             <p className="v2-lede">
               Plain English. No jargon. Here&rsquo;s how we get you showing up

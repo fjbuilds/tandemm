@@ -695,7 +695,7 @@ function PricingSlider() {
 
       {/* CTA */}
       <Button href="/book" className="w-full text-center">
-        {atMax ? "Let's talk about scaling" : "Scan my site"}
+        {atMax ? "Let's talk about scaling" : "See where I'm losing jobs"}
       </Button>
     </div>
   );

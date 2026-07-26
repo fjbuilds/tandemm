@@ -36,7 +36,7 @@ export function DuoFeature() {
         </Reveal>
         <Reveal>
           <p className="section-lede section-lede--on-dark">
-            Duo is the voice side of Tandemm Base. Hands on the tools, paperwork
+            Duo is the voice side of Tandemm Deck. Hands on the tools, paperwork
             off your plate. Talk to it the way you&rsquo;d talk to a good office
             manager. It logs, quotes, chases, replies. You keep going.
           </p>

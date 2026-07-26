@@ -23,7 +23,7 @@ export function AppShowcase() {
         <Reveal>
           <div className="app-showcase-eyebrow">
             <span className="app-showcase-dot" />
-            Tandemm Base · included
+            Tandemm Deck · included
           </div>
         </Reveal>
         <Reveal>
@@ -33,7 +33,7 @@ export function AppShowcase() {
         </Reveal>
         <Reveal>
           <p className="section-lede section-lede--on-dark">
-            Tandemm Base is the app your competitors pay a separate subscription
+            Tandemm Deck is the app your competitors pay a separate subscription
             for, wired into the same plan you already have. Every enquiry,
             every quote, every invoice, one place. Yours the moment you sign up.
           </p>

@@ -174,7 +174,7 @@ const GETTING_STARTED = [
 const FAQS = [
   {
     q: "What does the plan actually cost?",
-    a: "£197 a month + VAT. That covers your rebuilt site, ongoing SEO with Tandemm Local, the app to run enquiries and jobs, Duo voice assistant, tracking and the enquiry widget. Tandemm Boost (paid ads) is an optional add-on, priced against your spend.",
+    a: "£197 a month + VAT. That covers your rebuilt site, ongoing SEO with Tandemm Reach, the app to run enquiries and jobs, Duo voice assistant, tracking and the enquiry widget. Tandemm Fuel (paid ads) is an optional add-on, priced against your spend.",
   },
   {
     q: "Am I tied into a contract?",
@@ -186,7 +186,7 @@ const FAQS = [
   },
   {
     q: "How fast will the phone start ringing?",
-    a: "SEO compounds week on week, so month three is ahead of month one and month six is a different business. If you want faster, Tandemm Boost (paid ads) can start feeding the diary inside the first month.",
+    a: "SEO compounds week on week, so month three is ahead of month one and month six is a different business. If you want faster, Tandemm Fuel (paid ads) can start feeding the diary inside the first month.",
   },
 ];
 
@@ -283,7 +283,7 @@ export default function HomePage() {
               From strangers on Google<br />to booked jobs on the diary.
             </h2>
             <p className="v2-lede">
-              Your website, your Tandemm Local SEO, and the app
+              Your website, your Tandemm Reach SEO, and the app
               aren&rsquo;t three separate tools. They&rsquo;re one system that
               takes you from a local Google search to money in the bank.
             </p>
@@ -379,7 +379,7 @@ export default function HomePage() {
           </Reveal>
           <Reveal>
             <p className="v2-subs-sub">
-              Your website, Tandemm Local and the app, working
+              Your website, Tandemm Reach and the app, working
               as one system to win the work and run the business, while you
               stay on the tools.
             </p>
@@ -616,10 +616,10 @@ export default function HomePage() {
               <div className="v2-addon-copy">
                 <span className="v2-addon-tag">Optional add-on</span>
                 <div className="v2-addon-title">
-                  Need volume this week? Add Tandemm Boost.
+                  Need volume this week? Add Tandemm Fuel.
                 </div>
                 <div className="v2-addon-sub">
-                  Paid ads sit on top of Tandemm Local as an accelerator.
+                  Paid ads sit on top of Tandemm Reach as an accelerator.
                   Turn on for volume, off when the diary&rsquo;s full. Priced
                   against your spend, not a flat retainer.
                 </div>
@@ -654,7 +654,7 @@ export default function HomePage() {
               £197<span>/mo + VAT</span>
             </div>
             <p className="v2-lede">
-              Your website, hands-on SEO with Tandemm Local, the app,
+              Your website, hands-on SEO with Tandemm Reach, the app,
               Duo, tracking and the enquiry widget. Most trades
               earn it back inside a single extra job.
             </p>
@@ -682,6 +682,12 @@ export default function HomePage() {
             <div className="v2-price-guarantee">
               <GuaranteeStrip variant="inline" />
             </div>
+          </Reveal>
+          <Reveal>
+            <p className="v2-brand-tagline">
+              Every enquiry. Every customer. Every day.<br />
+              Working in Tandemm.
+            </p>
           </Reveal>
         </div>
       </section>

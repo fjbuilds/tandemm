@@ -31,8 +31,8 @@ const options = [
   },
   {
     key: "book",
-    label: "Scan my site",
-    sub: "See what is costing you jobs, in seconds",
+    label: "Free site scan",
+    sub: "See where you are losing jobs, in seconds",
     href: "/book",
     external: false,
     icon: (

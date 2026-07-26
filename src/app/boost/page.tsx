@@ -39,12 +39,12 @@ const HOW_IT_WORKS = [
   {
     n: "01",
     title: "Turn the tap on",
-    body: "You set the spend, we build the ads inside Tandemm Boost. LSA and CPC go live in the same week.",
+    body: "You set the spend, we build the ads inside Tandemm Fuel. LSA and CPC go live in the same week.",
   },
   {
     n: "02",
     title: "Every lead is scored",
-    body: "Calls, forms and WhatsApp land in Tandemm Base, tagged Boost. Spam and tyre-kickers filtered. Real jobs prioritised.",
+    body: "Calls, forms and WhatsApp land in Tandemm Deck, tagged Boost. Spam and tyre-kickers filtered. Real jobs prioritised.",
   },
   {
     n: "03",
@@ -71,7 +71,7 @@ export default function BoostPage() {
       <section className="boost-hero">
         <div className="boost-hero-inner">
           <Reveal>
-            <span className="boost-hero-eyebrow">Tandemm Boost · the accelerator</span>
+            <span className="boost-hero-eyebrow">Tandemm Fuel · the accelerator</span>
           </Reveal>
           <Reveal>
             <h1 className="boost-hero-title">
@@ -80,7 +80,7 @@ export default function BoostPage() {
           </Reveal>
           <Reveal>
             <p className="boost-hero-sub">
-              Tandemm Boost is the paid ads layer that sits on top of Tandemm
+              Tandemm Fuel is the paid ads layer that sits on top of Tandemm
               Local. Foundation runs underneath. Ads press the accelerator
               when you need the phone ringing this week.
             </p>
@@ -94,7 +94,7 @@ export default function BoostPage() {
                 Find out what&apos;s costing you jobs
               </Button>
               <Button href="/local-search" variant="secondary">
-                Start with Tandemm Local
+                Start with Tandemm Reach
               </Button>
             </div>
           </Reveal>
@@ -132,7 +132,7 @@ export default function BoostPage() {
       <section className="feature-slab">
         <div className="feature-slab-inner boost-flow-inner">
           <div>
-            <Reveal><span className="section-eyebrow">How Tandemm Boost runs</span></Reveal>
+            <Reveal><span className="section-eyebrow">How Tandemm Fuel runs</span></Reveal>
             <Reveal>
               <h2 className="section-title">
                 A tap you can turn on,<br />and, more importantly, off.
@@ -178,7 +178,7 @@ export default function BoostPage() {
           <div className="boost-compare">
             <Reveal>
               <div className="boost-compare-card">
-                <div className="boost-compare-tag">Tandemm Local · foundation</div>
+                <div className="boost-compare-tag">Tandemm Reach · foundation</div>
                 <div className="boost-compare-title">Owned. Compounds. Always on.</div>
                 <ul>
                   <li>Lead cost falls the longer you run it</li>
@@ -189,7 +189,7 @@ export default function BoostPage() {
             </Reveal>
             <Reveal>
               <div className="boost-compare-card boost-compare-card--accent">
-                <div className="boost-compare-tag">Tandemm Boost · accelerator</div>
+                <div className="boost-compare-tag">Tandemm Fuel · accelerator</div>
                 <div className="boost-compare-title">Rented. Instant. On when you want it.</div>
                 <ul>
                   <li>Turn on, see calls the same day</li>
