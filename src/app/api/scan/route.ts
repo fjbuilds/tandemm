@@ -52,8 +52,8 @@ async function checkPageSpeed(url: string): Promise<{ speed: Finding; mobile: Fi
         passed: speedPassed,
         copy: loadSec
           ? speedPassed
-            ? `Your site loads in ${loadSec} seconds on mobile. That is within the range most visitors will wait.`
-            : `Your site takes ${loadSec} seconds to load on mobile. Over half of visitors leave a page that takes more than 3 seconds to load (Google).`
+            ? `Your site loads in ${loadSec}s on mobile. That is under the 3 second threshold where 53% of visitors abandon the page (Google/SOASTA, 2017).`
+            : `Your site takes ${loadSec}s to load on mobile. 53% of visitors leave a page that takes more than 3 seconds to load, and each extra second reduces conversions by up to 20% (Google/SOASTA, 2017).`
           : "We could not measure your page speed. The site may be blocking automated checks.",
         severity: speedPassed ? 0 : loadMs && loadMs > 5000 ? 5 : 4,
       },
@@ -62,8 +62,8 @@ async function checkPageSpeed(url: string): Promise<{ speed: Finding; mobile: Fi
         label: "Mobile usability",
         passed: mobilePassed,
         copy: mobilePassed
-          ? "Your site appears to be optimised for mobile. Text is readable and buttons are easy to tap."
-          : "Your site is not optimised for mobile. 6 in 10 people will not return to a mobile site that is hard to use, and 4 in 10 go straight to a competitor instead (Google).",
+          ? "Your site appears to be optimised for mobile. Text is readable and buttons are easy to tap. 61% of users say they are unlikely to return to a site that is not mobile friendly (Google, 2018)."
+          : "Your site is not optimised for mobile. 61% of people will not return to a mobile site that is hard to use, and 40% go straight to a competitor instead (Google, 2018). With 78% of local searches on mobile leading to a purchase within 24 hours, that is work going to someone else.",
         severity: mobilePassed ? 0 : 4,
       },
     };
@@ -120,7 +120,7 @@ function checkEnquiryCapture(html: string): Finding {
   const present = Object.entries(methods).filter(([, v]) => v).map(([k]) => k);
   const missing = Object.entries(methods)
     .filter(([k, v]) => !v && ["phone", "form"].includes(k))
-    .map(([k]) => (k === "phone" ? "a visible phone number or click to call link" : "a contact form"));
+    .map(([k]) => (k === "phone" ? "visible phone number" : "contact form"));
 
   const passed = missing.length === 0;
 
@@ -129,8 +129,8 @@ function checkEnquiryCapture(html: string): Finding {
     label: "Enquiry capture",
     passed,
     copy: passed
-      ? `Your site has ${present.length} way${present.length > 1 ? "s" : ""} for customers to reach you. That covers the basics.`
-      : `Your site has no ${missing.join(" or ")}. Customers buy from whoever responds to them first, so every gap in how they can reach you is a job going elsewhere (Lead Response Research).`,
+      ? `Your site has ${present.length} way${present.length > 1 ? "s" : ""} for customers to reach you. 78% of customers hire the first business that responds to their enquiry (Lead Connect, 2023), so having multiple contact methods protects against missed leads.`
+      : `Your site has no ${missing.join(" or ")}. 78% of customers hire the first business that responds (Lead Connect, 2023). Every missing contact method is a job going to a competitor who picks up faster.`,
     severity: passed ? 0 : missing.length >= 2 ? 5 : 3,
   };
 }
@@ -150,8 +150,8 @@ function checkReviews(html: string): Finding {
     label: "Reviews and testimonials",
     passed,
     copy: passed
-      ? "Your site shows reviews or testimonials. That is one of the strongest trust signals for local customers."
-      : "Your site shows no reviews. 97% of people read reviews before choosing a local business, and 47% will not use one without seeing any at all (BrightLocal, 2026).",
+      ? "Your site shows reviews or testimonials. 93% of consumers say online reviews influence their purchase decisions (Podium, 2021). This is one of the strongest trust signals for local trades."
+      : "Your site shows no reviews or testimonials. 93% of consumers say online reviews influence their buying decisions (Podium, 2021), and 47% will not use a business with fewer than four stars (BrightLocal, 2023). Without social proof, potential customers move on.",
     severity: passed ? 0 : 4,
   };
 }
@@ -196,8 +196,8 @@ function checkLocalSeo(html: string, trade?: string, location?: string): Finding
     label: "Local SEO signals",
     passed,
     copy: passed
-      ? "Your title tag and meta description mention your trade and location. That helps you show up in local searches."
-      : `Your site does not mention ${missingParts.join(" or ")} in its title or description. Most local searches on mobile lead to a call or visit within a week, so if you are not visible there, that is going to a competitor who is (Google).`,
+      ? "Your title tag and meta description mention your trade and location. 46% of all Google searches have local intent (GoGulf, 2023), so this gives you a real advantage over competitors who skip it."
+      : `Your site does not mention ${missingParts.join(" or ")} in its title or description. 46% of all Google searches have local intent (GoGulf, 2023), and 76% of people who search for something nearby visit a business within 24 hours (Google, 2022). If your site does not say what you do and where, you are invisible to the customers already looking for you.`,
     severity: passed ? 0 : 3,
   };
 }
