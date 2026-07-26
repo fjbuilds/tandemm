@@ -6123,11 +6123,18 @@ body {
 
 .scan-hero {
   position: relative;
-  min-height: 70vh;
+  min-height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 80px 24px 60px;
+  padding: 100px 24px 60px;
+}
+
+.scan-hero--scanning {
+  min-height: auto;
+  align-items: flex-start;
+  padding-top: 120px;
+  padding-bottom: 80px;
 }
 
 .scan-hero-inner {
@@ -6226,53 +6233,118 @@ body {
 .scan-processing {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  padding: 40px 0;
+  gap: 28px;
+  width: 100%;
 }
 
-.scan-spinner {
-  position: relative;
-  width: 64px;
-  height: 64px;
+.scan-processing-header {
+  text-align: center;
 }
-
-.scan-spinner-ring {
-  position: absolute;
-  inset: 0;
-  border: 3px solid var(--color-hairline);
-  border-top-color: var(--color-accent);
-  border-radius: 50%;
-  animation: scan-spin 1s linear infinite;
-}
-
-.scan-spinner-diamond {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 14px;
-  height: 14px;
-  background: var(--color-accent);
-  transform: translate(-50%, -50%) rotate(45deg);
-  border-radius: 2px;
-  animation: scan-pulse 1.6s ease-in-out infinite;
-}
-
-@keyframes scan-spin { to { transform: rotate(360deg); } }
-@keyframes scan-pulse { 0%,100% { opacity: 1; transform: translate(-50%,-50%) rotate(45deg) scale(1); } 50% { opacity: 0.5; transform: translate(-50%,-50%) rotate(45deg) scale(0.75); } }
 
 .scan-processing-url {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--color-ink);
   word-break: break-all;
+  margin-bottom: 16px;
 }
 
-.scan-processing-msg {
+.scan-progress-bar {
+  width: 100%;
+  max-width: 420px;
+  height: 6px;
+  background: var(--color-hairline);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.scan-progress-fill {
+  height: 100%;
+  background: var(--color-accent);
+  border-radius: 3px;
+  transition: width 0.6s ease-out;
+}
+
+.scan-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-hairline);
+  overflow: hidden;
+}
+
+.scan-check-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--color-hairline-soft);
+  transition: background 0.3s, opacity 0.3s;
+}
+
+.scan-check-row:last-child { border-bottom: none; }
+
+.scan-check-row--waiting {
+  opacity: 0.4;
+}
+
+.scan-check-row--running {
+  opacity: 1;
+  background: rgba(193, 102, 44, 0.04);
+}
+
+.scan-check-row--done {
+  opacity: 1;
+}
+
+.scan-check-indicator {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.scan-check-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-ink-faint);
+}
+
+.scan-check-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid var(--color-hairline);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: scan-spin 0.8s linear infinite;
+}
+
+@keyframes scan-spin { to { transform: rotate(360deg); } }
+
+.scan-check-tick {
+  width: 20px;
+  height: 20px;
+  color: #2e7d32;
+}
+
+.scan-check-label {
   font-size: 15px;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+.scan-check-row--waiting .scan-check-label {
   color: var(--color-ink-muted);
-  min-height: 24px;
-  transition: opacity 0.2s;
+}
+
+.scan-check-row--running .scan-check-label {
+  color: var(--color-ink);
 }
 
 /* ── Results ── */

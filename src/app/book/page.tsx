@@ -1,9 +1,8 @@
 "use client";
 
-import { CSSProperties, useCallback, useRef, useState } from "react";
+import { CSSProperties, useCallback, useEffect, useRef, useState } from "react";
 import { Nav } from "@/components/tandemm/Nav";
 import { Footer } from "@/components/tandemm/Footer";
-import { Reveal } from "@/components/tandemm/Reveal";
 import { cn } from "@/lib/utils";
 
 const bookPaletteOverride = {
@@ -25,12 +24,12 @@ interface Finding {
 
 type Step = "entry" | "scanning" | "results" | "confirmed";
 
-const SCAN_MESSAGES = [
-  "Checking your mobile speed",
-  "Reviewing how customers can reach you",
-  "Looking for reviews and testimonials",
-  "Checking your visibility in local search",
-  "Scoring your results",
+const CHECKS = [
+  { id: "speed", label: "Mobile page speed" },
+  { id: "enquiry", label: "Enquiry capture" },
+  { id: "reviews", label: "Reviews and testimonials" },
+  { id: "seo", label: "Local SEO signals" },
+  { id: "mobile", label: "Mobile usability" },
 ];
 
 export default function BookPage() {
@@ -52,47 +51,66 @@ function ScanTool() {
   const [findings, setFindings] = useState<Finding[]>([]);
   const [failCount, setFailCount] = useState(0);
   const [scanId, setScanId] = useState<string | null>(null);
-  const [scanMsg, setScanMsg] = useState(SCAN_MESSAGES[0]);
+  const [checkStates, setCheckStates] = useState<Record<string, "waiting" | "running" | "done">>(
+    () => Object.fromEntries(CHECKS.map((c) => [c.id, "waiting" as const]))
+  );
   const [contactName, setContactName] = useState("");
   const [contactPhone, setContactPhone] = useState("");
   const [bestTime, setBestTime] = useState("");
   const [panelUnlocked, setPanelUnlocked] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const msgInterval = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [progressPct, setProgressPct] = useState(0);
+  const scanDataRef = useRef<{ findings: Finding[]; failCount: number; scanId: string | null } | null>(null);
 
   const startScan = useCallback(async () => {
     if (!url.trim()) return;
     setStep("scanning");
+    setProgressPct(0);
+    setCheckStates(Object.fromEntries(CHECKS.map((c) => [c.id, "waiting" as const])));
+    scanDataRef.current = null;
 
-    let msgIdx = 0;
-    msgInterval.current = setInterval(() => {
-      msgIdx = (msgIdx + 1) % SCAN_MESSAGES.length;
-      setScanMsg(SCAN_MESSAGES[msgIdx]);
-    }, 1600);
-
-    try {
-      const res = await fetch("/api/scan", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: url.trim() }),
+    const fetchPromise = fetch("/api/scan", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url: url.trim() }),
+    })
+      .then(async (res) => {
+        if (!res.ok) throw new Error("Scan failed");
+        return res.json();
+      })
+      .then((data) => {
+        scanDataRef.current = { findings: data.findings, failCount: data.failCount, scanId: data.scanId };
+      })
+      .catch(() => {
+        scanDataRef.current = { findings: [], failCount: 0, scanId: null };
       });
 
-      if (!res.ok) throw new Error("Scan failed");
+    const staggerDelays = [0, 1800, 3200, 5000, 6800];
+    const checkDurations = [1600, 1200, 1500, 1600, 1400];
 
-      const data = await res.json();
+    for (let i = 0; i < CHECKS.length; i++) {
+      await new Promise((r) => setTimeout(r, i === 0 ? 400 : staggerDelays[i] - staggerDelays[i - 1]));
+      setCheckStates((prev) => ({ ...prev, [CHECKS[i].id]: "running" }));
+      setProgressPct(Math.round(((i * 2 + 1) / (CHECKS.length * 2)) * 100));
+
+      await new Promise((r) => setTimeout(r, checkDurations[i]));
+      setCheckStates((prev) => ({ ...prev, [CHECKS[i].id]: "done" }));
+      setProgressPct(Math.round(((i * 2 + 2) / (CHECKS.length * 2)) * 100));
+    }
+
+    await fetchPromise;
+
+    await new Promise((r) => setTimeout(r, 600));
+
+    const data = scanDataRef.current;
+    if (data) {
       setFindings(data.findings);
       setFailCount(data.failCount);
       setScanId(data.scanId);
-    } catch {
-      setFindings([]);
-      setFailCount(0);
-    } finally {
-      if (msgInterval.current) clearInterval(msgInterval.current);
-      setTimeout(() => {
-        setStep("results");
-        window.scrollTo({ top: 0, behavior: "instant" });
-      }, 400);
     }
+
+    setStep("results");
+    window.scrollTo({ top: 0, behavior: "instant" });
   }, [url]);
 
   const submitContact = useCallback(async () => {
@@ -125,55 +143,74 @@ function ScanTool() {
     <>
       {/* HERO */}
       {(step === "entry" || step === "scanning") && (
-        <section className="scan-hero">
+        <section className={cn("scan-hero", step === "scanning" && "scan-hero--scanning")}>
           <div className="scan-hero-inner">
             {step === "entry" && (
-              <Reveal>
-                <div className="scan-entry">
-                  <h1 className="scan-headline">
-                    Find out what&rsquo;s costing you jobs
-                  </h1>
-                  <p className="scan-subheadline">
-                    Enter your website below and see it in seconds.
-                  </p>
-                  <form
-                    className="scan-url-form"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      startScan();
-                    }}
-                  >
-                    <div className="scan-url-input-wrap">
-                      <svg className="scan-url-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z" />
-                      </svg>
-                      <input
-                        type="text"
-                        value={url}
-                        onChange={(e) => setUrl(e.target.value)}
-                        placeholder="yourwebsite.co.uk"
-                        className="scan-url-input"
-                        autoFocus
-                        required
-                      />
-                    </div>
-                    <button type="submit" className="scan-submit-btn" disabled={!url.trim()}>
-                      Scan my site
-                    </button>
-                  </form>
-                </div>
-              </Reveal>
+              <div className="scan-entry">
+                <h1 className="scan-headline">
+                  Find out what&rsquo;s costing you jobs
+                </h1>
+                <p className="scan-subheadline">
+                  Enter your website below and we will check it against five things that cost trades businesses work every week.
+                </p>
+                <form
+                  className="scan-url-form"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    startScan();
+                  }}
+                >
+                  <div className="scan-url-input-wrap">
+                    <svg className="scan-url-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z" />
+                    </svg>
+                    <input
+                      type="text"
+                      value={url}
+                      onChange={(e) => setUrl(e.target.value)}
+                      placeholder="yourwebsite.co.uk"
+                      className="scan-url-input"
+                      autoFocus
+                      required
+                    />
+                  </div>
+                  <button type="submit" className="scan-submit-btn" disabled={!url.trim()}>
+                    Scan my site
+                  </button>
+                </form>
+              </div>
             )}
 
             {step === "scanning" && (
               <div className="scan-processing">
-                <div className="scan-spinner">
-                  <div className="scan-spinner-ring" />
-                  <div className="scan-spinner-diamond" />
+                <div className="scan-processing-header">
+                  <p className="scan-processing-url">Scanning {url}</p>
+                  <div className="scan-progress-bar">
+                    <div className="scan-progress-fill" style={{ width: `${progressPct}%` }} />
+                  </div>
                 </div>
-                <p className="scan-processing-url">{url}</p>
-                <p className="scan-processing-msg">{scanMsg}</p>
+
+                <div className="scan-checklist">
+                  {CHECKS.map((check) => (
+                    <div key={check.id} className={cn("scan-check-row", `scan-check-row--${checkStates[check.id]}`)}>
+                      <div className="scan-check-indicator">
+                        {checkStates[check.id] === "waiting" && (
+                          <div className="scan-check-dot" />
+                        )}
+                        {checkStates[check.id] === "running" && (
+                          <div className="scan-check-spinner" />
+                        )}
+                        {checkStates[check.id] === "done" && (
+                          <svg className="scan-check-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M5 12l5 5 9-11" />
+                          </svg>
+                        )}
+                      </div>
+                      <span className="scan-check-label">{check.label}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </div>
