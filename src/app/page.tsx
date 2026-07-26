@@ -541,14 +541,38 @@ export default function HomePage() {
               <div className="v2-app-voice-panels">
                 <Reveal>
                   <div className="v2-app-voice-panel v2-app-voice-panel--user">
-                    <div className="v2-app-voice-label">You say</div>
+                    <div className="v2-app-voice-screenhead">
+                      <span className="v2-app-voice-mic" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <rect x="9" y="2" width="6" height="12" rx="3" />
+                          <path d="M5 10a7 7 0 0 0 14 0M12 17v4" />
+                        </svg>
+                      </span>
+                      <span className="v2-app-voice-label">You, on the tools</span>
+                    </div>
+                    <div className="v2-app-voice-wave" aria-hidden="true">
+                      {[8, 16, 24, 14, 30, 20, 34, 18, 26, 12, 22, 10, 28, 16, 8, 20, 14, 24].map((h, i) => (
+                        <span key={i} style={{ height: `${h}px`, animationDelay: `${i * 0.08}s` }} />
+                      ))}
+                    </div>
                     <p>&ldquo;Log the job at 42 Oak Rise. Boiler swap, quoted at 2,400.&rdquo;</p>
                   </div>
                 </Reveal>
                 <Reveal>
                   <div className="v2-app-voice-panel v2-app-voice-panel--duo">
-                    <div className="v2-app-voice-label">Duo handles it</div>
-                    <p>&ldquo;Logged. Homeowner is Sarah, deposit invoice going out now. I&rsquo;ll block Thursday morning.&rdquo;</p>
+                    <div className="v2-app-voice-screenhead">
+                      <span className="v2-app-voice-duomark" aria-hidden="true" />
+                      <span className="v2-app-voice-label">Duo, on the paperwork</span>
+                    </div>
+                    <p className="v2-app-voice-duotext">
+                      Logged the job at 42 Oak Rise. Homeowner saved as Sarah, deposit
+                      invoice on its way, and I&rsquo;ve pencilled Thursday morning in the diary.
+                    </p>
+                    <div className="v2-app-voice-duochips">
+                      <span>Job created</span>
+                      <span>Invoice sent</span>
+                      <span>Diary updated</span>
+                    </div>
                   </div>
                 </Reveal>
               </div>
