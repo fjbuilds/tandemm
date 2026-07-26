@@ -36,7 +36,7 @@ export function ScanInput({ variant = "light", className }: ScanInputProps) {
         />
       </div>
       <button type="submit" className="scan-inline-btn" disabled={!url.trim()}>
-        Scan my site
+        See where I&apos;m losing jobs
       </button>
     </form>
   );

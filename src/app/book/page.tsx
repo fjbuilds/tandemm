@@ -194,7 +194,7 @@ function ScanTool() {
                     />
                   </div>
                   <button type="submit" className="scan-submit-btn" disabled={!url.trim()}>
-                    Scan my site
+                    See where I&apos;m losing jobs
                   </button>
                 </form>
               </div>
@@ -293,7 +293,7 @@ function ScanTool() {
                       See exactly how many jobs this is likely costing you each month, and what to fix first.
                     </h3>
                     <p className="scan-gate-sub">
-                      Leave your number and we will walk you through it.
+                      Leave your number and one of our team will call you within 24 hours.
                     </p>
                   </div>
 

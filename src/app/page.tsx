@@ -243,7 +243,7 @@ export default function HomePage() {
                   />
                 </div>
                 <button type="submit" className="v2-hero-btn">
-                  Scan my site
+                  See where I&apos;m losing jobs
                 </button>
               </form>
             </Reveal>
