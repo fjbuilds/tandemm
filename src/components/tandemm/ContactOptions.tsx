@@ -31,8 +31,8 @@ const options = [
   },
   {
     key: "book",
-    label: "Check availability",
-    sub: "Pick a 20 minute slot, we walk your site with you",
+    label: "Scan my site",
+    sub: "See what is costing you jobs, in seconds",
     href: "/book",
     external: false,
     icon: (

@@ -91,7 +91,7 @@ export default function BoostPage() {
                 href="/book"
                 className="bg-white text-[var(--color-primary)] hover:bg-white/90"
               >
-                Check availability
+                Find out what&apos;s costing you jobs
               </Button>
               <Button href="/local-search" variant="secondary">
                 Start with Tandemm Local

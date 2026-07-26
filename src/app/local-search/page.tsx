@@ -75,7 +75,7 @@ export default function LocalSearchPage() {
                 href="/book"
                 className="bg-white text-[var(--color-primary)] hover:bg-white/90"
               >
-                Get my Tandemm Diagnosis
+                Find out what&apos;s costing you jobs
               </Button>
               <Button href="/" variant="secondary">Back to the plan</Button>
             </div>

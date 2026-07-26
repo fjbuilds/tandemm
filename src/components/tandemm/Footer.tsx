@@ -8,7 +8,7 @@ const pageLinks = [
   { href: "/pricing", label: "Pricing" },
   { href: "/system", label: "How it works" },
   { href: "/about", label: "About" },
-  { href: "/book", label: "Check availability" },
+  { href: "/book", label: "Scan my site" },
 ];
 
 export function Footer() {
@@ -29,7 +29,7 @@ export function Footer() {
             </p>
             <div className="mt-5">
               <Button href="/book" variant="secondary">
-                Book a call
+                Find out what&apos;s costing you jobs
               </Button>
             </div>
           </div>

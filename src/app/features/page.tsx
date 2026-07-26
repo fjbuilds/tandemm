@@ -392,14 +392,14 @@ export default function FeaturesPage() {
         <Reveal>
           <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-14 text-center text-[var(--color-on-primary)] shadow-[var(--shadow-2)] sm:px-14">
             <h2 className="mx-auto max-w-[600px] font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              See what your site is missing. Free audit, yours to keep.
+              See what your site is missing. Scan it now, free.
             </h2>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Button
                 href="/book"
                 className="bg-white text-[var(--color-primary)] hover:bg-white/90"
               >
-                Get my free audit
+                Find out what&apos;s costing you jobs
               </Button>
               <Button href="/pricing" variant="secondary">
                 See pricing

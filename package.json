@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",
+    "@supabase/supabase-js": "^2.110.8",
     "clsx": "^2.1.1",
     "geist": "^1.7.2",
     "next": "16.2.10",

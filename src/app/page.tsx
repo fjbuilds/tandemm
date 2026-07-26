@@ -261,7 +261,7 @@ export default function HomePage() {
                 <HeroVisual />
                 <div className="hero-glass-fade" aria-hidden="true" />
                 <div className="hero-glass-gate">
-                  <Button href="/book">Get my Diagnosis</Button>
+                  <Button href="/book">Find out what&apos;s costing you jobs</Button>
                 </div>
                 <div className="hero-glass-glow" aria-hidden="true" />
               </div>
@@ -389,9 +389,9 @@ export default function HomePage() {
                 href="/book"
                 className="bg-white text-[var(--color-primary)] hover:bg-white/90"
               >
-                Check availability
+                Find out what&apos;s costing you jobs
               </Button>
-              <Button href="/book" variant="secondary">Talk to us first</Button>
+              <Button href="/book" variant="secondary">Scan my site</Button>
             </div>
           </Reveal>
           <Reveal>
@@ -677,7 +677,7 @@ export default function HomePage() {
           </Reveal>
           <Reveal>
             <div className="v2-price-cta">
-              <Button href="/book">Check availability</Button>
+              <Button href="/book">Find out what&apos;s costing you jobs</Button>
               <Link href="/pricing" className="v2-price-link">
                 Full pricing breakdown →
               </Link>

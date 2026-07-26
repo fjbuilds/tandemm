@@ -72,7 +72,7 @@ export function Nav({
             aria-current={active === "book" ? "page" : undefined}
             className="whitespace-nowrap rounded-[var(--radius-pill)] bg-white px-4 py-[11px] text-sm font-semibold text-[var(--color-primary)] no-underline sm:px-5"
           >
-            Check availability
+            Scan my site
           </Link>
           <button
             type="button"
@@ -123,7 +123,7 @@ export function Nav({
               onClick={() => setMenuOpen(false)}
               className="mt-1 rounded-[var(--radius-pill)] bg-white px-4 py-3 text-center text-[15px] font-semibold text-[var(--color-primary)] no-underline"
             >
-              Get my audit
+              Scan my site
             </Link>
           </nav>
         </div>

@@ -178,7 +178,7 @@ export default function SystemPage() {
           </Reveal>
           <Reveal>
             <p className="mx-auto mt-[18px] max-w-[640px] text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
-              The free audit is the starting point for most. From there,
+              The site scan is the starting point for most. From there,
               you can take the full system, or just the piece you need.
               The process below is what we do when we run the lot, end
               to end.
@@ -224,7 +224,7 @@ export default function SystemPage() {
             <div className="overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] shadow-[var(--shadow-1)]">
               {[
                 {
-                  head: "You get the free audit",
+                  head: "You scan your site",
                   body: "No commitment, no card on file. The audit is yours whether we ever work together or not.",
                 },
                 {
@@ -378,7 +378,7 @@ export default function SystemPage() {
                 </li>
               ))}
             </ul>
-            <Button href="/book">Get my free audit</Button>
+            <Button href="/book">Find out what&apos;s costing you jobs</Button>
           </Reveal>
         </div>
       </section>

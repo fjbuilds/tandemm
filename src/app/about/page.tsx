@@ -173,7 +173,7 @@ export default function AboutPage() {
                   variant="secondary"
                   className="border-white/25 bg-white text-[var(--color-primary)] hover:bg-white/90"
                 >
-                  Get my free audit
+                  Find out what&apos;s costing you jobs
                 </Button>
               </div>
             </div>
