@@ -240,11 +240,12 @@ const SHOWCASE: Showcase[] = [
 ];
 
 export function SiteShowcase() {
+  const loop = [...SHOWCASE, ...SHOWCASE];
   return (
-    <div className="site-showcase">
+    <div className="site-showcase site-showcase--carousel">
       <div className="site-showcase-track">
-        {SHOWCASE.map((s) => (
-          <figure key={s.name} className="site-showcase-item">
+        {loop.map((s, idx) => (
+          <figure key={`${s.name}-${idx}`} className="site-showcase-item" aria-hidden={idx >= SHOWCASE.length}>
             <div
               className="site-showcase-thumb"
               style={{
@@ -644,23 +645,40 @@ export function StepMockSignup() {
   );
 }
 
+function PersonIllustration({ skin, hair, shirt }: { skin: string; hair: string; shirt: string }) {
+  return (
+    <svg viewBox="0 0 64 64" className="step-mock-person" aria-hidden="true">
+      <circle cx="32" cy="32" r="32" fill="var(--person-bg, #EAE3D6)" />
+      {/* shoulders / shirt */}
+      <path d="M12 64 C12 50 21 44 32 44 C43 44 52 50 52 64 Z" fill={shirt} />
+      <path d="M27 42 h10 v6 a5 5 0 0 1 -10 0 Z" fill={skin} />
+      {/* head */}
+      <circle cx="32" cy="28" r="12" fill={skin} />
+      {/* hair */}
+      <path d="M20 27 C20 17 44 17 44 27 C44 22 40 18 32 18 C24 18 20 22 20 27 Z" fill={hair} />
+      {/* smile */}
+      <path d="M28 31 q4 3 8 0" stroke="#5A4632" strokeWidth="1.6" fill="none" strokeLinecap="round" opacity="0.65" />
+    </svg>
+  );
+}
+
 export function StepMockCall() {
   const TEAM_MEMBERS = [
-    { initials: "JM", role: "Your account manager", hue: 200 },
-    { initials: "RS", role: "SEO strategist", hue: 150 },
-    { initials: "KP", role: "Your designer", hue: 340 },
+    { role: "Your account manager", skin: "#E8B58C", hair: "#3A2A1E", shirt: "#24425A" },
+    { role: "SEO strategist", skin: "#C68A62", hair: "#1E1A16", shirt: "#2F7D4F" },
+    { role: "Your designer", skin: "#F0C6A0", hair: "#8A4B2A", shirt: "#A9551F" },
   ];
   return (
     <div className="step-mock step-mock-team">
-      <div className="step-mock-team-header">Your Tandemm team</div>
+      <div className="step-mock-team-header">
+        <span className="step-mock-team-live"><span className="step-mock-team-live-dot" />Welcome call</span>
+        Your Tandemm team
+      </div>
       <div className="step-mock-team-grid">
         {TEAM_MEMBERS.map((m) => (
-          <div key={m.initials} className="step-mock-team-member">
-            <span
-              className="step-mock-team-avatar"
-              style={{ background: `linear-gradient(135deg, hsl(${m.hue} 55% 55%), hsl(${m.hue} 50% 42%))` }}
-            >
-              {m.initials}
+          <div key={m.role} className="step-mock-team-member">
+            <span className="step-mock-team-avatar">
+              <PersonIllustration skin={m.skin} hair={m.hair} shirt={m.shirt} />
             </span>
             <span className="step-mock-team-role">{m.role}</span>
           </div>
@@ -668,7 +686,7 @@ export function StepMockCall() {
       </div>
       <div className="step-mock-team-note">
         <span className="step-mock-team-note-dot" />
-        Welcome call booked · 24 min
+        A real person, not a ticket queue · 24 min call
       </div>
     </div>
   );
@@ -677,27 +695,38 @@ export function StepMockCall() {
 export function StepMockPhotos() {
   return (
     <div className="step-mock step-mock-photos-real">
+      <div className="step-mock-photos-msghead">
+        <span className="step-mock-photos-avatar">SW</span>
+        <div>
+          <div className="step-mock-photos-sender">Sarah · South West Heating</div>
+          <div className="step-mock-photos-time">sent you 4 photos · 09:42</div>
+        </div>
+      </div>
       <div className="step-mock-photos-grid">
         <div className="step-mock-photo-real step-mock-photo-real--boiler">
-          <span className="step-mock-photo-real-label">Boiler install</span>
+          <span className="step-mock-photo-grain" aria-hidden="true" />
+          <span className="step-mock-photo-real-label">Boiler install, SW11</span>
         </div>
         <div className="step-mock-photo-real step-mock-photo-real--bathroom">
+          <span className="step-mock-photo-grain" aria-hidden="true" />
           <span className="step-mock-photo-real-label">Bathroom refit</span>
         </div>
         <div className="step-mock-photo-real step-mock-photo-real--van">
+          <span className="step-mock-photo-grain" aria-hidden="true" />
           <span className="step-mock-photo-real-label">The van</span>
         </div>
         <div className="step-mock-photo-real step-mock-photo-real--team">
+          <span className="step-mock-photo-grain" aria-hidden="true" />
           <span className="step-mock-photo-real-label">The team</span>
         </div>
       </div>
       <div className="step-mock-photos-bar">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <rect x="3" y="3" width="18" height="18" rx="2" />
-          <circle cx="9" cy="9" r="2" />
-          <path d="M21 15l-5-5-8 8" />
-        </svg>
-        4 photos uploaded
+        <span className="step-mock-photos-bar-check">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 12l5 5 9-11" />
+          </svg>
+        </span>
+        Received — building your gallery
       </div>
     </div>
   );

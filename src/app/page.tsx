@@ -13,6 +13,7 @@ import { DiamondLoader } from "@/components/tandemm/DiamondLoader";
 import { TrustPartners } from "@/components/tandemm/TrustPartners";
 import { GuaranteeStrip } from "@/components/tandemm/GuaranteeStrip";
 import { ContactOptions } from "@/components/tandemm/ContactOptions";
+import { FlowConnector } from "@/components/tandemm/FlowConnector";
 import {
   GoogleLocalPack,
   TradesSite,
@@ -100,6 +101,19 @@ const INCLUDED_GRID = [
       "Auto-chase deposits, auto-collect reviews",
       "Full diary, pipeline &amp; CRM",
     ],
+  },
+];
+
+const DIFFERENTIATORS = [
+  {
+    icon: "📞",
+    title: "Missed call recovery",
+    body: "Can't get to the phone? The second a call drops, an automatic text goes back so the lead never goes cold.",
+  },
+  {
+    icon: "⚡",
+    title: "Automatic quoting",
+    body: "Send a tidy, branded quote in a few taps straight from the app, then it chases itself until the customer replies.",
   },
 ];
 
@@ -294,22 +308,7 @@ export default function HomePage() {
               const flip = i % 2 === 1;
               return (
                 <Fragment key={s.n}>
-                  {i > 0 && (
-                    <div className={`v2-flow-connector ${flip ? "v2-flow-connector--right" : "v2-flow-connector--left"}`} aria-hidden="true">
-                      <svg viewBox="0 0 120 80" fill="none" preserveAspectRatio="xMidYMid meet">
-                        <path
-                          d={flip
-                            ? "M60,0 C60,25 95,30 95,40 C95,50 60,55 60,80"
-                            : "M60,0 C60,25 25,30 25,40 C25,50 60,55 60,80"}
-                          stroke="var(--color-accent)"
-                          strokeWidth="1.5"
-                          strokeDasharray="6 5"
-                          opacity="0.35"
-                        />
-                      </svg>
-                      <span className="v2-flow-diamond-node" />
-                    </div>
-                  )}
+                  {i > 0 && <FlowConnector flip={flip} />}
                   <Reveal className="v2-flow-step-outer">
                     <div className={`v2-flow-step ${flip ? "is-flip" : ""}`}>
                       <div className="v2-flow-step-copy">
@@ -419,10 +418,10 @@ export default function HomePage() {
             <Reveal>
               <h3 className="v2-h3">Show up, look great, get booked.</h3>
               <p className="v2-sub">
-                A premium site built for your trade, by us, and run for you
-                every month. Below are illustrative site styles, your
-                finished site is written from your work, your area and
-                your tone of voice.
+                Your subscription starts with a premium website, built for your
+                trade by us and run for you every month. Below are illustrative
+                styles, swipe through. Your finished site is written from your
+                work, your area and your tone of voice.
               </p>
             </Reveal>
             <Reveal>
@@ -463,6 +462,29 @@ export default function HomePage() {
               </Reveal>
             ))}
           </div>
+
+          <Reveal>
+            <div className="v2-diff">
+              <div className="v2-diff-head">
+                <span className="v2-eyebrow">The Tandemm difference</span>
+                <p className="v2-diff-lede">
+                  Most website companies stop at the site. We keep working after
+                  the enquiry lands, so nothing slips through.
+                </p>
+              </div>
+              <div className="v2-diff-grid">
+                {DIFFERENTIATORS.map((d) => (
+                  <div key={d.title} className="v2-diff-card">
+                    <span className="v2-diff-icon">{d.icon}</span>
+                    <div>
+                      <div className="v2-diff-title">{d.title}</div>
+                      <div className="v2-diff-body">{d.body}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
