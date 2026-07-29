@@ -23,6 +23,8 @@ interface Finding {
   severity: number;
 }
 
+type ScanData = { findings: Finding[]; failCount: number; scanId: string | null };
+
 type Step = "entry" | "scanning" | "results" | "confirmed";
 
 const CHECKS = [
@@ -63,7 +65,7 @@ function ScanTool() {
   const [panelUnlocked, setPanelUnlocked] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [progressPct, setProgressPct] = useState(0);
-  const scanDataRef = useRef<{ findings: Finding[]; failCount: number; scanId: string | null } | null>(null);
+  const scanDataRef = useRef<ScanData | null>(null);
   const autoStarted = useRef(false);
   const searchParams = useSearchParams();
 
@@ -111,7 +113,7 @@ function ScanTool() {
 
     await new Promise((r) => setTimeout(r, 600));
 
-    const data = scanDataRef.current;
+    const data = scanDataRef.current as ScanData | null;
     if (data) {
       setFindings(data.findings);
       setFailCount(data.failCount);
