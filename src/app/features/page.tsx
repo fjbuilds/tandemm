@@ -1,6 +1,6 @@
 "use client";
 
-import { CSSProperties } from "react";
+import { CSSProperties, ReactNode } from "react";
 import { Nav } from "@/components/tandemm/Nav";
 import { Footer } from "@/components/tandemm/Footer";
 import { Reveal } from "@/components/tandemm/Reveal";
@@ -143,121 +143,65 @@ export default function FeaturesPage() {
         </Reveal>
       </section>
 
-      {/* ── FLOW: STEP 01 — AUDIT ── */}
-      <section className="mx-auto max-w-[1160px] px-6 py-20">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-          <Reveal>
-            <div>
-              <StepEyebrow n="01" label="It starts with an audit" />
-              <h2 className="mb-4 font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
-                First, we find out exactly where you&apos;re losing jobs.
-              </h2>
-              <p className="mb-6 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-                Before anything gets built, we score your site, your ads
-                and your rankings by hand. You get a clear picture of
-                what&apos;s leaking work, and it&apos;s yours to keep whether
-                we go further or not.
-              </p>
-              <ul className="flex flex-col gap-3 text-[15px] leading-[1.55] text-[var(--color-ink)]">
-                {[
-                  "Every page checked for speed and conversion",
-                  "Ad accounts scored on structure and waste",
-                  "Where you rank against the local competition",
-                  "Ranked by impact on booked jobs, not vanity metrics",
-                ].map((i) => (
-                  <li key={i} className="flex items-start gap-2.5">
-                    <span className="mt-[9px] block h-1 w-1 shrink-0 rounded-full bg-[var(--color-ink-muted)]" />
-                    <span>{i}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
+      {/* ── FLOW: STEPS 01–03 (BFT-style timeline) ── */}
+      <section className="px-6 py-14">
+        <div className="relative mx-auto max-w-[1080px]">
+          {/* centre connector line */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute left-1/2 top-10 bottom-10 hidden w-px -translate-x-1/2 bg-gradient-to-b from-[var(--color-accent)] via-[var(--color-hairline)] to-[var(--color-primary)] opacity-50 md:block"
+          />
 
-          <Reveal>
-            <AuditMock />
-          </Reveal>
-        </div>
-      </section>
+          <div className="flex flex-col gap-16 md:gap-20">
+            <FlowStep
+              n="01"
+              label="It starts with an audit"
+              title="First, we find out exactly where you're losing jobs."
+              body="Before anything gets built, we score your site, your ads and your rankings by hand. You get a clear picture of what's leaking work, and it's yours to keep whether we go further or not."
+              bullets={[
+                "Every page checked for speed and conversion",
+                "Ad accounts scored on structure and waste",
+                "Where you rank against the local competition",
+                "Ranked by impact on booked jobs, not vanity metrics",
+              ]}
+              mock={<AuditMock />}
+            />
 
-      {/* ── FLOW: STEP 02 — WEBSITE REBUILD ── */}
-      <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
-        <div className="mx-auto grid max-w-[1160px] grid-cols-1 items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-          <Reveal>
-            <WebsiteMock />
-          </Reveal>
+            <FlowStep
+              n="02"
+              label="Then we rebuild your site"
+              title="A site built to turn visitors into booked jobs."
+              body="Fast, mobile-first, and included in your plan. Every page is built to do one thing: get the homeowner talking to you. The quote assistant handles the questions they'd otherwise ring around for, so they stay put and you get a proper job to quote on."
+              bullets={WEBSITE_FEATURES}
+              twoCol
+              mock={<WebsiteMock />}
+              reversed
+            />
 
-          <Reveal>
-            <div>
-              <StepEyebrow n="02" label="Then we rebuild your site" />
-              <h2 className="mb-4 font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
-                A site built to turn visitors into booked jobs.
-              </h2>
-              <p className="mb-6 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-                Fast, mobile-first, and included in your plan. Every page
-                is built to do one thing: get the homeowner talking to you.
-                The quote assistant handles the questions they&apos;d
-                otherwise ring around for, so they stay put and you get a
-                proper job to quote on.
-              </p>
-              <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                {WEBSITE_FEATURES.map((f) => (
-                  <li
-                    key={f}
-                    className="flex items-start gap-2 text-[14px] leading-[1.5] text-[var(--color-ink)]"
-                  >
-                    <span className="mt-[9px] block h-1 w-1 shrink-0 rounded-full bg-[var(--color-ink-muted)]" />
-                    <span>{f}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── FLOW: STEP 03 — RANKINGS: GOOGLE + AI ── */}
-      <section className="mx-auto max-w-[1160px] px-6 py-20">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-          <Reveal>
-            <div>
-              <StepEyebrow n="03" label="Then we get you found" />
-              <h2 className="mb-4 font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
-                Top of Google, and the name AI gives when people ask.
-              </h2>
-              <p className="mb-6 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-                Homeowners don&apos;t just Google any more. Plenty of them
-                now ask ChatGPT or Claude who to call. We get you visible in
-                both places: ranked where people search, and named when they
-                ask an AI.
-              </p>
-              <ul className="flex flex-col gap-3 text-[15px] leading-[1.55] text-[var(--color-ink)]">
-                {[
-                  "Featured at the top of Google when homeowners search",
-                  "Structured so AI assistants pick you up and recommend you",
-                  "Service and area pages that rank in your postcodes",
-                  "Every call and form tracked back to what drove it",
-                ].map((i) => (
-                  <li key={i} className="flex items-start gap-2.5">
-                    <span className="mt-[9px] block h-1 w-1 shrink-0 rounded-full bg-[var(--color-ink-muted)]" />
-                    <span>{i}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
-
-          <Reveal>
-            <div className="space-y-4">
-              <GoogleSerpMock />
-              <AiAnswerMock />
-            </div>
-          </Reveal>
+            <FlowStep
+              n="03"
+              label="Then we get you found"
+              title="Top of Google, and the name AI gives when people ask."
+              body="Homeowners don't just Google any more. Plenty of them now ask ChatGPT or Claude who to call. We get you visible in both places: ranked where people search, and named when they ask an AI."
+              bullets={[
+                "Featured at the top of Google when homeowners search",
+                "Structured so AI assistants pick you up and recommend you",
+                "Service and area pages that rank in your postcodes",
+                "Every call and form tracked back to what drove it",
+              ]}
+              mock={
+                <div className="space-y-4">
+                  <GoogleSerpMock />
+                  <AiAnswerMock />
+                </div>
+              }
+            />
+          </div>
         </div>
       </section>
 
       {/* ── FLOW: STEP 04 — DASHBOARD ── */}
-      <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
+      <section className="bg-[var(--color-canvas-deep)] px-6 py-16">
         <div className="mx-auto max-w-[1160px]">
           <Reveal className="mb-12 text-center">
             <StepEyebrow n="04" label="The work lands here" center />
@@ -301,7 +245,7 @@ export default function FeaturesPage() {
       </section>
 
       {/* ── FLOW: STEP 05 — ENQUIRIES HANDLED ── */}
-      <section className="mx-auto max-w-[1160px] px-6 py-20">
+      <section className="mx-auto max-w-[1160px] px-6 py-16">
         <Reveal className="mb-12 text-center">
           <StepEyebrow n="05" label="And none of it goes cold" center />
           <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
@@ -323,7 +267,7 @@ export default function FeaturesPage() {
       </section>
 
       {/* ── ROLES ROLLUP ── */}
-      <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
+      <section className="bg-[var(--color-canvas-deep)] px-6 py-16">
         <div className="mx-auto max-w-[1160px]">
           <Reveal className="mb-10 text-center">
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
@@ -388,7 +332,7 @@ export default function FeaturesPage() {
       </section>
 
       {/* ── FINAL CTA ── */}
-      <section className="mx-auto max-w-[1160px] px-6 py-20">
+      <section className="mx-auto max-w-[1160px] px-6 py-16">
         <Reveal>
           <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-14 text-center text-[var(--color-on-primary)] shadow-[var(--shadow-2)] sm:px-14">
             <h2 className="mx-auto max-w-[600px] font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
@@ -444,7 +388,7 @@ function GoogleSerpMock() {
   ];
 
   return (
-    <div className="mx-auto w-full max-w-[520px]">
+    <div className="mx-auto w-full max-w-[430px]">
       <div
         className="overflow-hidden rounded-[16px] border border-[var(--color-hairline)] bg-white font-[family-name:Arial,sans-serif] shadow-[var(--shadow-2)]"
       >
@@ -636,6 +580,87 @@ function StepEyebrow({
 }
 
 /* ─────────────────────────────────────────────────────────── */
+/*  Green check bullet                                         */
+/* ─────────────────────────────────────────────────────────── */
+
+function Check() {
+  return (
+    <span className="mt-[1px] flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-[var(--color-success-soft)] text-[var(--color-success)]">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20 6 9 17l-5-5" />
+      </svg>
+    </span>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/*  Flow step (BFT-style timeline row)                         */
+/* ─────────────────────────────────────────────────────────── */
+
+function FlowStep({
+  n,
+  label,
+  title,
+  body,
+  bullets,
+  twoCol,
+  mock,
+  reversed,
+}: {
+  n: string;
+  label: string;
+  title: string;
+  body: string;
+  bullets: string[];
+  twoCol?: boolean;
+  mock: ReactNode;
+  reversed?: boolean;
+}) {
+  return (
+    <div className="relative grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-14">
+      {/* node on the centre line */}
+      <span
+        aria-hidden
+        className="absolute left-1/2 top-8 hidden h-3.5 w-3.5 -translate-x-1/2 rounded-full border-2 border-[var(--color-accent)] bg-[var(--color-canvas)] shadow-[0_0_0_5px_var(--color-canvas)] md:block"
+      />
+
+      <Reveal className={reversed ? "md:order-2 md:pl-12" : "md:pr-12"}>
+        <div>
+          <StepEyebrow n={n} label={label} />
+          <h2 className="mb-3 font-[family-name:var(--font-display)] text-[clamp(22px,2.8vw,28px)] font-bold leading-[1.15] tracking-[-0.02em]">
+            {title}
+          </h2>
+          <p className="mb-5 text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
+            {body}
+          </p>
+          <ul
+            className={
+              twoCol
+                ? "grid grid-cols-1 gap-x-5 gap-y-2 sm:grid-cols-2"
+                : "flex flex-col gap-2.5"
+            }
+          >
+            {bullets.map((b) => (
+              <li
+                key={b}
+                className="flex items-start gap-2.5 text-[14px] leading-[1.5] text-[var(--color-ink)]"
+              >
+                <Check />
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Reveal>
+
+      <Reveal className={reversed ? "md:order-1 md:pr-12" : "md:pl-12"}>
+        <div>{mock}</div>
+      </Reveal>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────── */
 /*  Audit mock                                                 */
 /* ─────────────────────────────────────────────────────────── */
 
@@ -649,7 +674,7 @@ function AuditMock() {
   ];
 
   return (
-    <div className="mx-auto w-full max-w-[460px]">
+    <div className="mx-auto w-full max-w-[400px]">
       <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-2)]">
         <div className="mb-1 flex items-center justify-between">
           <span className="text-xs font-bold uppercase tracking-[0.06em] text-[var(--color-ink-muted)]">
@@ -726,7 +751,7 @@ function AuditMock() {
 
 function AiAnswerMock() {
   return (
-    <div className="mx-auto w-full max-w-[520px]">
+    <div className="mx-auto w-full max-w-[430px]">
       <div className="rounded-[16px] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-2)]">
         <div className="mb-3 flex items-center gap-2">
           <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-primary)]">
@@ -768,7 +793,7 @@ function AiAnswerMock() {
 
 function WebsiteMock() {
   return (
-    <div className="mx-auto w-full max-w-[560px]">
+    <div className="mx-auto w-full max-w-[440px]">
       <div className="relative rounded-t-[14px] border border-[var(--color-hairline)] bg-[#0e1420] p-2 shadow-[var(--shadow-2)]">
         <div className="overflow-hidden rounded-t-[8px] bg-white">
           <div className="flex items-center gap-2 border-b border-[var(--color-hairline-soft)] px-3 py-2">

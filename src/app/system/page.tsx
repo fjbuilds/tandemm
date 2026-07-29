@@ -202,7 +202,7 @@ export default function SystemPage() {
       </section>
 
       {/* ── COMMITMENT MECHANIC ── */}
-      <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
+      <section className="bg-[var(--color-canvas-deep)] px-6 py-16">
         <div className="mx-auto max-w-[900px]">
           <Reveal className="mb-8 text-center">
             <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
@@ -270,7 +270,7 @@ export default function SystemPage() {
       </section>
 
       {/* ── DEEP DIVE PER STAGE ── */}
-      <section className="px-6 py-20">
+      <section className="px-6 py-16">
         <div className="mx-auto max-w-[1160px]">
           <Reveal className="mb-14 text-center">
             <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
@@ -311,7 +311,7 @@ export default function SystemPage() {
       </section>
 
       {/* ── DASHBOARD MOCK ── */}
-      <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
+      <section className="bg-[var(--color-canvas-deep)] px-6 py-16">
         <div className="mx-auto max-w-[1160px]">
           <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1fr_auto] lg:items-center">
             <Reveal>
@@ -337,7 +337,11 @@ export default function SystemPage() {
                     "A simple monthly trend: leads in, jobs booked",
                   ].map((i) => (
                     <li key={i} className="flex items-start gap-2.5">
-                      <span className="mt-[9px] block h-1 w-1 shrink-0 rounded-full bg-[var(--color-ink-muted)]" />
+                      <span className="mt-[1px] flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-[var(--color-success-soft)] text-[var(--color-success)]">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M20 6 9 17l-5-5" />
+                        </svg>
+                      </span>
                       <span>{i}</span>
                     </li>
                   ))}
@@ -361,7 +365,7 @@ export default function SystemPage() {
       </section>
 
       {/* ── DIAGNOSIS AUDIT CENTREPIECE ── */}
-      <section className="px-6 py-20">
+      <section className="px-6 py-16">
         <div className="mx-auto max-w-[720px] text-center">
           <Reveal>
             <div className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
@@ -373,7 +377,11 @@ export default function SystemPage() {
             <ul className="mx-auto mb-8 flex max-w-[560px] flex-col gap-3.5 text-left">
               {AUDIT_CHECKS.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-[15px] leading-[1.55]">
-                  <span className="mt-[9px] block h-1 w-1 shrink-0 rounded-full bg-[var(--color-ink-muted)]" />
+                  <span className="mt-[1px] flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-[var(--color-success-soft)] text-[var(--color-success)]">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20 6 9 17l-5-5" />
+                    </svg>
+                  </span>
                   <span className="text-[var(--color-ink)]">{item}</span>
                 </li>
               ))}
@@ -384,7 +392,7 @@ export default function SystemPage() {
       </section>
 
       {/* ── AUDIT PROCESS ── */}
-      <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
+      <section className="bg-[var(--color-canvas-deep)] px-6 py-16">
         <div className="mx-auto max-w-[1160px]">
           <Reveal className="mb-12 text-center">
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
