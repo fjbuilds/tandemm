@@ -1,15 +1,32 @@
 "use client";
 
-import { CSSProperties, FormEvent, useState } from "react";
+import { CSSProperties, FormEvent, Fragment, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Nav } from "@/components/tandemm/Nav";
 import { Footer } from "@/components/tandemm/Footer";
 import { Reveal } from "@/components/tandemm/Reveal";
 import { Button } from "@/components/tandemm/Button";
+import { ScanInput } from "@/components/tandemm/ScanInput";
 import { HeroVisual } from "@/components/tandemm/HeroVisual";
 import { DiamondLoader } from "@/components/tandemm/DiamondLoader";
-import { DashboardPhone } from "@/components/tandemm/Dashboard";
 import { TrustPartners } from "@/components/tandemm/TrustPartners";
+import { GuaranteeStrip } from "@/components/tandemm/GuaranteeStrip";
+import { ContactOptions } from "@/components/tandemm/ContactOptions";
+import { FlowConnector } from "@/components/tandemm/FlowConnector";
+import {
+  GoogleLocalPack,
+  TradesSite,
+  SiteShowcase,
+  BaseApp,
+  TeamRow,
+  StepMockSignup,
+  StepMockCall,
+  StepMockPhotos,
+  StepMockPreview,
+  StepMockLive,
+  BoostFunnel,
+} from "@/components/tandemm/Mocks";
 
 const paletteOverride = {
   "--color-canvas": "#EDEEEA",
@@ -20,106 +37,172 @@ const paletteOverride = {
   "--color-hairline-soft": "#E1E3DC",
 } as CSSProperties;
 
-/* ─────────────────────────────────────────────────────────── */
-/*  Diagnosis / Prevention / Cure, the process                 */
-/* ─────────────────────────────────────────────────────────── */
+const FLOW_STEPS = [
+  {
+    n: "01",
+    title: "Get found",
+    body: "Showing up on Google isn&rsquo;t an overnight switch. It&rsquo;s ongoing work, and that&rsquo;s our job. Every month we tune your Google Business Profile and local pages so more of the right people nearby find you over time.",
+    bullets: ["Lightning-fast website", "Monthly SEO by hand", "Google Business Profile tuning"],
+    mock: "google" as const,
+  },
+  {
+    n: "02",
+    title: "Win the visit",
+    body: "Every page is built to turn a visitor into an enquiry, and each one drops straight into the app with an instant notification. You manage the whole way, from first ping through to a booked-in job, all from one simple app.",
+    bullets: ["Widget on every page", "Instant push notification", "WhatsApp &amp; tap-to-call"],
+    mock: "site" as const,
+  },
+  {
+    n: "03",
+    title: "Get booked",
+    body: "Send quotes and invoices in a few taps, straight from the app, and get paid faster. Then the moment an invoice is settled, the app automatically asks the customer for a review, so every finished job helps the next one find you.",
+    bullets: ["Quote &amp; invoice from the app", "Card payment on the doorstep", "Reviews collected automatically"],
+    mock: "base" as const,
+  },
+];
 
-const DPC = [
+const INCLUDED_GRID = [
   {
-    step: "01",
-    title: "Diagnosis",
-    art: "magnifier" as const,
-    oneLiner:
-      "A scored audit of your site, your ads and your Google rankings. Yours to keep, no commitment.",
+    icon: "search",
+    title: "Gets you found on Google",
     items: [
-      "Every page checked by hand",
-      "Ad accounts scored on structure and waste",
-      "Local rank across your postcodes",
+      "Ranks when locals search your trade",
+      "A page for every service &amp; area you cover",
+      "Fast pages Google loves",
+      "Monthly SEO working in the background",
     ],
   },
   {
-    step: "02",
-    title: "Prevention",
-    art: "wrench" as const,
-    oneLiner:
-      "Website rebuild, tracking number, widget, dashboard. All set up for you and included in your monthly plan.",
+    icon: "inbox",
+    title: "Turns visitors into jobs",
     items: [
-      "Website rebuilt, fast and mobile-first",
-      "Tracking phone number and lead widget installed",
-      "Dashboard set up, ads restructured",
+      "Enquiry forms &amp; WhatsApp direct",
+      "Instant push the second a lead lands",
+      "Missed call text-back, automatic",
+      "Spam filtered, only real enquiries",
     ],
   },
   {
-    step: "03",
-    title: "Cure",
-    art: "pulse" as const,
-    oneLiner:
-      "Where the lead generation happens. Ads run, enquiries land in one place, and the engine keeps working.",
+    icon: "gallery",
+    title: "Shows off your work",
     items: [
-      "Google Ads managed and tuned weekly",
-      "Every enquiry in one dashboard",
-      "Missed calls recovered and customers quoted",
+      "Project pages &amp; photo galleries",
+      "Before &amp; after sliders",
+      "Your own videos on the site",
+      "Every job a page you can share",
+    ],
+  },
+  {
+    icon: "tools",
+    title: "Runs the business",
+    items: [
+      "Quote &amp; invoice from the van",
+      "Card payments on the doorstep",
+      "Auto-chase deposits, auto-collect reviews",
+      "Full diary, pipeline &amp; CRM",
     ],
   },
 ];
 
-/* ─────────────────────────────────────────────────────────── */
-/*  Feature preview cards                                      */
-/* ─────────────────────────────────────────────────────────── */
-
-const FEATURE_PREVIEW = [
+const DIFFERENTIATORS = [
   {
-    tag: "Website rebuild",
-    title: "A site that turns visitors into booked jobs.",
-    body: "Fast, mobile-first, and built around one goal: get the homeowner into the widget or onto the phone.",
+    icon: "📞",
+    title: "Missed call recovery",
+    body: "Can't get to the phone? The second a call drops, an automatic text goes back so the lead never goes cold.",
   },
   {
-    tag: "Google Ads",
-    title: "In front of homeowners who are ready to book.",
-    body: "Your ads sit where the work is, on the searches that turn into jobs. Tuned every week, and spend moved to whatever is paying back.",
-  },
-  {
-    tag: "Tracking and widget",
-    title: "Every call and form, in one dashboard.",
-    body: "Dedicated tracking number, on-site widget, missed-call auto-text. Nothing lands in a black hole.",
-  },
-  {
-    tag: "Missed-call capture",
-    title: "Missed calls, caught and quoted.",
-    body: "You can't answer every call. The system texts the homeowner from your number, runs them through five qualifying questions, and drops the answers into your dashboard.",
+    icon: "⚡",
+    title: "Automatic quoting",
+    body: "Send a tidy, branded quote in a few taps straight from the app, then it chases itself until the customer replies.",
   },
 ];
 
-/* ─────────────────────────────────────────────────────────── */
-/*  FAQ                                                        */
-/* ─────────────────────────────────────────────────────────── */
+const APP_FEATURES = [
+  {
+    title: "Every job in one place",
+    items: [
+      "Leads land straight from your website",
+      "Every job, enquiry to paid, in one line",
+      "Pipeline, jobs, appointments at a glance",
+      "All contacts, tap to call or text",
+    ],
+  },
+  {
+    title: "Quote, invoice &amp; get paid",
+    items: [
+      "Send quotes &amp; invoices in a few taps",
+      "Track every job through to Paid",
+      "Auto-asks for a review once paid",
+      "Card payment on the doorstep",
+    ],
+  },
+  {
+    title: "Plan your day, get there faster",
+    items: [
+      "Today&rsquo;s jobs pinned on a map",
+      "One-tap navigation &amp; live drive times",
+      "Full diary &amp; appointments in one place",
+      "Log arrival, hand over notes in one tap",
+    ],
+  },
+];
+
+const GETTING_STARTED = [
+  {
+    n: "1",
+    when: "Day one · 2 minutes",
+    title: "You sign up online",
+    body: "No setup fees, no contract. A few details about the website and you&rsquo;re in. Honestly, it&rsquo;s the hardest part of the whole thing, and it takes about two minutes.",
+    Mock: StepMockSignup,
+  },
+  {
+    n: "2",
+    when: "Within 24 hours",
+    title: "We call to get you set up",
+    body: "Within a day, one of the team gives you a welcome call. We get to know your trade, the jobs you want more of, and the areas you want to win, then tell you exactly what happens next. A real person, not a ticket queue.",
+    Mock: StepMockCall,
+  },
+  {
+    n: "3",
+    when: "A quick 5 minutes",
+    title: "You send us a few bits",
+    body: "After your call, we send over one short form. Add a few photos, your work, your van, your team, and the bits that make you different. That&rsquo;s everything we need to build a site that&rsquo;s properly yours.",
+    Mock: StepMockPhotos,
+  },
+  {
+    n: "4",
+    when: "Within 7 days",
+    title: "Your website preview lands",
+    body: "Within seven days we send you the real thing to review, every word written and every page designed, not a rough wireframe. Want changes? Tell us, and we keep tweaking until you&rsquo;re happy.",
+    Mock: StepMockPreview,
+  },
+  {
+    n: "5",
+    when: "Live &amp; ongoing",
+    title: "Your business goes live",
+    body: "Everything goes live as one connected system: your website tied into the app, your quotes and invoices. We set you up with the SEO foundation, then keep working on it every month so Google keeps sending people your way.",
+    Mock: StepMockLive,
+  },
+];
 
 const FAQS = [
   {
-    q: "How much does it cost?",
-    a: "The audit is free. The monthly plan is £197 a month and covers the website rebuild, SEO, dashboard, lead tracking and missed-call capture. If you want to add paid ads, we manage those for a separate fee on top of your ad spend. You pick the lead volume and the ad spend follows.",
+    q: "What does the plan actually cost?",
+    a: "£197 a month + VAT. That covers your rebuilt site, ongoing SEO with Tandemm Reach, the app to run enquiries and jobs, Duo voice assistant, tracking and the enquiry widget. Tandemm Fuel (paid ads) is an optional add-on, priced against your spend.",
   },
   {
-    q: "Do I have to sign a contract?",
-    a: "No. The monthly plan runs month to month. Cancel whenever it stops working for you.",
+    q: "Am I tied into a contract?",
+    a: "No. Month to month, cancel any time. The 90 Day Tandemm Promise sits over the top: if it hasn&rsquo;t earned its keep in 90 days, the plan refunds in full.",
   },
   {
-    q: "What's the difference between LSA and CPC?",
-    a: "LSA (Local Services Ads) sits at the top of Google and charges you only when a homeowner actually contacts you. CPC (Google Ads) charges per click. We run both.",
+    q: "Do I own the website?",
+    a: "The domain and content are yours. The site itself runs inside the Tandemm system, which is what keeps the SEO, tracking, widget and app talking to each other. Most owners don&rsquo;t think about the wiring, they just pick up the phone when it rings.",
   },
   {
-    q: "Do I own the website you build?",
-    a: "Yes. The website, the domain, the content are all yours. If you leave, you take it with you.",
-  },
-  {
-    q: "How fast will I see leads?",
-    a: "LSA leads inside 2 to 4 weeks of going live. CPC inside the first month. SEO compounds, so month three beats month one.",
+    q: "How fast will the phone start ringing?",
+    a: "SEO compounds week on week, so month three is ahead of month one and month six is a different business. If you want faster, Tandemm Fuel (paid ads) can start feeding the diary inside the first month.",
   },
 ];
-
-/* ─────────────────────────────────────────────────────────── */
-/*  Component                                                  */
-/* ─────────────────────────────────────────────────────────── */
 
 export default function HomePage() {
   const router = useRouter();
@@ -128,13 +211,8 @@ export default function HomePage() {
 
   const handleAudit = (e: FormEvent) => {
     e.preventDefault();
-    const trimmed = url.trim();
-    if (!trimmed) {
-      router.push("/book");
-      return;
-    }
-    const params = new URLSearchParams({ website: trimmed });
-    router.push(`/book?${params.toString()}`);
+    const t = url.trim();
+    router.push(t ? `/book?url=${encodeURIComponent(t)}` : "/book");
   };
 
   return (
@@ -145,104 +223,60 @@ export default function HomePage() {
       <DiamondLoader />
       <Nav active="home" />
 
-      {/* ── HERO ── */}
-      <section
-        className="hero-split relative box-border px-6 pb-10 pt-[52px]"
-        style={{
-          background:
-            "radial-gradient(70% 55% at 60% 0%, rgba(226,229,222,0.9), transparent 74%)",
-        }}
-      >
-        <div className="hero-split-grid">
-          <div className="hero-split-copy">
+      {/* ── HERO ────────────────────────────────────────────────── */}
+      <section className="v2-hero">
+        <div className="v2-hero-inner">
+          <div className="v2-hero-copy">
             <Reveal>
-              <h1 className="hero-title">
-                You&rsquo;re good
-                <br />
-                at the job.
+              <span className="v2-hero-tag">
+                Tandemm plan · from £197/mo + VAT
+              </span>
+            </Reveal>
+            <Reveal>
+              <h1 className="v2-hero-title">
+                Everything you need to win<br />work and run the business.
               </h1>
             </Reveal>
             <Reveal>
-              <p className="hero-subtitle" style={{ position: "relative", display: "inline-block" }}>
-                We make sure the right people know it.
-                <span
-                  style={{
-                    position: "absolute",
-                    bottom: -4,
-                    left: 0,
-                    width: "100%",
-                    height: 3,
-                    borderRadius: 99,
-                    background: "var(--color-accent)",
-                  }}
-                  aria-hidden="true"
-                />
+              <p className="v2-hero-sub">
+                A website built for your trade, hands-on SEO every month so
+                you show up on Google, and the Tandemm app to run
+                enquiries and jobs from your phone. One plan, one team, one bill.
               </p>
             </Reveal>
             <Reveal>
-              <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 28 }}>
-                <span
-                  className="hero-title"
-                  style={{ fontSize: "clamp(28px, 3.6vw, 40px)", lineHeight: 1, marginTop: 0, color: "var(--color-primary)" }}
-                >
-                  3.6m
-                </span>
-                <span style={{ maxWidth: 220, textAlign: "left", fontSize: 14, lineHeight: 1.4, color: "var(--color-ink-muted)" }}>
-                  people in the UK search for a tradesman every month
-                </span>
-              </div>
-            </Reveal>
-            <Reveal>
-              <div
-                className="mt-5 inline-block rounded-[var(--radius-xl)] bg-[var(--color-surface-muted)] px-6 py-4"
-                style={{ maxWidth: 480 }}
-              >
-                <p className="hero-desc" style={{ margin: 0 }}>
-                  Audit. Rebuild. Get&nbsp;found.
-                  <br />
-                  One place for every enquiry. Nothing&nbsp;missed.
-                </p>
-              </div>
-            </Reveal>
-
-            {/* URL audit form */}
-            <Reveal>
-              <form
-                onSubmit={handleAudit}
-                className="mt-7 flex w-full max-w-[500px] flex-col gap-3 sm:flex-row sm:items-center"
-              >
-                <div className="relative flex-1">
-                  <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[13px] font-semibold text-[var(--color-ink-muted)]">
-                    https://
-                  </span>
+              <form onSubmit={handleAudit} className="v2-hero-form">
+                <div className="v2-hero-input">
+                  <span>https://</span>
                   <input
                     type="text"
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     placeholder="yourbusiness.co.uk"
                     aria-label="Your website URL"
-                    className="h-[50px] w-full rounded-[var(--radius-pill)] border border-[var(--color-hairline)] bg-white pl-[74px] pr-4 text-[15px] font-medium text-[var(--color-ink)] outline-none transition-colors placeholder:text-[var(--color-ink-faint)] focus:border-[var(--color-accent)] focus:shadow-[var(--shadow-focus)]"
                   />
                 </div>
-                <button
-                  type="submit"
-                  className="inline-flex h-[50px] shrink-0 items-center justify-center whitespace-nowrap rounded-[var(--radius-pill)] bg-[var(--color-primary)] px-6 text-[15px] font-semibold text-[var(--color-on-primary)] transition-colors hover:bg-[var(--color-primary-hover)]"
-                >
-                  Get my free audit
+                <button type="submit" className="v2-hero-btn">
+                  See where I&apos;m losing jobs
                 </button>
               </form>
             </Reveal>
-
+            <Reveal>
+              <div className="v2-hero-guarantee">
+                <GuaranteeStrip variant="inline" />
+                <span>Full refund, no debate</span>
+              </div>
+            </Reveal>
           </div>
 
-          <div className="hero-split-visual">
+          <div className="v2-hero-visual">
             <Reveal>
-              <div className="hero-glass">
+              <div className="hero-glass v2-hero-glass">
                 <div className="hero-glass-highlight" aria-hidden="true" />
                 <HeroVisual />
                 <div className="hero-glass-fade" aria-hidden="true" />
                 <div className="hero-glass-gate">
-                  <Button href="/book">Get my free audit</Button>
+                  <ScanInput />
                 </div>
                 <div className="hero-glass-glow" aria-hidden="true" />
               </div>
@@ -251,50 +285,176 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── TRUST PARTNERS ── */}
+      {/* ── TRUST STRIP ─────────────────────────────────────────── */}
       <TrustPartners />
 
-      {/* ── DPC, the process, not offerings ── */}
-      <section className="px-6 py-20">
-        <div className="mx-auto max-w-[1160px]">
-          <Reveal className="mb-10 text-center">
-            <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
-              What we do
-            </div>
-            <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              Diagnosis. Prevention. Cure.
+      {/* ── FLOW: FROM GETTING FOUND TO BOOKED (curved line) ───── */}
+      <section className="v2-flow">
+        <div className="v2-flow-inner">
+          <Reveal className="v2-eyebrow-head">
+            <span className="v2-eyebrow">How it all works together</span>
+            <h2 className="v2-h2">
+              From strangers on Google<br />to booked jobs on the diary.
             </h2>
-            <p className="mx-auto mt-3 max-w-[620px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-              What you get: a free audit that&apos;s yours to keep, a
-              rebuilt website and full setup included in your plan, then
-              an engine that turns local searches into booked jobs.
+            <p className="v2-lede">
+              Your website, your Tandemm Reach SEO, and the app
+              aren&rsquo;t three separate tools. They&rsquo;re one system that
+              takes you from a local Google search to money in the bank.
             </p>
           </Reveal>
 
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-            {DPC.map((item) => (
-              <Reveal key={item.step}>
-                <div className="relative flex h-full flex-col overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
-                  <DpcArt name={item.art} />
-                  <div className="relative mb-3">
-                    <span className="text-xs font-bold uppercase tracking-[0.08em] text-[var(--color-accent)]">
-                      Stage {item.step}
-                    </span>
+          <div className="v2-flow-steps">
+            {FLOW_STEPS.map((s, i) => {
+              const flip = i % 2 === 1;
+              return (
+                <Fragment key={s.n}>
+                  {i > 0 && <FlowConnector flip={flip} />}
+                  <Reveal className="v2-flow-step-outer">
+                    <div className={`v2-flow-step ${flip ? "is-flip" : ""}`}>
+                      <div className="v2-flow-step-copy">
+                        <div className="v2-flow-step-num">
+                          <span className="v2-flow-diamond">{s.n}</span>
+                        </div>
+                        <h3 className="v2-flow-step-title">{s.title}</h3>
+                        <p
+                          className="v2-flow-step-body"
+                          dangerouslySetInnerHTML={{ __html: s.body }}
+                        />
+                        <ul className="v2-flow-step-bullets">
+                          {s.bullets.map((b) => (
+                            <li key={b}>
+                              <span className="v2-tick" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M5 12l5 5 9-11" />
+                                </svg>
+                              </span>
+                              <span dangerouslySetInnerHTML={{ __html: b }} />
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="v2-flow-step-visual">
+                        {s.mock === "google" && <GoogleLocalPack />}
+                        {s.mock === "site" && <TradesSite />}
+                        {s.mock === "base" && <BaseApp variant="inbox" />}
+                      </div>
+                    </div>
+                  </Reveal>
+                </Fragment>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── TEAM ROW ────────────────────────────────────────────── */}
+      <section className="v2-team">
+        <div className="v2-team-inner">
+          <Reveal>
+            <div className="v2-team-eyebrow">Managed by the Tandemm team</div>
+          </Reveal>
+          <Reveal>
+            <TeamRow />
+          </Reveal>
+          <Reveal>
+            <p className="v2-team-copy">
+              A real person on call, email or WhatsApp, never a ticket queue.
+              Unlimited changes, no extra charge, ever.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── DARK CTA WITH GLOW ──────────────────────────────────── */}
+      <section className="v2-subs v2-subs--glow">
+        <div className="v2-subs-inner">
+          <Reveal>
+            <div className="v2-subs-eyebrow">Ready when you are</div>
+          </Reveal>
+          <Reveal>
+            <h2 className="v2-subs-title">
+              Found, won and booked,<br />all from one Tandemm plan.
+            </h2>
+          </Reveal>
+          <Reveal>
+            <p className="v2-subs-sub">
+              Your website, Tandemm Reach and the app, working
+              as one system to win the work and run the business, while you
+              stay on the tools.
+            </p>
+          </Reveal>
+          <Reveal>
+            <div className="v2-subs-cta">
+              <ScanInput variant="dark" />
+            </div>
+          </Reveal>
+          <Reveal>
+            <div className="v2-subs-note">
+              £197/mo + VAT · No setup fees · Cancel any time
+            </div>
+          </Reveal>
+          <Reveal>
+            <div className="v2-subs-guarantee">
+              <GuaranteeStrip variant="inline" />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── EVERYTHING YOUR PLAN GIVES YOU ──────────────────────── */}
+      <section className="v2-included">
+        <div className="v2-included-inner">
+          <Reveal className="v2-eyebrow-head">
+            <span className="v2-eyebrow">What&rsquo;s included</span>
+            <h2 className="v2-h2">Everything your plan gives you.</h2>
+            <p className="v2-lede">
+              A rebuilt website, hands-on SEO every month, the app to run
+              enquiries and jobs, and a real person managing it for you.
+              Here&rsquo;s what that actually means.
+            </p>
+          </Reveal>
+
+          <div className="v2-included-websites">
+            <Reveal>
+              <h3 className="v2-h3">Show up, look great, get booked.</h3>
+              <p className="v2-sub">
+                Your subscription starts with a premium website, built for your
+                trade by us and run for you every month. Below are illustrative
+                styles, swipe through. Your finished site is written from your
+                work, your area and your tone of voice.
+              </p>
+            </Reveal>
+            <Reveal>
+              <div className="v2-included-showcase-wrap">
+                <SiteShowcase />
+                <div className="v2-included-badge">
+                  <div className="v2-included-badge-num">90+</div>
+                  <div>
+                    <div className="v2-included-badge-title">Google PageSpeed</div>
+                    <div className="v2-included-badge-sub">on every site</div>
                   </div>
-                  <h3 className="relative mb-2 font-[family-name:var(--font-display)] text-xl font-bold">
-                    {item.title}
-                  </h3>
-                  <p className="relative mb-4 text-[14.5px] leading-[1.55] text-[var(--color-ink-muted)]">
-                    {item.oneLiner}
-                  </p>
-                  <ul className="relative mt-auto flex flex-col gap-2 border-t border-[var(--color-hairline-soft)] pt-4">
-                    {item.items.map((it) => (
-                      <li
-                        key={it}
-                        className="flex items-start gap-2 text-[13.5px] leading-[1.4] text-[var(--color-ink)]"
-                      >
-                        <span className="mt-[7px] block h-1 w-1 shrink-0 rounded-full bg-[var(--color-ink-muted)]" />
-                        <span>{it}</span>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+
+          <div className="v2-included-grid">
+            {INCLUDED_GRID.map((f) => (
+              <Reveal key={f.title}>
+                <div className="v2-included-cell">
+                  <div className={`v2-included-icon v2-included-icon--${f.icon}`}>
+                    <FeatureIcon name={f.icon} />
+                  </div>
+                  <h4 className="v2-included-title">{f.title}</h4>
+                  <ul className="v2-included-list">
+                    {f.items.map((item) => (
+                      <li key={item}>
+                        <span className="v2-tick v2-tick--sm" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M5 12l5 5 9-11" />
+                          </svg>
+                        </span>
+                        <span dangerouslySetInnerHTML={{ __html: item }} />
                       </li>
                     ))}
                   </ul>
@@ -302,164 +462,314 @@ export default function HomePage() {
               </Reveal>
             ))}
           </div>
+
+          <Reveal>
+            <div className="v2-diff">
+              <div className="v2-diff-head">
+                <span className="v2-eyebrow">The Tandemm difference</span>
+                <p className="v2-diff-lede">
+                  Most website companies stop at the site. We keep working after
+                  the enquiry lands, so nothing slips through.
+                </p>
+              </div>
+              <div className="v2-diff-grid">
+                {DIFFERENTIATORS.map((d) => (
+                  <div key={d.title} className="v2-diff-card">
+                    <span className="v2-diff-icon">{d.icon}</span>
+                    <div>
+                      <div className="v2-diff-title">{d.title}</div>
+                      <div className="v2-diff-body">{d.body}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* ── FEATURE PREVIEW ── */}
-      <section className="px-6 py-20">
-        <div className="mx-auto max-w-[1160px]">
-          <Reveal className="mb-12 text-center">
-            <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
-              What you get
+      {/* ── APP CARD (rounded, not full-width) ──────────────────── */}
+      <section className="v2-app-section">
+        <div className="v2-app-section-inner">
+          <div className="v2-app-card">
+            <div className="v2-app-card-top">
+              <div className="v2-app-card-content">
+                <Reveal>
+                  <span className="v2-eyebrow v2-eyebrow--on-dark">Run it all from your pocket</span>
+                </Reveal>
+                <Reveal>
+                  <h2 className="v2-h2 v2-h2--on-dark">
+                    Win it, do it, get paid.<br />All from your pocket.
+                  </h2>
+                </Reveal>
+                <Reveal>
+                  <p className="v2-lede v2-lede--on-dark">
+                    Every lead from your website lands straight in your pocket.
+                    Your CRM, your jobs, your quotes and invoices, your
+                    reviews. The whole business, run from your phone.
+                  </p>
+                </Reveal>
+
+                <div className="v2-app-features">
+                  {APP_FEATURES.map((f) => (
+                    <Reveal key={f.title}>
+                      <div className="v2-app-feature">
+                        <h4
+                          className="v2-app-feature-title"
+                          dangerouslySetInnerHTML={{ __html: f.title }}
+                        />
+                        <ul className="v2-app-feature-list">
+                          {f.items.map((item) => (
+                            <li key={item} dangerouslySetInnerHTML={{ __html: item }} />
+                          ))}
+                        </ul>
+                      </div>
+                    </Reveal>
+                  ))}
+                </div>
+              </div>
+
+              <div className="v2-app-card-visual">
+                <Reveal>
+                  <div className="v2-app-phone-float">
+                    <BaseApp variant="inbox" withMic />
+                  </div>
+                </Reveal>
+              </div>
             </div>
-            <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              Everything you would normally hire multiple people for.
-            </h2>
-            <p className="mx-auto mt-3 max-w-[620px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-              One system captures every enquiry (calls, forms, missed
-              calls) so nothing slips through the cracks. You get on
-              with the work.
+
+            {/* Voice / Duo section inside the card */}
+            <div className="v2-app-voice">
+              <div className="v2-app-voice-header">
+                <Reveal>
+                  <span className="v2-app-voice-eyebrow">
+                    <span className="v2-app-voice-dot" />
+                    Talk to Duo · voice-first
+                  </span>
+                </Reveal>
+                <Reveal>
+                  <h3 className="v2-app-voice-title">
+                    Just talk. Duo does the typing.
+                  </h3>
+                </Reveal>
+                <Reveal>
+                  <p className="v2-app-voice-sub">
+                    Hands on the tools, paperwork off your plate. Talk to Duo
+                    the way you&rsquo;d talk to a good office manager.
+                  </p>
+                </Reveal>
+              </div>
+
+              <div className="v2-app-voice-panels">
+                <Reveal>
+                  <div className="v2-app-voice-panel v2-app-voice-panel--user">
+                    <div className="v2-app-voice-screenhead">
+                      <span className="v2-app-voice-mic" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <rect x="9" y="2" width="6" height="12" rx="3" />
+                          <path d="M5 10a7 7 0 0 0 14 0M12 17v4" />
+                        </svg>
+                      </span>
+                      <span className="v2-app-voice-label">You, on the tools</span>
+                    </div>
+                    <div className="v2-app-voice-wave" aria-hidden="true">
+                      {[8, 16, 24, 14, 30, 20, 34, 18, 26, 12, 22, 10, 28, 16, 8, 20, 14, 24].map((h, i) => (
+                        <span key={i} style={{ height: `${h}px`, animationDelay: `${i * 0.08}s` }} />
+                      ))}
+                    </div>
+                    <p>&ldquo;Log the job at 42 Oak Rise. Boiler swap, quoted at 2,400.&rdquo;</p>
+                  </div>
+                </Reveal>
+                <Reveal>
+                  <div className="v2-app-voice-panel v2-app-voice-panel--duo">
+                    <div className="v2-app-voice-screenhead">
+                      <span className="v2-app-voice-duomark" aria-hidden="true" />
+                      <span className="v2-app-voice-label">Duo, on the paperwork</span>
+                    </div>
+                    <p className="v2-app-voice-duotext">
+                      Logged the job at 42 Oak Rise. Homeowner saved as Sarah, deposit
+                      invoice on its way, and I&rsquo;ve pencilled Thursday morning in the diary.
+                    </p>
+                    <div className="v2-app-voice-duochips">
+                      <span>Job created</span>
+                      <span>Invoice sent</span>
+                      <span>Diary updated</span>
+                    </div>
+                  </div>
+                </Reveal>
+              </div>
+
+              <Reveal>
+                <ul className="v2-app-voice-list">
+                  <li>Log jobs and notes without unlocking your phone</li>
+                  <li>Send quotes and invoices while you drive</li>
+                  <li>Book calls, chase deposits and update the diary by voice</li>
+                </ul>
+              </Reveal>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── GETTING STARTED (5-step) ────────────────────────────── */}
+      <section className="v2-steps">
+        <div className="v2-steps-inner">
+          <Reveal className="v2-eyebrow-head">
+            <span className="v2-eyebrow">How it works</span>
+            <h2 className="v2-h2">Getting started is easy.</h2>
+            <p className="v2-lede">
+              No long forms, no chasing, and a real person with you from day
+              one. Here&rsquo;s exactly how it goes.
             </p>
           </Reveal>
 
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-            {FEATURE_PREVIEW.map((f) => (
-              <Reveal key={f.tag}>
-                <div className="flex h-full flex-col rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-1)]">
-                  <span className="mb-3 inline-flex w-fit rounded-full bg-[var(--color-accent-soft)] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--color-accent-hover)]">
-                    {f.tag}
-                  </span>
-                  <h3 className="mb-2 font-[family-name:var(--font-display)] text-[20px] font-bold leading-[1.2]">
-                    {f.title}
-                  </h3>
-                  <p className="text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-                    {f.body}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
+          <div className="v2-steps-list">
+            {GETTING_STARTED.map((s, i) => {
+              const flip = i % 2 === 1;
+              return (
+                <Reveal key={s.n} className="v2-step-outer">
+                  <div className={`v2-step ${flip ? "is-flip" : ""}`}>
+                    <div className="v2-step-visual">
+                      <s.Mock />
+                    </div>
+                    <div className="v2-step-copy">
+                      <div className="v2-step-badge">
+                        <span className="v2-step-badge-num">{s.n}</span>
+                        <span
+                          className="v2-step-badge-when"
+                          dangerouslySetInnerHTML={{ __html: s.when }}
+                        />
+                      </div>
+                      <h3 className="v2-step-title">{s.title}</h3>
+                      <p
+                        className="v2-step-body"
+                        dangerouslySetInnerHTML={{ __html: s.body }}
+                      />
+                    </div>
+                  </div>
+                </Reveal>
+              );
+            })}
           </div>
+        </div>
+      </section>
 
-          <Reveal className="mt-8 text-center">
-            <Button href="/features" variant="ghost">
-              See every feature
-            </Button>
+      {/* ── BOOST ADD-ON WITH GRAPHIC ──────────────────────────── */}
+      <section className="v2-addon">
+        <div className="v2-addon-inner">
+          <Reveal>
+            <div className="v2-addon-card">
+              <div className="v2-addon-copy">
+                <span className="v2-addon-tag">Optional add-on</span>
+                <div className="v2-addon-title">
+                  Need volume this week? Add Tandemm Fuel.
+                </div>
+                <div className="v2-addon-sub">
+                  Paid ads sit on top of Tandemm Reach as an accelerator.
+                  Turn on for volume, off when the diary&rsquo;s full. Priced
+                  against your spend, not a flat retainer.
+                </div>
+                <Button href="/boost" variant="ghost">See how Boost works</Button>
+              </div>
+              <div className="v2-addon-visual">
+                <BoostFunnel />
+              </div>
+            </div>
           </Reveal>
         </div>
       </section>
 
-      {/* ── DASHBOARD PREVIEW ── */}
-      <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
-        <div className="mx-auto max-w-[1160px]">
-          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_auto]">
-            <Reveal>
-              <div>
-                <div className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
-                  One dashboard
-                </div>
-                <h2 className="mb-4 font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
-                  Right now, leads are slipping through the cracks.
-                </h2>
-                <p className="mb-6 text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-                  Calls go to voicemail while you&apos;re on the tools. Texts
-                  get buried. You&apos;ve no real idea which job came from
-                  where. The dashboard tracks every enquiry, from every
-                  source, so nothing goes cold and you can see exactly
-                  what&apos;s working.
-                </p>
-                <ul className="mb-6 flex flex-col gap-2.5 text-[14.5px] leading-[1.55]">
-                  {[
-                    "Every call, form, WhatsApp and missed call tracked in one place",
-                    "Every lead tied to its source: ads, SEO, direct or referral",
-                    "Missed calls get an instant text back, before the lead cools",
-                    "Reporting tied to booked jobs, not clicks",
-                  ].map((i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-[var(--color-ink)]">
-                      <span className="mt-[9px] block h-1 w-1 shrink-0 rounded-full bg-[var(--color-ink-muted)]" />
-                      {i}
-                    </li>
-                  ))}
-                </ul>
-                <Button href="/features">Explore the dashboard</Button>
-              </div>
-            </Reveal>
-
-            <Reveal>
-              <DashboardPhone view="list" />
-            </Reveal>
-          </div>
+      {/* ── CONTACT ─────────────────────────────────────────────── */}
+      <section className="v2-contact">
+        <div className="v2-contact-inner">
+          <Reveal className="v2-eyebrow-head">
+            <span className="v2-eyebrow">Talk to a human</span>
+            <h2 className="v2-h2">Three ways in.</h2>
+          </Reveal>
+          <ContactOptions />
         </div>
       </section>
 
-      {/* ── FAQ ── */}
-      <section className="mx-auto max-w-[860px] px-6 py-20">
-        <Reveal className="mb-10 text-center">
-          <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-            Frequently asked questions
-          </h2>
-        </Reveal>
-        <div className="flex flex-col gap-3">
-          {FAQS.map((item, i) => {
-            const open = openFaq === i;
-            return (
-              <div
-                key={item.q}
-                className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[var(--color-surface)]"
-              >
-                <button
-                  type="button"
-                  onClick={() => setOpenFaq(open ? null : i)}
-                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left text-[16px] font-semibold text-[var(--color-ink)] transition-colors"
-                >
-                  {item.q}
-                  <span className="text-[22px] text-[var(--color-ink-muted)]">
-                    {open ? "−" : "+"}
-                  </span>
-                </button>
-                <div
-                  className="grid transition-[grid-template-rows] duration-200 ease-out"
-                  style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
-                >
-                  <div className="overflow-hidden">
-                    <p className="px-6 pb-5 text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-                      {item.a}
-                    </p>
+      {/* ── PRICING ─────────────────────────────────────────────── */}
+      <section className="v2-price">
+        <div className="v2-price-inner">
+          <Reveal className="v2-price-head">
+            <span className="v2-eyebrow">Simple pricing</span>
+            <h2 className="v2-h2">One price. That&rsquo;s the lot.</h2>
+            <div className="v2-price-num">
+              £197<span>/mo + VAT</span>
+            </div>
+            <p className="v2-lede">
+              Your website, hands-on SEO with Tandemm Reach, the app,
+              Duo, tracking and the enquiry widget. Most trades
+              earn it back inside a single extra job.
+            </p>
+          </Reveal>
+          <Reveal>
+            <div className="v2-price-row">
+              <span>One flat fee</span>
+              <span className="v2-price-dot" />
+              <span>No setup fees</span>
+              <span className="v2-price-dot" />
+              <span>No contract</span>
+              <span className="v2-price-dot" />
+              <span>Cancel any time</span>
+            </div>
+          </Reveal>
+          <Reveal>
+            <div className="v2-price-cta">
+              <ScanInput />
+              <Link href="/pricing" className="v2-price-link">
+                Full pricing breakdown →
+              </Link>
+            </div>
+          </Reveal>
+          <Reveal>
+            <div className="v2-price-guarantee">
+              <GuaranteeStrip variant="inline" />
+            </div>
+          </Reveal>
+          <Reveal>
+            <p className="v2-brand-tagline">
+              Every enquiry. Every customer. Every day.<br />
+              Working in Tandemm.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── FAQ ─────────────────────────────────────────────────── */}
+      <section className="v2-faq">
+        <div className="v2-faq-inner">
+          <Reveal>
+            <h2 className="v2-h2 v2-h2--center">Questions.</h2>
+          </Reveal>
+          <div className="v2-faq-list">
+            {FAQS.map((item, i) => {
+              const open = openFaq === i;
+              return (
+                <div key={item.q} className="v2-faq-item">
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq(open ? null : i)}
+                    className="v2-faq-btn"
+                  >
+                    {item.q}
+                    <span>{open ? "−" : "+"}</span>
+                  </button>
+                  <div
+                    className="v2-faq-body-wrap"
+                    style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
+                  >
+                    <div className="v2-faq-body">
+                      <p dangerouslySetInnerHTML={{ __html: item.a }} />
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-        <div className="mt-6 text-center">
-          <Button href="/pricing" variant="ghost">
-            More questions on the Pricing page
-          </Button>
-        </div>
-      </section>
-
-      {/* ── FINAL CTA ── */}
-      <section className="mx-auto max-w-[1160px] px-6 pb-20">
-        <Reveal>
-          <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-14 text-center text-[var(--color-on-primary)] shadow-[var(--shadow-2)] sm:px-14">
-            <h2 className="mx-auto max-w-[560px] font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              Find out where your site is costing you jobs.
-            </h2>
-            <p className="mx-auto mt-4 max-w-[480px] text-[17px] leading-[1.55] text-white/70">
-              Free audit. Yours to keep. No hard sell.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button
-                href="/book"
-                className="bg-white text-[var(--color-primary)] hover:bg-white/90"
-              >
-                Get my free audit
-              </Button>
-              <Button href="/features" variant="secondary">
-                See features
-              </Button>
-            </div>
+              );
+            })}
           </div>
-        </Reveal>
+        </div>
       </section>
 
       <Footer />
@@ -467,44 +777,50 @@ export default function HomePage() {
   );
 }
 
-/* ─────────────────────────────────────────────────────────── */
-/*  Faded stage illustrations                                  */
-/* ─────────────────────────────────────────────────────────── */
-
-function DpcArt({ name }: { name: "magnifier" | "wrench" | "pulse" }) {
+function FeatureIcon({ name }: { name: string }) {
   const common = {
-    width: 150,
-    height: 150,
+    width: 24,
+    height: 24,
     viewBox: "0 0 24 24",
     fill: "none",
-    stroke: "var(--color-accent)",
-    strokeWidth: 1.25,
+    stroke: "currentColor",
+    strokeWidth: 1.8,
     strokeLinecap: "round" as const,
     strokeLinejoin: "round" as const,
   };
+  if (name === "search")
+    return (
+      <svg {...common}>
+        <circle cx="11" cy="11" r="7" />
+        <path d="M21 21l-4.3-4.3" />
+      </svg>
+    );
+  if (name === "inbox")
+    return (
+      <svg {...common}>
+        <path d="M22 12h-6l-2 3h-4l-2-3H2" />
+        <path d="M5 4h14l3 8v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8l3-8z" />
+      </svg>
+    );
+  if (name === "gallery")
+    return (
+      <svg {...common}>
+        <rect x="3" y="4" width="18" height="16" rx="2" />
+        <circle cx="9" cy="10" r="2" />
+        <path d="M21 16l-5-5-8 8" />
+      </svg>
+    );
+  if (name === "tools")
+    return (
+      <svg {...common}>
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a3 3 0 0 1-4.2 4.2L7.5 19.5a2.1 2.1 0 0 1-3-3l9.8-9.8a3 3 0 0 1 4.2 4.2" />
+        <path d="M5 3l4 4" />
+      </svg>
+    );
   return (
-    <div
-      aria-hidden="true"
-      className="pointer-events-none absolute -right-6 -top-6 opacity-[0.07]"
-    >
-      {name === "magnifier" && (
-        <svg {...common}>
-          <circle cx="11" cy="11" r="7" />
-          <path d="M21 21l-4.3-4.3" />
-          <path d="M11 8v6M8 11h6" />
-        </svg>
-      )}
-      {name === "wrench" && (
-        <svg {...common}>
-          <path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4 2.5-2.5z" />
-        </svg>
-      )}
-      {name === "pulse" && (
-        <svg {...common}>
-          <path d="M2 12h4l2-6 4 14 3-9 2 3h5" />
-        </svg>
-      )}
-    </div>
+    <svg {...common}>
+      <path d="M12 2l8 4v6c0 5-3.5 9.5-8 10-4.5-.5-8-5-8-10V6l8-4z" />
+      <path d="M9 12l2 2 4-4" />
+    </svg>
   );
 }
-

@@ -429,7 +429,7 @@ export default function ResultsPage() {
                 href="/book"
                 className="bg-white text-[var(--color-primary)] hover:bg-white/90"
               >
-                Book a call
+                Find out what&apos;s costing you jobs
               </Button>
               <Button href="/system" variant="secondary">
                 See how it works

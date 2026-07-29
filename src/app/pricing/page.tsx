@@ -186,7 +186,7 @@ const FAQS = [
   },
   {
     q: "What if my trade or area is not a fit?",
-    a: "We say so before you spend anything. The free audit tells us whether there is enough search demand in your postcode to make it work. If it will not pay back, we tell you.",
+    a: "We say so before you spend anything. The site scan tells us whether there is enough search demand in your postcode to make it work. If it will not pay back, we tell you.",
   },
 ];
 
@@ -412,7 +412,7 @@ export default function PricingPage() {
                 href="/book"
                 className="bg-white text-[var(--color-primary)] hover:bg-white/90"
               >
-                Get my free audit
+                Find out what&apos;s costing you jobs
               </Button>
               <Button href="/features" variant="secondary">
                 See features
@@ -695,7 +695,7 @@ function PricingSlider() {
 
       {/* CTA */}
       <Button href="/book" className="w-full text-center">
-        {atMax ? "Let's talk about scaling" : "Get my free audit"}
+        {atMax ? "Let's talk about scaling" : "See where I'm losing jobs"}
       </Button>
     </div>
   );

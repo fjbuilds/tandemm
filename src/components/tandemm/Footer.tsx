@@ -1,14 +1,14 @@
 import Link from "next/link";
-import { Button } from "./Button";
+import { ScanInput } from "./ScanInput";
 
 const pageLinks = [
   { href: "/", label: "Home" },
+  { href: "/local-search", label: "Local Search" },
   { href: "/features", label: "Features" },
   { href: "/pricing", label: "Pricing" },
   { href: "/system", label: "How it works" },
-  { href: "/results", label: "Results" },
   { href: "/about", label: "About" },
-  { href: "/book", label: "Book a call" },
+  { href: "/book", label: "Free site scan" },
 ];
 
 export function Footer() {
@@ -28,9 +28,7 @@ export function Footer() {
               One place for every enquiry. Nothing&nbsp;missed.
             </p>
             <div className="mt-5">
-              <Button href="/book" variant="secondary">
-                Book a call
-              </Button>
+              <ScanInput variant="dark" />
             </div>
           </div>
 
@@ -62,6 +60,14 @@ export function Footer() {
               >
                 hello@tandemm.co.uk
               </a>
+              <a
+                href="https://wa.me/447000000000"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[15px] text-white/85 no-underline"
+              >
+                WhatsApp the team
+              </a>
               <span className="text-[15px] text-white/60">London, UK</span>
             </div>
           </div>
@@ -86,7 +92,7 @@ export function Footer() {
             </Link>
           </div>
           <span className="text-[13px] text-white/50">
-            Ads. SEO. Site. Enquiry system. Missed-call capture.
+            Website. SEO. App. All in Tandemm.
           </span>
         </div>
       </div>

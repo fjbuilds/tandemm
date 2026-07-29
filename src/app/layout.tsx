@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     template: "%s | Tandemm",
   },
   description:
-    "We run ads, SEO, the site, the enquiry system and missed-call capture for UK trade businesses. Leads land, we catch them, none go cold. Book a call for the Diagnosis Audit.",
+    "We run ads, SEO, the site, the enquiry system and missed-call capture for UK trade businesses. Leads land, we catch them, none go cold. Scan your site to see what is costing you jobs.",
 };
 
 export default function RootLayout({
