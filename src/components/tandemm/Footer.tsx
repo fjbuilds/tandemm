@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ScanInput } from "./ScanInput";
 
 const pageLinks = [
   { href: "/", label: "Home" },
@@ -23,13 +22,8 @@ export function Footer() {
               className="h-9 w-auto"
             />
             <p className="mt-4 max-w-[260px] font-[family-name:var(--font-display)] text-[17px] font-semibold leading-[1.3] text-white">
-              Audit. Rebuild. Get&nbsp;found.
-              <br />
-              One place for every enquiry. Nothing&nbsp;missed.
+              Get found. Get booked. Get&nbsp;paid.
             </p>
-            <div className="mt-5">
-              <ScanInput variant="dark" />
-            </div>
           </div>
 
           <div>
