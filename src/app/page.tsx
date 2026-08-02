@@ -13,7 +13,6 @@ import { DiamondLoader } from "@/components/tandemm/DiamondLoader";
 import { TrustPartners } from "@/components/tandemm/TrustPartners";
 import { GuaranteeStrip } from "@/components/tandemm/GuaranteeStrip";
 import { ContactOptions } from "@/components/tandemm/ContactOptions";
-import { FlowConnector } from "@/components/tandemm/FlowConnector";
 import {
   GoogleLocalPack,
   TradesSite,
@@ -308,7 +307,6 @@ export default function HomePage() {
               const flip = i % 2 === 1;
               return (
                 <Fragment key={s.n}>
-                  {i > 0 && <FlowConnector flip={flip} />}
                   <Reveal className="v2-flow-step-outer">
                     <div className={`v2-flow-step ${flip ? "is-flip" : ""}`}>
                       <div className="v2-flow-step-copy">
@@ -350,9 +348,6 @@ export default function HomePage() {
       {/* ── TEAM ROW ────────────────────────────────────────────── */}
       <section className="v2-team">
         <div className="v2-team-inner">
-          <Reveal>
-            <div className="v2-team-eyebrow">Managed by the Tandemm team</div>
-          </Reveal>
           <Reveal>
             <TeamRow />
           </Reveal>

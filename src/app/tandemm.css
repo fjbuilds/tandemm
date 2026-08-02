@@ -5622,9 +5622,25 @@ body {
    V3 — FLOW SECTION (curved line replacing spine)
    ───────────────────────────────────────────────────────────── */
 
-.v2-flow { padding: 80px 0 40px; }
-.v2-flow-inner { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
-.v2-flow-steps { margin-top: 64px; display: flex; flex-direction: column; align-items: center; }
+.v2-flow { padding: 60px 0 24px; }
+.v2-flow-inner { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+.v2-flow-steps { margin-top: 40px; display: flex; flex-direction: column; align-items: center; position: relative; }
+/* Continuous BFT-style vertical spine running down the centre */
+.v2-flow-steps::before {
+  content: ""; position: absolute; left: 50%; top: 14px; bottom: 46px;
+  width: 2px; transform: translateX(-50%);
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--color-accent) 70%, transparent) 0%,
+    color-mix(in srgb, var(--color-accent) 45%, transparent) 55%,
+    color-mix(in srgb, var(--color-primary) 45%, transparent) 100%);
+  z-index: 0;
+}
+.v2-flow-steps::after {
+  content: ""; position: absolute; left: 50%; bottom: 36px;
+  width: 11px; height: 11px; transform: translateX(-50%);
+  border-radius: 50%; background: var(--color-accent);
+  box-shadow: 0 0 0 5px var(--color-canvas); z-index: 1;
+}
 
 .v2-flow-connector {
   display: flex !important; flex-direction: column; align-items: center;
@@ -5654,10 +5670,10 @@ body {
   .v2-flow-connector-dot { opacity: 0.85; }
 }
 
-.v2-flow-step-outer { width: 100%; }
+.v2-flow-step-outer { width: 100%; position: relative; z-index: 1; }
 .v2-flow-step {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
-  align-items: center; padding: 32px 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 88px;
+  align-items: center; padding: 22px 0;
 }
 .v2-flow-step.is-flip { direction: rtl; }
 .v2-flow-step.is-flip > * { direction: ltr; }
@@ -5674,13 +5690,19 @@ body {
 .v2-flow-diamond > * { transform: rotate(-45deg); }
 .v2-flow-step-title {
   font-family: var(--font-display); font-weight: 800;
-  font-size: clamp(24px, 3vw, 32px); line-height: 1.15;
-  color: var(--color-ink); margin-bottom: 12px;
+  font-size: clamp(20px, 2.3vw, 26px); line-height: 1.15;
+  color: var(--color-ink); margin-bottom: 10px;
 }
-.v2-flow-step-body { font-size: 15px; line-height: 1.7; color: var(--color-ink-muted); margin-bottom: 20px; }
-.v2-flow-step-bullets { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
-.v2-flow-step-bullets li { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--color-ink); }
+.v2-flow-step-body { font-size: 14.5px; line-height: 1.65; color: var(--color-ink-muted); margin-bottom: 16px; }
+.v2-flow-step-bullets { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 7px; }
+.v2-flow-step-bullets li { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--color-ink); }
 .v2-flow-step-visual { display: flex; justify-content: center; }
+/* Scale the flow mockups down to BFT card size */
+.v2-flow-step-visual > .google-pack,
+.v2-flow-step-visual > .trades-site { max-width: 410px; }
+.v2-flow-step-visual .base-app-frame {
+  transform: scale(0.64); transform-origin: center center; margin: -115px 0;
+}
 
 @media (max-width: 767px) {
   .v2-flow-step { grid-template-columns: 1fr; gap: 24px; }
@@ -5688,6 +5710,8 @@ body {
   .v2-flow-step-visual { order: -1; }
   .v2-flow-connector { height: 48px; }
   .v2-flow-connector svg { height: 48px; }
+  .v2-flow-steps::before, .v2-flow-steps::after { display: none; }
+  .v2-flow-step-visual .base-app-frame { transform: scale(0.72); margin: -90px 0; }
 }
 
 /* ─────────────────────────────────────────────────────────────
