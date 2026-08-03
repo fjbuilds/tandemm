@@ -65,7 +65,7 @@ export default function BoostPage() {
       style={paletteOverride}
     >
       <DiamondLoader />
-      <Nav active="features" />
+      <Nav active="fuel" />
 
       {/* HERO — dark */}
       <section className="boost-hero">

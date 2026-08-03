@@ -61,12 +61,18 @@ export function Footer() {
                 hello@tandemm.co.uk
               </a>
               <a
-                href="https://wa.me/447000000000"
+                href="https://wa.me/447948091506"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[15px] text-white/85 no-underline"
               >
                 WhatsApp the team
+              </a>
+              <a
+                href="tel:+447948091506"
+                className="text-[15px] text-white/85 no-underline"
+              >
+                07948 091506
               </a>
               <span className="text-[15px] text-white/60">London, UK</span>
             </div>
