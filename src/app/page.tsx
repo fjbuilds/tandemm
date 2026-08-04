@@ -8,7 +8,7 @@ import { Footer } from "@/components/tandemm/Footer";
 import { Reveal } from "@/components/tandemm/Reveal";
 import { Button } from "@/components/tandemm/Button";
 import { ScanInput } from "@/components/tandemm/ScanInput";
-import { HeroVisual } from "@/components/tandemm/HeroVisual";
+import { HeroSystem } from "@/components/tandemm/HeroSystem";
 import { DiamondLoader } from "@/components/tandemm/DiamondLoader";
 import { TrustPartners } from "@/components/tandemm/TrustPartners";
 import { GuaranteeStrip } from "@/components/tandemm/GuaranteeStrip";
@@ -19,13 +19,11 @@ import {
   TradesSite,
   SiteShowcase,
   BaseApp,
-  TeamRow,
   StepMockSignup,
   StepMockCall,
   StepMockPhotos,
   StepMockPreview,
   StepMockLive,
-  BoostFunnel,
 } from "@/components/tandemm/Mocks";
 
 const paletteOverride = {
@@ -76,9 +74,9 @@ const INCLUDED_GRID = [
     icon: "inbox",
     title: "Turns visitors into jobs",
     items: [
-      "Enquiry forms &amp; WhatsApp direct",
-      "Instant push the second a lead lands",
-      "Missed call text-back, automatic",
+      "Quote-taking widget, replacing outdated enquiry forms",
+      "Instant notification when a job comes in",
+      "Missed-call text-back &amp; enquiry recovery, automatic",
       "Spam filtered, only real enquiries",
     ],
   },
@@ -89,31 +87,31 @@ const INCLUDED_GRID = [
       "Project pages &amp; photo galleries",
       "Before &amp; after sliders",
       "Your own videos on the site",
-      "Every job a page you can share",
+      "Images optimised for Google&rsquo;s algorithm",
     ],
   },
   {
     icon: "tools",
     title: "Runs the business",
     items: [
-      "Quote &amp; invoice from the van",
-      "Card payments on the doorstep",
-      "Auto-chase deposits, auto-collect reviews",
-      "Full diary, pipeline &amp; CRM",
+      "Ready-to-buy customers, sent to you automatically via the website",
+      "Voice-enabled app to log jobs on the move",
+      "Automated follow-ups for cold enquiries and Google reviews",
+      "The tech side of the business, handled 24/7",
     ],
   },
 ];
 
 const DIFFERENTIATORS = [
   {
-    icon: "📞",
-    title: "Missed call recovery",
-    body: "Can't get to the phone? The second a call drops, an automatic text goes back so the lead never goes cold.",
+    label: "01",
+    title: "Missed-call recovery",
+    body: "On the tools and can&rsquo;t pick up? The second a call drops, an automatic text goes straight back. The lead knows you&rsquo;ll be in touch, so it never goes cold before you&rsquo;ve seen it.",
   },
   {
-    icon: "⚡",
-    title: "Automatic quoting",
-    body: "Send a tidy, branded quote in a few taps straight from the app, then it chases itself until the customer replies.",
+    label: "02",
+    title: "Quoting quality control",
+    body: "We don&rsquo;t auto-quote blindly. Before an enquiry reaches you, the customer is walked through the right questions, so what lands is a proper, qualified job with the detail you need, not a one-line &lsquo;how much?&rsquo;.",
   },
 ];
 
@@ -150,37 +148,37 @@ const APP_FEATURES = [
 const GETTING_STARTED = [
   {
     n: "1",
-    when: "Day one · 2 minutes",
-    title: "You sign up online",
-    body: "No setup fees, no contract. A few details about the website and you&rsquo;re in. Honestly, it&rsquo;s the hardest part of the whole thing, and it takes about two minutes.",
+    when: "Day one · 30 seconds",
+    title: "Scan your site, see where it&rsquo;s losing jobs",
+    body: "Pop in your details and within 30 seconds you get a plain-English report on your current site, where it&rsquo;s leaking enquiries and what a rebuild would fix. Like what you see? Leave a few details and we take it from there.",
     Mock: StepMockSignup,
   },
   {
     n: "2",
     when: "Within 24 hours",
-    title: "We call to get you set up",
-    body: "Within a day, one of the team gives you a welcome call. We get to know your trade, the jobs you want more of, and the areas you want to win, then tell you exactly what happens next. A real person, not a ticket queue.",
+    title: "We call with a design already started",
+    body: "One of the team calls inside a day, and we don&rsquo;t turn up empty-handed. We bring an early mock-up of your new site and a few questions, so the very first conversation is about your business, not a blank page.",
     Mock: StepMockCall,
   },
   {
     n: "3",
     when: "A quick 5 minutes",
-    title: "You send us a few bits",
-    body: "After your call, we send over one short form. Add a few photos, your work, your van, your team, and the bits that make you different. That&rsquo;s everything we need to build a site that&rsquo;s properly yours.",
+    title: "You send the bits only you have",
+    body: "Photos of your work, the services you offer, your patch and your team. The things that make the site properly yours. Send them over and we build everything around them.",
     Mock: StepMockPhotos,
   },
   {
     n: "4",
-    when: "Within 7 days",
-    title: "Your website preview lands",
-    body: "Within seven days we send you the real thing to review, every word written and every page designed, not a rough wireframe. Want changes? Tell us, and we keep tweaking until you&rsquo;re happy.",
+    when: "Within 5 days",
+    title: "Your working site lands",
+    body: "Within five days you get a fully working site, not a rough wireframe. We go back and forth until every page, every word and every photo is exactly right.",
     Mock: StepMockPreview,
   },
   {
     n: "5",
     when: "Live &amp; ongoing",
-    title: "Your business goes live",
-    body: "Everything goes live as one connected system: your website tied into the app, your quotes and invoices. We set you up with the SEO foundation, then keep working on it every month so Google keeps sending people your way.",
+    title: "You go live, and you&rsquo;re away",
+    body: "The whole system goes live as one: your site, the app, your enquiries and your SEO all wired together. We walk you through how it runs, then you&rsquo;re away, with us keeping it working in the background.",
     Mock: StepMockLive,
   },
 ];
@@ -234,15 +232,20 @@ export default function HomePage() {
             </Reveal>
             <Reveal>
               <h1 className="v2-hero-title">
-                Everything you need to win<br />work and run the business.
+                You&rsquo;re good at the job.<br />
+                We make sure the right people{" "}
+                <span className="v2-hero-underline">see</span> it.
               </h1>
             </Reveal>
             <Reveal>
-              <p className="v2-hero-sub">
-                A website built for your trade, hands-on SEO every month so
-                you show up on Google, and the Tandemm app to run
-                enquiries and jobs from your phone. One plan, one team, one bill.
-              </p>
+              <div className="v2-hero-stat">
+                <div className="v2-hero-stat-num">9 in 10</div>
+                <p className="v2-hero-stat-text">
+                  homeowners look you up online before they ever call. If
+                  you&rsquo;re not showing up, or the site looks tired, that job
+                  quietly goes to whoever is.
+                </p>
+              </div>
             </Reveal>
             <Reveal>
               <form onSubmit={handleAudit} className="v2-hero-form">
@@ -271,15 +274,7 @@ export default function HomePage() {
 
           <div className="v2-hero-visual">
             <Reveal>
-              <div className="hero-glass v2-hero-glass">
-                <div className="hero-glass-highlight" aria-hidden="true" />
-                <HeroVisual />
-                <div className="hero-glass-fade" aria-hidden="true" />
-                <div className="hero-glass-gate">
-                  <ScanInput />
-                </div>
-                <div className="hero-glass-glow" aria-hidden="true" />
-              </div>
+              <HeroSystem />
             </Reveal>
           </div>
         </div>
@@ -294,12 +289,11 @@ export default function HomePage() {
           <Reveal className="v2-eyebrow-head">
             <span className="v2-eyebrow">How it all works together</span>
             <h2 className="v2-h2">
-              From strangers on Google<br />to booked jobs on the diary.
+              From getting found,<br />to getting paid.
             </h2>
             <p className="v2-lede">
-              Your website, your Tandemm Reach SEO, and the app
-              aren&rsquo;t three separate tools. They&rsquo;re one system that
-              takes you from a local Google search to money in the bank.
+              Your website. Tandemm Reach. Duo app.<br />
+              One system, generating high-quality, local business.
             </p>
           </Reveal>
 
@@ -334,9 +328,11 @@ export default function HomePage() {
                         </ul>
                       </div>
                       <div className="v2-flow-step-visual">
-                        {s.mock === "google" && <GoogleLocalPack />}
-                        {s.mock === "site" && <TradesSite />}
-                        {s.mock === "base" && <BaseApp variant="inbox" />}
+                        <div className="v2-flow-step-frame">
+                          {s.mock === "google" && <GoogleLocalPack />}
+                          {s.mock === "site" && <TradesSite />}
+                          {s.mock === "base" && <BaseApp variant="inbox" />}
+                        </div>
                       </div>
                     </div>
                   </Reveal>
@@ -344,24 +340,6 @@ export default function HomePage() {
               );
             })}
           </div>
-        </div>
-      </section>
-
-      {/* ── TEAM ROW ────────────────────────────────────────────── */}
-      <section className="v2-team">
-        <div className="v2-team-inner">
-          <Reveal>
-            <div className="v2-team-eyebrow">Managed by the Tandemm team</div>
-          </Reveal>
-          <Reveal>
-            <TeamRow />
-          </Reveal>
-          <Reveal>
-            <p className="v2-team-copy">
-              A real person on call, email or WhatsApp, never a ticket queue.
-              Unlimited changes, no extra charge, ever.
-            </p>
-          </Reveal>
         </div>
       </section>
 
@@ -378,19 +356,13 @@ export default function HomePage() {
           </Reveal>
           <Reveal>
             <p className="v2-subs-sub">
-              Your website, Tandemm Reach and the app, working
-              as one system to win the work and run the business, while you
-              stay on the tools.
+              Your website. Tandemm Reach. Duo app.<br />
+              One system, generating high-quality, local business.
             </p>
           </Reveal>
           <Reveal>
             <div className="v2-subs-cta">
               <ScanInput variant="dark" />
-            </div>
-          </Reveal>
-          <Reveal>
-            <div className="v2-subs-note">
-              £197/mo + VAT · No setup fees · Cancel any time
             </div>
           </Reveal>
           <Reveal>
@@ -408,9 +380,9 @@ export default function HomePage() {
             <span className="v2-eyebrow">What&rsquo;s included</span>
             <h2 className="v2-h2">Everything your plan gives you.</h2>
             <p className="v2-lede">
-              A rebuilt website, hands-on SEO every month, the app to run
-              enquiries and jobs, and a real person managing it for you.
-              Here&rsquo;s what that actually means.
+              A rebuilt website, hands-on SEO every month so you stay visible,
+              and the Tandemm Duo app to handle enquiries and capture any you
+              miss. Here&rsquo;s what that actually means.
             </p>
           </Reveal>
 
@@ -419,9 +391,8 @@ export default function HomePage() {
               <h3 className="v2-h3">Show up, look great, get booked.</h3>
               <p className="v2-sub">
                 Your subscription starts with a premium website, built for your
-                trade by us and run for you every month. Below are illustrative
-                styles, swipe through. Your finished site is written from your
-                work, your area and your tone of voice.
+                trade by us and run for you every month. Your finished site is
+                written from your work, your area and your tone of voice.
               </p>
             </Reveal>
             <Reveal>
@@ -469,16 +440,21 @@ export default function HomePage() {
                 <span className="v2-eyebrow">The Tandemm difference</span>
                 <p className="v2-diff-lede">
                   Most website companies stop at the site. We keep working after
-                  the enquiry lands, so nothing slips through.
+                  the enquiry lands. Not by auto-quoting on your behalf, but by
+                  recovering the calls you miss and controlling the quality of
+                  what reaches you.
                 </p>
               </div>
               <div className="v2-diff-grid">
                 {DIFFERENTIATORS.map((d) => (
                   <div key={d.title} className="v2-diff-card">
-                    <span className="v2-diff-icon">{d.icon}</span>
+                    <span className="v2-diff-num">{d.label}</span>
                     <div>
                       <div className="v2-diff-title">{d.title}</div>
-                      <div className="v2-diff-body">{d.body}</div>
+                      <div
+                        className="v2-diff-body"
+                        dangerouslySetInnerHTML={{ __html: d.body }}
+                      />
                     </div>
                   </div>
                 ))}
@@ -532,7 +508,7 @@ export default function HomePage() {
               <div className="v2-app-card-visual">
                 <Reveal>
                   <div className="v2-app-phone-float">
-                    <BaseApp variant="inbox" withMic />
+                    <BaseApp variant="home" withMic />
                   </div>
                 </Reveal>
               </div>
@@ -564,32 +540,50 @@ export default function HomePage() {
                 <Reveal>
                   <div className="v2-app-voice-panel v2-app-voice-panel--user">
                     <div className="v2-app-voice-screenhead">
-                      <span className="v2-app-voice-mic" aria-hidden="true">
+                      <span className="v2-app-voice-mic v2-app-voice-mic--live" aria-hidden="true">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                           <rect x="9" y="2" width="6" height="12" rx="3" />
                           <path d="M5 10a7 7 0 0 0 14 0M12 17v4" />
                         </svg>
                       </span>
-                      <span className="v2-app-voice-label">You, on the tools</span>
+                      <span className="v2-app-voice-label">Speaking to Duo</span>
+                      <span className="v2-app-voice-rec">
+                        <span className="v2-app-voice-rec-dot" />
+                        Listening
+                      </span>
                     </div>
                     <div className="v2-app-voice-wave" aria-hidden="true">
                       {[8, 16, 24, 14, 30, 20, 34, 18, 26, 12, 22, 10, 28, 16, 8, 20, 14, 24].map((h, i) => (
                         <span key={i} style={{ height: `${h}px`, animationDelay: `${i * 0.08}s` }} />
                       ))}
                     </div>
-                    <p>&ldquo;Log the job at 42 Oak Rise. Boiler swap, quoted at 2,400.&rdquo;</p>
+                    <p className="v2-app-voice-transcript">
+                      &ldquo;Log the job at 42 Oak Rise. Boiler swap for Sarah,
+                      quoted at 2,400. Book me in Thursday morning.&rdquo;
+                    </p>
                   </div>
                 </Reveal>
                 <Reveal>
                   <div className="v2-app-voice-panel v2-app-voice-panel--duo">
                     <div className="v2-app-voice-screenhead">
                       <span className="v2-app-voice-duomark" aria-hidden="true" />
-                      <span className="v2-app-voice-label">Duo, on the paperwork</span>
+                      <span className="v2-app-voice-label">Logged in Duo</span>
+                      <span className="v2-app-voice-done">Done</span>
                     </div>
-                    <p className="v2-app-voice-duotext">
-                      Logged the job at 42 Oak Rise. Homeowner saved as Sarah, deposit
-                      invoice on its way, and I&rsquo;ve pencilled Thursday morning in the diary.
-                    </p>
+                    <div className="v2-app-voice-job">
+                      <div className="v2-app-voice-job-head">
+                        <div>
+                          <div className="v2-app-voice-job-title">Boiler swap · Sarah W.</div>
+                          <div className="v2-app-voice-job-sub">42 Oak Rise · Thu, 8:00am</div>
+                        </div>
+                        <div className="v2-app-voice-job-val">£2,400</div>
+                      </div>
+                      <div className="v2-app-voice-job-rows">
+                        <div><span>Contact</span><span>Sarah W. saved</span></div>
+                        <div><span>Deposit invoice</span><span>Sent</span></div>
+                        <div><span>Diary</span><span>Thu 8:00am booked</span></div>
+                      </div>
+                    </div>
                     <div className="v2-app-voice-duochips">
                       <span>Job created</span>
                       <span>Invoice sent</span>
@@ -617,10 +611,6 @@ export default function HomePage() {
           <Reveal className="v2-eyebrow-head">
             <span className="v2-eyebrow">How it works</span>
             <h2 className="v2-h2">Getting started is easy.</h2>
-            <p className="v2-lede">
-              No long forms, no chasing, and a real person with you from day
-              one. Here&rsquo;s exactly how it goes.
-            </p>
           </Reveal>
 
           <div className="v2-steps-list">
@@ -654,25 +644,34 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── BOOST ADD-ON WITH GRAPHIC ──────────────────────────── */}
+      {/* ── TANDEMM FUEL ADD-ON ────────────────────────────────── */}
       <section className="v2-addon">
         <div className="v2-addon-inner">
           <Reveal>
             <div className="v2-addon-card">
               <div className="v2-addon-copy">
-                <span className="v2-addon-tag">Optional add-on</span>
+                <span className="v2-addon-tag">Optional add-on · Tandemm Fuel</span>
                 <div className="v2-addon-title">
-                  Need volume this week? Add Tandemm Fuel.
+                  Turn your lead volume up or down, whenever you need.
                 </div>
                 <div className="v2-addon-sub">
-                  Paid ads sit on top of Tandemm Reach as an accelerator.
-                  Turn on for volume, off when the diary&rsquo;s full. Priced
-                  against your spend, not a flat retainer.
+                  Tandemm Reach builds steady, compounding local rankings.
+                  Tandemm Fuel is the paid-ads accelerator that sits on top:
+                  turn it up when the diary&rsquo;s quiet, ease it off when
+                  you&rsquo;re full. Priced against your spend, never a flat
+                  retainer.
                 </div>
-                <Button href="/boost" variant="ghost">See how Boost works</Button>
+                <div className="v2-addon-points">
+                  <span>Live within the week</span>
+                  <span>Spend follows what pays</span>
+                  <span>Pause any time</span>
+                </div>
+                <Button href="/boost" variant="primary">
+                  See how Tandemm Fuel works
+                </Button>
               </div>
               <div className="v2-addon-visual">
-                <BoostFunnel />
+                <FuelVolume />
               </div>
             </div>
           </Reveal>
@@ -700,9 +699,10 @@ export default function HomePage() {
               £197<span>/mo + VAT</span>
             </div>
             <p className="v2-lede">
-              Your website, hands-on SEO with Tandemm Reach, the app,
-              Duo, tracking and the enquiry widget. Most trades
-              earn it back inside a single extra job.
+              Your website, Tandemm Reach SEO every month, and the Duo app
+              running your enquiries and jobs. One flat fee that most trades
+              earn back inside a single extra job. Want more volume on top?
+              Tandemm Fuel turns the leads up or down as you need them.
             </p>
           </Reveal>
           <Reveal>
@@ -773,6 +773,54 @@ export default function HomePage() {
       </section>
 
       <Footer />
+    </div>
+  );
+}
+
+function FuelVolume() {
+  // bars for "quiet" baseline vs "boosted" volume
+  const bars = [34, 40, 30, 46, 52, 60, 72, 84, 92];
+  return (
+    <div className="fuel-vol" aria-hidden="true">
+      <div className="fuel-vol-head">
+        <div>
+          <div className="fuel-vol-title">Lead volume</div>
+          <div className="fuel-vol-sub">This month · Tandemm Fuel on</div>
+        </div>
+        <span className="fuel-vol-badge">
+          <span className="fuel-vol-badge-dot" />
+          Boosted
+        </span>
+      </div>
+
+      <div className="fuel-vol-chart">
+        {bars.map((h, i) => (
+          <span
+            key={i}
+            className={`fuel-vol-bar ${i >= 6 ? "is-boost" : ""}`}
+            style={{ height: `${h}%` }}
+          />
+        ))}
+      </div>
+
+      <div className="fuel-vol-scale">
+        <span>Quiet week</span>
+        <span>Diary full</span>
+      </div>
+
+      <div className="fuel-vol-control">
+        <span className="fuel-vol-ctrl-btn">−</span>
+        <div className="fuel-vol-track">
+          <div className="fuel-vol-fill" style={{ width: "78%" }}>
+            <span className="fuel-vol-knob" />
+          </div>
+        </div>
+        <span className="fuel-vol-ctrl-btn is-plus">+</span>
+      </div>
+      <div className="fuel-vol-foot">
+        <span>Turn up for volume</span>
+        <span>Ease off when full</span>
+      </div>
     </div>
   );
 }

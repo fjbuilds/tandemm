@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 const links = [
   { href: "/", label: "Home", key: "home" },
   { href: "/local-search", label: "Tandemm Reach", key: "features" },
+  { href: "/boost", label: "Tandemm Fuel", key: "fuel" },
   { href: "/pricing", label: "Pricing", key: "pricing" },
   { href: "/about", label: "About", key: "about" },
 ] as const;
@@ -17,6 +18,7 @@ export function Nav({
   active:
     | "home"
     | "features"
+    | "fuel"
     | "pricing"
     | "system"
     | "results"
@@ -57,7 +59,7 @@ export function Nav({
 
         <div className="flex shrink-0 items-center gap-2.5">
           <a
-            href="https://wa.me/447000000000"
+            href="https://wa.me/447948091506"
             aria-label="WhatsApp Tandemm"
             target="_blank"
             rel="noopener noreferrer"

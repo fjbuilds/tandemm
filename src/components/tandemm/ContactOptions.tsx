@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 export const TANDEMM_WHATSAPP =
-  "https://wa.me/447000000000?text=Hi%20Tandemm%2C%20I%27d%20like%20to%20check%20availability";
-export const TANDEMM_PHONE = "tel:+447000000000";
+  "https://wa.me/447948091506?text=Hi%20Tandemm%2C%20I%27d%20like%20to%20check%20availability";
+export const TANDEMM_PHONE = "tel:+447948091506";
 
 const options = [
   {

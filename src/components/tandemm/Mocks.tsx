@@ -280,10 +280,6 @@ export function SiteShowcase() {
                 </div>
               </div>
             </div>
-            <figcaption className="site-showcase-caption">
-              <div className="site-showcase-name">{s.name}</div>
-              <div className="site-showcase-trade">{s.trade}</div>
-            </figcaption>
           </figure>
         ))}
       </div>
@@ -302,19 +298,94 @@ const LEADS = [
   { name: "David R.", src: "Google", job: "Powerflush, SW12", time: "3h", tone: "cool" as const, val: "£420" },
 ];
 
-export function BaseApp({ variant = "inbox", withMic = false }: { variant?: "inbox" | "day" | "quotes"; withMic?: boolean }) {
+export function BaseApp({ variant = "inbox", withMic = false }: { variant?: "inbox" | "day" | "quotes" | "home"; withMic?: boolean }) {
   return (
-    <div className={`base-app${withMic ? " base-app--float" : ""}`} role="img" aria-label="Illustrative Tandemm Deck app on a phone">
+    <div className={`base-app${withMic ? " base-app--float" : ""}`} role="img" aria-label="Illustrative Tandemm Duo app on a phone">
       <div className="base-app-frame">
         <div className="base-app-notch" />
         <div className="base-app-screen">
           {variant === "inbox" && <BaseInbox withMic={withMic} />}
           {variant === "day" && <BaseDay withMic={withMic} />}
           {variant === "quotes" && <BaseQuotes withMic={withMic} />}
+          {variant === "home" && <BaseHome withMic={withMic} />}
         </div>
         <div className="base-app-home" />
       </div>
     </div>
+  );
+}
+
+function BaseHome({ withMic = false }: { withMic?: boolean }) {
+  return (
+    <>
+      <div className="base-app-status">
+        <span>9:41</span>
+        <span className="base-app-status-icons">
+          <span className="base-app-signal" />
+          <span className="base-app-wifi" />
+          <span className="base-app-battery" />
+        </span>
+      </div>
+      <div className="base-app-topbar">
+        <div>
+          <div className="base-app-hello">Morning, Alex</div>
+          <div className="base-app-today">Tue 12 Aug · 3 jobs on today</div>
+        </div>
+        <div className="base-app-avatar">AH</div>
+      </div>
+
+      {/* Map view */}
+      <div className="base-home-map">
+        <div className="base-day-map-bg" />
+        <div className="base-day-map-route" />
+        <div className="base-day-map-pin base-day-map-pin--1">1</div>
+        <div className="base-day-map-pin base-day-map-pin--2">2</div>
+        <div className="base-day-map-pin base-day-map-pin--3">3</div>
+        <div className="base-home-map-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z" />
+            <circle cx="12" cy="10" r="2.5" />
+          </svg>
+          24 mi · 3 stops
+        </div>
+      </div>
+
+      {/* Weather */}
+      <div className="base-home-weather">
+        <span className="base-home-weather-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M17.5 18a4.5 4.5 0 0 0 0-9 6 6 0 0 0-11.6 1.5A3.75 3.75 0 0 0 6.5 18h11z" />
+            <path d="M8 21l-1 1.5M12 21l-1 1.5M16 21l-1 1.5" />
+          </svg>
+        </span>
+        <div className="base-home-weather-body">
+          <div className="base-home-weather-temp">14° · Light rain</div>
+          <div className="base-home-weather-sub">Wandsworth · dry by 2pm</div>
+        </div>
+        <span className="base-home-weather-hi">H 17°  L 9°</span>
+      </div>
+
+      {/* Today's enquiries */}
+      <div className="base-app-section-title">
+        Today&rsquo;s enquiries
+        <span className="base-app-section-tag">3 new</span>
+      </div>
+      <div className="base-app-leads base-home-leads">
+        {LEADS.slice(0, 3).map((l, i) => (
+          <div key={i} className="base-app-lead">
+            <span className={`base-app-lead-dot base-app-lead-dot--${l.tone}`} />
+            <div className="base-app-lead-body">
+              <div className="base-app-lead-name">{l.name}</div>
+              <div className="base-app-lead-meta">
+                {l.job} · via {l.src}
+              </div>
+            </div>
+            <div className="base-app-lead-val">{l.val}</div>
+          </div>
+        ))}
+      </div>
+      <AppTabBar active="Inbox" withMic={withMic} />
+    </>
   );
 }
 
