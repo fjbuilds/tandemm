@@ -176,8 +176,8 @@ const GETTING_STARTED = [
   {
     n: "5",
     when: "Live and ongoing",
-    title: "You go live and you&rsquo;re away",
-    body: "Everything goes live together. Your website, the app, your enquiries and your SEO all connected. We walk you through how it runs, then you&rsquo;re away while we keep it working behind the scenes.",
+    title: "Everything goes live",
+    body: "The whole system switches on together. Your website, the app, your enquiries and your SEO all connected. We run through how it works, then you&rsquo;re away while we keep it running behind the scenes.",
     Mock: StepMockLive,
   },
 ];

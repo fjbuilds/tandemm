@@ -106,40 +106,6 @@ function TopIcon({
   );
 }
 
-/** label on the front-right face, reading up to the right */
-function FaceLabel({
-  cx,
-  cy,
-  hw,
-  t,
-  text,
-  size = 11,
-}: {
-  cx: number;
-  cy: number;
-  hw: number;
-  t: number;
-  text: string;
-  size?: number;
-}) {
-  const hh = hw / 2;
-  const mx = cx + hw * 0.42;
-  const my = cy + hh * 0.42 + t * 0.62;
-  return (
-    <text
-      transform={`matrix(1,-0.5,0,1,${mx},${my})`}
-      textAnchor="end"
-      fontFamily="Archivo, sans-serif"
-      fontWeight={800}
-      fontSize={size}
-      letterSpacing="0.04em"
-      fill={C.label}
-    >
-      {text}
-    </text>
-  );
-}
-
 type IconFn = (p: { cx: number; cy: number; hw: number }) => React.ReactNode;
 
 /** two distinct chips sitting on a cluster platform — "what you get" */
@@ -301,7 +267,7 @@ export function HeroSystem() {
 
   return (
     <div className="hero-iso" aria-hidden="true">
-      <svg viewBox="48 140 588 376" className="hero-iso-svg" role="img">
+      <svg viewBox="58 112 614 394" className="hero-iso-svg" role="img">
         {/* orbiting ring */}
         <ellipse
           cx={320}
@@ -357,31 +323,31 @@ export function HeroSystem() {
           <Tile cx={320} cy={330} hw={118} t={12} top={C.topLight} />
           {/* raised chip */}
           <g transform="translate(0,-34)">
-            <Tile cx={320} cy={318} hw={92} t={30} top={C.hubTop} right={C.hubRight} left={C.hubLeft}>
-              <FaceLabel cx={320} cy={318} hw={92} t={30} text="TANDEMM" size={15} />
-            </Tile>
-            {/* dot grid + diamond mark on top */}
+            <Tile cx={320} cy={318} hw={92} t={30} top={C.hubTop} right={C.hubRight} left={C.hubLeft} />
+            {/* subtle chip texture on top */}
             <g transform={topMatrix(320, 318, 92)}>
-              {Array.from({ length: 5 }).map((_, r) =>
-                Array.from({ length: 5 }).map((__, c) => (
+              {Array.from({ length: 4 }).map((_, r) =>
+                Array.from({ length: 4 }).map((__, c) => (
                   <circle
                     key={`${r}-${c}`}
-                    cx={0.28 + c * 0.11}
-                    cy={0.16 + r * 0.11}
-                    r={0.012}
+                    cx={0.32 + c * 0.12}
+                    cy={0.22 + r * 0.12}
+                    r={0.011}
                     fill={C.ring}
-                    fillOpacity={0.5}
+                    fillOpacity={0.28}
                   />
                 )),
               )}
-              <rect
-                x={0.4}
-                y={0.55}
-                width={0.2}
-                height={0.2}
-                rx={0.03}
-                transform="rotate(45 0.5 0.65)"
-                fill={C.accent}
+            </g>
+            {/* Tandemm logo on the front face */}
+            <g transform="matrix(1,-0.5,0,1,326,368)">
+              <image
+                href="/brand/logo/tandemm-lockup-white.svg"
+                x={0}
+                y={0}
+                width={80}
+                height={15.2}
+                preserveAspectRatio="xMidYMid meet"
               />
             </g>
           </g>
