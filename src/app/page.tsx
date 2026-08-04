@@ -17,7 +17,6 @@ import { FlowConnector } from "@/components/tandemm/FlowConnector";
 import {
   GoogleLocalPack,
   TradesSite,
-  SiteShowcase,
   BaseApp,
   StepMockSignup,
   StepMockCall,
@@ -106,12 +105,12 @@ const DIFFERENTIATORS = [
   {
     label: "01",
     title: "Missed-call recovery",
-    body: "On the tools and can&rsquo;t pick up? The second a call drops, an automatic text goes straight back. The lead knows you&rsquo;ll be in touch, so it never goes cold before you&rsquo;ve seen it.",
+    body: "When you&rsquo;re on the tools and can&rsquo;t pick up, an automatic text goes straight back the second a call drops. The customer knows you&rsquo;ll be in touch, so the lead never goes cold before you&rsquo;ve seen it.",
   },
   {
     label: "02",
     title: "Quoting quality control",
-    body: "We don&rsquo;t auto-quote blindly. Before an enquiry reaches you, the customer is walked through the right questions, so what lands is a proper, qualified job with the detail you need, not a one-line &lsquo;how much?&rsquo;.",
+    body: "We don&rsquo;t auto-quote on your behalf. Before an enquiry reaches you, the customer answers the right questions, so what lands is a proper, qualified job with the detail you need to price it.",
   },
 ];
 
@@ -148,37 +147,37 @@ const APP_FEATURES = [
 const GETTING_STARTED = [
   {
     n: "1",
-    when: "Day one · 30 seconds",
-    title: "Scan your site, see where it&rsquo;s losing jobs",
-    body: "Pop in your details and within 30 seconds you get a plain-English report on your current site, where it&rsquo;s leaking enquiries and what a rebuild would fix. Like what you see? Leave a few details and we take it from there.",
+    when: "Day one, 30 seconds",
+    title: "Scan your site in 30 seconds",
+    body: "Pop in your website and you get a plain-English report on where it&rsquo;s losing you enquiries. Happy with what you see, leave a few details and we take it from there.",
     Mock: StepMockSignup,
   },
   {
     n: "2",
     when: "Within 24 hours",
-    title: "We call with a design already started",
-    body: "One of the team calls inside a day, and we don&rsquo;t turn up empty-handed. We bring an early mock-up of your new site and a few questions, so the very first conversation is about your business, not a blank page.",
+    title: "We call you within 24 hours",
+    body: "One of the team calls inside a day and we come prepared, with an early design of your new site and a few quick questions. The first conversation is about your business, not a blank page.",
     Mock: StepMockCall,
   },
   {
     n: "3",
     when: "A quick 5 minutes",
-    title: "You send the bits only you have",
-    body: "Photos of your work, the services you offer, your patch and your team. The things that make the site properly yours. Send them over and we build everything around them.",
+    title: "You send us a few bits",
+    body: "Photos of your work, the services you offer, your area and your team. The bits that make the site properly yours. Send them over and we build everything around them.",
     Mock: StepMockPhotos,
   },
   {
     n: "4",
     when: "Within 5 days",
-    title: "Your working site lands",
-    body: "Within five days you get a fully working site, not a rough wireframe. We go back and forth until every page, every word and every photo is exactly right.",
+    title: "Your working site lands in 5 days",
+    body: "Within five days you get a fully working site to review, not a rough sketch. We go back and forth until every page, every word and every photo is right.",
     Mock: StepMockPreview,
   },
   {
     n: "5",
-    when: "Live &amp; ongoing",
-    title: "You go live, and you&rsquo;re away",
-    body: "The whole system goes live as one: your site, the app, your enquiries and your SEO all wired together. We walk you through how it runs, then you&rsquo;re away, with us keeping it working in the background.",
+    when: "Live and ongoing",
+    title: "You go live and you&rsquo;re away",
+    body: "Everything goes live together. Your website, the app, your enquiries and your SEO all connected. We walk you through how it runs, then you&rsquo;re away while we keep it working behind the scenes.",
     Mock: StepMockLive,
   },
 ];
@@ -226,11 +225,6 @@ export default function HomePage() {
         <div className="v2-hero-inner">
           <div className="v2-hero-copy">
             <Reveal>
-              <span className="v2-hero-tag">
-                Tandemm plan · from £197/mo + VAT
-              </span>
-            </Reveal>
-            <Reveal>
               <h1 className="v2-hero-title">
                 You&rsquo;re good at the job.<br />
                 We make sure the right people{" "}
@@ -239,11 +233,11 @@ export default function HomePage() {
             </Reveal>
             <Reveal>
               <div className="v2-hero-stat">
-                <div className="v2-hero-stat-num">9 in 10</div>
+                <div className="v2-hero-stat-num">77%</div>
                 <p className="v2-hero-stat-text">
-                  homeowners look you up online before they ever call. If
-                  you&rsquo;re not showing up, or the site looks tired, that job
-                  quietly goes to whoever is.
+                  of Google users in the UK don&rsquo;t scroll past page 1. If
+                  you&rsquo;re not on it, most of your area never sees you, and
+                  those jobs go to the trades that are.
                 </p>
               </div>
             </Reveal>
@@ -381,33 +375,10 @@ export default function HomePage() {
             <h2 className="v2-h2">Everything your plan gives you.</h2>
             <p className="v2-lede">
               A rebuilt website, hands-on SEO every month so you stay visible,
-              and the Tandemm Duo app to handle enquiries and capture any you
-              miss. Here&rsquo;s what that actually means.
+              and the Tandemm Duo app to handle enquiries and catch any you
+              miss. Here&rsquo;s what you get.
             </p>
           </Reveal>
-
-          <div className="v2-included-websites">
-            <Reveal>
-              <h3 className="v2-h3">Show up, look great, get booked.</h3>
-              <p className="v2-sub">
-                Your subscription starts with a premium website, built for your
-                trade by us and run for you every month. Your finished site is
-                written from your work, your area and your tone of voice.
-              </p>
-            </Reveal>
-            <Reveal>
-              <div className="v2-included-showcase-wrap">
-                <SiteShowcase />
-                <div className="v2-included-badge">
-                  <div className="v2-included-badge-num">90+</div>
-                  <div>
-                    <div className="v2-included-badge-title">Google PageSpeed</div>
-                    <div className="v2-included-badge-sub">on every site</div>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          </div>
 
           <div className="v2-included-grid">
             {INCLUDED_GRID.map((f) => (

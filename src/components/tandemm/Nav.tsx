@@ -30,12 +30,12 @@ export function Nav({
 
   return (
     <div className="sticky top-0 z-50 w-full p-4 font-[family-name:var(--font-body)]">
-      <div className="mx-auto flex h-[60px] max-w-[1180px] items-center justify-between gap-4 rounded-[var(--radius-pill)] bg-[var(--color-primary)] py-0 pl-[26px] pr-3 shadow-[var(--shadow-2)]">
+      <div className="mx-auto flex h-[60px] max-w-[1180px] items-center justify-between gap-2 rounded-[var(--radius-pill)] bg-[var(--color-primary)] py-0 pl-4 pr-2.5 shadow-[var(--shadow-2)] sm:gap-4 sm:pl-[26px] sm:pr-3">
         <Link href="/" className="flex shrink-0 items-center no-underline">
           <img
             src="/brand/logo/tandemm-lockup-white.svg"
             alt="Tandemm"
-            className="h-7 w-auto"
+            className="h-6 w-auto sm:h-7"
           />
         </Link>
 
@@ -57,7 +57,7 @@ export function Nav({
           ))}
         </nav>
 
-        <div className="flex shrink-0 items-center gap-2.5">
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2.5">
           <a
             href="https://wa.me/447948091506"
             aria-label="WhatsApp Tandemm"
@@ -72,9 +72,10 @@ export function Nav({
           <Link
             href="/book"
             aria-current={active === "book" ? "page" : undefined}
-            className="whitespace-nowrap rounded-[var(--radius-pill)] bg-white px-4 py-[11px] text-sm font-semibold text-[var(--color-primary)] no-underline sm:px-5"
+            className="whitespace-nowrap rounded-[var(--radius-pill)] bg-white px-3.5 py-[11px] text-[13px] font-semibold text-[var(--color-primary)] no-underline sm:px-5 sm:text-sm"
           >
-            Free site scan
+            <span className="sm:hidden">Free scan</span>
+            <span className="hidden sm:inline">Free site scan</span>
           </Link>
           <button
             type="button"

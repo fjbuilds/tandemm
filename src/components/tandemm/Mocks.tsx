@@ -797,7 +797,7 @@ export function StepMockPhotos() {
             <path d="M5 12l5 5 9-11" />
           </svg>
         </span>
-        Received — building your gallery
+        Received, building your gallery
       </div>
     </div>
   );

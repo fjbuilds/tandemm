@@ -140,57 +140,97 @@ function FaceLabel({
   );
 }
 
-/** two small chips sitting on a cluster platform */
+type IconFn = (p: { cx: number; cy: number; hw: number }) => React.ReactNode;
+
+/** two distinct chips sitting on a cluster platform — "what you get" */
 function ClusterChips({
   cx,
   cy,
-  icon,
+  icons,
 }: {
   cx: number;
   cy: number;
-  icon: (p: { cx: number; cy: number; hw: number }) => React.ReactNode;
+  icons: [IconFn, IconFn];
 }) {
-  const hw = 24;
-  const t = 16;
-  const a = { cx: cx - 26, cy: cy - 8 };
-  const b = { cx: cx + 24, cy: cy + 6 };
+  const hw = 25;
+  const a = { cx: cx - 27, cy: cy - 9 }; // back-left chip (taller)
+  const b = { cx: cx + 25, cy: cy + 7 }; // front-right chip
   return (
     <>
-      <Tile cx={a.cx} cy={a.cy} hw={hw} t={t} top={C.topLit}>
-        {icon({ cx: a.cx, cy: a.cy, hw })}
+      <Tile cx={a.cx} cy={a.cy} hw={hw} t={22} top={C.topLit}>
+        {icons[0]({ cx: a.cx, cy: a.cy, hw })}
       </Tile>
-      <Tile cx={b.cx} cy={b.cy} hw={hw} t={t} top={C.topLit}>
-        {icon({ cx: b.cx, cy: b.cy, hw })}
+      <Tile cx={b.cx} cy={b.cy} hw={hw} t={15} top={C.topLit}>
+        {icons[1]({ cx: b.cx, cy: b.cy, hw })}
       </Tile>
     </>
   );
 }
 
-/* ── cluster top-face icons ─────────────────────────────────── */
-const iconWebsite = ({ cx, cy, hw }: { cx: number; cy: number; hw: number }) => (
+/* ── cluster top-face icons: each shows what that layer delivers ── */
+// Website: a built site
+const iconWebsite: IconFn = ({ cx, cy, hw }) => (
   <TopIcon cx={cx} cy={cy} hw={hw}>
-    <rect x={0.24} y={0.26} width={0.52} height={0.46} rx={0.06} />
-    <path d="M0.24 0.4 H0.76" />
-    <circle cx={0.32} cy={0.33} r={0.02} fill={C.accent} stroke="none" />
+    <rect x={0.24} y={0.24} width={0.52} height={0.5} rx={0.06} />
+    <path d="M0.24 0.36 H0.76" />
+    <rect x={0.3} y={0.44} width={0.4} height={0.08} rx={0.02} fill={C.accent} stroke="none" />
+    <path d="M0.3 0.6 H0.62" />
   </TopIcon>
 );
-const iconSeo = ({ cx, cy, hw }: { cx: number; cy: number; hw: number }) => (
+// Website: photo gallery
+const iconGallery: IconFn = ({ cx, cy, hw }) => (
   <TopIcon cx={cx} cy={cy} hw={hw}>
-    <circle cx={0.42} cy={0.42} r={0.16} />
-    <path d="M0.54 0.54 L0.68 0.68" />
-    <path d="M0.3 0.7 L0.42 0.58 L0.5 0.64 L0.66 0.46" stroke={C.accent} />
+    <rect x={0.26} y={0.26} width={0.48} height={0.48} rx={0.05} />
+    <circle cx={0.4} cy={0.4} r={0.05} fill={C.accent} stroke="none" />
+    <path d="M0.28 0.68 L0.44 0.52 L0.56 0.6 L0.72 0.44" />
   </TopIcon>
 );
-const iconDuo = ({ cx, cy, hw }: { cx: number; cy: number; hw: number }) => (
+// SEO: search
+const iconSearch: IconFn = ({ cx, cy, hw }) => (
   <TopIcon cx={cx} cy={cy} hw={hw}>
-    <rect x={0.34} y={0.24} width={0.32} height={0.5} rx={0.06} />
-    <circle cx={0.5} cy={0.63} r={0.03} fill={C.accent} stroke="none" />
-    <path d="M0.42 0.36 H0.58" stroke={C.accent} />
+    <circle cx={0.44} cy={0.42} r={0.16} />
+    <path d="M0.56 0.54 L0.7 0.68" />
+    <circle cx={0.44} cy={0.42} r={0.06} fill={C.accent} stroke="none" />
   </TopIcon>
 );
-const iconFuel = ({ cx, cy, hw }: { cx: number; cy: number; hw: number }) => (
+// SEO: climbing rank
+const iconRank: IconFn = ({ cx, cy, hw }) => (
+  <TopIcon cx={cx} cy={cy} hw={hw}>
+    <rect x={0.28} y={0.56} width={0.11} height={0.18} rx={0.02} />
+    <rect x={0.45} y={0.44} width={0.11} height={0.3} rx={0.02} />
+    <rect x={0.62} y={0.3} width={0.11} height={0.44} rx={0.02} fill={C.accent} stroke="none" />
+  </TopIcon>
+);
+// Duo: enquiry phone
+const iconPhone: IconFn = ({ cx, cy, hw }) => (
+  <TopIcon cx={cx} cy={cy} hw={hw}>
+    <rect x={0.36} y={0.24} width={0.3} height={0.5} rx={0.05} />
+    <path d="M0.44 0.34 H0.58" />
+    <circle cx={0.62} cy={0.26} r={0.05} fill={C.accent} stroke="none" />
+  </TopIcon>
+);
+// Duo: enquiry / chat
+const iconChat: IconFn = ({ cx, cy, hw }) => (
+  <TopIcon cx={cx} cy={cy} hw={hw}>
+    <path d="M0.26 0.3 H0.74 V0.6 H0.5 L0.4 0.72 V0.6 H0.26 Z" />
+    <circle cx={0.4} cy={0.45} r={0.025} fill={C.accent} stroke="none" />
+    <circle cx={0.5} cy={0.45} r={0.025} fill={C.accent} stroke="none" />
+    <circle cx={0.6} cy={0.45} r={0.025} fill={C.accent} stroke="none" />
+  </TopIcon>
+);
+// Fuel: ads spark
+const iconFuel: IconFn = ({ cx, cy, hw }) => (
   <TopIcon cx={cx} cy={cy} hw={hw}>
     <path d="M0.52 0.24 L0.36 0.52 H0.5 L0.44 0.76 L0.64 0.44 H0.5 Z" fill={C.accent} stroke={C.accent} />
+  </TopIcon>
+);
+// Fuel: lead volume dial
+const iconVolume: IconFn = ({ cx, cy, hw }) => (
+  <TopIcon cx={cx} cy={cy} hw={hw}>
+    <rect x={0.28} y={0.6} width={0.09} height={0.14} rx={0.02} />
+    <rect x={0.41} y={0.5} width={0.09} height={0.24} rx={0.02} />
+    <rect x={0.54} y={0.4} width={0.09} height={0.34} rx={0.02} />
+    <rect x={0.67} y={0.3} width={0.09} height={0.44} rx={0.02} fill={C.accent} stroke="none" />
   </TopIcon>
 );
 
@@ -230,7 +270,7 @@ function Cluster({
   labelX,
   labelY,
   labelDir,
-  icon,
+  icons,
   cls,
 }: {
   cx: number;
@@ -239,13 +279,13 @@ function Cluster({
   labelX: number;
   labelY: number;
   labelDir: "left" | "right";
-  icon: (p: { cx: number; cy: number; hw: number }) => React.ReactNode;
+  icons: [IconFn, IconFn];
   cls: string;
 }) {
   return (
     <g className={`iso-cluster ${cls}`}>
       <Tile cx={cx} cy={cy} hw={66} t={13} />
-      <ClusterChips cx={cx} cy={cy - 4} icon={icon} />
+      <ClusterChips cx={cx} cy={cy - 4} icons={icons} />
       <GroundLabel x={labelX} y={labelY} text={label} dir={labelDir} />
     </g>
   );
@@ -261,7 +301,7 @@ export function HeroSystem() {
 
   return (
     <div className="hero-iso" aria-hidden="true">
-      <svg viewBox="0 0 640 560" className="hero-iso-svg" role="img">
+      <svg viewBox="48 140 588 376" className="hero-iso-svg" role="img">
         {/* orbiting ring */}
         <ellipse
           cx={320}
@@ -297,7 +337,7 @@ export function HeroSystem() {
           labelX={150}
           labelY={172}
           labelDir="left"
-          icon={iconWebsite}
+          icons={[iconWebsite, iconGallery]}
           cls="iso-c1"
         />
         <Cluster
@@ -307,7 +347,7 @@ export function HeroSystem() {
           labelX={512}
           labelY={196}
           labelDir="right"
-          icon={iconSeo}
+          icons={[iconRank, iconSearch]}
           cls="iso-c2"
         />
 
@@ -355,7 +395,7 @@ export function HeroSystem() {
           labelX={150}
           labelY={470}
           labelDir="left"
-          icon={iconDuo}
+          icons={[iconChat, iconPhone]}
           cls="iso-c3"
         />
         <Cluster
@@ -365,7 +405,7 @@ export function HeroSystem() {
           labelX={512}
           labelY={476}
           labelDir="right"
-          icon={iconFuel}
+          icons={[iconVolume, iconFuel]}
           cls="iso-c4"
         />
 
@@ -377,13 +417,13 @@ export function HeroSystem() {
         {/* floating particles */}
         <g className="iso-particles">
           {[
-            [90, 200, C.accent],
-            [560, 190, C.ring],
-            [110, 430, C.ring],
-            [545, 430, C.accent],
-            [330, 120, C.accentSoft],
-            [40, 320, C.ring],
-            [600, 330, C.accentSoft],
+            [105, 205, C.accent],
+            [558, 205, C.ring],
+            [120, 420, C.ring],
+            [545, 435, C.accent],
+            [305, 158, C.accentSoft],
+            [80, 330, C.ring],
+            [582, 330, C.accentSoft],
           ].map((p, i) => (
             <g key={i} transform={`translate(${p[0]},${p[1]})`}>
               <path
