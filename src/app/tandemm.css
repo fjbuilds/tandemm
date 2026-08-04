@@ -4928,6 +4928,78 @@ body {
   .hs { max-width: 400px; }
 }
 
+/* ── HERO SYSTEM (isometric scene) ─────────────────────────── */
+.hero-iso {
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+  filter: drop-shadow(0 40px 60px rgba(27, 35, 32, 0.14));
+}
+.hero-iso-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  animation: iso-float 7s ease-in-out infinite;
+}
+@keyframes iso-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* clusters pop up in sequence and hold */
+.iso-cluster {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: iso-pop 8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.iso-c1 { animation-delay: 0.1s; }
+.iso-c2 { animation-delay: 0.55s; }
+.iso-c3 { animation-delay: 1s; }
+.iso-c4 { animation-delay: 1.45s; }
+@keyframes iso-pop {
+  0% { opacity: 0; transform: translateY(24px); }
+  7% { opacity: 1; transform: translateY(0); }
+  86% { opacity: 1; transform: translateY(0); }
+  96% { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 0; transform: translateY(24px); }
+}
+
+.iso-hub {
+  animation: iso-hub-in 8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes iso-hub-in {
+  0% { opacity: 0; transform: scale(0.92); }
+  6% { opacity: 1; transform: scale(1); }
+  92% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.92); }
+}
+
+.iso-particles path {
+  animation: iso-particle 3.4s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes iso-particle {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(-6px); opacity: 0.95; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-iso-svg,
+  .iso-cluster,
+  .iso-hub,
+  .iso-particles path { animation: none; }
+  .iso-cluster { opacity: 1; transform: none; }
+}
+
+@media (max-width: 960px) {
+  .hero-iso { max-width: 460px; }
+}
+
 /* ── SPINE section ─────────────────────────────────────────── */
 .v2-spine {
   padding: 72px 24px;

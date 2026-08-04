@@ -8,7 +8,7 @@ import { Footer } from "@/components/tandemm/Footer";
 import { Reveal } from "@/components/tandemm/Reveal";
 import { Button } from "@/components/tandemm/Button";
 import { ScanInput } from "@/components/tandemm/ScanInput";
-import { HeroStages } from "@/components/tandemm/HeroStages";
+import { HeroSystem } from "@/components/tandemm/HeroSystem";
 import { DiamondLoader } from "@/components/tandemm/DiamondLoader";
 import { TrustPartners } from "@/components/tandemm/TrustPartners";
 import { GuaranteeStrip } from "@/components/tandemm/GuaranteeStrip";
@@ -274,7 +274,7 @@ export default function HomePage() {
 
           <div className="v2-hero-visual">
             <Reveal>
-              <HeroStages />
+              <HeroSystem />
             </Reveal>
           </div>
         </div>
