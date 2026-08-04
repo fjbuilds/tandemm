@@ -4931,14 +4931,14 @@ body {
 /* ── HERO SYSTEM (isometric scene) ─────────────────────────── */
 .hero-iso {
   width: 100%;
-  max-width: 540px;
+  max-width: 600px;
   margin: 0 auto;
   filter: drop-shadow(0 40px 60px rgba(27, 35, 32, 0.14));
 }
 .hero-iso-svg {
   width: 100%;
   height: auto;
-  overflow: visible;
+  overflow: hidden;
   animation: iso-float 7s ease-in-out infinite;
 }
 @keyframes iso-float {
