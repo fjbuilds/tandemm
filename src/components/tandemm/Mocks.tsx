@@ -1075,6 +1075,138 @@ export function BoostFunnel() {
 }
 
 /* ─────────────────────────────────────────────────────────────
+   Reach: "you are first" — a compact Google Maps-style card
+   showing the customer's business at #1, two competitors below.
+   ───────────────────────────────────────────────────────────── */
+
+export function ReachFirstResult() {
+  const rows = [
+    { rank: 1, name: "Sarah's Plumbing", rating: 4.9, reviews: 217, meta: "Open · 24hr callouts", you: true },
+    { rank: 2, name: "Southside Boilers", rating: 4.5, reviews: 84, meta: "Open · Closes 6pm", you: false },
+    { rank: 3, name: "River Plumbing", rating: 4.3, reviews: 42, meta: "Closed · Opens 8am", you: false },
+  ];
+  return (
+    <div className="reach-first" role="img" aria-label="Illustrative Google Maps result with your business ranked first">
+      <div className="reach-first-head">
+        <span className="reach-first-head-dot" />
+        Google Maps · &ldquo;plumber near me&rdquo;
+      </div>
+      <div className="reach-first-rows">
+        {rows.map((r) => (
+          <div key={r.rank} className={`reach-first-row${r.you ? " is-you" : ""}`}>
+            <div className={`reach-first-pin reach-first-pin--${r.rank}${r.you ? " is-you" : ""}`}>{r.rank}</div>
+            <div className="reach-first-body">
+              <div className="reach-first-name">
+                {r.name}
+                {r.you && <span className="reach-first-badge">You</span>}
+              </div>
+              <div className="reach-first-rating">
+                <span className="reach-first-rating-num">{r.rating.toFixed(1)}</span>
+                <span className="reach-first-stars">{"★★★★★".slice(0, Math.round(r.rating))}<span className="reach-first-stars-off">{"★★★★★".slice(0, 5 - Math.round(r.rating))}</span></span>
+                <span className="reach-first-reviews">({r.reviews})</span>
+              </div>
+              <div className="reach-first-meta">{r.meta}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="reach-first-foot">
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M5 12l5 5 9-11" />
+        </svg>
+        The first name they find
+      </div>
+    </div>
+  );
+}
+
+/* Reach: "you're not showing" — the problem card, three competitors,
+   your business missing */
+export function ReachMissingCard() {
+  const rows = [
+    { rank: 1, name: "JR Heating Solutions", rating: 4.7 },
+    { rank: 2, name: "HeatPro Services", rating: 4.2 },
+    { rank: 3, name: "AllFix Boilers", rating: 3.9 },
+  ];
+  return (
+    <div className="reach-missing" role="img" aria-label="Illustrative Google Maps result with your business missing from the top three">
+      <div className="reach-missing-head">Google Maps · &ldquo;heating engineer near me&rdquo;</div>
+      <div className="reach-missing-rows">
+        {rows.map((r) => (
+          <div key={r.rank} className="reach-missing-row">
+            <div className="reach-missing-avatar">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z" />
+                <circle cx="12" cy="10" r="2.5" />
+              </svg>
+            </div>
+            <div className="reach-missing-body">
+              <div className="reach-missing-name">{r.name}</div>
+              <div className="reach-missing-rating">
+                <span className="reach-first-stars">{"★★★★★".slice(0, Math.round(r.rating))}<span className="reach-first-stars-off">{"★★★★★".slice(0, 5 - Math.round(r.rating))}</span></span>
+                <span className="reach-missing-num">{r.rating.toFixed(1)}</span>
+              </div>
+            </div>
+            <div className="reach-missing-rank">#{r.rank}</div>
+          </div>
+        ))}
+      </div>
+      <div className="reach-missing-foot">Your business isn&rsquo;t showing</div>
+    </div>
+  );
+}
+
+/* Reach: postcode visibility timeline — clearer than a raw rank grid.
+   Shows a small basket of postcodes moving from off-map to top 3. */
+export function PostcodeProgress() {
+  const rows = [
+    { postcode: "SW11 4EG", area: "Battersea",   before: "Not showing", after: "Ranked #1", tone: "top" },
+    { postcode: "SW4 6NE",  area: "Clapham",     before: "Page 2",      after: "Ranked #2", tone: "top" },
+    { postcode: "SW18 1EG", area: "Wandsworth",  before: "Page 3+",     after: "Ranked #3", tone: "mid" },
+    { postcode: "SW12 8AA", area: "Balham",      before: "Not showing", after: "Ranked #2", tone: "top" },
+    { postcode: "SW6 2QD",  area: "Fulham",      before: "Page 2",      after: "Ranked #4", tone: "mid" },
+  ];
+  return (
+    <div className="reach-postcodes" role="img" aria-label="Illustrative postcode-by-postcode visibility improvement">
+      <div className="reach-postcodes-head">
+        <div>
+          <div className="reach-postcodes-title">Where you show up, postcode by postcode</div>
+          <div className="reach-postcodes-sub">South West London · six months in Tandemm Reach</div>
+        </div>
+        <div className="reach-postcodes-legend">
+          <span><span className="reach-postcodes-swatch reach-postcodes-swatch--before" /> Before</span>
+          <span><span className="reach-postcodes-swatch reach-postcodes-swatch--after" /> After 6 months</span>
+        </div>
+      </div>
+      <div className="reach-postcodes-rows">
+        <div className="reach-postcodes-row reach-postcodes-row--head">
+          <span>Postcode</span>
+          <span>Area</span>
+          <span>Before</span>
+          <span>After 6 months</span>
+        </div>
+        {rows.map((r) => (
+          <div key={r.postcode} className="reach-postcodes-row">
+            <span className="reach-postcodes-pc">{r.postcode}</span>
+            <span className="reach-postcodes-area">{r.area}</span>
+            <span className="reach-postcodes-before">{r.before}</span>
+            <span className={`reach-postcodes-after reach-postcodes-after--${r.tone}`}>
+              <span className="reach-postcodes-tick" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12l5 5 9-11" /></svg>
+              </span>
+              {r.after}
+            </span>
+          </div>
+        ))}
+      </div>
+      <div className="reach-postcodes-foot">
+        Same business. Same trade. Same team. Just found by more of your area.
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────
    8. Team row — fabricated team avatars for the "real person" band
    ───────────────────────────────────────────────────────────── */
 
