@@ -53,7 +53,7 @@ const FLOW_STEPS = [
     n: "03",
     title: "Get booked",
     body: "Send quotes and invoices in a few taps, straight from the app, and get paid faster. Then the moment an invoice is settled, the app automatically asks the customer for a review, so every finished job helps the next one find you.",
-    bullets: ["Quote &amp; invoice from the app", "Card payments via your provider", "Reviews collected automatically"],
+    bullets: ["Quote &amp; invoice from the app", "Reviews collected automatically"],
     mock: "base" as const,
   },
 ];
@@ -130,14 +130,12 @@ const APP_FEATURES = [
       "Send quotes &amp; invoices in a few taps",
       "Track every job through to Paid",
       "Auto-asks for a review once paid",
-      "Plugs into the card provider you already use",
     ],
   },
   {
     title: "Plan your day, get there faster",
     items: [
       "Today&rsquo;s jobs pinned on a map",
-      "Live van tracking, straight on the map",
       "Full diary &amp; appointments in one place",
       "Log arrival, hand over notes in one tap",
     ],

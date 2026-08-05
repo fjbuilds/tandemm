@@ -169,7 +169,6 @@ export function TradesSite() {
               <span>Worcester accredited</span>
             </div>
           </div>
-          <div className="trades-site-hero-photo" />
         </div>
 
         <div className="trades-site-services">
@@ -732,36 +731,18 @@ function PersonIllustration({ skin, hair, shirt }: { skin: string; hair: string;
 export function StepMockCall() {
   return (
     <div className="step-mock step-mock-founder">
-      <div className="step-mock-founder-header">
-        <span className="step-mock-founder-live"><span className="step-mock-founder-live-dot" />Live call · 00:12</span>
-        Straight from the founder
-      </div>
-      <div className="step-mock-founder-body">
+      <div className="step-mock-founder-callcard">
+        <div className="step-mock-founder-callcard-label">Incoming call</div>
         <div className="step-mock-founder-avatar">
           <PersonIllustration skin="#E8B58C" hair="#2A1F17" shirt="#24425A" />
-          <span className="step-mock-founder-status" aria-hidden="true" />
         </div>
-        <div className="step-mock-founder-copy">
-          <div className="step-mock-founder-name">Owen · Founder, Tandemm</div>
-          <div className="step-mock-founder-quote">
-            &ldquo;I&rsquo;ve had a look at your site and pulled together
-            an early design. Got 20 minutes now?&rdquo;
-          </div>
-          <div className="step-mock-founder-chips">
-            <span>No support queue</span>
-            <span>No ticket number</span>
-            <span>Answering in real time</span>
-          </div>
-        </div>
-      </div>
-      <div className="step-mock-founder-actions">
-        <span className="step-mock-founder-btn is-primary">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <div className="step-mock-founder-name">Owen</div>
+        <div className="step-mock-founder-role">Founder, Tandemm</div>
+        <div className="step-mock-founder-callbtn" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.5 2.6a2 2 0 0 1-.5 2.1L7.9 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.2 1.7.4 2.6.5a2 2 0 0 1 1.7 2z" />
           </svg>
-          Answer
-        </span>
-        <span className="step-mock-founder-btn">Message instead</span>
+        </div>
       </div>
     </div>
   );
@@ -1000,7 +981,6 @@ export function StepMockPreview() {
           <span>Bathroom fit</span>
         </div>
       </div>
-      <div className="step-mock-preview-badge">Preview ready for review</div>
     </div>
   );
 }

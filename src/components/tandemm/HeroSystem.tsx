@@ -306,7 +306,7 @@ export function HeroSystem() {
           cy={250}
           label="WEBSITE"
           labelX={150}
-          labelY={172}
+          labelY={180}
           labelDir="left"
           icons={[iconWebsite, iconGallery]}
           cls="iso-c1"
@@ -316,7 +316,7 @@ export function HeroSystem() {
           cy={272}
           label="TANDEMM REACH"
           labelX={512}
-          labelY={196}
+          labelY={180}
           labelDir="right"
           icons={[iconRank, iconSearch]}
           cls="iso-c2"
@@ -344,27 +344,12 @@ export function HeroSystem() {
                 )),
               )}
             </g>
-            {/* Tandemm brand mark laid flat on the top face of the hub */}
-            <g transform={topMatrix(320, 318, 92)}>
-              {/* Two-diamond brand mark, drawn inline for reliable render */}
-              <g transform="translate(0.36, 0.44) scale(0.00032)">
-                <path
-                  d="M350,260 L590,500 L350,740 L110,500 Z M650,260 L890,500 L650,740 L410,500 Z"
-                  fill="#2A3FE8"
-                />
-              </g>
-              <text
-                x={0.5}
-                y={0.62}
-                textAnchor="middle"
-                fontFamily="Archivo, sans-serif"
-                fontWeight={800}
-                fontSize={0.09}
-                fill="#20384D"
-                letterSpacing="-0.002"
-              >
-                tandemm
-              </text>
+            {/* Tandemm favicon mark, sitting on top of the hub */}
+            <g transform="translate(320 318) scale(0.11) translate(-500 -500)">
+              <path
+                d="M350,260 L590,500 L350,740 L110,500 Z M650,260 L890,500 L650,740 L410,500 Z"
+                fill="#0B1220"
+              />
             </g>
           </g>
         </g>
@@ -373,9 +358,9 @@ export function HeroSystem() {
         <Cluster
           cx={185}
           cy={400}
-          label="DUO ∞"
+          label="DU∞"
           labelX={150}
-          labelY={470}
+          labelY={476}
           labelDir="left"
           icons={[iconChat, iconPhone]}
           cls="iso-c3"

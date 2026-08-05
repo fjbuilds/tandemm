@@ -4117,8 +4117,7 @@ body {
 }
 
 .trades-site-hero {
-  display: grid; grid-template-columns: 1.15fr 1fr;
-  gap: 20px; padding: 22px;
+  padding: 26px 22px;
   background: linear-gradient(135deg, #F6F2EA, #EAE0CD);
 }
 .trades-site-hero-eyebrow {
@@ -6452,8 +6451,10 @@ body {
 
 .v2-app-card {
   border-radius: 24px; overflow: hidden;
-  background: var(--color-primary);
-  border: 1px solid rgba(255,255,255,0.1);
+  background:
+    radial-gradient(120% 80% at 15% 0%, color-mix(in srgb, var(--color-accent) 22%, transparent) 0%, transparent 55%),
+    linear-gradient(160deg, #2A4763 0%, var(--color-primary) 62%);
+  border: 1px solid rgba(255,255,255,0.14);
   box-shadow: 0 20px 60px rgba(0,0,0,0.18);
   color: white;
 }
@@ -6768,12 +6769,40 @@ body {
   box-shadow: 0 0 0 2px rgba(52,199,89,0.25);
 }
 
-/* Founder-led call mock */
+/* Founder-led call mock (simple) */
 .step-mock-founder {
-  background: white; border-radius: 18px; padding: 22px;
+  max-width: 300px; margin: 0 auto;
+}
+.step-mock-founder-callcard {
+  background: white; border-radius: 22px; padding: 28px 24px;
   border: 1px solid var(--color-hairline-soft);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-  max-width: 360px; margin: 0 auto;
+  box-shadow: 0 12px 30px rgba(27,35,32,0.08);
+  text-align: center;
+}
+.step-mock-founder-callcard-label {
+  font-family: var(--font-body); font-weight: 600; font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--color-ink-muted); margin-bottom: 18px;
+}
+.step-mock-founder-callcard .step-mock-founder-avatar {
+  --person-bg: #DCE6EC;
+  width: 84px; height: 84px; margin: 0 auto 14px;
+  border-radius: 50%; overflow: hidden;
+  box-shadow: 0 6px 18px rgba(27,35,32,0.14);
+}
+.step-mock-founder-callcard .step-mock-founder-name {
+  font-family: var(--font-display); font-weight: 800; font-size: 20px;
+  color: var(--color-ink); margin-bottom: 4px;
+}
+.step-mock-founder-role {
+  font-size: 13px; color: var(--color-ink-muted); margin-bottom: 22px;
+}
+.step-mock-founder-callbtn {
+  width: 52px; height: 52px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #34C759; color: white;
+  box-shadow: 0 8px 18px rgba(52,199,89,0.35);
+  animation: mic-pulse 2s ease-in-out infinite;
 }
 .step-mock-founder-header {
   font-family: var(--font-display); font-weight: 700; font-size: 14px;
