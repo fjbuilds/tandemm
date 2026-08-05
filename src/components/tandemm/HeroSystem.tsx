@@ -143,12 +143,17 @@ const iconWebsite: IconFn = ({ cx, cy, hw }) => (
     <path d="M0.3 0.6 H0.62" />
   </TopIcon>
 );
-// Website: photo gallery
+// Website: laptop screen
 const iconGallery: IconFn = ({ cx, cy, hw }) => (
   <TopIcon cx={cx} cy={cy} hw={hw}>
-    <rect x={0.26} y={0.26} width={0.48} height={0.48} rx={0.05} />
-    <circle cx={0.4} cy={0.4} r={0.05} fill={C.accent} stroke="none" />
-    <path d="M0.28 0.68 L0.44 0.52 L0.56 0.6 L0.72 0.44" />
+    {/* laptop base */}
+    <path d="M0.22 0.72 H0.78" />
+    {/* screen frame */}
+    <rect x={0.28} y={0.28} width={0.44} height={0.36} rx={0.04} />
+    {/* url bar */}
+    <path d="M0.28 0.38 H0.72" />
+    <rect x={0.34} y={0.44} width={0.32} height={0.06} rx={0.02} fill={C.accent} stroke="none" />
+    <path d="M0.34 0.56 H0.6" />
   </TopIcon>
 );
 // SEO: search
@@ -339,16 +344,27 @@ export function HeroSystem() {
                 )),
               )}
             </g>
-            {/* Tandemm logo on the front face */}
-            <g transform="matrix(1,-0.5,0,1,326,368)">
-              <image
-                href="/brand/logo/tandemm-lockup-white.svg"
-                x={0}
-                y={0}
-                width={80}
-                height={15.2}
-                preserveAspectRatio="xMidYMid meet"
-              />
+            {/* Tandemm brand mark laid flat on the top face of the hub */}
+            <g transform={topMatrix(320, 318, 92)}>
+              {/* Two-diamond brand mark, drawn inline for reliable render */}
+              <g transform="translate(0.36, 0.44) scale(0.00032)">
+                <path
+                  d="M350,260 L590,500 L350,740 L110,500 Z M650,260 L890,500 L650,740 L410,500 Z"
+                  fill="#2A3FE8"
+                />
+              </g>
+              <text
+                x={0.5}
+                y={0.62}
+                textAnchor="middle"
+                fontFamily="Archivo, sans-serif"
+                fontWeight={800}
+                fontSize={0.09}
+                fill="#20384D"
+                letterSpacing="-0.002"
+              >
+                tandemm
+              </text>
             </g>
           </g>
         </g>
@@ -357,7 +373,7 @@ export function HeroSystem() {
         <Cluster
           cx={185}
           cy={400}
-          label="DUO APP"
+          label="DUO ∞"
           labelX={150}
           labelY={470}
           labelDir="left"
