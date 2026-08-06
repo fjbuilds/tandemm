@@ -143,12 +143,17 @@ const iconWebsite: IconFn = ({ cx, cy, hw }) => (
     <path d="M0.3 0.6 H0.62" />
   </TopIcon>
 );
-// Website: photo gallery
+// Website: laptop screen
 const iconGallery: IconFn = ({ cx, cy, hw }) => (
   <TopIcon cx={cx} cy={cy} hw={hw}>
-    <rect x={0.26} y={0.26} width={0.48} height={0.48} rx={0.05} />
-    <circle cx={0.4} cy={0.4} r={0.05} fill={C.accent} stroke="none" />
-    <path d="M0.28 0.68 L0.44 0.52 L0.56 0.6 L0.72 0.44" />
+    {/* laptop base */}
+    <path d="M0.22 0.72 H0.78" />
+    {/* screen frame */}
+    <rect x={0.28} y={0.28} width={0.44} height={0.36} rx={0.04} />
+    {/* url bar */}
+    <path d="M0.28 0.38 H0.72" />
+    <rect x={0.34} y={0.44} width={0.32} height={0.06} rx={0.02} fill={C.accent} stroke="none" />
+    <path d="M0.34 0.56 H0.6" />
   </TopIcon>
 );
 // SEO: search
@@ -267,7 +272,7 @@ export function HeroSystem() {
 
   return (
     <div className="hero-iso" aria-hidden="true">
-      <svg viewBox="58 112 614 394" className="hero-iso-svg" role="img">
+      <svg viewBox="30 112 690 394" className="hero-iso-svg" role="img">
         {/* orbiting ring */}
         <ellipse
           cx={320}
@@ -301,7 +306,7 @@ export function HeroSystem() {
           cy={250}
           label="WEBSITE"
           labelX={150}
-          labelY={172}
+          labelY={180}
           labelDir="left"
           icons={[iconWebsite, iconGallery]}
           cls="iso-c1"
@@ -311,7 +316,7 @@ export function HeroSystem() {
           cy={272}
           label="TANDEMM REACH"
           labelX={512}
-          labelY={196}
+          labelY={180}
           labelDir="right"
           icons={[iconRank, iconSearch]}
           cls="iso-c2"
@@ -324,30 +329,13 @@ export function HeroSystem() {
           {/* raised chip */}
           <g transform="translate(0,-34)">
             <Tile cx={320} cy={318} hw={92} t={30} top={C.hubTop} right={C.hubRight} left={C.hubLeft} />
-            {/* subtle chip texture on top */}
-            <g transform={topMatrix(320, 318, 92)}>
-              {Array.from({ length: 4 }).map((_, r) =>
-                Array.from({ length: 4 }).map((__, c) => (
-                  <circle
-                    key={`${r}-${c}`}
-                    cx={0.32 + c * 0.12}
-                    cy={0.22 + r * 0.12}
-                    r={0.011}
-                    fill={C.ring}
-                    fillOpacity={0.28}
-                  />
-                )),
-              )}
-            </g>
-            {/* Tandemm logo on the front face */}
-            <g transform="matrix(1,-0.5,0,1,326,368)">
-              <image
-                href="/brand/logo/tandemm-lockup-white.svg"
-                x={0}
-                y={0}
-                width={80}
-                height={15.2}
-                preserveAspectRatio="xMidYMid meet"
+            {/* Tandemm favicon mark, kept at right-angle (not skewed
+                onto the isometric top face) so the two diamonds read
+                cleanly. Sits centred on the raised hub chip. */}
+            <g transform="translate(320 318) scale(0.14) translate(-500 -500)">
+              <path
+                d="M350,260 L590,500 L350,740 L110,500 Z M650,260 L890,500 L650,740 L410,500 Z"
+                fill="#0B1220"
               />
             </g>
           </g>
@@ -357,9 +345,9 @@ export function HeroSystem() {
         <Cluster
           cx={185}
           cy={400}
-          label="DUO APP"
+          label="DUO"
           labelX={150}
-          labelY={470}
+          labelY={476}
           labelDir="left"
           icons={[iconChat, iconPhone]}
           cls="iso-c3"

@@ -8,7 +8,11 @@ import { Button } from "@/components/tandemm/Button";
 import { DiamondLoader } from "@/components/tandemm/DiamondLoader";
 import { GuaranteeStrip } from "@/components/tandemm/GuaranteeStrip";
 import { ContactOptions } from "@/components/tandemm/ContactOptions";
-import { GoogleLocalPack, BeforeAfterGrid, ReportCard } from "@/components/tandemm/Mocks";
+import {
+  ReachMissingCard,
+  PostcodeProgress,
+  ReportCard,
+} from "@/components/tandemm/Mocks";
 
 const paletteOverride = {
   "--color-canvas": "#EDEEEA",
@@ -21,23 +25,66 @@ const paletteOverride = {
 const DO_GRID = [
   {
     icon: "profile",
-    title: "Your Google listing, working harder than you",
-    body: "We set up and manage your Google Business Profile. The right categories, photos, descriptions, and details. So when someone searches for your trade nearby, Google puts you forward, not your competitor.",
+    title: "Your Google Business Profile, run for you",
+    what: "We take over your Google Business Profile. Categories, service areas, opening hours, photos, descriptions, the lot. Kept live, kept accurate, month after month.",
+    benefit: "When someone in your postcodes types your trade into Google, your business is the one that shows up ready to book.",
   },
   {
     icon: "star",
-    title: "More reviews without the awkward ask",
-    body: "Reviews are the number one thing that moves you up Google Maps. We set up a system that makes getting them natural. No scripts, no cringe. Just happy customers leaving honest feedback.",
+    title: "Reviews on autopilot",
+    what: "Every finished job triggers a friendly, on-brand review request the moment you&rsquo;ve been paid. No scripts, no awkward asks, no forgetting.",
+    benefit: "Your review count climbs quietly in the background. More stars, more trust, and a listing Google is happy to push up the map.",
   },
   {
     icon: "everywhere",
-    title: "Your name, everywhere it matters",
-    body: "Google trusts businesses that show up consistently across the web. We build local citations (directories, trusted listings, and local sites) so your details match everywhere and Google ranks you higher.",
+    title: "Your name, matching everywhere",
+    what: "We list your business consistently across the directories, trade sites and local pages Google actually checks. Name, address, phone, all identical.",
+    benefit: "Google trusts you more, so you rank higher. And when a customer double-checks you on another site, everything looks legit.",
   },
   {
     icon: "signal",
-    title: "We keep signalling you&rsquo;re active",
-    body: "Google ranks businesses that look alive. We keep posting, updating, and replying month after month so Google sees you&rsquo;re active and bumps you up.",
+    title: "Live signals, every single week",
+    what: "Fresh posts, updated photos, replies to reviews, weekly activity that tells Google your business is alive and open for work.",
+    benefit: "Listings that go quiet slide down the map. Yours doesn&rsquo;t, so the phone keeps ringing while your competitors go stale.",
+  },
+];
+
+const TIMELINE = [
+  {
+    month: "Month 1",
+    label: "Foundation",
+    body: "We audit exactly where you show up today, sort out your Google Business Profile, and lay the groundwork. Early wins land quickly, so you can see the shift starting in your own area.",
+    benefit: "You stop being invisible in your postcodes.",
+  },
+  {
+    month: "Month 3",
+    label: "Momentum",
+    body: "Reviews are stacking up, your citations are live across the web, and Google is starting to trust the signal. Most trades feel a clear step up in visibility around this point.",
+    benefit: "The right kind of enquiries start landing on your phone.",
+  },
+  {
+    month: "Month 6",
+    label: "Results",
+    body: "You&rsquo;re showing up consistently across your postcodes, for your trade. The phone rings more. Customers find you first. From here on, the plan is paying for itself comfortably.",
+    benefit: "A steady stream of local work, without you chasing it.",
+  },
+];
+
+const MEANING = [
+  {
+    icon: "phone",
+    title: "The phone starts ringing again",
+    body: "More of the right people, in your postcodes, finding you first when they need your trade. Not tyre-kickers from the other side of the country. Locals, ready to book.",
+  },
+  {
+    icon: "diary",
+    title: "A diary that fills itself",
+    body: "You stop chasing work and start choosing it. The jobs that suit you, in the areas you actually want to be in, coming to you week after week.",
+  },
+  {
+    icon: "shield",
+    title: "A moat around your business",
+    body: "Rankings compound. The longer you&rsquo;re in the top spots, the harder it is for the next lot to knock you off. Turn Reach on and stay there.",
   },
 ];
 
@@ -50,36 +97,70 @@ export default function LocalSearchPage() {
       <DiamondLoader />
       <Nav active="features" />
 
-      {/* HERO */}
+      {/* HERO — copy only, offset left */}
       <section className="v2-local-hero">
         <div className="v2-local-hero-inner">
+          <div className="v2-local-hero-copy">
+            <Reveal>
+              <span className="v2-eyebrow v2-eyebrow--on-dark">Tandemm Reach</span>
+            </Reveal>
+            <Reveal>
+              <h1 className="v2-local-hero-title">
+                Be the first name<br />they find.
+              </h1>
+            </Reveal>
+            <Reveal>
+              <p className="v2-local-hero-sub">
+                Nearby customers search for your trade every day. Tandemm
+                Reach is the monthly work that puts you in front of them on
+                Google, then keeps you there while your competitors slide
+                down the page.
+              </p>
+            </Reveal>
+            <Reveal>
+              <div className="v2-local-hero-cta">
+                <Button
+                  href="/book"
+                  className="bg-white text-[var(--color-primary)] hover:bg-white/90"
+                >
+                  Find out what&apos;s costing you jobs
+                </Button>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* PROBLEM — someone nearby just searched for your trade */}
+      <section className="v2-problem">
+        <div className="v2-problem-inner">
           <Reveal>
-            <span className="v2-eyebrow v2-eyebrow--on-dark">Tandemm Reach</span>
-          </Reveal>
-          <Reveal>
-            <h1 className="v2-local-hero-title">
-              Be the first name<br />they find.
-            </h1>
-          </Reveal>
-          <Reveal>
-            <p className="v2-local-hero-sub">
-              Nearby customers search for your trade every day. Tandemm
-              Local is the monthly work that puts you in front of them on
-              Google, then keeps you there while your competitors slide
-              down the page.
-            </p>
-          </Reveal>
-          <Reveal>
-            <div className="v2-local-hero-cta">
-              <Button
-                href="/book"
-                className="bg-white text-[var(--color-primary)] hover:bg-white/90"
-              >
-                Find out what&apos;s costing you jobs
-              </Button>
-              <Button href="/" variant="secondary">Back to the plan</Button>
+            <div className="v2-problem-visual">
+              <ReachMissingCard />
             </div>
           </Reveal>
+          <div className="v2-problem-copy">
+            <Reveal>
+              <span className="v2-eyebrow v2-eyebrow--accent">The problem</span>
+            </Reveal>
+            <Reveal>
+              <h2 className="v2-h2 v2-h2--left">
+                Someone nearby just searched<br />for your trade.
+              </h2>
+            </Reveal>
+            <Reveal>
+              <p className="v2-lede v2-lede--left">
+                They found three names. Yours wasn&rsquo;t one of them. That
+                customer&rsquo;s gone. They&rsquo;ve already called someone
+                else, maybe someone who does half the quality work you do.
+              </p>
+            </Reveal>
+            <Reveal>
+              <p className="v2-lede v2-lede--left v2-problem-punch">
+                It&rsquo;s not about being the best. It&rsquo;s about being found.
+              </p>
+            </Reveal>
+          </div>
         </div>
       </section>
 
@@ -88,116 +169,105 @@ export default function LocalSearchPage() {
         <div className="v2-stats-inner">
           <Reveal className="v2-eyebrow-head">
             <span className="v2-eyebrow">The numbers</span>
-            <h2 className="v2-h2">Why showing up locally matters.</h2>
-            <p className="v2-lede">
-              The data doesn&rsquo;t lie. If you&rsquo;re not in the top 3 on
-              Google Maps, you&rsquo;re losing work every single day.
-            </p>
+            <h2 className="v2-h2">Why being found locally is the whole game.</h2>
           </Reveal>
-          <div className="v2-stats-grid">
+          <div className="v2-stats-grid v2-stats-grid--two">
             <Reveal>
               <div className="v2-stat">
-                <div className="v2-stat-num">46%</div>
-                <div className="v2-stat-label">of all Google searches have local intent</div>
+                <div className="v2-stat-num">75%</div>
+                <div className="v2-stat-label">
+                  of people don&rsquo;t go past the first page of Google.
+                </div>
+                <div className="v2-stat-src">HubSpot via Backlinko</div>
               </div>
             </Reveal>
             <Reveal>
               <div className="v2-stat">
                 <div className="v2-stat-num">76%</div>
-                <div className="v2-stat-label">of people who search nearby visit a business within a day</div>
-              </div>
-            </Reveal>
-            <Reveal>
-              <div className="v2-stat">
-                <div className="v2-stat-num">70%</div>
-                <div className="v2-stat-label">of clicks go to the top 3 Google Maps results</div>
+                <div className="v2-stat-label">
+                  of people who search for something nearby visit a business
+                  within one day.
+                </div>
+                <div className="v2-stat-src">Google · Think with Google</div>
               </div>
             </Reveal>
           </div>
-        </div>
-      </section>
-
-      {/* SHAPE OF THE MAP PACK */}
-      <section className="v2-map">
-        <div className="v2-map-inner">
-          <Reveal className="v2-eyebrow-head">
-            <span className="v2-eyebrow">The map pack</span>
-            <h2 className="v2-h2">
-              Homeowners call the top three.<br />
-              Everyone else scrolls past.
-            </h2>
-            <p className="v2-lede">
-              This is what a nearby search actually looks like. Tandemm Reach
-              is the monthly work that moves your listing up the pack over
-              time, so more of the searches near you land on your phone.
-            </p>
-          </Reveal>
           <Reveal>
-            <div className="v2-map-visual">
-              <GoogleLocalPack />
-            </div>
+            <blockquote className="v2-stats-callout">
+              <span className="v2-stats-callout-quote" aria-hidden="true">&ldquo;</span>
+              <span className="v2-stats-callout-text">
+                If customers can&rsquo;t find you when they&rsquo;re ready to
+                buy, they&rsquo;ll hire{" "}
+                <span className="v2-stats-callout-hi">someone they can find.</span>
+              </span>
+            </blockquote>
           </Reveal>
         </div>
       </section>
 
-      {/* RESULTS — before/after grid case study */}
+      {/* WHAT TO EXPECT — postcode progress */}
       <section className="v2-results">
         <div className="v2-results-inner">
           <Reveal className="v2-eyebrow-head">
-            <span className="v2-eyebrow">Illustrative results</span>
+            <span className="v2-eyebrow">What to expect</span>
             <h2 className="v2-h2">
-              What six months in Tandemm Reach<br />looks like on the map.
+              Postcode by postcode,<br />you go from invisible to first.
             </h2>
             <p className="v2-lede">
-              Postcode by postcode, service by service. This is a
-              representative pattern of what the shift looks like when the
-              monthly work compounds. Not a specific customer, not a guarantee,
-              just how the map tends to move.
+              Google doesn&rsquo;t rank you across the whole country, it ranks
+              you postcode by postcode. Tandemm Reach works each one until
+              your trade in your area lands you on the map.
             </p>
           </Reveal>
           <Reveal>
             <div className="v2-results-visual">
-              <BeforeAfterGrid />
+              <PostcodeProgress />
             </div>
           </Reveal>
-          <div className="v2-results-kpis">
-            <Reveal>
-              <div className="v2-results-kpi">
-                <div className="v2-results-kpi-num">4 → 1</div>
-                <div className="v2-results-kpi-label">average map rank</div>
-              </div>
-            </Reveal>
-            <Reveal>
-              <div className="v2-results-kpi">
-                <div className="v2-results-kpi-num">3.4×</div>
-                <div className="v2-results-kpi-label">profile views vs baseline</div>
-              </div>
-            </Reveal>
-            <Reveal>
-              <div className="v2-results-kpi">
-                <div className="v2-results-kpi-num">Every wk</div>
-                <div className="v2-results-kpi-label">signals sent to Google</div>
-              </div>
-            </Reveal>
+        </div>
+      </section>
+
+      {/* WHAT DOES THIS MEAN FOR YOU — dark variant band */}
+      <section className="v2-meaning v2-meaning--dark">
+        <div className="v2-meaning-inner">
+          <Reveal className="v2-eyebrow-head">
+            <span className="v2-eyebrow v2-eyebrow--on-dark">What this means for you</span>
+            <h2 className="v2-h2 v2-h2--on-dark">
+              When someone searches local,<br />you&rsquo;re the answer.
+            </h2>
+          </Reveal>
+          <div className="v2-meaning-grid">
+            {MEANING.map((m) => (
+              <Reveal key={m.title}>
+                <div className="v2-meaning-cell">
+                  <div className="v2-meaning-icon">
+                    <MeaningIcon name={m.icon} />
+                  </div>
+                  <h3 className="v2-meaning-title">{m.title}</h3>
+                  <p className="v2-meaning-body">{m.body}</p>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* WHAT WE ACTUALLY DO — 2x2 grid */}
+      {/* WHAT WE ACTUALLY DO — 2x2 grid, benefit-led */}
       <section className="v2-do">
         <div className="v2-do-inner">
           <Reveal className="v2-eyebrow-head">
             <span className="v2-eyebrow">What Tandemm Reach actually does</span>
-            <h2 className="v2-h2">We make you the first name they find.</h2>
+            <h2 className="v2-h2">The monthly work that puts you at the top.</h2>
             <p className="v2-lede">
-              Plain English. No jargon. Here&rsquo;s how we get you showing up
-              when nearby customers search for your trade.
+              Plain English, no smoke, no jargon. Four jobs we run every
+              month so your trade in your area shows up first, and stays
+              there.
             </p>
           </Reveal>
           <div className="v2-do-grid">
             {DO_GRID.map((d) => (
               <Reveal key={d.title}>
-                <div className="v2-do-cell">
+                <div className="v2-do-cell v2-do-cell--dual">
                   <div className="v2-do-icon">
                     <DoIcon name={d.icon} />
                   </div>
@@ -207,8 +277,15 @@ export default function LocalSearchPage() {
                   />
                   <p
                     className="v2-do-body"
-                    dangerouslySetInnerHTML={{ __html: d.body }}
+                    dangerouslySetInnerHTML={{ __html: d.what }}
                   />
+                  <div className="v2-do-benefit">
+                    <span className="v2-do-benefit-tag">What it means for you</span>
+                    <p
+                      className="v2-do-benefit-body"
+                      dangerouslySetInnerHTML={{ __html: d.benefit }}
+                    />
+                  </div>
                 </div>
               </Reveal>
             ))}
@@ -243,26 +320,91 @@ export default function LocalSearchPage() {
         </div>
       </section>
 
-      {/* CTA + GUARANTEE + CONTACT */}
-      <section className="v2-local-cta">
-        <div className="v2-local-cta-inner">
+      {/* WHEN WILL I SEE RESULTS — 3-month timeline */}
+      <section className="v2-timeline">
+        <div className="v2-timeline-inner">
           <Reveal className="v2-eyebrow-head">
-            <span className="v2-eyebrow">The Tandemm Promise</span>
-            <h2 className="v2-h2">See where you rank today.</h2>
+            <span className="v2-eyebrow">When will I see results</span>
+            <h2 className="v2-h2">Honest expectations, no smoke and mirrors.</h2>
             <p className="v2-lede">
-              Free postcode audit, walked through with a Tandemm strategist.
-              You keep the report either way.
+              Real SEO takes a few months to properly compound. Anyone
+              promising you the top of Google inside 30 days is either
+              bluffing or about to burn through your budget. Here&rsquo;s
+              what the road actually looks like, and what you get out of
+              each stretch of it.
             </p>
           </Reveal>
-          <div className="v2-local-cta-guarantee">
-            <GuaranteeStrip />
+          <div className="v2-timeline-grid">
+            {TIMELINE.map((t, i) => (
+              <Reveal key={t.month}>
+                <div className="v2-timeline-card">
+                  <div className="v2-timeline-step">Step {i + 1}</div>
+                  <div className="v2-timeline-month">{t.month}</div>
+                  <div className="v2-timeline-label">{t.label}</div>
+                  <p
+                    className="v2-timeline-body"
+                    dangerouslySetInnerHTML={{ __html: t.body }}
+                  />
+                  <div className="v2-timeline-benefit">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M5 12l5 5 9-11" />
+                    </svg>
+                    {t.benefit}
+                  </div>
+                </div>
+              </Reveal>
+            ))}
           </div>
+        </div>
+      </section>
+
+      {/* GUARANTEE + CONTACT (slimmed — no wrapper heading) */}
+      <section className="v2-local-cta">
+        <div className="v2-local-cta-inner">
+          <Reveal>
+            <div className="v2-local-cta-guarantee">
+              <GuaranteeStrip />
+            </div>
+          </Reveal>
           <ContactOptions />
         </div>
       </section>
 
       <Footer />
     </div>
+  );
+}
+
+function MeaningIcon({ name }: { name: string }) {
+  const common = {
+    width: 22,
+    height: 22,
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.8,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+  };
+  if (name === "phone")
+    return (
+      <svg {...common}>
+        <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.5 2.6a2 2 0 0 1-.5 2.1L7.9 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.2 1.7.4 2.6.5a2 2 0 0 1 1.7 2z" />
+      </svg>
+    );
+  if (name === "diary")
+    return (
+      <svg {...common}>
+        <rect x="3" y="4" width="18" height="17" rx="2" />
+        <path d="M3 9h18M8 2v4M16 2v4" />
+        <path d="M8 14h3M8 17h6" />
+      </svg>
+    );
+  return (
+    <svg {...common}>
+      <path d="M12 2l8 4v6c0 5-3.5 9.5-8 10-4.5-.5-8-5-8-10V6l8-4z" />
+      <path d="M9 12l2 2 4-4" />
+    </svg>
   );
 }
 

@@ -39,21 +39,32 @@ const FLOW_STEPS = [
     n: "01",
     title: "Get found",
     body: "Showing up on Google isn&rsquo;t an overnight switch. It&rsquo;s ongoing work, and that&rsquo;s our job. Every month we tune your Google Business Profile and local pages so more of the right people nearby find you over time.",
-    bullets: ["Lightning-fast website", "Monthly SEO by hand", "Google Business Profile tuning"],
+    bullets: [
+      "More of your area actually seeing you",
+      "The right jobs, in your postcodes, every month",
+      "A site that loads fast, so people stay to enquire",
+    ],
     mock: "google" as const,
   },
   {
     n: "02",
     title: "Win the visit",
     body: "Every page is built to turn a visitor into an enquiry, and each one drops straight into the app with an instant notification. You manage the whole way, from first ping through to a booked-in job, all from one simple app.",
-    bullets: ["Widget on every page", "Instant push notification", "WhatsApp &amp; tap-to-call"],
+    bullets: [
+      "Enquiries land in your pocket the second they happen",
+      "No missed leads while you&rsquo;re on the tools",
+      "One tap to call or WhatsApp the customer back",
+    ],
     mock: "site" as const,
   },
   {
     n: "03",
     title: "Get booked",
     body: "Send quotes and invoices in a few taps, straight from the app, and get paid faster. Then the moment an invoice is settled, the app automatically asks the customer for a review, so every finished job helps the next one find you.",
-    bullets: ["Quote &amp; invoice from the app", "Card payment on the doorstep", "Reviews collected automatically"],
+    bullets: [
+      "Get paid faster, with less chasing",
+      "Every finished job earns you the next one",
+    ],
     mock: "base" as const,
   },
 ];
@@ -103,12 +114,12 @@ const INCLUDED_GRID = [
 
 const DIFFERENTIATORS = [
   {
-    label: "01",
+    icon: "phone" as const,
     title: "Missed-call recovery",
     body: "When you&rsquo;re on the tools and can&rsquo;t pick up, an automatic text goes straight back the second a call drops. The customer knows you&rsquo;ll be in touch, so the lead never goes cold before you&rsquo;ve seen it.",
   },
   {
-    label: "02",
+    icon: "star" as const,
     title: "Quoting quality control",
     body: "We don&rsquo;t auto-quote on your behalf. Before an enquiry reaches you, the customer answers the right questions, so what lands is a proper, qualified job with the detail you need to price it.",
   },
@@ -130,14 +141,12 @@ const APP_FEATURES = [
       "Send quotes &amp; invoices in a few taps",
       "Track every job through to Paid",
       "Auto-asks for a review once paid",
-      "Card payment on the doorstep",
     ],
   },
   {
     title: "Plan your day, get there faster",
     items: [
       "Today&rsquo;s jobs pinned on a map",
-      "One-tap navigation &amp; live drive times",
       "Full diary &amp; appointments in one place",
       "Log arrival, hand over notes in one tap",
     ],
@@ -149,14 +158,14 @@ const GETTING_STARTED = [
     n: "1",
     when: "Day one, 30 seconds",
     title: "Scan your site in 30 seconds",
-    body: "Pop in your website and you get a plain-English report on where it&rsquo;s losing you enquiries. Happy with what you see, leave a few details and we take it from there.",
+    body: "Pop in your website and you get a plain-English score on where it&rsquo;s losing you enquiries. From there, leave your details and we&rsquo;ll come back to you, or skip the wait and call us on the spot.",
     Mock: StepMockSignup,
   },
   {
     n: "2",
     when: "Within 24 hours",
-    title: "We call you within 24 hours",
-    body: "One of the team calls inside a day and we come prepared, with an early design of your new site and a few quick questions. The first conversation is about your business, not a blank page.",
+    title: "We call you back inside a day",
+    body: "If you left your details rather than calling straight through, this is when you&rsquo;ll hear from us. Founder-led, no support queue, no ticket number. You get a proper conversation about your business, with an early design of your new site already on the table.",
     Mock: StepMockCall,
   },
   {
@@ -185,19 +194,27 @@ const GETTING_STARTED = [
 const FAQS = [
   {
     q: "What does the plan actually cost?",
-    a: "£197 a month + VAT. That covers your rebuilt site, ongoing SEO with Tandemm Reach, the app to run enquiries and jobs, Duo voice assistant, tracking and the enquiry widget. Tandemm Fuel (paid ads) is an optional add-on, priced against your spend.",
+    a: "£197 a month + VAT. That covers your rebuilt site, ongoing SEO with Tandemm Reach, Duo to run your enquiries and jobs, the voice assistant, tracking and the enquiry widget. Tandemm Fuel is a separate service, priced against your ad spend, and only added on if and when you want it.",
   },
   {
-    q: "Am I tied into a contract?",
-    a: "No. Month to month, cancel any time. The 90 Day Tandemm Promise sits over the top: if it hasn&rsquo;t earned its keep in 90 days, the plan refunds in full.",
-  },
-  {
-    q: "Do I own the website?",
-    a: "The domain and content are yours. The site itself runs inside the Tandemm system, which is what keeps the SEO, tracking, widget and app talking to each other. Most owners don&rsquo;t think about the wiring, they just pick up the phone when it rings.",
+    q: "Is there a minimum term?",
+    a: "No minimum term. There is a proper written agreement, because we&rsquo;re building real infrastructure for your business, but you&rsquo;re never locked in for a stretch you can&rsquo;t leave. On top of that, the 90 Day Tandemm Promise: if it hasn&rsquo;t earned its keep in 90 days, the plan refunds in full.",
   },
   {
     q: "How fast will the phone start ringing?",
-    a: "SEO compounds week on week, so month three is ahead of month one and month six is a different business. If you want faster, Tandemm Fuel (paid ads) can start feeding the diary inside the first month.",
+    a: "SEO compounds week on week, so month three is ahead of month one and month six is a different business. If you want faster, Tandemm Fuel can start feeding the diary inside the first month.",
+  },
+  {
+    q: "Do I own the website?",
+    a: "The domain and content are yours. The site itself runs inside the Tandemm system, which is what keeps the SEO, tracking, widget and Duo talking to each other. Most owners don&rsquo;t think about the wiring, they just pick up the phone when it rings.",
+  },
+  {
+    q: "Do I need to be techy to run Duo?",
+    a: "No. If you can send a text, you can run Duo. Most of the work is voice-first, so on a busy day you talk, Duo types. The founder walks you through it on your welcome call, and support is a message away, not a ticket queue.",
+  },
+  {
+    q: "How much of my time does setup take?",
+    a: "About an hour of your time, spread across the first week. The welcome call, sending a few photos, and reviewing the site when it lands. We do the rest in the background so you can stay on the tools.",
   },
 ];
 
@@ -261,7 +278,6 @@ export default function HomePage() {
             <Reveal>
               <div className="v2-hero-guarantee">
                 <GuaranteeStrip variant="inline" />
-                <span>Full refund, no debate</span>
               </div>
             </Reveal>
           </div>
@@ -286,7 +302,7 @@ export default function HomePage() {
               From getting found,<br />to getting paid.
             </h2>
             <p className="v2-lede">
-              Your website. Tandemm Reach. Duo app.<br />
+              Your website. Tandemm Reach. Duo.<br />
               One system, generating high-quality, local business.
             </p>
           </Reveal>
@@ -350,7 +366,7 @@ export default function HomePage() {
           </Reveal>
           <Reveal>
             <p className="v2-subs-sub">
-              Your website. Tandemm Reach. Duo app.<br />
+              Your website. Tandemm Reach. Duo.<br />
               One system, generating high-quality, local business.
             </p>
           </Reveal>
@@ -375,7 +391,7 @@ export default function HomePage() {
             <h2 className="v2-h2">Everything your plan gives you.</h2>
             <p className="v2-lede">
               A rebuilt website, hands-on SEO every month so you stay visible,
-              and the Tandemm Duo app to handle enquiries and catch any you
+              and Tandemm Duo to handle enquiries and catch any you
               miss. Here&rsquo;s what you get.
             </p>
           </Reveal>
@@ -419,7 +435,9 @@ export default function HomePage() {
               <div className="v2-diff-grid">
                 {DIFFERENTIATORS.map((d) => (
                   <div key={d.title} className="v2-diff-card">
-                    <span className="v2-diff-num">{d.label}</span>
+                    <span className="v2-diff-illus" aria-hidden="true">
+                      <DiffIllus name={d.icon} />
+                    </span>
                     <div>
                       <div className="v2-diff-title">{d.title}</div>
                       <div
@@ -621,16 +639,16 @@ export default function HomePage() {
           <Reveal>
             <div className="v2-addon-card">
               <div className="v2-addon-copy">
-                <span className="v2-addon-tag">Optional add-on · Tandemm Fuel</span>
+                <span className="v2-addon-tag">Separate service · Tandemm Fuel</span>
                 <div className="v2-addon-title">
                   Turn your lead volume up or down, whenever you need.
                 </div>
                 <div className="v2-addon-sub">
-                  Tandemm Reach builds steady, compounding local rankings.
-                  Tandemm Fuel is the paid-ads accelerator that sits on top:
-                  turn it up when the diary&rsquo;s quiet, ease it off when
-                  you&rsquo;re full. Priced against your spend, never a flat
-                  retainer.
+                  Fuel is a standalone service, not part of the monthly plan.
+                  Bolt it on when the diary&rsquo;s quiet, ease it off when
+                  you&rsquo;re full, or run it on its own. Priced against your
+                  ad spend, never a flat retainer, and only paid when you want
+                  it running.
                 </div>
                 <div className="v2-addon-points">
                   <span>Live within the week</span>
@@ -670,7 +688,7 @@ export default function HomePage() {
               £197<span>/mo + VAT</span>
             </div>
             <p className="v2-lede">
-              Your website, Tandemm Reach SEO every month, and the Duo app
+              Your website, Tandemm Reach SEO every month, and Duo
               running your enquiries and jobs. One flat fee that most trades
               earn back inside a single extra job. Want more volume on top?
               Tandemm Fuel turns the leads up or down as you need them.
@@ -682,7 +700,7 @@ export default function HomePage() {
               <span className="v2-price-dot" />
               <span>No setup fees</span>
               <span className="v2-price-dot" />
-              <span>No contract</span>
+              <span>No minimum term</span>
               <span className="v2-price-dot" />
               <span>Cancel any time</span>
             </div>
@@ -793,6 +811,35 @@ function FuelVolume() {
         <span>Ease off when full</span>
       </div>
     </div>
+  );
+}
+
+function DiffIllus({ name }: { name: "phone" | "star" }) {
+  const common = {
+    viewBox: "0 0 64 64",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.6,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+  };
+  if (name === "phone") {
+    return (
+      <svg {...common} width="44" height="44">
+        <rect x="19" y="8" width="26" height="48" rx="5" />
+        <line x1="19" y1="16" x2="45" y2="16" />
+        <line x1="19" y1="48" x2="45" y2="48" />
+        <circle cx="32" cy="52" r="1.4" />
+        <path d="M27 24 h10" />
+        <path d="M27 30 h10" />
+        <path d="M27 36 h6" />
+      </svg>
+    );
+  }
+  return (
+    <svg {...common} width="44" height="44">
+      <path d="M32 8 l6.9 14 15.4 2.2 -11.2 10.9 2.7 15.3 -13.8 -7.2 -13.8 7.2 2.7 -15.3 -11.2 -10.9 15.4 -2.2 z" />
+    </svg>
   );
 }
 

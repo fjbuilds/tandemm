@@ -165,8 +165,8 @@ const FAQS = [
     a: "LSA (Local Services Ads) sits at the very top of Google and you only pay when a homeowner actually contacts you, not per click. CPC (regular Google Ads) charges every time someone clicks. We run both, and shift spend to whichever is paying back best for your trade and area.",
   },
   {
-    q: "Am I locked into a long contract?",
-    a: "No. The monthly plan runs month to month. Cancel whenever it stops working for you.",
+    q: "Is there a minimum term?",
+    a: "No minimum term. There is a proper written agreement — we&rsquo;re building real infrastructure for your business, so it&rsquo;s a real service agreement — but you&rsquo;re never locked into a stretch you can&rsquo;t leave. Cancel whenever it stops working for you, and the 90 Day Tandemm Promise sits over the top: if it hasn&rsquo;t earned its keep in 90 days, the plan refunds in full.",
   },
   {
     q: "Will you work with my competitors too?",
