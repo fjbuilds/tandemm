@@ -475,19 +475,18 @@ export default function PricingPage() {
         <Reveal>
           <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-14 text-center text-[var(--color-on-primary)] shadow-[var(--shadow-2)] sm:px-14">
             <h2 className="mx-auto max-w-[620px] font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              First, let&rsquo;s check your area is open.
+              Leave your details. We&rsquo;ll call within 24 hours.
             </h2>
             <p className="mx-auto mt-4 max-w-[520px] text-[17px] leading-[1.55] text-white/75">
-              We limit how many of the same trade we take on in any one area.
-              Leave your details and a real person will call you within one
-              working day.
+              A real person on the phone, walking you through how Tandemm
+              would work for your trade. No card, no commitment.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Button
                 href="/start"
                 className="bg-white text-[var(--color-primary)] hover:bg-white/90"
               >
-                Check my area
+                Get in touch
               </Button>
               <a
                 href={TANDEMM_WHATSAPP}
@@ -783,7 +782,7 @@ function PricingSlider() {
 
       {/* CTA */}
       <Button href="/start" className="w-full text-center">
-        {atMax ? "Let's talk about scaling" : "Check if my area is open"}
+        {atMax ? "Let's talk about scaling" : "Get in touch"}
       </Button>
     </div>
   );

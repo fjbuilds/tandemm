@@ -15,24 +15,6 @@ const paletteOverride = {
   "--color-hairline-soft": "#E1E3DC",
 } as CSSProperties;
 
-const STEPS = [
-  {
-    kicker: "Now",
-    title: "Leave your details",
-    body: "Two minutes. Your name, email and mobile so we know who to call back.",
-  },
-  {
-    kicker: "Then",
-    title: "We check your area",
-    body: "We look at your trade, your patch and whether we have room to take you on without cannibalising existing customers.",
-  },
-  {
-    kicker: "Within one working day",
-    title: "You get a straight answer",
-    body: "A real person calls you within 24 hours. Open or full, you will know either way. No chasing, no sales run-around.",
-  },
-];
-
 const INCLUDES = [
   "A website built for your trade and your area.",
   "Hands-on SEO every month, pushing you up Google where you work.",
@@ -92,56 +74,23 @@ export default function StartPage() {
           <div>
             <Reveal>
               <h1 className="font-[family-name:var(--font-display)] text-[clamp(34px,4.6vw,52px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-                Let&rsquo;s check we can take you on.
+                Leave your details.
+                <br />
+                We&rsquo;ll call you within 24 hours.
               </h1>
             </Reveal>
             <Reveal>
               <p className="mt-5 max-w-[520px] text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
-                We limit how many of the same trade we work with in any one
-                area, so our customers never end up fighting each other for the
-                same spot on Google.
+                A real person on the other end. We&rsquo;ll walk you through
+                how Tandemm would work for your trade, answer anything you
+                want to ask, and pick a start date if it makes sense. No card,
+                no commitment.
               </p>
-              <p className="mt-3 max-w-[520px] text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
-                Leave your details on the right and a real person will call you
-                within one working day. No card, no commitment.
-              </p>
-            </Reveal>
-
-            {/* Steps */}
-            <Reveal>
-              <div className="mt-10">
-                <div className="mb-4 text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--color-accent)]">
-                  How it works
-                </div>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                  {STEPS.map((s, i) => (
-                    <div
-                      key={s.title}
-                      className="rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-4"
-                    >
-                      <div className="mb-2 flex items-center gap-2">
-                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-accent)] text-[11px] font-bold text-white">
-                          {i + 1}
-                        </span>
-                        <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-[var(--color-ink-muted)]">
-                          {s.kicker}
-                        </span>
-                      </div>
-                      <div className="font-[family-name:var(--font-display)] text-[15px] font-bold text-[var(--color-ink)]">
-                        {s.title}
-                      </div>
-                      <p className="mt-1.5 text-[13px] leading-[1.5] text-[var(--color-ink-muted)]">
-                        {s.body}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
             </Reveal>
 
             {/* Includes */}
             <Reveal>
-              <div className="mt-8 rounded-[var(--radius-lg)] bg-[var(--color-surface-muted)] p-6">
+              <div className="mt-10 rounded-[var(--radius-lg)] bg-[var(--color-surface-muted)] p-6">
                 <div className="mb-3 text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--color-accent)]">
                   What you&rsquo;d be getting
                 </div>
@@ -216,13 +165,13 @@ export default function StartPage() {
             <div className="sticky top-[92px]">
               <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-2)] sm:p-8">
                 <div className="mb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
-                  Check availability
+                  Get in touch
                 </div>
                 <h2 className="font-[family-name:var(--font-display)] text-[24px] font-extrabold leading-tight tracking-[-0.01em] text-[var(--color-ink)]">
-                  Two quick steps. We&rsquo;ll call you back.
+                  Your details, our call.
                 </h2>
                 <p className="mt-1 text-[13.5px] text-[var(--color-ink-muted)]">
-                  A straight answer within one working day.
+                  We&rsquo;ll ring you within 24 hours.
                 </p>
 
                 {status === "sent" ? (
