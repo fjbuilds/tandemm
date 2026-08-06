@@ -74,7 +74,7 @@ const MEANING = [
   {
     icon: "phone",
     title: "The phone starts ringing again",
-    body: "More of the right people, in your postcodes, finding you first when they need your trade. Not tyre-kickers from the other side of the country — locals ready to book.",
+    body: "More of the right people, in your postcodes, finding you first when they need your trade. Not tyre-kickers from the other side of the country. Locals, ready to book.",
   },
   {
     icon: "diary",
@@ -125,7 +125,6 @@ export default function LocalSearchPage() {
                 >
                   Find out what&apos;s costing you jobs
                 </Button>
-                <Button href="/" variant="secondary">Back to the plan</Button>
               </div>
             </Reveal>
           </div>
@@ -228,12 +227,12 @@ export default function LocalSearchPage() {
         </div>
       </section>
 
-      {/* WHAT DOES THIS MEAN FOR YOU — subtle band */}
-      <section className="v2-meaning">
+      {/* WHAT DOES THIS MEAN FOR YOU — dark variant band */}
+      <section className="v2-meaning v2-meaning--dark">
         <div className="v2-meaning-inner">
           <Reveal className="v2-eyebrow-head">
-            <span className="v2-eyebrow">What this means for you</span>
-            <h2 className="v2-h2">
+            <span className="v2-eyebrow v2-eyebrow--on-dark">What this means for you</span>
+            <h2 className="v2-h2 v2-h2--on-dark">
               When someone searches local,<br />you&rsquo;re the answer.
             </h2>
           </Reveal>

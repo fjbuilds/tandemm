@@ -645,16 +645,6 @@ export function ReportCard() {
         </div>
       </div>
 
-      <div className="report-card-notes">
-        <div className="report-card-note">
-          <span className="report-card-note-tag">What we did this month</span>
-          <span>Posted 4 job updates, replied to 12 reviews, added 3 new service pages for SW11, SW4, SW18.</span>
-        </div>
-        <div className="report-card-note">
-          <span className="report-card-note-tag">What&rsquo;s next</span>
-          <span>Push into two new postcodes, chase reviews from June jobs, refresh boiler-install photos.</span>
-        </div>
-      </div>
     </div>
   );
 }
@@ -773,7 +763,7 @@ export function StepMockPhotos() {
       <div className="step-mock-photos-msghead">
         <span className="step-mock-photos-avatar">SW</span>
         <div>
-          <div className="step-mock-photos-sender">Sarah · South West Heating</div>
+          <div className="step-mock-photos-sender">John · South West Heating</div>
           <div className="step-mock-photos-time">sent you 4 photos · 09:42</div>
         </div>
       </div>
@@ -781,7 +771,7 @@ export function StepMockPhotos() {
         <div className="step-mock-photo-real step-mock-photo-real--van">
           <PhotoVan />
           <span className="step-mock-photo-grain" aria-hidden="true" />
-          <span className="step-mock-photo-real-label">The van · Sarah&rsquo;s Plumbing</span>
+          <span className="step-mock-photo-real-label">The van · John&rsquo;s Plumbing</span>
         </div>
         <div className="step-mock-photo-real step-mock-photo-real--boiler">
           <PhotoBoiler />
@@ -836,7 +826,7 @@ function PhotoVan() {
       <path d="M108 44 L152 44 Q166 44 166 56 L166 66 L98 66 Z" fill="#3B5D77" opacity="0.7" />
       {/* side panel branding */}
       <rect x="34" y="72" width="70" height="16" rx="1" fill="#C1662C" />
-      <text x="69" y="84" fontSize="9" fontWeight="800" fontFamily="Archivo, sans-serif" fill="#fff" textAnchor="middle" letterSpacing="0.05em">SARAH&rsquo;S PLUMBING</text>
+      <text x="69" y="84" fontSize="9" fontWeight="800" fontFamily="Archivo, sans-serif" fill="#fff" textAnchor="middle" letterSpacing="0.05em">JOHN&rsquo;S PLUMBING</text>
       {/* wheels */}
       <circle cx="56" cy="102" r="12" fill="#1F262B" />
       <circle cx="56" cy="102" r="5" fill="#3A4650" />

@@ -5005,14 +5005,14 @@ body {
 /* ── HERO SYSTEM (isometric scene) ─────────────────────────── */
 .hero-iso {
   width: 100%;
-  max-width: 600px;
+  max-width: 640px;
   margin: 0 auto;
   filter: drop-shadow(0 40px 60px rgba(27, 35, 32, 0.14));
 }
 .hero-iso-svg {
   width: 100%;
   height: auto;
-  overflow: hidden;
+  overflow: visible;
   animation: iso-float 7s ease-in-out infinite;
 }
 @keyframes iso-float {
@@ -6250,10 +6250,16 @@ body {
   .reach-postcodes-row--head { display: none; }
 }
 
-/* What this means for you — subtle band between postcodes and Do */
+/* What this means for you — dark band for variety */
 .v2-meaning {
-  padding: 64px 24px;
+  padding: 72px 24px;
   background: var(--color-canvas);
+}
+.v2-meaning--dark {
+  background:
+    radial-gradient(70% 60% at 100% 0%, color-mix(in srgb, var(--color-accent) 22%, transparent), transparent 55%),
+    linear-gradient(160deg, #2A4763 0%, var(--color-primary) 62%);
+  color: white;
 }
 .v2-meaning-inner { max-width: 1100px; margin: 0 auto; }
 .v2-meaning-grid {
@@ -6268,6 +6274,15 @@ body {
   transition: box-shadow 0.2s ease;
 }
 .v2-meaning-cell:hover { box-shadow: 0 20px 40px -30px rgba(15,25,35,0.2); }
+.v2-meaning--dark .v2-meaning-cell {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(6px);
+}
+.v2-meaning--dark .v2-meaning-cell:hover {
+  background: rgba(255,255,255,0.09);
+  box-shadow: 0 20px 40px -30px rgba(0,0,0,0.4);
+}
 .v2-meaning-icon {
   width: 42px; height: 42px; border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
@@ -6275,13 +6290,19 @@ body {
   background: color-mix(in srgb, var(--color-accent) 12%, transparent);
   margin-bottom: 14px;
 }
+.v2-meaning--dark .v2-meaning-icon {
+  color: #F7B26B;
+  background: color-mix(in srgb, var(--color-accent) 28%, transparent);
+}
 .v2-meaning-title {
   font-family: var(--font-display); font-weight: 800; font-size: 17px;
   color: var(--color-ink); margin-bottom: 6px; letter-spacing: -0.01em;
 }
+.v2-meaning--dark .v2-meaning-title { color: white; }
 .v2-meaning-body {
   font-size: 14px; line-height: 1.6; color: var(--color-ink-muted);
 }
+.v2-meaning--dark .v2-meaning-body { color: rgba(255,255,255,0.78); }
 @media (max-width: 800px) {
   .v2-meaning-grid { grid-template-columns: 1fr; }
 }

@@ -272,7 +272,7 @@ export function HeroSystem() {
 
   return (
     <div className="hero-iso" aria-hidden="true">
-      <svg viewBox="58 112 614 394" className="hero-iso-svg" role="img">
+      <svg viewBox="30 112 690 394" className="hero-iso-svg" role="img">
         {/* orbiting ring */}
         <ellipse
           cx={320}
@@ -329,17 +329,14 @@ export function HeroSystem() {
           {/* raised chip */}
           <g transform="translate(0,-34)">
             <Tile cx={320} cy={318} hw={92} t={30} top={C.hubTop} right={C.hubRight} left={C.hubLeft} />
-            {/* Tandemm favicon mark, laid flat on the top face of the hub */}
-            <g transform={topMatrix(320, 318, 92)}>
-              {/* Two-diamond mark. Path native ~1000x1000. Scale +
-                  translate so it sits centred on the unit square,
-                  then the topMatrix flat-packs it onto the top face. */}
-              <g transform="translate(0.5 0.5) scale(0.00058) translate(-500 -500)">
-                <path
-                  d="M350,260 L590,500 L350,740 L110,500 Z M650,260 L890,500 L650,740 L410,500 Z"
-                  fill="#0B1220"
-                />
-              </g>
+            {/* Tandemm favicon mark, kept at right-angle (not skewed
+                onto the isometric top face) so the two diamonds read
+                cleanly. Sits centred on the raised hub chip. */}
+            <g transform="translate(320 318) scale(0.14) translate(-500 -500)">
+              <path
+                d="M350,260 L590,500 L350,740 L110,500 Z M650,260 L890,500 L650,740 L410,500 Z"
+                fill="#0B1220"
+              />
             </g>
           </g>
         </g>
