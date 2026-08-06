@@ -21,7 +21,7 @@ const paletteOverride = {
 /* ─────────────────────────────────────────────────────────── */
 
 const INCLUDED_PILLARS = [
-  { title: "Website rebuild", note: "Fast, mobile-first, yours to keep" },
+  { title: "Website rebuild", note: "Fast, mobile-first, built for your trade" },
   { title: "Found on Google", note: "Ranked where homeowners search" },
   { title: "Visible on AI", note: "Named on ChatGPT and Claude" },
   { title: "Quote assistant", note: "Qualifies the job, captures the lead" },

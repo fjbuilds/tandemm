@@ -86,11 +86,12 @@ const INCLUDED: IncludedTile[] = [
     tagline: "Built to convert, run for you.",
     accent: "primary",
     items: [
-      "Full website rebuild (yours to keep)",
+      "Full website rebuild, designed for your trade",
       "Design changes made for you at any time",
       "Hosting, SSL certificate and domain",
       "Mobile-first, sub-2s load times",
       "Above-the-fold enquiry widget on every page",
+      "Quote quality-control widget that filters tyre-kickers before they hit your phone",
       "Landing pages tuned to each ad campaign",
       "GDPR-compliant cookie and privacy handling",
     ],
@@ -116,10 +117,10 @@ const INCLUDED: IncludedTile[] = [
     items: [
       "Dedicated tracking phone number (rings your line)",
       "Call recording and source attribution",
-      "Missed-call auto-text within 60 seconds",
       "On-site enquiry widget with SMS notification",
       "WhatsApp entry point and thread logging",
       "Web-form-to-SMS on every enquiry",
+      "Missed-call catcher hands off straight to the app",
     ],
   },
   {
@@ -127,6 +128,7 @@ const INCLUDED: IncludedTile[] = [
     tagline: "One app. Every lead, tied to a pound.",
     accent: "ink",
     items: [
+      "Missed-call auto-text within 60 seconds, straight from the app",
       "One inbox for calls, forms, WhatsApp and missed calls",
       "Lead pipeline (New, Quoting, Booked, Dead)",
       "Notes, callbacks and file storage per lead",
@@ -204,10 +206,6 @@ const FAQS = [
   {
     q: "How quickly will I see leads?",
     a: "Most clients see the first LSA leads within 2 to 4 weeks of the site going live. Google Ads typically kick in inside the first month. SEO compounds, so month three beats month one and month six beats month three.",
-  },
-  {
-    q: "Do I own the website you build?",
-    a: "Yes. The site is yours. If you leave, you take the website, the domain and the content with you. We do not hold your business hostage.",
   },
   {
     q: "What happens if I miss a call?",
