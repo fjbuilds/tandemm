@@ -143,7 +143,7 @@ export default function FeaturesPage() {
         </Reveal>
       </section>
 
-      {/* ── FLOW: STEP 01 — AUDIT ── */}
+      {/* ── FLOW: STEP 01. AUDIT ── */}
       <section className="mx-auto max-w-[1160px] px-6 py-20">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <Reveal>
@@ -180,7 +180,7 @@ export default function FeaturesPage() {
         </div>
       </section>
 
-      {/* ── FLOW: STEP 02 — WEBSITE REBUILD ── */}
+      {/* ── FLOW: STEP 02. WEBSITE REBUILD ── */}
       <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
         <div className="mx-auto grid max-w-[1160px] grid-cols-1 items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
           <Reveal>
@@ -216,7 +216,7 @@ export default function FeaturesPage() {
         </div>
       </section>
 
-      {/* ── FLOW: STEP 03 — RANKINGS: GOOGLE + AI ── */}
+      {/* ── FLOW: STEP 03. RANKINGS: GOOGLE + AI ── */}
       <section className="mx-auto max-w-[1160px] px-6 py-20">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <Reveal>
@@ -256,7 +256,7 @@ export default function FeaturesPage() {
         </div>
       </section>
 
-      {/* ── FLOW: STEP 04 — DASHBOARD ── */}
+      {/* ── FLOW: STEP 04. DASHBOARD ── */}
       <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
         <div className="mx-auto max-w-[1160px]">
           <Reveal className="mb-12 text-center">
@@ -300,7 +300,7 @@ export default function FeaturesPage() {
         </div>
       </section>
 
-      {/* ── FLOW: STEP 05 — ENQUIRIES HANDLED ── */}
+      {/* ── FLOW: STEP 05. ENQUIRIES HANDLED ── */}
       <section className="mx-auto max-w-[1160px] px-6 py-20">
         <Reveal className="mb-12 text-center">
           <StepEyebrow n="05" label="And none of it goes cold" center />

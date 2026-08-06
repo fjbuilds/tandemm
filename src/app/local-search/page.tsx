@@ -97,7 +97,7 @@ export default function LocalSearchPage() {
       <DiamondLoader />
       <Nav active="features" />
 
-      {/* HERO — copy only, offset left */}
+      {/* HERO. copy only, offset left */}
       <section className="v2-local-hero">
         <div className="v2-local-hero-inner">
           <div className="v2-local-hero-copy">
@@ -131,7 +131,7 @@ export default function LocalSearchPage() {
         </div>
       </section>
 
-      {/* PROBLEM — someone nearby just searched for your trade */}
+      {/* PROBLEM. someone nearby just searched for your trade */}
       <section className="v2-problem">
         <div className="v2-problem-inner">
           <Reveal>
@@ -164,7 +164,7 @@ export default function LocalSearchPage() {
         </div>
       </section>
 
-      {/* WHY IT MATTERS — big stats */}
+      {/* WHY IT MATTERS. big stats */}
       <section className="v2-stats">
         <div className="v2-stats-inner">
           <Reveal className="v2-eyebrow-head">
@@ -205,7 +205,7 @@ export default function LocalSearchPage() {
         </div>
       </section>
 
-      {/* WHAT TO EXPECT — postcode progress */}
+      {/* WHAT TO EXPECT. postcode progress */}
       <section className="v2-results">
         <div className="v2-results-inner">
           <Reveal className="v2-eyebrow-head">
@@ -227,7 +227,7 @@ export default function LocalSearchPage() {
         </div>
       </section>
 
-      {/* WHAT DOES THIS MEAN FOR YOU — dark variant band */}
+      {/* WHAT DOES THIS MEAN FOR YOU. dark variant band */}
       <section className="v2-meaning v2-meaning--dark">
         <div className="v2-meaning-inner">
           <Reveal className="v2-eyebrow-head">
@@ -252,7 +252,7 @@ export default function LocalSearchPage() {
         </div>
       </section>
 
-      {/* WHAT WE ACTUALLY DO — 2x2 grid, benefit-led */}
+      {/* WHAT WE ACTUALLY DO. 2x2 grid, benefit-led */}
       <section className="v2-do">
         <div className="v2-do-inner">
           <Reveal className="v2-eyebrow-head">
@@ -320,7 +320,7 @@ export default function LocalSearchPage() {
         </div>
       </section>
 
-      {/* WHEN WILL I SEE RESULTS — 3-month timeline */}
+      {/* WHEN WILL I SEE RESULTS. 3-month timeline */}
       <section className="v2-timeline">
         <div className="v2-timeline-inner">
           <Reveal className="v2-eyebrow-head">
@@ -358,7 +358,7 @@ export default function LocalSearchPage() {
         </div>
       </section>
 
-      {/* GUARANTEE + CONTACT (slimmed — no wrapper heading) */}
+      {/* GUARANTEE + CONTACT (slimmed. no wrapper heading) */}
       <section className="v2-local-cta">
         <div className="v2-local-cta-inner">
           <Reveal>

@@ -5,6 +5,7 @@ import { Nav } from "@/components/tandemm/Nav";
 import { Footer } from "@/components/tandemm/Footer";
 import { Reveal } from "@/components/tandemm/Reveal";
 import { Button } from "@/components/tandemm/Button";
+import { TANDEMM_WHATSAPP } from "@/components/tandemm/ContactOptions";
 
 const paletteOverride = {
   "--color-canvas": "#EDEEEA",
@@ -25,7 +26,7 @@ const LEADS_STEP = 5;
 const ENQUIRY_RATE = 0.6;
 
 // Piecewise cost-per-lead anchors. Real Google Ads accounts don't scale
-// linearly in a single service area — CPL rises as spend goes up because
+// linearly in a single service area. CPL rises as spend goes up because
 // local demand is finite. We linearly interpolate CPL between anchors,
 // then multiply by lead volume to get monthly spend.
 const CPL_ANCHORS: readonly (readonly [leads: number, cpl: number])[] = [
@@ -72,9 +73,18 @@ function priceForLeads(leads: number) {
 /*  What's included (shared across all tiers)                  */
 /* ─────────────────────────────────────────────────────────── */
 
-const INCLUDED = [
+type IncludedTile = {
+  group: string;
+  tagline: string;
+  accent: "primary" | "accent" | "ink" | "teal";
+  items: string[];
+};
+
+const INCLUDED: IncludedTile[] = [
   {
-    group: "Website",
+    group: "Your website",
+    tagline: "Built to convert, run for you.",
+    accent: "primary",
     items: [
       "Full website rebuild (yours to keep)",
       "Design changes made for you at any time",
@@ -86,27 +96,23 @@ const INCLUDED = [
     ],
   },
   {
-    group: "Google Ads",
-    items: [
-      "Local Services Ads (LSA), pay per lead, not per click",
-      "Google Ads (CPC) for the searches LSA does not cover",
-      "Keyword and location research",
-      "Ad copy, extensions, and negative lists",
-      "A/B testing on ads and landing pages",
-    ],
-  },
-  {
-    group: "SEO",
+    group: "Get found",
+    tagline: "SEO and paid, working together.",
+    accent: "accent",
     items: [
       "New service pages targeting local search terms",
       "New area pages for each postcode you cover",
       "Google Business Profile setup and management",
-      "Local citations and directory listings",
-      "Monthly on-page and technical SEO work",
+      "Monthly on-page and technical SEO",
+      "Local Services Ads (pay per lead, not per click)",
+      "Google Ads for the searches LSA doesn't cover",
+      "A/B testing on ads and landing pages",
     ],
   },
   {
-    group: "Lead capture",
+    group: "Capture every lead",
+    tagline: "No enquiry ever slips.",
+    accent: "teal",
     items: [
       "Dedicated tracking phone number (rings your line)",
       "Call recording and source attribution",
@@ -117,27 +123,50 @@ const INCLUDED = [
     ],
   },
   {
-    group: "Dashboard",
+    group: "Run the day",
+    tagline: "One app. Every lead, tied to a pound.",
+    accent: "ink",
     items: [
       "One inbox for calls, forms, WhatsApp and missed calls",
       "Lead pipeline (New, Quoting, Booked, Dead)",
       "Notes, callbacks and file storage per lead",
       "Live on desktop, live on your phone",
-      "Multi-user access for your team",
-      "Data export and backup",
-    ],
-  },
-  {
-    group: "Reporting",
-    items: [
       "Every call and form tied back to source",
       "Cost per booked job, per channel",
-      "Return on ad spend (ROAS) reporting",
       "Monthly review call and written report",
-      "Full transparency on Google Ads spend",
     ],
   },
 ];
+
+const ACCENT_TOKENS: Record<
+  IncludedTile["accent"],
+  { chip: string; ring: string; glow: string; icon: string }
+> = {
+  primary: {
+    chip: "bg-[var(--color-primary)] text-white",
+    ring: "hover:border-[var(--color-primary)]",
+    glow: "from-[var(--color-primary)]/25 to-transparent",
+    icon: "text-[var(--color-primary)]",
+  },
+  accent: {
+    chip: "bg-[var(--color-accent)] text-white",
+    ring: "hover:border-[var(--color-accent)]",
+    glow: "from-[var(--color-accent)]/25 to-transparent",
+    icon: "text-[var(--color-accent)]",
+  },
+  teal: {
+    chip: "bg-[#0F766E] text-white",
+    ring: "hover:border-[#0F766E]",
+    glow: "from-[#0F766E]/25 to-transparent",
+    icon: "text-[#0F766E]",
+  },
+  ink: {
+    chip: "bg-[var(--color-ink)] text-white",
+    ring: "hover:border-[var(--color-ink)]",
+    glow: "from-[var(--color-ink)]/25 to-transparent",
+    icon: "text-[var(--color-ink)]",
+  },
+};
 
 /* ─────────────────────────────────────────────────────────── */
 /*  FAQ                                                        */
@@ -166,7 +195,7 @@ const FAQS = [
   },
   {
     q: "Is there a minimum term?",
-    a: "No minimum term. There is a proper written agreement — we&rsquo;re building real infrastructure for your business, so it&rsquo;s a real service agreement — but you&rsquo;re never locked into a stretch you can&rsquo;t leave. Cancel whenever it stops working for you, and the 90 Day Tandemm Promise sits over the top: if it hasn&rsquo;t earned its keep in 90 days, the plan refunds in full.",
+    a: "No minimum term. There is a proper written agreement, because we're building real infrastructure for your business, so it's a real service agreement. But you're never locked into a stretch you can't leave. Cancel whenever it stops working for you, and the 90 Day Tandemm Promise sits over the top: if it hasn't earned its keep in 90 days, the plan refunds in full.",
   },
   {
     q: "Will you work with my competitors too?",
@@ -195,7 +224,7 @@ const FAQS = [
 /* ─────────────────────────────────────────────────────────── */
 
 export default function PricingPage() {
-  const [openTier, setOpenTier] = useState<string | null>("Website");
+  const [openTier, setOpenTier] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   return (
@@ -262,60 +291,108 @@ export default function PricingPage() {
 
       {/* ── WHAT'S INCLUDED ── */}
       <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
-        <div className="mx-auto max-w-[900px]">
+        <div className="mx-auto max-w-[1100px]">
           <Reveal className="mb-10 text-center">
             <h2 className="font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
               What is in every plan
             </h2>
-            <p className="mx-auto mt-3 max-w-[540px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Same features, every tier. Tap a section to see the detail.
+            <p className="mx-auto mt-3 max-w-[560px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
+              Four sides of the same system. Hover or tap a tile to see what
+              is inside.
             </p>
           </Reveal>
 
-          <div className="flex flex-col gap-3">
-            {INCLUDED.map((group) => {
-              const open = openTier === group.group;
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            {INCLUDED.map((tile) => {
+              const open = openTier === tile.group;
+              const tokens = ACCENT_TOKENS[tile.accent];
               return (
-                <div
-                  key={group.group}
-                  className="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-hairline)] bg-[var(--color-surface)]"
+                <button
+                  key={tile.group}
+                  type="button"
+                  onClick={() => setOpenTier(open ? null : tile.group)}
+                  className={`group relative overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface)] p-6 text-left transition-all duration-300 ${tokens.ring} ${open ? "shadow-[var(--shadow-2)]" : "shadow-[var(--shadow-1)] hover:-translate-y-0.5"}`}
                 >
-                  <button
-                    type="button"
-                    onClick={() => setOpenTier(open ? null : group.group)}
-                    className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--color-primary)] text-[13px] font-bold text-white">
-                        {group.items.length}
+                  {/* Coloured glow that lifts on hover / open */}
+                  <span
+                    aria-hidden
+                    className={`pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-gradient-to-br ${tokens.glow} blur-2xl transition-opacity duration-300 ${open ? "opacity-100" : "opacity-40 group-hover:opacity-80"}`}
+                  />
+
+                  <div className="relative flex items-start justify-between gap-3">
+                    <div>
+                      <span
+                        className={`inline-block rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] ${tokens.chip}`}
+                      >
+                        {tile.group}
                       </span>
-                      <span className="font-[family-name:var(--font-display)] text-[17px] font-bold text-[var(--color-ink)]">
-                        {group.group}
-                      </span>
+                      <div className="mt-3 font-[family-name:var(--font-display)] text-[20px] font-bold leading-tight tracking-[-0.01em] text-[var(--color-ink)]">
+                        {tile.tagline}
+                      </div>
                     </div>
-                    <span className="text-[22px] text-[var(--color-ink-muted)]">
-                      {open ? "−" : "+"}
+                    <span
+                      className={`mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--color-hairline)] bg-[var(--color-surface)] text-[18px] font-bold transition-transform duration-300 ${tokens.icon} ${open ? "rotate-45" : ""}`}
+                      aria-hidden
+                    >
+                      +
                     </span>
-                  </button>
+                  </div>
+
+                  {/* Misted preview when closed */}
+                  {!open && (
+                    <div className="relative mt-4 h-[92px] overflow-hidden">
+                      <ul className="space-y-1.5 text-[13.5px] leading-[1.5] text-[var(--color-ink)]/70">
+                        {tile.items.slice(0, 4).map((item) => (
+                          <li key={item} className="flex items-start gap-2">
+                            <span
+                              className={`mt-[7px] block h-1 w-1 shrink-0 rounded-full ${tokens.icon} bg-current`}
+                            />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-b from-transparent to-[var(--color-surface)]" />
+                    </div>
+                  )}
+
+                  {/* Full list when open */}
                   <div
-                    className="grid transition-[grid-template-rows] duration-200 ease-out"
+                    className="grid transition-[grid-template-rows] duration-300 ease-out"
                     style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
                   >
                     <div className="overflow-hidden">
-                      <ul className="grid grid-cols-1 gap-2 border-t border-[var(--color-hairline-soft)] px-6 py-5 sm:grid-cols-2">
-                        {group.items.map((item) => (
+                      <ul className="mt-5 space-y-2 border-t border-[var(--color-hairline-soft)] pt-4 text-[14px] leading-[1.5] text-[var(--color-ink)]">
+                        {tile.items.map((item) => (
                           <li
                             key={item}
-                            className="flex items-start gap-2 text-[14px] leading-[1.5] text-[var(--color-ink)]"
+                            className="flex items-start gap-2.5"
                           >
-                            <span className="mt-[9px] block h-1 w-1 shrink-0 rounded-full bg-[var(--color-ink-muted)]" />
+                            <svg
+                              className={`mt-[3px] h-4 w-4 shrink-0 ${tokens.icon}`}
+                              viewBox="0 0 16 16"
+                              fill="none"
+                            >
+                              <path
+                                d="M3 8l3.5 3.5L13 5"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
                             <span>{item}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
                   </div>
-                </div>
+
+                  {!open && (
+                    <div className="relative mt-3 text-[12px] font-semibold text-[var(--color-ink-muted)]">
+                      Tap to see all {tile.items.length}
+                    </div>
+                  )}
+                </button>
               );
             })}
           </div>
@@ -399,24 +476,37 @@ export default function PricingPage() {
       <section className="mx-auto max-w-[1160px] px-6 py-20">
         <Reveal>
           <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-14 text-center text-[var(--color-on-primary)] shadow-[var(--shadow-2)] sm:px-14">
-            <h2 className="mx-auto max-w-[600px] font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              Free audit first. Pricing after. In that order.
+            <h2 className="mx-auto max-w-[620px] font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
+              First, let&rsquo;s check your area is open.
             </h2>
-            <p className="mx-auto mt-4 max-w-[500px] text-[17px] leading-[1.55] text-white/70">
-              We look at your site, your ads and your rankings. If the
-              numbers will not work in your area, we say so before you
-              sign anything.
+            <p className="mx-auto mt-4 max-w-[520px] text-[17px] leading-[1.55] text-white/75">
+              We limit how many of the same trade we take on in any one area.
+              Leave your details and a real person will call you within one
+              working day.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Button
-                href="/book"
+                href="/start"
                 className="bg-white text-[var(--color-primary)] hover:bg-white/90"
               >
-                Find out what&apos;s costing you jobs
+                Check my area
               </Button>
-              <Button href="/features" variant="secondary">
-                See features
-              </Button>
+              <a
+                href={TANDEMM_WHATSAPP}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-[42px] items-center justify-center gap-2 rounded-[var(--radius-pill)] border border-white/25 bg-white/10 px-5 text-[15px] font-semibold text-white transition-colors hover:bg-white/20"
+              >
+                <svg
+                  className="h-4 w-4"
+                  viewBox="0 0 32 32"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path d="M16 3C9 3 3.4 8.6 3.4 15.6c0 2.5.7 4.9 2 7L3 29l6.6-2.3c2 1.1 4.2 1.6 6.4 1.6 7 0 12.6-5.6 12.6-12.6S23 3 16 3zm5.9 14.8c-.3.7-1.7 1.4-2.1 1.5-.6.1-1.2.1-1.9-.1-.4-.1-.9-.3-1.6-.6-2.9-1.2-4.7-4.1-4.9-4.3-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4-.1.7.5.3.7.9 2.3 1 2.5.1.1.1.3 0 .5-.1.2-.1.3-.3.5-.2.2-.4.5-.5.6-.1.2-.3.4-.1.7.2.3.8 1.4 1.8 2.2 1.3 1 2.3 1.3 2.6 1.5.3.1.5.1.7-.1.2-.2.9-.9 1.1-1.2.2-.3.4-.4.7-.2.3.1 1.9.8 2.2 1 .3.2.5.3.6.4.1.2.1.8-.2 1.5z" />
+                </svg>
+                Rather just ask? WhatsApp us
+              </a>
             </div>
           </div>
         </Reveal>
@@ -489,7 +579,7 @@ function MonthlyPlanCard() {
         ))}
       </ul>
 
-      <Button href="/book" className="w-full text-center">
+      <Button href="/start" className="w-full text-center">
         Get started
       </Button>
     </div>
@@ -527,7 +617,7 @@ function PricingSlider() {
         </div>
         <p className="mt-1 text-[13.5px] leading-[1.5] text-[var(--color-ink-muted)]">
           Drag the slider to see the spend, leads and return. Nothing here
-          is included in the £197 base plan &mdash; this stacks on top.
+          is included in the £197 base plan. This stacks on top.
         </p>
       </div>
 
@@ -602,7 +692,7 @@ function PricingSlider() {
             Scaling past ~125 leads a month in one service area usually
             means running multiple campaigns or expanding your patch.
             The numbers change enough that a single slider stops being
-            honest &mdash; better to talk it through.
+            honest. Better to talk it through.
           </p>
         </div>
       ) : (
@@ -694,8 +784,8 @@ function PricingSlider() {
       </div>
 
       {/* CTA */}
-      <Button href="/book" className="w-full text-center">
-        {atMax ? "Let's talk about scaling" : "See where I'm losing jobs"}
+      <Button href="/start" className="w-full text-center">
+        {atMax ? "Let's talk about scaling" : "Check if my area is open"}
       </Button>
     </div>
   );

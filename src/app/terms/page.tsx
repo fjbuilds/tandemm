@@ -68,15 +68,15 @@ export default function TermsPage() {
           <P>
             You may use this site to learn about our services, request a
             free audit, and get in touch with us. You agree not to misuse
-            the site &mdash; including attempting to gain unauthorised
+            the site. including attempting to gain unauthorised
             access, scraping or copying content at scale, introducing
             malicious code, or interfering with its normal operation.
           </P>
 
           <H2>Intellectual property</H2>
           <P>
-            The content on this site &mdash; including text, graphics,
-            logos, and the underlying design and code &mdash; belongs to
+            The content on this site. including text, graphics,
+            logos, and the underlying design and code. belongs to
             Tandemm or our licensors, unless stated otherwise. You may view
             and share pages for your own personal, non-commercial reference,
             but you may not reproduce, republish, or reuse our content
@@ -128,8 +128,8 @@ export default function TermsPage() {
           <H2>Paid services and engagements</H2>
           <P>
             These terms cover use of the website only. If you engage
-            Tandemm for paid work &mdash; a website build, ongoing
-            marketing, or any other service &mdash; that engagement is
+            Tandemm for paid work. a website build, ongoing
+            marketing, or any other service. that engagement is
             governed by a separate, signed proposal or agreement between you
             and Tandemm, which will set out scope, fees, timelines, and each
             party&apos;s obligations. Where the two conflict, that signed

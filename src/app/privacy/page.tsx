@@ -137,9 +137,9 @@ export default function PrivacyPage() {
           <H2>Who we share it with</H2>
           <P>
             We don&apos;t sell your data. We share it only with service
-            providers who help us run Tandemm and this website &mdash; for
+            providers who help us run Tandemm and this website. for
             example, hosting, email, calendar/booking, analytics, and
-            advertising platforms &mdash; strictly so they can provide that
+            advertising platforms. strictly so they can provide that
             service to us, and with professional advisers (accountants,
             legal counsel) where necessary. Some of these providers may be
             based outside the UK; where that&apos;s the case, we rely on
