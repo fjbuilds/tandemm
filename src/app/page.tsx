@@ -39,21 +39,32 @@ const FLOW_STEPS = [
     n: "01",
     title: "Get found",
     body: "Showing up on Google isn&rsquo;t an overnight switch. It&rsquo;s ongoing work, and that&rsquo;s our job. Every month we tune your Google Business Profile and local pages so more of the right people nearby find you over time.",
-    bullets: ["Lightning-fast website", "Monthly SEO by hand", "Google Business Profile tuning"],
+    bullets: [
+      "More of your area actually seeing you",
+      "The right jobs, in your postcodes, every month",
+      "A site that loads fast, so people stay to enquire",
+    ],
     mock: "google" as const,
   },
   {
     n: "02",
     title: "Win the visit",
     body: "Every page is built to turn a visitor into an enquiry, and each one drops straight into the app with an instant notification. You manage the whole way, from first ping through to a booked-in job, all from one simple app.",
-    bullets: ["Widget on every page", "Instant push notification", "WhatsApp &amp; tap-to-call"],
+    bullets: [
+      "Enquiries land in your pocket the second they happen",
+      "No missed leads while you&rsquo;re on the tools",
+      "One tap to call or WhatsApp the customer back",
+    ],
     mock: "site" as const,
   },
   {
     n: "03",
     title: "Get booked",
     body: "Send quotes and invoices in a few taps, straight from the app, and get paid faster. Then the moment an invoice is settled, the app automatically asks the customer for a review, so every finished job helps the next one find you.",
-    bullets: ["Quote &amp; invoice from the app", "Reviews collected automatically"],
+    bullets: [
+      "Get paid faster, with less chasing",
+      "Every finished job earns you the next one",
+    ],
     mock: "base" as const,
   },
 ];
@@ -147,14 +158,14 @@ const GETTING_STARTED = [
     n: "1",
     when: "Day one, 30 seconds",
     title: "Scan your site in 30 seconds",
-    body: "Pop in your website and you get a plain-English report on where it&rsquo;s losing you enquiries. Leave a few details and we take it from there.",
+    body: "Pop in your website and you get a plain-English score on where it&rsquo;s losing you enquiries. From there, leave your details and we&rsquo;ll come back to you, or skip the wait and call us on the spot.",
     Mock: StepMockSignup,
   },
   {
     n: "2",
     when: "Within 24 hours",
-    title: "The founder calls you inside a day",
-    body: "This is a founder-led business, so the call comes from the person building it. No support queue, no ticket number, no waiting a week for someone to circle back. You get a real conversation about your business, with an early design of your new site already on the table.",
+    title: "We call you back inside a day",
+    body: "If you left your details rather than calling straight through, this is when you&rsquo;ll hear from us. Founder-led, no support queue, no ticket number. You get a proper conversation about your business, with an early design of your new site already on the table.",
     Mock: StepMockCall,
   },
   {

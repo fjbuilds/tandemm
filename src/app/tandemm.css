@@ -5900,6 +5900,9 @@ body {
   color: white;
 }
 .v2-local-hero-inner { max-width: 1180px; margin: 0 auto; }
+.v2-local-hero:not(.v2-local-hero--split) .v2-local-hero-copy {
+  max-width: 720px;
+}
 .v2-local-hero--split .v2-local-hero-inner {
   display: grid; grid-template-columns: 1.05fr 1fr; gap: 48px;
   align-items: center; text-align: left;
@@ -6097,6 +6100,46 @@ body {
   font-weight: 700; line-height: 1.35;
   color: var(--color-ink);
 }
+.v2-stats-callout {
+  position: relative;
+  max-width: 820px; margin: 48px auto 0;
+  padding: 36px 44px 32px;
+  border-radius: 20px;
+  background: var(--color-primary);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 30px 60px -30px rgba(15,25,35,0.35);
+  overflow: hidden;
+}
+.v2-stats-callout::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(60% 80% at 100% 0%, color-mix(in srgb, var(--color-accent) 30%, transparent), transparent 60%);
+  pointer-events: none;
+}
+.v2-stats-callout-quote {
+  position: absolute; top: 8px; left: 22px;
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 96px; line-height: 1;
+  color: var(--color-accent); opacity: 0.5;
+  pointer-events: none;
+}
+.v2-stats-callout-text {
+  position: relative;
+  display: block;
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(22px, 2.6vw, 30px);
+  line-height: 1.25; letter-spacing: -0.015em;
+  text-align: center;
+}
+.v2-stats-callout-hi {
+  display: inline-block;
+  color: transparent;
+  background: linear-gradient(120deg, #F7B26B, var(--color-accent));
+  background-clip: text; -webkit-background-clip: text;
+  padding-right: 4px;
+  border-bottom: 3px solid color-mix(in srgb, var(--color-accent) 55%, transparent);
+}
 @media (max-width: 720px) {
   .v2-stats-grid--two { grid-template-columns: 1fr; }
 }
@@ -6207,6 +6250,61 @@ body {
   .reach-postcodes-row--head { display: none; }
 }
 
+/* What this means for you — subtle band between postcodes and Do */
+.v2-meaning {
+  padding: 64px 24px;
+  background: var(--color-canvas);
+}
+.v2-meaning-inner { max-width: 1100px; margin: 0 auto; }
+.v2-meaning-grid {
+  margin-top: 36px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+}
+.v2-meaning-cell {
+  background: white;
+  border: 1px solid var(--color-hairline-soft);
+  border-radius: 16px;
+  padding: 26px 24px;
+  transition: box-shadow 0.2s ease;
+}
+.v2-meaning-cell:hover { box-shadow: 0 20px 40px -30px rgba(15,25,35,0.2); }
+.v2-meaning-icon {
+  width: 42px; height: 42px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  margin-bottom: 14px;
+}
+.v2-meaning-title {
+  font-family: var(--font-display); font-weight: 800; font-size: 17px;
+  color: var(--color-ink); margin-bottom: 6px; letter-spacing: -0.01em;
+}
+.v2-meaning-body {
+  font-size: 14px; line-height: 1.6; color: var(--color-ink-muted);
+}
+@media (max-width: 800px) {
+  .v2-meaning-grid { grid-template-columns: 1fr; }
+}
+
+/* Do grid: benefit block underneath the what */
+.v2-do-cell--dual { display: flex; flex-direction: column; }
+.v2-do-benefit {
+  margin-top: 14px; padding-top: 14px;
+  border-top: 1px dashed var(--color-hairline);
+}
+.v2-do-benefit-tag {
+  display: inline-block;
+  font-size: 10.5px; font-weight: 700;
+  color: var(--color-accent);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+.v2-do-benefit-body {
+  font-size: 13.5px; line-height: 1.55;
+  color: var(--color-ink);
+  font-weight: 500;
+}
+
 /* When will I see results — three-month timeline */
 .v2-timeline {
   padding: 72px 24px;
@@ -6244,6 +6342,17 @@ body {
   margin-top: 12px;
   font-size: 14px; line-height: 1.55;
   color: var(--color-ink-muted);
+}
+.v2-timeline-benefit {
+  margin-top: 14px; padding-top: 12px;
+  border-top: 1px solid var(--color-hairline-soft);
+  display: flex; align-items: flex-start; gap: 8px;
+  font-family: var(--font-display); font-weight: 700; font-size: 13.5px;
+  color: var(--color-ink); line-height: 1.4;
+}
+.v2-timeline-benefit svg {
+  flex-shrink: 0; margin-top: 2px;
+  color: var(--color-success);
 }
 @media (max-width: 800px) {
   .v2-timeline-grid { grid-template-columns: 1fr; }
@@ -6402,6 +6511,26 @@ body {
 .report-card-swatch--now { background: var(--color-ink-muted); }
 .report-card-swatch--proj { background: var(--color-accent); }
 .report-card-axis { display: flex; justify-content: space-between; padding-top: 6px; font-size: 10px; color: var(--color-ink-muted); }
+.report-card-notes {
+  margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.report-card-note {
+  padding: 14px 16px; border-radius: 12px;
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-hairline-soft);
+  font-size: 12.5px; line-height: 1.5;
+  color: var(--color-ink);
+}
+.report-card-note-tag {
+  display: block;
+  font-size: 10.5px; font-weight: 700;
+  color: var(--color-accent);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+@media (max-width: 720px) {
+  .report-card-notes { grid-template-columns: 1fr; }
+}
 @media (max-width: 640px) {
   .report-card-grid { grid-template-columns: 1fr; }
   .report-card-head { flex-direction: column; }
@@ -7084,6 +7213,13 @@ body {
   width: 84px; height: 84px; margin: 0 auto 14px;
   border-radius: 50%; overflow: hidden;
   box-shadow: 0 6px 18px rgba(27,35,32,0.14);
+}
+.step-mock-founder-avatar--brand {
+  background: var(--color-primary);
+  display: flex; align-items: center; justify-content: center;
+}
+.step-mock-founder-avatar--brand svg {
+  width: 46%; height: 46%; display: block;
 }
 .step-mock-founder-callcard .step-mock-founder-name {
   font-family: var(--font-display); font-weight: 800; font-size: 20px;

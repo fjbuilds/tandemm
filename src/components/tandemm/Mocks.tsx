@@ -577,6 +577,9 @@ function AppTabBar({ active, withMic }: { active: string; withMic: boolean }) {
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const BASELINE = [18, 20, 22, 21, 24, 26, 25, 27, 28, 30, 29, 31];
 const WITH_TANDEMM = [18, 21, 26, 33, 41, 50, 58, 66, 75, 84, 92, 99];
+/* enquiries/month — realistic ramp for a single trade */
+const ENQUIRIES_BASE = [6, 7, 6, 8, 7, 6, 8, 7, 8, 9, 8, 9];
+const ENQUIRIES_WITH = [6, 7, 8, 11, 14, 18, 21, 24, 27, 30, 32, 35];
 
 function toPath(values: number[], w: number, h: number, max: number) {
   const step = w / (values.length - 1);
@@ -587,13 +590,13 @@ function toArea(values: number[], w: number, h: number, max: number) {
 }
 
 export function ReportCard() {
-  const W = 640, H = 180, MAX = 110;
+  const W = 640, H = 160, MAX = 40;
   return (
-    <div className="report-card" role="img" aria-label="Illustrative monthly report">
+    <div className="report-card" role="img" aria-label="Illustrative Tandemm monthly report">
       <div className="report-card-head">
         <div>
-          <div className="report-card-tag">Tandemm monthly report · plain English, one page</div>
-          <div className="report-card-title">Ranking moves · South West Heating</div>
+          <div className="report-card-tag">Your Tandemm report · one page, plain English</div>
+          <div className="report-card-title">South West Heating · July</div>
         </div>
         <div className="report-card-period">
           <span>Jun → Jul</span>
@@ -602,26 +605,26 @@ export function ReportCard() {
 
       <div className="report-card-grid">
         <div className="report-card-kpi">
-          <div className="report-card-kpi-num">128</div>
-          <div className="report-card-kpi-label">Calls from Google</div>
-          <div className="report-card-kpi-delta">▲ 42 vs last month</div>
+          <div className="report-card-kpi-num">32</div>
+          <div className="report-card-kpi-label">New enquiries from Google</div>
+          <div className="report-card-kpi-delta">▲ 11 vs last month</div>
         </div>
         <div className="report-card-kpi">
-          <div className="report-card-kpi-num">3,940</div>
-          <div className="report-card-kpi-label">Profile views</div>
-          <div className="report-card-kpi-delta">▲ 720 vs last month</div>
+          <div className="report-card-kpi-num">18</div>
+          <div className="report-card-kpi-label">Calls tracked from your listing</div>
+          <div className="report-card-kpi-delta">▲ 6 vs last month</div>
         </div>
         <div className="report-card-kpi">
-          <div className="report-card-kpi-num">11 / 14</div>
-          <div className="report-card-kpi-label">Postcodes in top 3</div>
-          <div className="report-card-kpi-delta">▲ 4 postcodes</div>
+          <div className="report-card-kpi-num">9 / 14</div>
+          <div className="report-card-kpi-label">Postcodes ranked top 3</div>
+          <div className="report-card-kpi-delta">▲ 3 postcodes</div>
         </div>
       </div>
 
       <div className="report-card-chart">
         <div className="report-card-legend">
-          <span><span className="report-card-swatch report-card-swatch--now" /> Baseline · before Tandemm</span>
-          <span><span className="report-card-swatch report-card-swatch--proj" /> With Tandemm Reach + Base</span>
+          <span><span className="report-card-swatch report-card-swatch--now" /> Enquiries before Tandemm</span>
+          <span><span className="report-card-swatch report-card-swatch--proj" /> Enquiries with Tandemm Reach</span>
         </div>
         <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" aria-hidden="true">
           <defs>
@@ -633,12 +636,23 @@ export function ReportCard() {
           {[0.25, 0.5, 0.75].map((f) => (
             <line key={f} x1="0" x2={W} y1={H * f} y2={H * f} stroke="var(--color-hairline-soft)" strokeDasharray="3 5" />
           ))}
-          <path d={toArea(WITH_TANDEMM, W, H, MAX)} fill="url(#rc-area)" />
-          <path d={toPath(WITH_TANDEMM, W, H, MAX)} fill="none" stroke="var(--color-accent)" strokeWidth="2.4" strokeLinecap="round" />
-          <path d={toPath(BASELINE, W, H, MAX)} fill="none" stroke="var(--color-ink-muted)" strokeWidth="1.4" strokeDasharray="5 5" />
+          <path d={toArea(ENQUIRIES_WITH, W, H, MAX)} fill="url(#rc-area)" />
+          <path d={toPath(ENQUIRIES_WITH, W, H, MAX)} fill="none" stroke="var(--color-accent)" strokeWidth="2.4" strokeLinecap="round" />
+          <path d={toPath(ENQUIRIES_BASE, W, H, MAX)} fill="none" stroke="var(--color-ink-muted)" strokeWidth="1.4" strokeDasharray="5 5" />
         </svg>
         <div className="report-card-axis">
           {MONTHS.map((m) => <span key={m}>{m}</span>)}
+        </div>
+      </div>
+
+      <div className="report-card-notes">
+        <div className="report-card-note">
+          <span className="report-card-note-tag">What we did this month</span>
+          <span>Posted 4 job updates, replied to 12 reviews, added 3 new service pages for SW11, SW4, SW18.</span>
+        </div>
+        <div className="report-card-note">
+          <span className="report-card-note-tag">What&rsquo;s next</span>
+          <span>Push into two new postcodes, chase reviews from June jobs, refresh boiler-install photos.</span>
         </div>
       </div>
     </div>
@@ -674,7 +688,7 @@ export function BeforeAfterGrid() {
       <div className="before-after-arrow" aria-hidden="true">→</div>
       <div className="before-after-block">
         <div className="before-after-head">
-          <span className="before-after-label before-after-label--after">After 6 months</span>
+          <span className="before-after-label before-after-label--after">After 3–6 months</span>
           <span className="before-after-note before-after-note--after">Average rank #1.3</span>
         </div>
         <div className="before-after-grid">
@@ -733,11 +747,16 @@ export function StepMockCall() {
     <div className="step-mock step-mock-founder">
       <div className="step-mock-founder-callcard">
         <div className="step-mock-founder-callcard-label">Incoming call</div>
-        <div className="step-mock-founder-avatar">
-          <PersonIllustration skin="#E8B58C" hair="#2A1F17" shirt="#24425A" />
+        <div className="step-mock-founder-avatar step-mock-founder-avatar--brand">
+          <svg viewBox="0 0 1000 1000" aria-hidden="true">
+            <path
+              d="M350,260 L590,500 L350,740 L110,500 Z M650,260 L890,500 L650,740 L410,500 Z"
+              fill="#ffffff"
+            />
+          </svg>
         </div>
-        <div className="step-mock-founder-name">Owen</div>
-        <div className="step-mock-founder-role">Founder, Tandemm</div>
+        <div className="step-mock-founder-name">Tandemm Team</div>
+        <div className="step-mock-founder-role">Real people, no queue</div>
         <div className="step-mock-founder-callbtn" aria-hidden="true">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.5 2.6a2 2 0 0 1-.5 2.1L7.9 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.2 1.7.4 2.6.5a2 2 0 0 1 1.7 2z" />
@@ -1171,11 +1190,11 @@ export function PostcodeProgress() {
       <div className="reach-postcodes-head">
         <div>
           <div className="reach-postcodes-title">Where you show up, postcode by postcode</div>
-          <div className="reach-postcodes-sub">South West London · six months in Tandemm Reach</div>
+          <div className="reach-postcodes-sub">South West London · 3–6 months in Tandemm Reach</div>
         </div>
         <div className="reach-postcodes-legend">
           <span><span className="reach-postcodes-swatch reach-postcodes-swatch--before" /> Before</span>
-          <span><span className="reach-postcodes-swatch reach-postcodes-swatch--after" /> After 6 months</span>
+          <span><span className="reach-postcodes-swatch reach-postcodes-swatch--after" /> After 3–6 months</span>
         </div>
       </div>
       <div className="reach-postcodes-rows">
@@ -1183,7 +1202,7 @@ export function PostcodeProgress() {
           <span>Postcode</span>
           <span>Area</span>
           <span>Before</span>
-          <span>After 6 months</span>
+          <span>After 3–6 months</span>
         </div>
         {rows.map((r) => (
           <div key={r.postcode} className="reach-postcodes-row">

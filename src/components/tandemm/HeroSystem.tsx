@@ -329,27 +329,17 @@ export function HeroSystem() {
           {/* raised chip */}
           <g transform="translate(0,-34)">
             <Tile cx={320} cy={318} hw={92} t={30} top={C.hubTop} right={C.hubRight} left={C.hubLeft} />
-            {/* subtle chip texture on top */}
+            {/* Tandemm favicon mark, laid flat on the top face of the hub */}
             <g transform={topMatrix(320, 318, 92)}>
-              {Array.from({ length: 4 }).map((_, r) =>
-                Array.from({ length: 4 }).map((__, c) => (
-                  <circle
-                    key={`${r}-${c}`}
-                    cx={0.32 + c * 0.12}
-                    cy={0.22 + r * 0.12}
-                    r={0.011}
-                    fill={C.ring}
-                    fillOpacity={0.28}
-                  />
-                )),
-              )}
-            </g>
-            {/* Tandemm favicon mark, sitting on top of the hub */}
-            <g transform="translate(320 318) scale(0.11) translate(-500 -500)">
-              <path
-                d="M350,260 L590,500 L350,740 L110,500 Z M650,260 L890,500 L650,740 L410,500 Z"
-                fill="#0B1220"
-              />
+              {/* Two-diamond mark. Path native ~1000x1000. Scale +
+                  translate so it sits centred on the unit square,
+                  then the topMatrix flat-packs it onto the top face. */}
+              <g transform="translate(0.5 0.5) scale(0.00058) translate(-500 -500)">
+                <path
+                  d="M350,260 L590,500 L350,740 L110,500 Z M650,260 L890,500 L650,740 L410,500 Z"
+                  fill="#0B1220"
+                />
+              </g>
             </g>
           </g>
         </g>
@@ -358,7 +348,7 @@ export function HeroSystem() {
         <Cluster
           cx={185}
           cy={400}
-          label="DU∞"
+          label="DUO"
           labelX={150}
           labelY={476}
           labelDir="left"
