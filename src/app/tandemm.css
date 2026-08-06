@@ -5007,6 +5007,7 @@ body {
   width: 100%;
   max-width: 640px;
   margin: 0 auto;
+  overflow: visible;
   filter: drop-shadow(0 40px 60px rgba(27, 35, 32, 0.14));
 }
 .hero-iso-svg {

@@ -305,7 +305,7 @@ export function HeroSystem() {
           cx={165}
           cy={250}
           label="WEBSITE"
-          labelX={150}
+          labelX={165}
           labelY={180}
           labelDir="left"
           icons={[iconWebsite, iconGallery]}
@@ -315,8 +315,8 @@ export function HeroSystem() {
           cx={478}
           cy={272}
           label="TANDEMM REACH"
-          labelX={512}
-          labelY={180}
+          labelX={478}
+          labelY={188}
           labelDir="right"
           icons={[iconRank, iconSearch]}
           cls="iso-c2"
@@ -329,12 +329,14 @@ export function HeroSystem() {
           {/* raised chip */}
           <g transform="translate(0,-34)">
             <Tile cx={320} cy={318} hw={92} t={30} top={C.hubTop} right={C.hubRight} left={C.hubLeft} />
-            {/* Tandemm favicon mark, kept at right-angle (not skewed
-                onto the isometric top face) so the two diamonds read
-                cleanly. Sits centred on the raised hub chip. */}
-            <g transform="translate(320 318) scale(0.14) translate(-500 -500)">
+            {/* Tandemm favicon mark, laid flat on the top face of the
+                hub chip so it sits in the same isometric perspective
+                as the cluster tiles around it. Drawn directly in unit
+                space so the topMatrix skew reads as a clean flat-pack
+                rather than compounding a scaled path. */}
+            <g transform={topMatrix(320, 318, 92)}>
               <path
-                d="M350,260 L590,500 L350,740 L110,500 Z M650,260 L890,500 L650,740 L410,500 Z"
+                d="M0.36,0.18 L0.62,0.5 L0.36,0.82 L0.10,0.5 Z M0.64,0.18 L0.90,0.5 L0.64,0.82 L0.38,0.5 Z"
                 fill="#0B1220"
               />
             </g>
@@ -346,7 +348,7 @@ export function HeroSystem() {
           cx={185}
           cy={400}
           label="DUO"
-          labelX={150}
+          labelX={185}
           labelY={476}
           labelDir="left"
           icons={[iconChat, iconPhone]}
@@ -356,7 +358,7 @@ export function HeroSystem() {
           cx={480}
           cy={406}
           label="TANDEMM FUEL"
-          labelX={512}
+          labelX={480}
           labelY={476}
           labelDir="right"
           icons={[iconVolume, iconFuel]}
