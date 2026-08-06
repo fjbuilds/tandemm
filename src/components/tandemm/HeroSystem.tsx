@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * HeroSystem — isometric "one system" scene for the home hero.
+ * HeroSystem. isometric "one system" scene for the home hero.
  * A central Tandemm hub with four clusters that pop up in sequence
  * (Website → SEO/Reach → Duo app → Fuel), joined by pipes, inside an
  * orbiting ring with floating particles. Pure SVG + CSS animation.
@@ -108,7 +108,7 @@ function TopIcon({
 
 type IconFn = (p: { cx: number; cy: number; hw: number }) => React.ReactNode;
 
-/** two distinct chips sitting on a cluster platform — "what you get" */
+/** two distinct chips sitting on a cluster platform. "what you get" */
 function ClusterChips({
   cx,
   cy,

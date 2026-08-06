@@ -205,8 +205,8 @@ const FAQS = [
     a: "SEO compounds week on week, so month three is ahead of month one and month six is a different business. If you want faster, Tandemm Fuel can start feeding the diary inside the first month.",
   },
   {
-    q: "Do I own the website?",
-    a: "The domain and content are yours. The site itself runs inside the Tandemm system, which is what keeps the SEO, tracking, widget and Duo talking to each other. Most owners don&rsquo;t think about the wiring, they just pick up the phone when it rings.",
+    q: "How does the website side of it actually work?",
+    a: "We build and run the site inside the Tandemm system, which is what keeps the SEO, tracking, widget and Duo talking to each other. You focus on the work coming in, we handle the wiring in the background. Design changes are made for you at any time, no dev tickets or hourly fees.",
   },
   {
     q: "Do I need to be techy to run Duo?",

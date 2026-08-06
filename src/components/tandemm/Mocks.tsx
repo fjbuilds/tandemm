@@ -1,10 +1,10 @@
 /* High-fidelity fabricated UI mockups.
- * Realistic to make the story land — not real customer data, not real
+ * Realistic to make the story land. not real customer data, not real
  * ranking claims. Names, numbers and screenshots are illustrative.
  */
 
 /* ─────────────────────────────────────────────────────────────
-   1. Google local pack — neutral map pack, no self-positioning
+   1. Google local pack. neutral map pack, no self-positioning
    ───────────────────────────────────────────────────────────── */
 
 const LISTINGS = [
@@ -185,7 +185,7 @@ export function TradesSite() {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   3. Site showcase — horizontal row of varied trades sites
+   3. Site showcase. horizontal row of varied trades sites
    ───────────────────────────────────────────────────────────── */
 
 type Showcase = {
@@ -283,7 +283,7 @@ export function SiteShowcase() {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   4. BaseApp — phone with realistic Tandemm Deck UI
+   4. BaseApp. phone with realistic Tandemm Deck UI
    ───────────────────────────────────────────────────────────── */
 
 const LEADS = [
@@ -571,13 +571,13 @@ function AppTabBar({ active, withMic }: { active: string; withMic: boolean }) {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   5. Report card — monthly report for Local Search page
+   5. Report card. monthly report for Local Search page
    ───────────────────────────────────────────────────────────── */
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const BASELINE = [18, 20, 22, 21, 24, 26, 25, 27, 28, 30, 29, 31];
 const WITH_TANDEMM = [18, 21, 26, 33, 41, 50, 58, 66, 75, 84, 92, 99];
-/* enquiries/month — realistic ramp for a single trade */
+/* enquiries/month. realistic ramp for a single trade */
 const ENQUIRIES_BASE = [6, 7, 6, 8, 7, 6, 8, 7, 8, 9, 8, 9];
 const ENQUIRIES_WITH = [6, 7, 8, 11, 14, 18, 21, 24, 27, 30, 32, 35];
 
@@ -650,7 +650,7 @@ export function ReportCard() {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   6. Before/After grid — Local Search case study
+   6. Before/After grid. Local Search case study
    ───────────────────────────────────────────────────────────── */
 
 const BEFORE = [3,4,4,3,5,4,4,5,4,4,3,4,5,4,3,4];
@@ -1049,7 +1049,7 @@ export function StepMockLive() {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   Boost funnel — leads in → revenue out visualization
+   Boost funnel. leads in → revenue out visualization
    ───────────────────────────────────────────────────────────── */
 
 const FUNNEL_STAGES = [
@@ -1084,7 +1084,7 @@ export function BoostFunnel() {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   Reach: "you are first" — a compact Google Maps-style card
+   Reach: "you are first". a compact Google Maps-style card
    showing the customer's business at #1, two competitors below.
    ───────────────────────────────────────────────────────────── */
 
@@ -1129,7 +1129,7 @@ export function ReachFirstResult() {
   );
 }
 
-/* Reach: "you're not showing" — the problem card, three competitors,
+/* Reach: "you're not showing". the problem card, three competitors,
    your business missing */
 export function ReachMissingCard() {
   const rows = [
@@ -1165,7 +1165,7 @@ export function ReachMissingCard() {
   );
 }
 
-/* Reach: postcode visibility timeline — clearer than a raw rank grid.
+/* Reach: postcode visibility timeline. clearer than a raw rank grid.
    Shows a small basket of postcodes moving from off-map to top 3. */
 export function PostcodeProgress() {
   const rows = [
@@ -1216,7 +1216,7 @@ export function PostcodeProgress() {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   8. Team row — fabricated team avatars for the "real person" band
+   8. Team row. fabricated team avatars for the "real person" band
    ───────────────────────────────────────────────────────────── */
 
 const TEAM = [

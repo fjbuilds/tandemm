@@ -67,7 +67,7 @@ export default function BoostPage() {
       <DiamondLoader />
       <Nav active="fuel" />
 
-      {/* HERO — dark */}
+      {/* HERO. dark */}
       <section className="boost-hero">
         <div className="boost-hero-inner">
           <Reveal>
@@ -101,7 +101,7 @@ export default function BoostPage() {
         </div>
       </section>
 
-      {/* MODES — three cards */}
+      {/* MODES. three cards */}
       <section className="journey">
         <div className="journey-inner">
           <Reveal className="journey-head">
@@ -128,7 +128,7 @@ export default function BoostPage() {
         </div>
       </section>
 
-      {/* HOW IT WORKS — four numbered steps */}
+      {/* HOW IT WORKS. four numbered steps */}
       <section className="feature-slab">
         <div className="feature-slab-inner boost-flow-inner">
           <div>

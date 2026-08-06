@@ -25,7 +25,7 @@ export function FlowConnector({ flip = false }: { flip?: boolean }) {
     return () => obs.disconnect();
   }, []);
 
-  // Irregular, wandering curve — not a symmetric S.
+  // Irregular, wandering curve. not a symmetric S.
   const d = flip
     ? "M70,2 C74,26 96,30 88,48 C82,62 58,64 62,86 C64,100 78,104 74,118"
     : "M50,2 C46,26 24,30 32,48 C38,62 62,64 58,86 C56,100 42,104 46,118";

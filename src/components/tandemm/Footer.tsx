@@ -57,7 +57,7 @@ export function Footer() {
                 hello@tandemm.co.uk
               </a>
               <a
-                href="https://wa.me/447948091506"
+                href="https://wa.me/447359781555"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[15px] text-white/85 no-underline"
@@ -65,10 +65,10 @@ export function Footer() {
                 WhatsApp the team
               </a>
               <a
-                href="tel:+447948091506"
+                href="tel:+447359781555"
                 className="text-[15px] text-white/85 no-underline"
               >
-                07948 091506
+                07359 781555
               </a>
               <span className="text-[15px] text-white/60">London, UK</span>
             </div>
