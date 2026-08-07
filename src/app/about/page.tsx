@@ -33,180 +33,25 @@ const PRINCIPLES = [
   },
 ];
 
-// Hand-drawn portrait illustrations. Simple, warm, character-driven —
-// the goal is a "sketched by a mate" feel, not a photorealistic headshot.
-function OwenPortrait({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 300 340"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-label="Illustrated portrait of Owen"
-    >
-      <defs>
-        <pattern id="owenGrain" width="4" height="4" patternUnits="userSpaceOnUse">
-          <circle cx="1" cy="1" r="0.4" fill="#1B2320" opacity="0.06" />
-        </pattern>
-      </defs>
-      {/* backdrop */}
-      <rect width="300" height="340" fill="#F1DCC4" />
-      <rect width="300" height="340" fill="url(#owenGrain)" />
-      {/* shoulders / shirt */}
-      <path
-        d="M40 340 C 55 265, 105 245, 150 245 C 195 245, 245 265, 260 340 Z"
-        fill="#24425A"
-      />
-      <path
-        d="M120 250 L 150 285 L 180 250"
-        fill="none"
-        stroke="#1B2320"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      {/* neck */}
-      <path
-        d="M128 235 L 128 260 Q 150 275 172 260 L 172 235 Z"
-        fill="#E8C9A6"
-      />
-      {/* head */}
-      <path
-        d="M92 150 C 92 100, 118 78, 150 78 C 182 78, 208 100, 208 150 C 208 195, 188 240, 150 240 C 112 240, 92 195, 92 150 Z"
-        fill="#EBD1B1"
-        stroke="#1B2320"
-        strokeWidth="2.5"
-      />
-      {/* hair — short crop, textured */}
-      <path
-        d="M92 138 C 90 95, 118 68, 150 68 C 184 68, 212 92, 210 140 C 205 130, 195 122, 180 120 C 176 108, 158 100, 145 105 C 130 100, 112 108, 104 122 C 98 126, 94 132, 92 138 Z"
-        fill="#3A2A1E"
-        stroke="#1B2320"
-        strokeWidth="2"
-      />
-      <path d="M104 108 L 112 120" stroke="#1B2320" strokeWidth="1.2" strokeLinecap="round" opacity="0.5" />
-      <path d="M118 100 L 124 116" stroke="#1B2320" strokeWidth="1.2" strokeLinecap="round" opacity="0.5" />
-      <path d="M180 108 L 176 122" stroke="#1B2320" strokeWidth="1.2" strokeLinecap="round" opacity="0.5" />
-      {/* eyebrows */}
-      <path d="M112 152 Q 122 148 132 152" stroke="#1B2320" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-      <path d="M168 152 Q 178 148 188 152" stroke="#1B2320" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-      {/* eyes */}
-      <circle cx="122" cy="164" r="3" fill="#1B2320" />
-      <circle cx="178" cy="164" r="3" fill="#1B2320" />
-      {/* nose */}
-      <path d="M150 168 L 146 195 Q 150 200 154 195" stroke="#1B2320" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      {/* mouth — small smile */}
-      <path d="M134 214 Q 150 226 166 214" stroke="#1B2320" strokeWidth="2.2" fill="none" strokeLinecap="round" />
-      {/* beard stubble */}
-      <path d="M108 200 Q 150 250 192 200" stroke="#3A2A1E" strokeWidth="1.4" fill="none" opacity="0.35" />
-      <path d="M115 210 Q 150 245 185 210" stroke="#3A2A1E" strokeWidth="1.4" fill="none" opacity="0.28" />
-      {/* ear */}
-      <path d="M92 172 Q 84 178 90 190 Q 94 194 96 190" fill="#EBD1B1" stroke="#1B2320" strokeWidth="2" />
-      <path d="M208 172 Q 216 178 210 190 Q 206 194 204 190" fill="#EBD1B1" stroke="#1B2320" strokeWidth="2" />
-      {/* name plaque */}
-      <rect x="20" y="300" width="90" height="26" rx="4" fill="#1B2320" />
-      <text x="65" y="317" textAnchor="middle" fill="#F1DCC4" fontSize="13" fontWeight="700" fontFamily="var(--font-display), serif" letterSpacing="1.5">
-        OWEN
-      </text>
-    </svg>
-  );
-}
-
-function FJPortrait({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 300 340"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-label="Illustrated portrait of FJ"
-    >
-      <defs>
-        <pattern id="fjGrain" width="4" height="4" patternUnits="userSpaceOnUse">
-          <circle cx="1" cy="1" r="0.4" fill="#1B2320" opacity="0.06" />
-        </pattern>
-      </defs>
-      <rect width="300" height="340" fill="#C9D6D0" />
-      <rect width="300" height="340" fill="url(#fjGrain)" />
-      {/* shoulders — different colour to differentiate */}
-      <path
-        d="M40 340 C 55 265, 105 245, 150 245 C 195 245, 245 265, 260 340 Z"
-        fill="#A9551F"
-      />
-      {/* collar — open neck tee */}
-      <path
-        d="M128 250 Q 150 268 172 250"
-        fill="none"
-        stroke="#1B2320"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-      />
-      {/* neck */}
-      <path
-        d="M128 235 L 128 260 Q 150 275 172 260 L 172 235 Z"
-        fill="#D6B08A"
-      />
-      {/* head — slightly narrower jaw */}
-      <path
-        d="M94 148 C 94 98, 120 76, 150 76 C 180 76, 206 98, 206 148 C 206 200, 184 238, 150 238 C 116 238, 94 200, 94 148 Z"
-        fill="#DAB48F"
-        stroke="#1B2320"
-        strokeWidth="2.5"
-      />
-      {/* hair — swept, longer on top */}
-      <path
-        d="M96 140 C 92 92, 122 62, 156 66 C 190 70, 210 96, 208 138 C 200 118, 188 108, 172 110 C 160 92, 132 92, 118 108 C 108 114, 100 126, 96 140 Z"
-        fill="#1B1512"
-        stroke="#1B2320"
-        strokeWidth="2"
-      />
-      {/* hair sweep line */}
-      <path
-        d="M108 120 Q 145 92, 200 118"
-        stroke="#1B2320"
-        strokeWidth="1.4"
-        fill="none"
-        opacity="0.55"
-      />
-      <path
-        d="M112 128 Q 150 108, 198 128"
-        stroke="#1B2320"
-        strokeWidth="1.2"
-        fill="none"
-        opacity="0.4"
-      />
-      {/* eyebrows */}
-      <path d="M112 154 Q 122 149 132 154" stroke="#1B2320" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-      <path d="M168 154 Q 178 149 188 154" stroke="#1B2320" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-      {/* eyes */}
-      <circle cx="122" cy="166" r="3" fill="#1B2320" />
-      <circle cx="178" cy="166" r="3" fill="#1B2320" />
-      {/* nose */}
-      <path d="M150 172 L 145 198 Q 150 204 155 198" stroke="#1B2320" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      {/* mouth — subtle grin */}
-      <path d="M132 216 Q 150 224 168 216" stroke="#1B2320" strokeWidth="2.2" fill="none" strokeLinecap="round" />
-      {/* full beard */}
-      <path
-        d="M100 190 Q 108 240, 150 246 Q 192 240, 200 190 Q 190 220, 168 216 Q 150 224, 132 216 Q 110 220, 100 190 Z"
-        fill="#1B1512"
-        opacity="0.9"
-        stroke="#1B2320"
-        strokeWidth="1.5"
-      />
-      {/* moustache */}
-      <path
-        d="M124 208 Q 150 200, 176 208 Q 168 214, 150 214 Q 132 214, 124 208 Z"
-        fill="#1B1512"
-      />
-      {/* ears */}
-      <path d="M94 172 Q 86 178 92 190 Q 96 194 98 190" fill="#DAB48F" stroke="#1B2320" strokeWidth="2" />
-      <path d="M206 172 Q 214 178 208 190 Q 204 194 202 190" fill="#DAB48F" stroke="#1B2320" strokeWidth="2" />
-      {/* name plaque */}
-      <rect x="20" y="300" width="70" height="26" rx="4" fill="#1B2320" />
-      <text x="55" y="317" textAnchor="middle" fill="#C9D6D0" fontSize="13" fontWeight="700" fontFamily="var(--font-display), serif" letterSpacing="1.5">
-        FJ
-      </text>
-    </svg>
-  );
-}
+const FOUNDERS = [
+  {
+    name: "Owen Harris",
+    role: "Co-founder — Growth & Ads",
+    photo: "/brand/team/owen.jpg",
+    // tight headshot; a light zoom keeps the crop consistent with FJ
+    imgClass: "scale-[1.05] object-[center_35%]",
+    bio: "Owen runs the paid side — Google, Local Services, the tracking behind it. Seven years inside agencies before this, most of it burning other people’s budgets on trade accounts nobody was paying proper attention to. He’s the one on the phone when your cost-per-lead moves.",
+  },
+  {
+    name: "FJ",
+    role: "Co-founder — Sites & SEO",
+    photo: "/brand/team/fj.jpg",
+    // pull the crop up so his head sits at the same height as Owen\'s,
+    // and scale in so the face isn\'t noticeably smaller
+    imgClass: "scale-[1.65] object-[center_14%]",
+    bio: "FJ builds the sites and does the ranking work — the page structure, the local SEO, the quiet grind that puts you top of Google in your town. Design background, developer hands, and a stubborn streak about page speed. If it loads slow, he doesn’t sleep.",
+  },
+];
 
 export default function AboutPage() {
   return (
@@ -241,48 +86,32 @@ export default function AboutPage() {
 
       {/* ── FOUNDERS ── */}
       <section className="px-6 pb-20">
-        <div className="mx-auto grid max-w-[1080px] grid-cols-1 gap-8 md:grid-cols-2 md:gap-10">
-          <Reveal>
-            <article className="overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)]">
-              <OwenPortrait className="block h-auto w-full" />
-              <div className="px-7 py-6 sm:px-8 sm:py-7">
-                <div className="mb-1 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
-                  Co-founder &mdash; Growth &amp; Ads
+        <div className="mx-auto grid max-w-[860px] grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8">
+          {FOUNDERS.map((f) => (
+            <Reveal key={f.name}>
+              <article className="h-full overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)]">
+                <div className="relative aspect-[4/5] w-full overflow-hidden bg-[var(--color-canvas-deep)]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={f.photo}
+                    alt={`Portrait of ${f.name}`}
+                    className={`h-full w-full object-cover grayscale ${f.imgClass}`}
+                  />
                 </div>
-                <h3 className="mb-3 font-[family-name:var(--font-display)] text-[22px] font-bold leading-tight sm:text-[24px]">
-                  Owen Harris
-                </h3>
-                <p className="text-[15.5px] leading-[1.62] text-[var(--color-ink-muted)]">
-                  Owen runs the paid side &mdash; Google, Local Services, the
-                  tracking behind it. Seven years inside agencies before this,
-                  most of it burning other people&rsquo;s budgets on trade
-                  accounts nobody was paying proper attention to. He&rsquo;s
-                  the one on the phone when your cost-per-lead moves.
-                </p>
-              </div>
-            </article>
-          </Reveal>
-
-          <Reveal>
-            <article className="overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)]">
-              <FJPortrait className="block h-auto w-full" />
-              <div className="px-7 py-6 sm:px-8 sm:py-7">
-                <div className="mb-1 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
-                  Co-founder &mdash; Sites &amp; SEO
+                <div className="px-6 py-5 sm:px-7 sm:py-6">
+                  <div className="mb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
+                    {f.role}
+                  </div>
+                  <h3 className="mb-2 font-[family-name:var(--font-display)] text-[20px] font-bold leading-tight sm:text-[22px]">
+                    {f.name}
+                  </h3>
+                  <p className="text-[14.5px] leading-[1.6] text-[var(--color-ink-muted)]">
+                    {f.bio}
+                  </p>
                 </div>
-                <h3 className="mb-3 font-[family-name:var(--font-display)] text-[22px] font-bold leading-tight sm:text-[24px]">
-                  FJ
-                </h3>
-                <p className="text-[15.5px] leading-[1.62] text-[var(--color-ink-muted)]">
-                  FJ builds the sites and does the ranking work &mdash; the
-                  page structure, the local SEO, the quiet grind that puts
-                  you top of Google in your town. Design background,
-                  developer hands, and a stubborn streak about page speed.
-                  If it loads slow, he doesn&rsquo;t sleep.
-                </p>
-              </div>
-            </article>
-          </Reveal>
+              </article>
+            </Reveal>
+          ))}
         </div>
       </section>
 
