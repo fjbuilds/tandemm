@@ -36,20 +36,15 @@ const PRINCIPLES = [
 const FOUNDERS = [
   {
     name: "Owen Harris",
-    role: "Co-founder — Growth & Ads",
     photo: "/brand/team/owen.jpg",
-    // tight headshot; a light zoom keeps the crop consistent with FJ
-    imgClass: "scale-[1.05] object-[center_35%]",
-    bio: "Owen runs the paid side — Google, Local Services, the tracking behind it. Seven years inside agencies before this, most of it burning other people’s budgets on trade accounts nobody was paying proper attention to. He’s the one on the phone when your cost-per-lead moves.",
+    imgClass: "object-center",
+    bio: "Design and SEO. Builds the site, structures the pages, and does the local ranking work that puts you top of Google in your town. Also on the sales side — if you sign up, you’ll speak to Owen first.",
   },
   {
     name: "FJ",
-    role: "Co-founder — Sites & SEO",
     photo: "/brand/team/fj.jpg",
-    // pull the crop up so his head sits at the same height as Owen\'s,
-    // and scale in so the face isn\'t noticeably smaller
-    imgClass: "scale-[1.65] object-[center_14%]",
-    bio: "FJ builds the sites and does the ranking work — the page structure, the local SEO, the quiet grind that puts you top of Google in your town. Design background, developer hands, and a stubborn streak about page speed. If it loads slow, he doesn’t sleep.",
+    imgClass: "object-center",
+    bio: "Paid ads — Google, Local Services, and the tracking behind them. Also on the sales side alongside Owen. Between us we cover the free traffic, the paid, and the calls that come off both.",
   },
 ];
 
@@ -85,12 +80,12 @@ export default function AboutPage() {
       </section>
 
       {/* ── FOUNDERS ── */}
-      <section className="px-6 pb-20">
-        <div className="mx-auto grid max-w-[860px] grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8">
+      <section className="px-6 pb-16">
+        <div className="mx-auto grid max-w-[880px] grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
           {FOUNDERS.map((f) => (
             <Reveal key={f.name}>
-              <article className="h-full overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)]">
-                <div className="relative aspect-[4/5] w-full overflow-hidden bg-[var(--color-canvas-deep)]">
+              <article className="flex h-full flex-row items-stretch overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)]">
+                <div className="relative aspect-square w-[128px] flex-shrink-0 overflow-hidden bg-[var(--color-canvas-deep)] sm:w-[140px]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={f.photo}
@@ -98,14 +93,14 @@ export default function AboutPage() {
                     className={`h-full w-full object-cover grayscale ${f.imgClass}`}
                   />
                 </div>
-                <div className="px-6 py-5 sm:px-7 sm:py-6">
-                  <div className="mb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
-                    {f.role}
+                <div className="flex flex-1 flex-col justify-center px-4 py-3 sm:px-5 sm:py-4">
+                  <div className="mb-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
+                    Co-founder
                   </div>
-                  <h3 className="mb-2 font-[family-name:var(--font-display)] text-[20px] font-bold leading-tight sm:text-[22px]">
+                  <h3 className="mb-1.5 font-[family-name:var(--font-display)] text-[17px] font-bold leading-tight sm:text-[18px]">
                     {f.name}
                   </h3>
-                  <p className="text-[14.5px] leading-[1.6] text-[var(--color-ink-muted)]">
+                  <p className="text-[13px] leading-[1.5] text-[var(--color-ink-muted)] sm:text-[13.5px]">
                     {f.bio}
                   </p>
                 </div>
