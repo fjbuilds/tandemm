@@ -42,7 +42,7 @@ const PROCESS_STEPS = [
   },
   {
     n: 5,
-    when: "Around day 14",
+    when: "Around day 7",
     title: "Everything goes live",
     body: "Site, tracking, SEO and any ads switch on together. From day one you’re on one dashboard, seeing every enquiry traced back to what brought it in.",
   },
@@ -235,7 +235,7 @@ export default function AboutPage() {
             <div className="mt-6 rounded-[var(--radius-xl)] border border-[var(--color-accent)]/40 bg-[var(--color-accent)]/10 px-6 py-6 sm:px-8 sm:py-7">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
                 <div className="font-[family-name:var(--font-display)] text-[26px] font-extrabold leading-none tracking-[-0.02em] text-[var(--color-accent)] sm:text-[32px]">
-                  ~14 days
+                  ~7 days
                 </div>
                 <div className="text-[14.5px] leading-[1.55] text-[var(--color-canvas)]/85 sm:text-[15px]">
                   From first click to being live. Your side of it: a phone call
