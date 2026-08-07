@@ -15,21 +15,21 @@ const paletteOverride = {
   "--color-hairline-soft": "#E1E3DC",
 } as CSSProperties;
 
-const PRINCIPLES = [
+const MONTH_TIMELINE = [
   {
     n: 1,
-    title: "Talk straight",
-    body: "No jargon walls, no inflated promises. If a channel won't pay back for your area or your budget, we say so before you spend a penny.",
+    title: "First week",
+    body: "We look at last month together. Call or WhatsApp, your choice. What worked, what didn’t, what changes for the next 30 days. Ten minutes, no jargon.",
   },
   {
     n: 2,
-    title: "Build to convert",
-    body: "Fast, clear, honest. Every page has one job: turn a homeowner into an enquiry. No filler, no stock hero shots, no clever animations getting in the way.",
+    title: "The middle",
+    body: "The quiet work. New landing pages ship, ads get tuned, Google keeps rising. You keep working. If nothing’s on fire, you won’t hear from us. If something is, you will.",
   },
   {
     n: 3,
-    title: "Stay after launch",
-    body: "A site that stands still loses ground. We keep tuning it, adding pages and earning links, so you stay at the top of Google month after month.",
+    title: "Last week",
+    body: "One simple dashboard. Every enquiry, every call, every booked job, traced back to the ad or keyword that brought it in. No spreadsheet homework for you.",
   },
 ];
 
@@ -66,8 +66,13 @@ export default function AboutPage() {
           </Reveal>
           <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              Two of us. Working in{" "}
-              <span className="lowercase tracking-[-0.045em]">tandemm</span>.
+              Two of us.
+              <br />
+              Working in{" "}
+              <span className="lowercase tracking-[-0.045em] text-[var(--color-primary)]">
+                tande<span className="tracking-[-0.24em]">m</span>m
+              </span>
+              .
             </h1>
           </Reveal>
           <Reveal>
@@ -167,75 +172,68 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── DISARM SECTION ── */}
-      <section className="px-6 py-20">
-        <div className="mx-auto max-w-[900px]">
+      {/* ── THE DEAL (pattern-interrupt: dark, signed pledge) ── */}
+      <section className="bg-[var(--color-ink)] px-6 py-24 text-[var(--color-canvas)]">
+        <div className="mx-auto max-w-[760px]">
           <Reveal>
-            <h2 className="mb-3 text-center font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              &ldquo;I&rsquo;ve been burned by marketing lads before.&rdquo;
+            <div className="mb-6 text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--color-accent)]">
+              The deal, in writing
+            </div>
+          </Reveal>
+          <Reveal>
+            <h2 className="font-[family-name:var(--font-display)] text-[clamp(32px,4.8vw,52px)] font-extrabold leading-[1.02] tracking-[-0.03em]">
+              If the phone isn&rsquo;t ringing more inside 90 days,
+              <span className="text-[var(--color-accent)]"> you don&rsquo;t pay </span>
+              the next month.
             </h2>
-            <p className="mx-auto mb-12 max-w-[560px] text-center text-[16.5px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Fair. Most trades we speak to have. Here&rsquo;s how we&rsquo;re
-              different. And if you don&rsquo;t buy it, don&rsquo;t sign anything.
-            </p>
           </Reveal>
 
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            {[
-              {
-                q: "“They signed me up then vanished.”",
-                a: "One of us is on your account, not a junior, not a rota. Same number every time.",
-              },
-              {
-                q: "“I paid for a site I can’t change.”",
-                a: "You own everything. Domain, site, ad account. If we ever part ways, it all leaves with you.",
-              },
-              {
-                q: "“I’ve no idea what they actually did.”",
-                a: "One dashboard. Every call, every form, every job, traced back to what caused it. Look any time.",
-              },
-              {
-                q: "“The leads were rubbish.”",
-                a: "We tune the ads and the forms to filter out tyre-kickers, and we sit with you monthly to check the ones that came through.",
-              },
-              {
-                q: "“I’m too old-school for all this.”",
-                a: "Cool. You keep doing the work. We handle the phone-ringing part and explain it in plain English when you want to know.",
-              },
-              {
-                q: "“It’s another monthly bill.”",
-                a: "It is. And if the jobs it brings in don’t cover it many times over inside the first quarter, we tell you and we stop.",
-              },
-            ].map((item) => (
-              <Reveal key={item.q}>
-                <div className="h-full rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)] px-6 py-6">
-                  <p className="mb-2 font-[family-name:var(--font-display)] text-[16px] font-bold leading-snug text-[var(--color-ink)]">
-                    {item.q}
-                  </p>
-                  <p className="text-[14.5px] leading-[1.6] text-[var(--color-ink-muted)]">
-                    {item.a}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal>
+            <ul className="mt-12 grid grid-cols-1 gap-0 sm:grid-cols-2">
+              {[
+                "No 12-month lock-in. Cancel any month.",
+                "No small print in month four. What you sign is the whole thing.",
+                "No junior on your account. One of us, every time.",
+                "You own the site, the domain, and every ad account. Always.",
+              ].map((line) => (
+                <li
+                  key={line}
+                  className="flex items-start gap-4 border-t border-[var(--color-canvas)]/15 py-5 text-[15.5px] leading-[1.5] sm:text-[16px] sm:[&:nth-child(-n+2)]:border-t-0 sm:[&:nth-child(odd)]:border-r sm:[&:nth-child(odd)]:border-r-[var(--color-canvas)]/15 sm:[&:nth-child(odd)]:pr-8 sm:[&:nth-child(even)]:pl-8"
+                >
+                  <span className="mt-[6px] block h-[6px] w-[6px] flex-shrink-0 rounded-full bg-[var(--color-accent)]" />
+                  <span>{line}</span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+
+          <Reveal>
+            <div className="mt-14 flex flex-wrap items-end justify-between gap-6 border-t border-[var(--color-canvas)]/15 pt-6">
+              <div className="text-[12px] uppercase tracking-[0.18em] text-[var(--color-canvas)]/60">
+                Signed
+              </div>
+              <div className="font-[family-name:var(--font-display)] text-[22px] font-extrabold italic tracking-[-0.01em] sm:text-[26px]">
+                Owen &amp; FJ
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* ── PRINCIPLES ── */}
+      {/* ── A MONTH WITH TANDEMM ── */}
       <section className="bg-[var(--color-canvas-deep)] px-6 py-16 sm:py-20">
         <div className="mx-auto max-w-[820px]">
           <Reveal>
             <div className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
-              How we work
+              A month with tandemm
             </div>
-            <h2 className="max-w-[560px] font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,40px)] font-bold leading-[1.1] tracking-[-0.02em]">
-              Three rules we don&rsquo;t break.
+            <h2 className="max-w-[620px] font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,40px)] font-bold leading-[1.1] tracking-[-0.02em]">
+              What actually happens between the 1st and the 31st.
             </h2>
           </Reveal>
 
           <div className="mt-10 sm:mt-12">
-            {PRINCIPLES.map((p) => (
+            {MONTH_TIMELINE.map((p) => (
               <Reveal key={p.n}>
                 <div className="grid grid-cols-[auto_1fr] items-baseline gap-x-5 gap-y-1 border-t border-[var(--color-hairline)] py-7 first:border-t-0 first:pt-0 sm:gap-x-8 sm:py-9">
                   <span className="font-[family-name:var(--font-display)] text-[clamp(38px,9vw,64px)] font-extrabold leading-[0.8] tracking-[-0.03em] text-[var(--color-accent)]/25">
