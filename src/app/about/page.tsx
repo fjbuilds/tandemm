@@ -38,7 +38,7 @@ const FOUNDERS = [
     name: "Owen Harris",
     photo: "/brand/team/owen.jpg",
     imgClass: "object-center",
-    bio: "Design and SEO. Builds the site, structures the pages, and does the local ranking work that puts you top of Google in your town. Also on the sales side — if you sign up, you’ll speak to Owen first.",
+    bio: "Design, SEO, and the day-to-day sales. Builds the sites, does the ranking work, picks up the phone. Nine years in sales, launched his first business in 2024, then started Tandemm at the start of 2026 — after watching too many friends and family in trades pay over the odds for something that shouldn’t be this complicated.",
   },
   {
     name: "FJ",
