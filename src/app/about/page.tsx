@@ -15,21 +15,36 @@ const paletteOverride = {
   "--color-hairline-soft": "#E1E3DC",
 } as CSSProperties;
 
-const PRINCIPLES = [
+const PROCESS_STEPS = [
   {
     n: 1,
-    title: "Talk straight",
-    body: "No jargon walls, no inflated promises. If a channel won't pay back for your area or your budget, we say so before you spend a penny.",
+    when: "Day one, 30 seconds",
+    title: "Scan your site",
+    body: "Pop your site into the scanner and get an instant, plain-English score of where it’s losing you enquiries. No sign-up, no details. Just a straight look at what’s there.",
   },
   {
     n: 2,
-    title: "Build to convert",
-    body: "Fast, clear, honest. Every page has one job: turn a homeowner into an enquiry. No filler, no stock hero shots, no clever animations getting in the way.",
+    when: "Within 24 hours",
+    title: "One of us calls you",
+    body: "We go through your site, your rankings and what your competition are doing, then give you a straight answer on whether we can help. If we can’t, we say so on the call.",
   },
   {
     n: 3,
-    title: "Stay after launch",
-    body: "A site that stands still loses ground. We keep tuning it, adding pages and earning links, so you stay at the top of Google month after month.",
+    when: "Five minutes of your time",
+    title: "Send us a few bits",
+    body: "Photos of your work, the services you offer, the areas you cover, and your team. That’s the whole ask from you. We build everything else around it.",
+  },
+  {
+    n: 4,
+    when: "Inside 5 working days",
+    title: "Your site gets built",
+    body: "Full working site to review, not a rough sketch. We go back and forth on the wording and the layout until every page reads the way you want it to.",
+  },
+  {
+    n: 5,
+    when: "Around day 7",
+    title: "Everything goes live",
+    body: "Site, tracking, SEO and any ads switch on together, and you’re set up on the Duo app so every enquiry, call and job lands in one place. From day one you can trace every lead back to what brought it in.",
   },
 ];
 
@@ -38,13 +53,13 @@ const FOUNDERS = [
     name: "Owen Harris",
     photo: "/brand/team/owen.jpg",
     imgClass: "object-center",
-    bio: "Design and SEO. Builds the site, structures the pages, and does the local ranking work that puts you top of Google in your town. Also on the sales side — if you sign up, you’ll speak to Owen first.",
+    bio: "I handle design, SEO, and the day-to-day sales. Building the sites, doing the ranking work, and picking up the phone. Nine years in sales, launched my first business in 2024, and then in 2026, Tandemm was born, after watching too many friends and family in trades pay over the odds for something that shouldn’t be this complicated.",
   },
   {
     name: "FJ",
     photo: "/brand/team/fj.jpg",
     imgClass: "object-center",
-    bio: "Paid ads — Google, Local Services, and the tracking behind them. Also on the sales side alongside Owen. Between us we cover the free traffic, the paid, and the calls that come off both.",
+    bio: "Background in all things Google, ads and marketing. Realised it was time to strap the boots on and work with the industry I know best. On Tandemm I run the paid ads side, and I’ll make sure your name rings bells in your town and the surrounding areas, sticking by your side the whole way.",
   },
 ];
 
@@ -66,14 +81,20 @@ export default function AboutPage() {
           </Reveal>
           <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              Two of us. Built for trades.
+              Two of us.
+              <br />
+              Working in{" "}
+              <span className="lowercase tracking-[-0.045em] text-[var(--color-primary)]">
+                tande<span className="tracking-[-0.24em]">m</span>m
+              </span>
+              .
             </h1>
           </Reveal>
           <Reveal>
             <p className="mx-auto mt-[22px] max-w-[600px] text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
               We only work with tradespeople. Not gyms, not clinics,
               not restaurants. Every hour we spend, every page we build,
-              every ad we run, is inside one industry &mdash; so we get good at it.
+              every ad we run, is inside one industry, so we get good at it.
             </p>
           </Reveal>
         </div>
@@ -118,122 +139,89 @@ export default function AboutPage() {
               Why we started this
             </div>
             <h2 className="mb-8 font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,40px)] font-bold leading-[1.1] tracking-[-0.02em]">
-              We watched people we love do brilliant work &mdash; and still fight for the next job.
+              We watched family and friends do good work. And still fight for the next job.
             </h2>
           </Reveal>
 
           <div className="space-y-6 text-[16.5px] leading-[1.7] text-[var(--color-ink)]">
             <Reveal>
               <p>
-                Both of us grew up around trades. Uncles on the tools, mates
-                who went out on their own after their apprenticeship, family
-                members quoting jobs in the evenings after a full day on site.
-                Good work. Fair prices. Repeat customers who&rsquo;d recommend
-                them to anyone.
+                Both of us saw first-hand how volatile a trade business can be.
+                Family and friends on the tools, too busy on jobs to think about
+                long-term growth, so no buffer for the quiet spells. A good
+                August, a dead November. Chasing quotes that never come back.
+                The kind of business everyone recommends, that still has
+                to fight for the next booking.
               </p>
             </Reveal>
             <Reveal>
               <p>
-                And still, every winter, the same conversation. &ldquo;It&rsquo;s
-                gone quiet.&rdquo; &ldquo;I&rsquo;m chasing quotes that never come
-                back.&rdquo; &ldquo;The bloke down the road with the bad reviews is
-                somehow rammed.&rdquo; The problem was never the work. It was
-                that nobody in their town knew they existed until a neighbour
-                happened to mention them.
+                The problem was never the work. So they said. It was that nobody
+                in their town knew they existed. They had a website, a Google
+                profile, the areas they cover listed out. Looked fine from the
+                outside. Just didn&rsquo;t do the one thing a website is meant
+                to do: turn strangers into enquiries.
               </p>
             </Reveal>
             <Reveal>
               <p>
-                Meanwhile we were sat in agencies watching trade accounts get
-                treated like an afterthought &mdash; template sites, ads run by
-                whoever was free that week, no one who&rsquo;d ever set foot on a
-                job. So we left, put our heads down, and built the thing we
-                wished those family members had five years ago.
+                Meanwhile you see trades get taken advantage of. Charged an arm
+                and a leg for a website that looks basic. SEO that was
+                overpromised and underdelivered. Ads sold on the promise that
+                if they just invest a bit more each month, they&rsquo;re
+                guaranteed X more clients. Every trade we speak to has been
+                burned by at least one of them.
+              </p>
+            </Reveal>
+            <Reveal>
+              <p>
+                That&rsquo;s why we started Tandemm. Not to sell the same
+                promises back to the same people. To do the slow, ongoing work
+                properly, one town at a time, for the kind of trades we grew up
+                around. No guaranteed lead-count nonsense. No twelve-month
+                lock-ins. One flat fee, the same numbers each month, and two
+                people you can actually get on the phone.
               </p>
             </Reveal>
           </div>
         </div>
       </section>
 
-      {/* ── DISARM SECTION ── */}
-      <section className="px-6 py-20">
-        <div className="mx-auto max-w-[900px]">
+      {/* ── FIRST HELLO → LIVE (process timeline) ── */}
+      <section className="bg-[var(--color-canvas-deep)] px-6 py-20 text-[var(--color-ink)] sm:py-24">
+        <div className="mx-auto max-w-[860px]">
           <Reveal>
-            <h2 className="mb-3 text-center font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              &ldquo;I&rsquo;ve been burned by marketing lads before.&rdquo;
-            </h2>
-            <p className="mx-auto mb-12 max-w-[560px] text-center text-[16.5px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Fair. Most trades we speak to have. Here&rsquo;s how we&rsquo;re
-              different &mdash; and if you don&rsquo;t buy it, don&rsquo;t sign anything.
-            </p>
-          </Reveal>
-
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            {[
-              {
-                q: "“They signed me up then vanished.”",
-                a: "One of us is on your account &mdash; not a junior, not a rota. Same number every time.",
-              },
-              {
-                q: "“I paid for a site I can’t change.”",
-                a: "You own everything. Domain, site, ad account. If we ever part ways, it all leaves with you.",
-              },
-              {
-                q: "“I’ve no idea what they actually did.”",
-                a: "One dashboard. Every call, every form, every job, traced back to what caused it. Look any time.",
-              },
-              {
-                q: "“The leads were rubbish.”",
-                a: "We tune the ads and the forms to filter out tyre-kickers, and we sit with you monthly to check the ones that came through.",
-              },
-              {
-                q: "“I’m too old-school for all this.”",
-                a: "Cool. You keep doing the work. We handle the phone-ringing part and explain it in plain English when you want to know.",
-              },
-              {
-                q: "“It’s another monthly bill.”",
-                a: "It is. And if the jobs it brings in don’t cover it many times over inside the first quarter, we tell you and we stop.",
-              },
-            ].map((item) => (
-              <Reveal key={item.q}>
-                <div className="h-full rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)] px-6 py-6">
-                  <p className="mb-2 font-[family-name:var(--font-display)] text-[16px] font-bold leading-snug text-[var(--color-ink)]">
-                    {item.q}
-                  </p>
-                  <p className="text-[14.5px] leading-[1.6] text-[var(--color-ink-muted)]">
-                    {item.a}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── PRINCIPLES ── */}
-      <section className="bg-[var(--color-canvas-deep)] px-6 py-16 sm:py-20">
-        <div className="mx-auto max-w-[820px]">
-          <Reveal>
-            <div className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
-              How we work
+            <div className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-primary)]">
+              The process
             </div>
-            <h2 className="max-w-[560px] font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,40px)] font-bold leading-[1.1] tracking-[-0.02em]">
-              Three rules we don&rsquo;t break.
+            <h2 className="max-w-[620px] font-[family-name:var(--font-display)] text-[clamp(28px,3.8vw,42px)] font-extrabold leading-[1.05] tracking-[-0.03em]">
+              From your first click to your site being live.
             </h2>
           </Reveal>
 
-          <div className="mt-10 sm:mt-12">
-            {PRINCIPLES.map((p) => (
+          {/* Vertical connected timeline */}
+          <div className="relative mt-12 sm:mt-14">
+            <div
+              aria-hidden
+              className="absolute left-[23px] top-4 bottom-4 w-[2px] bg-[var(--color-primary)]/25 sm:left-[27px]"
+            />
+
+            {PROCESS_STEPS.map((p) => (
               <Reveal key={p.n}>
-                <div className="grid grid-cols-[auto_1fr] items-baseline gap-x-5 gap-y-1 border-t border-[var(--color-hairline)] py-7 first:border-t-0 first:pt-0 sm:gap-x-8 sm:py-9">
-                  <span className="font-[family-name:var(--font-display)] text-[clamp(38px,9vw,64px)] font-extrabold leading-[0.8] tracking-[-0.03em] text-[var(--color-accent)]/25">
-                    {String(p.n).padStart(2, "0")}
-                  </span>
-                  <div className="pt-1">
-                    <h3 className="mb-2 font-[family-name:var(--font-display)] text-[19px] font-bold sm:text-[22px]">
+                <div className="relative flex gap-5 pb-10 last:pb-0 sm:gap-7">
+                  <div className="relative z-10 flex-shrink-0">
+                    <div className="flex h-[48px] w-[48px] items-center justify-center rounded-full bg-[var(--color-primary)] font-[family-name:var(--font-display)] text-[18px] font-extrabold text-white shadow-[0_0_0_5px_var(--color-canvas-deep)] sm:h-[56px] sm:w-[56px] sm:text-[20px]">
+                      {p.n}
+                    </div>
+                  </div>
+                  <div className="flex-1 pt-1.5 sm:pt-2">
+                    <div className="mb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-primary)]">
+                      {p.when}
+                    </div>
+                    <h3 className="mb-2 font-[family-name:var(--font-display)] text-[19px] font-bold text-[var(--color-ink)] sm:text-[22px]">
                       {p.title}
                     </h3>
-                    <p className="max-w-[520px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)] sm:text-[15.5px]">
+                    <p className="max-w-[560px] text-[14.5px] leading-[1.6] text-[var(--color-ink-muted)] sm:text-[15px]">
                       {p.body}
                     </p>
                   </div>
@@ -241,6 +229,22 @@ export default function AboutPage() {
               </Reveal>
             ))}
           </div>
+
+          {/* Conclusion */}
+          <Reveal>
+            <div className="mt-6 rounded-[var(--radius-xl)] border border-[var(--color-primary)]/30 bg-[var(--color-primary)]/[0.06] px-6 py-6 sm:px-8 sm:py-7">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
+                <div className="font-[family-name:var(--font-display)] text-[26px] font-extrabold leading-none tracking-[-0.02em] text-[var(--color-primary)] sm:text-[32px]">
+                  ~7 days
+                </div>
+                <div className="text-[14.5px] leading-[1.55] text-[var(--color-ink)] sm:text-[15px]">
+                  From first click to being live. Your side of it: a phone call
+                  and a handful of photos. That&rsquo;s honestly it. We handle
+                  the rest.
+                </div>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 

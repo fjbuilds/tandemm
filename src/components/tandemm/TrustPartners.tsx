@@ -190,10 +190,13 @@ export function TrustPartners() {
   const shown = phase === "in";
 
   return (
-    <section className="px-6 py-14">
+    <section className="px-6 pb-14 pt-6">
+      <div className="mx-auto max-w-[760px]">
+        <div className="mb-8 border-t border-[var(--color-hairline)]" />
+      </div>
       <div className="mx-auto max-w-[1000px] text-center">
-        <p className="mb-9 text-[13px] font-semibold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
-          The tools we build on
+        <p className="mb-8 text-[13px] font-semibold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
+          Built on tools you already trust
         </p>
         <div
           className="flex flex-wrap items-center justify-center gap-x-10 gap-y-7"
