@@ -18,26 +18,32 @@ const paletteOverride = {
 const PROCESS_STEPS = [
   {
     n: 1,
-    when: "The first call",
-    title: "We look at your site together",
-    body: "One of us picks up. We go through your site, your rankings and what your competition are doing, and give you a straight answer on whether we can help. If we can’t, we say so.",
+    when: "Day one, 30 seconds",
+    title: "Scan your site",
+    body: "Pop your site into the scanner and get an instant, plain-English score of where it’s losing you enquiries. No sign-up, no details. Just a straight look at what’s there.",
   },
   {
     n: 2,
-    when: "Inside a few days",
-    title: "You see an early design",
-    body: "You send a handful of photos and the areas you cover. We come back with an early design of your new site so you can see the direction before you sign anything.",
+    when: "Within 24 hours",
+    title: "One of us calls you",
+    body: "We go through your site, your rankings and what your competition are doing, then give you a straight answer on whether we can help. If we can’t, we say so on the call.",
   },
   {
     n: 3,
-    when: "Inside 5 working days",
-    title: "The site gets built",
-    body: "Once you’re happy with the direction, we build the whole thing. Full working site to review, not a rough sketch. We go back and forth until every page reads the way you want it to.",
+    when: "Five minutes of your time",
+    title: "Send us a few bits",
+    body: "Photos of your work, the services you offer, the areas you cover, and your team. That’s the whole ask from you. We build everything else around it.",
   },
   {
     n: 4,
-    when: "Launch day",
-    title: "It all goes live together",
+    when: "Inside 5 working days",
+    title: "Your site gets built",
+    body: "Full working site to review, not a rough sketch. We go back and forth on the wording and the layout until every page reads the way you want it to.",
+  },
+  {
+    n: 5,
+    when: "Around day 14",
+    title: "Everything goes live",
     body: "Site, tracking, SEO and any ads switch on together. From day one you’re on one dashboard, seeing every enquiry traced back to what brought it in.",
   },
 ];
@@ -182,32 +188,40 @@ export default function AboutPage() {
       </section>
 
       {/* ── FIRST HELLO → LIVE (process timeline) ── */}
-      <section className="bg-[var(--color-canvas-deep)] px-6 py-16 sm:py-20">
-        <div className="mx-auto max-w-[820px]">
+      <section className="bg-[var(--color-ink)] px-6 py-20 text-[var(--color-canvas)] sm:py-24">
+        <div className="mx-auto max-w-[860px]">
           <Reveal>
             <div className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
               The process
             </div>
-            <h2 className="max-w-[620px] font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,40px)] font-bold leading-[1.1] tracking-[-0.02em]">
-              From your first call to going live.
+            <h2 className="max-w-[620px] font-[family-name:var(--font-display)] text-[clamp(28px,3.8vw,42px)] font-extrabold leading-[1.05] tracking-[-0.03em]">
+              From your first click to your site being live.
             </h2>
           </Reveal>
 
-          <div className="mt-10 sm:mt-12">
-            {PROCESS_STEPS.map((p) => (
+          {/* Vertical connected timeline */}
+          <div className="relative mt-12 sm:mt-14">
+            <div
+              aria-hidden
+              className="absolute left-[23px] top-4 bottom-4 w-[2px] bg-[var(--color-accent)]/30 sm:left-[27px]"
+            />
+
+            {PROCESS_STEPS.map((p, i) => (
               <Reveal key={p.n}>
-                <div className="grid grid-cols-[auto_1fr] items-baseline gap-x-5 gap-y-1 border-t border-[var(--color-hairline)] py-7 first:border-t-0 first:pt-0 sm:gap-x-8 sm:py-9">
-                  <span className="font-[family-name:var(--font-display)] text-[clamp(38px,9vw,64px)] font-extrabold leading-[0.8] tracking-[-0.03em] text-[var(--color-accent)]/25">
-                    {String(p.n).padStart(2, "0")}
-                  </span>
-                  <div className="pt-1">
+                <div className="relative flex gap-5 pb-10 last:pb-0 sm:gap-7">
+                  <div className="relative z-10 flex-shrink-0">
+                    <div className="flex h-[48px] w-[48px] items-center justify-center rounded-full bg-[var(--color-accent)] font-[family-name:var(--font-display)] text-[18px] font-extrabold text-white shadow-[0_0_0_5px_var(--color-ink)] sm:h-[56px] sm:w-[56px] sm:text-[20px]">
+                      {p.n}
+                    </div>
+                  </div>
+                  <div className="flex-1 pt-1.5 sm:pt-2">
                     <div className="mb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
                       {p.when}
                     </div>
-                    <h3 className="mb-2 font-[family-name:var(--font-display)] text-[19px] font-bold sm:text-[22px]">
+                    <h3 className="mb-2 font-[family-name:var(--font-display)] text-[19px] font-bold text-[var(--color-canvas)] sm:text-[22px]">
                       {p.title}
                     </h3>
-                    <p className="max-w-[520px] text-[15px] leading-[1.6] text-[var(--color-ink-muted)] sm:text-[15.5px]">
+                    <p className="max-w-[560px] text-[14.5px] leading-[1.6] text-[var(--color-canvas)]/70 sm:text-[15px]">
                       {p.body}
                     </p>
                   </div>
@@ -215,6 +229,22 @@ export default function AboutPage() {
               </Reveal>
             ))}
           </div>
+
+          {/* Conclusion */}
+          <Reveal>
+            <div className="mt-6 rounded-[var(--radius-xl)] border border-[var(--color-accent)]/40 bg-[var(--color-accent)]/10 px-6 py-6 sm:px-8 sm:py-7">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
+                <div className="font-[family-name:var(--font-display)] text-[26px] font-extrabold leading-none tracking-[-0.02em] text-[var(--color-accent)] sm:text-[32px]">
+                  ~14 days
+                </div>
+                <div className="text-[14.5px] leading-[1.55] text-[var(--color-canvas)]/85 sm:text-[15px]">
+                  From first click to being live. Your side of it: a phone call
+                  and a handful of photos. That&rsquo;s honestly it. We handle
+                  the rest.
+                </div>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
