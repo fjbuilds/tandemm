@@ -18,8 +18,8 @@ const paletteOverride = {
 const PRINCIPLES = [
   {
     n: 1,
-    title: "Understand first",
-    body: "Before we build a page or run an ad, we learn how homeowners in your area search and what makes them pick one trade business over another. Guesswork is what most agencies charge for.",
+    title: "Talk straight",
+    body: "No jargon walls, no inflated promises. If a channel won't pay back for your area or your budget, we say so before you spend a penny.",
   },
   {
     n: 2,
@@ -28,31 +28,23 @@ const PRINCIPLES = [
   },
   {
     n: 3,
-    title: "Keep improving",
-    body: "Launch is day one, not the finish line. We tune ads weekly, add landing pages each quarter, and push you up Google month after month. That is how a site becomes a long-term asset instead of a one-off cost.",
+    title: "Stay after launch",
+    body: "A site that stands still loses ground. We keep tuning it, adding pages and earning links, so you stay at the top of Google month after month.",
   },
 ];
 
-const STANDARDS = [
+const FOUNDERS = [
   {
-    n: "01",
-    title: "Look before we sell",
-    body: "No pitch until we have properly gone through your site, your rankings and your ads. If we cannot help, we say so on the call.",
+    name: "Owen Harris",
+    photo: "/brand/team/owen.jpg",
+    imgClass: "object-center",
+    bio: "Design and SEO. Builds the site, structures the pages, and does the local ranking work that puts you top of Google in your town. Also on the sales side — if you sign up, you’ll speak to Owen first.",
   },
   {
-    n: "02",
-    title: "Talk straight",
-    body: "No jargon walls, no inflated promises. If a channel will not pay back for your area or budget, we tell you before you spend a penny.",
-  },
-  {
-    n: "03",
-    title: "Show the numbers",
-    body: "If it is not in the dashboard, we have not done the job. Every call, every form, every booked job, tied back to the ad or keyword that brought it in.",
-  },
-  {
-    n: "04",
-    title: "Stay after launch",
-    body: "A site that stands still loses ground. We keep tuning it, adding pages, and earning links, so you stay at the top of Google month after month.",
+    name: "FJ",
+    photo: "/brand/team/fj.jpg",
+    imgClass: "object-center",
+    bio: "Paid ads — Google, Local Services, and the tracking behind them. Also on the sales side alongside Owen. Between us we cover the free traffic, the paid, and the calls that come off both.",
   },
 ];
 
@@ -65,7 +57,7 @@ export default function AboutPage() {
       <Nav active="about" />
 
       {/* ── HERO ── */}
-      <section className="px-6 pb-16 pt-[60px] text-center">
+      <section className="px-6 pb-14 pt-[60px] text-center">
         <div className="mx-auto max-w-[820px]">
           <Reveal>
             <div className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-ink-muted)]">
@@ -74,22 +66,151 @@ export default function AboutPage() {
           </Reveal>
           <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              Two of us. One system. Built for tradespeople.
+              Two of us. Built for trades.
             </h1>
           </Reveal>
           <Reveal>
-            <p className="mx-auto mt-[22px] max-w-[620px] text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
-              We ran ads and built sites for other people&rsquo;s
-              agencies for years, watched the same leaks in the same
-              trade accounts, and got tired of not fixing them. So we
-              started this. Small team, close to the work.
+            <p className="mx-auto mt-[22px] max-w-[600px] text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
+              We only work with tradespeople. Not gyms, not clinics,
+              not restaurants. Every hour we spend, every page we build,
+              every ad we run, is inside one industry &mdash; so we get good at it.
             </p>
           </Reveal>
         </div>
       </section>
 
+      {/* ── FOUNDERS ── */}
+      <section className="px-6 pb-16">
+        <div className="mx-auto grid max-w-[880px] grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
+          {FOUNDERS.map((f) => (
+            <Reveal key={f.name}>
+              <article className="flex h-full flex-row items-stretch overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)]">
+                <div className="relative aspect-square w-[128px] flex-shrink-0 overflow-hidden bg-[var(--color-canvas-deep)] sm:w-[140px]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={f.photo}
+                    alt={`Portrait of ${f.name}`}
+                    className={`h-full w-full object-cover grayscale ${f.imgClass}`}
+                  />
+                </div>
+                <div className="flex flex-1 flex-col justify-center px-4 py-3 sm:px-5 sm:py-4">
+                  <div className="mb-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
+                    Co-founder
+                  </div>
+                  <h3 className="mb-1.5 font-[family-name:var(--font-display)] text-[17px] font-bold leading-tight sm:text-[18px]">
+                    {f.name}
+                  </h3>
+                  <p className="text-[13px] leading-[1.5] text-[var(--color-ink-muted)] sm:text-[13.5px]">
+                    {f.bio}
+                  </p>
+                </div>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </section>
 
-      {/* ── THREE PRINCIPLES ── */}
+      {/* ── ORIGIN STORY ── */}
+      <section className="bg-[var(--color-canvas-deep)] px-6 py-20">
+        <div className="mx-auto max-w-[720px]">
+          <Reveal>
+            <div className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
+              Why we started this
+            </div>
+            <h2 className="mb-8 font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,40px)] font-bold leading-[1.1] tracking-[-0.02em]">
+              We watched people we love do brilliant work &mdash; and still fight for the next job.
+            </h2>
+          </Reveal>
+
+          <div className="space-y-6 text-[16.5px] leading-[1.7] text-[var(--color-ink)]">
+            <Reveal>
+              <p>
+                Both of us grew up around trades. Uncles on the tools, mates
+                who went out on their own after their apprenticeship, family
+                members quoting jobs in the evenings after a full day on site.
+                Good work. Fair prices. Repeat customers who&rsquo;d recommend
+                them to anyone.
+              </p>
+            </Reveal>
+            <Reveal>
+              <p>
+                And still, every winter, the same conversation. &ldquo;It&rsquo;s
+                gone quiet.&rdquo; &ldquo;I&rsquo;m chasing quotes that never come
+                back.&rdquo; &ldquo;The bloke down the road with the bad reviews is
+                somehow rammed.&rdquo; The problem was never the work. It was
+                that nobody in their town knew they existed until a neighbour
+                happened to mention them.
+              </p>
+            </Reveal>
+            <Reveal>
+              <p>
+                Meanwhile we were sat in agencies watching trade accounts get
+                treated like an afterthought &mdash; template sites, ads run by
+                whoever was free that week, no one who&rsquo;d ever set foot on a
+                job. So we left, put our heads down, and built the thing we
+                wished those family members had five years ago.
+              </p>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ── DISARM SECTION ── */}
+      <section className="px-6 py-20">
+        <div className="mx-auto max-w-[900px]">
+          <Reveal>
+            <h2 className="mb-3 text-center font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
+              &ldquo;I&rsquo;ve been burned by marketing lads before.&rdquo;
+            </h2>
+            <p className="mx-auto mb-12 max-w-[560px] text-center text-[16.5px] leading-[1.6] text-[var(--color-ink-muted)]">
+              Fair. Most trades we speak to have. Here&rsquo;s how we&rsquo;re
+              different &mdash; and if you don&rsquo;t buy it, don&rsquo;t sign anything.
+            </p>
+          </Reveal>
+
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            {[
+              {
+                q: "“They signed me up then vanished.”",
+                a: "One of us is on your account &mdash; not a junior, not a rota. Same number every time.",
+              },
+              {
+                q: "“I paid for a site I can’t change.”",
+                a: "You own everything. Domain, site, ad account. If we ever part ways, it all leaves with you.",
+              },
+              {
+                q: "“I’ve no idea what they actually did.”",
+                a: "One dashboard. Every call, every form, every job, traced back to what caused it. Look any time.",
+              },
+              {
+                q: "“The leads were rubbish.”",
+                a: "We tune the ads and the forms to filter out tyre-kickers, and we sit with you monthly to check the ones that came through.",
+              },
+              {
+                q: "“I’m too old-school for all this.”",
+                a: "Cool. You keep doing the work. We handle the phone-ringing part and explain it in plain English when you want to know.",
+              },
+              {
+                q: "“It’s another monthly bill.”",
+                a: "It is. And if the jobs it brings in don’t cover it many times over inside the first quarter, we tell you and we stop.",
+              },
+            ].map((item) => (
+              <Reveal key={item.q}>
+                <div className="h-full rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)] px-6 py-6">
+                  <p className="mb-2 font-[family-name:var(--font-display)] text-[16px] font-bold leading-snug text-[var(--color-ink)]">
+                    {item.q}
+                  </p>
+                  <p className="text-[14.5px] leading-[1.6] text-[var(--color-ink-muted)]">
+                    {item.a}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── PRINCIPLES ── */}
       <section className="bg-[var(--color-canvas-deep)] px-6 py-16 sm:py-20">
         <div className="mx-auto max-w-[820px]">
           <Reveal>
@@ -99,10 +220,6 @@ export default function AboutPage() {
             <h2 className="max-w-[560px] font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,40px)] font-bold leading-[1.1] tracking-[-0.02em]">
               Three rules we don&rsquo;t break.
             </h2>
-            <p className="mt-3 max-w-[520px] text-[16px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Every decision runs through these three. If a job breaks one,
-              we don&rsquo;t take it.
-            </p>
           </Reveal>
 
           <div className="mt-10 sm:mt-12">
@@ -127,53 +244,25 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── HOW WE THINK ── */}
-      <section className="px-6 py-20">
-        <div className="mx-auto max-w-[1060px]">
-          <Reveal>
-            <h2 className="mb-4 text-center font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,38px)] font-bold leading-[1.12] tracking-[-0.02em]">
-              What you get from us, every time.
-            </h2>
-            <p className="mx-auto mb-12 max-w-[520px] text-center text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
-              Not slogans. These are how we actually work, on every account.
-            </p>
-          </Reveal>
-
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            {STANDARDS.map((s) => (
-              <Reveal key={s.n}>
-                <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)] px-7 py-7">
-                  <div className="mb-3 text-sm font-bold text-[var(--color-accent-hover)]">
-                    {s.n}
-                  </div>
-                  <h3 className="mb-2 font-[family-name:var(--font-display)] text-[18px] font-bold">
-                    {s.title}
-                  </h3>
-                  <p className="text-[15px] leading-[1.6] text-[var(--color-ink-muted)]">
-                    {s.body}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── FINAL CTA ── */}
-      <section className="px-6 pb-20">
+      <section className="px-6 py-20">
         <div className="mx-auto max-w-[860px]">
           <Reveal>
             <div className="rounded-[var(--radius-xl)] bg-[var(--color-primary)] px-8 py-14 text-center text-[var(--color-on-primary)] shadow-[var(--shadow-2)]">
               <h2 className="mx-auto max-w-[600px] font-[family-name:var(--font-display)] text-[clamp(26px,3.4vw,36px)] font-bold leading-[1.12] tracking-[-0.02em]">
-                Before you change anything, see what is actually costing you jobs.
+                Have a look at what&rsquo;s actually costing you jobs.
               </h2>
+              <p className="mx-auto mt-4 max-w-[500px] text-[15.5px] leading-[1.55] opacity-80">
+                Free 20-minute call. One of us, not a salesperson. We tell you
+                what we&rsquo;d change and whether it&rsquo;s worth changing.
+              </p>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
                 <Button
                   href="/book"
                   variant="secondary"
                   className="border-white/25 bg-white text-[var(--color-primary)] hover:bg-white/90"
                 >
-                  Find out what&apos;s costing you jobs
+                  Book the call
                 </Button>
               </div>
             </div>
@@ -185,5 +274,3 @@ export default function AboutPage() {
     </div>
   );
 }
-
-
