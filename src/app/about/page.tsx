@@ -44,7 +44,7 @@ const FOUNDERS = [
     name: "FJ",
     photo: "/brand/team/fj.jpg",
     imgClass: "object-center",
-    bio: "I run the paid side — Google, Local Services, and the tracking behind them. I’m on the sales side alongside Owen too, so between us we cover the free traffic, the paid, and every call that comes off both.",
+    bio: "Background in all things Google, ads and marketing. Realised it was time to strap the boots on and work with the industry I know best. On Tandemm I run the paid side, and I’ll make sure your name rings bells in your town and the surrounding areas — sticking by your side the whole way.",
   },
 ];
 
@@ -118,37 +118,48 @@ export default function AboutPage() {
               Why we started this
             </div>
             <h2 className="mb-8 font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,40px)] font-bold leading-[1.1] tracking-[-0.02em]">
-              We watched people we love do brilliant work &mdash; and still fight for the next job.
+              We watched family and friends do good work. And still fight for the next job.
             </h2>
           </Reveal>
 
           <div className="space-y-6 text-[16.5px] leading-[1.7] text-[var(--color-ink)]">
             <Reveal>
               <p>
-                Both of us grew up around trades. Uncles on the tools, mates
-                who went out on their own after their apprenticeship, family
-                members quoting jobs in the evenings after a full day on site.
-                Good work. Fair prices. Repeat customers who&rsquo;d recommend
-                them to anyone.
+                Both of us saw first-hand how volatile a trade business can be.
+                Family and friends on the tools, too busy on jobs to think about
+                long-term growth, so no buffer for the quiet spells. A good
+                August, a dead November. Chasing quotes that never come back.
+                The kind of business everyone recommends &mdash; that still has
+                to fight for the next booking.
               </p>
             </Reveal>
             <Reveal>
               <p>
-                And still, every winter, the same conversation. &ldquo;It&rsquo;s
-                gone quiet.&rdquo; &ldquo;I&rsquo;m chasing quotes that never come
-                back.&rdquo; &ldquo;The bloke down the road with the bad reviews is
-                somehow rammed.&rdquo; The problem was never the work. It was
-                that nobody in their town knew they existed until a neighbour
-                happened to mention them.
+                The problem was never the work. So they said. It was that nobody
+                in their town knew they existed. They had a website, a Google
+                profile, the areas they cover listed out. Looked fine from the
+                outside. Just didn&rsquo;t do the one thing a website is meant
+                to do &mdash; turn strangers into enquiries.
               </p>
             </Reveal>
             <Reveal>
               <p>
-                Meanwhile we were sat in agencies watching trade accounts get
-                treated like an afterthought &mdash; template sites, ads run by
-                whoever was free that week, no one who&rsquo;d ever set foot on a
-                job. So we left, put our heads down, and built the thing we
-                wished those family members had five years ago.
+                Meanwhile you see trades get taken advantage of. Charged an arm
+                and a leg for a website that looks basic. SEO that was
+                overpromised and underdelivered. Ads sold on the promise that
+                if they just invest a bit more each month, they&rsquo;re
+                guaranteed X more clients. Every trade we speak to has been
+                burned by at least one of them.
+              </p>
+            </Reveal>
+            <Reveal>
+              <p>
+                That&rsquo;s why we started Tandemm. Not to sell the same
+                promises back to the same people. To do the slow, ongoing work
+                properly, one town at a time, for the kind of trades we grew up
+                around. No guaranteed lead-count nonsense. No twelve-month
+                lock-ins. One flat fee, the same numbers each month, and two
+                people you can actually get on the phone.
               </p>
             </Reveal>
           </div>
