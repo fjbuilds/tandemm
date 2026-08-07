@@ -15,21 +15,30 @@ const paletteOverride = {
   "--color-hairline-soft": "#E1E3DC",
 } as CSSProperties;
 
-const MONTH_TIMELINE = [
+const PROCESS_STEPS = [
   {
     n: 1,
-    title: "First week",
-    body: "We look at last month together. Call or WhatsApp, your choice. What worked, what didn’t, what changes for the next 30 days. Ten minutes, no jargon.",
+    when: "The first call",
+    title: "We look at your site together",
+    body: "One of us picks up. We go through your site, your rankings and what your competition are doing, and give you a straight answer on whether we can help. If we can’t, we say so.",
   },
   {
     n: 2,
-    title: "The middle",
-    body: "The quiet work. New landing pages ship, ads get tuned, Google keeps rising. You keep working. If nothing’s on fire, you won’t hear from us. If something is, you will.",
+    when: "Inside a few days",
+    title: "You see an early design",
+    body: "You send a handful of photos and the areas you cover. We come back with an early design of your new site so you can see the direction before you sign anything.",
   },
   {
     n: 3,
-    title: "Last week",
-    body: "One simple dashboard. Every enquiry, every call, every booked job, traced back to the ad or keyword that brought it in. No spreadsheet homework for you.",
+    when: "Inside 5 working days",
+    title: "The site gets built",
+    body: "Once you’re happy with the direction, we build the whole thing. Full working site to review, not a rough sketch. We go back and forth until every page reads the way you want it to.",
+  },
+  {
+    n: 4,
+    when: "Launch day",
+    title: "It all goes live together",
+    body: "Site, tracking, SEO and any ads switch on together. From day one you’re on one dashboard, seeing every enquiry traced back to what brought it in.",
   },
 ];
 
@@ -172,74 +181,29 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── THE DEAL (pattern-interrupt: dark, signed pledge) ── */}
-      <section className="bg-[var(--color-ink)] px-6 py-24 text-[var(--color-canvas)]">
-        <div className="mx-auto max-w-[760px]">
-          <Reveal>
-            <div className="mb-6 text-[11px] font-bold uppercase tracking-[0.2em] text-[var(--color-accent)]">
-              The deal, in writing
-            </div>
-          </Reveal>
-          <Reveal>
-            <h2 className="font-[family-name:var(--font-display)] text-[clamp(32px,4.8vw,52px)] font-extrabold leading-[1.02] tracking-[-0.03em]">
-              If the phone isn&rsquo;t ringing more inside 90 days,
-              <span className="text-[var(--color-accent)]"> you don&rsquo;t pay </span>
-              the next month.
-            </h2>
-          </Reveal>
-
-          <Reveal>
-            <ul className="mt-12 grid grid-cols-1 gap-0 sm:grid-cols-2">
-              {[
-                "No 12-month lock-in. Cancel any month.",
-                "No small print in month four. What you sign is the whole thing.",
-                "No junior on your account. One of us, every time.",
-                "You own the site, the domain, and every ad account. Always.",
-              ].map((line) => (
-                <li
-                  key={line}
-                  className="flex items-start gap-4 border-t border-[var(--color-canvas)]/15 py-5 text-[15.5px] leading-[1.5] sm:text-[16px] sm:[&:nth-child(-n+2)]:border-t-0 sm:[&:nth-child(odd)]:border-r sm:[&:nth-child(odd)]:border-r-[var(--color-canvas)]/15 sm:[&:nth-child(odd)]:pr-8 sm:[&:nth-child(even)]:pl-8"
-                >
-                  <span className="mt-[6px] block h-[6px] w-[6px] flex-shrink-0 rounded-full bg-[var(--color-accent)]" />
-                  <span>{line}</span>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-
-          <Reveal>
-            <div className="mt-14 flex flex-wrap items-end justify-between gap-6 border-t border-[var(--color-canvas)]/15 pt-6">
-              <div className="text-[12px] uppercase tracking-[0.18em] text-[var(--color-canvas)]/60">
-                Signed
-              </div>
-              <div className="font-[family-name:var(--font-display)] text-[22px] font-extrabold italic tracking-[-0.01em] sm:text-[26px]">
-                Owen &amp; FJ
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── A MONTH WITH TANDEMM ── */}
+      {/* ── FIRST HELLO → LIVE (process timeline) ── */}
       <section className="bg-[var(--color-canvas-deep)] px-6 py-16 sm:py-20">
         <div className="mx-auto max-w-[820px]">
           <Reveal>
             <div className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
-              A month with tandemm
+              The process
             </div>
             <h2 className="max-w-[620px] font-[family-name:var(--font-display)] text-[clamp(28px,3.6vw,40px)] font-bold leading-[1.1] tracking-[-0.02em]">
-              What actually happens between the 1st and the 31st.
+              From your first call to going live.
             </h2>
           </Reveal>
 
           <div className="mt-10 sm:mt-12">
-            {MONTH_TIMELINE.map((p) => (
+            {PROCESS_STEPS.map((p) => (
               <Reveal key={p.n}>
                 <div className="grid grid-cols-[auto_1fr] items-baseline gap-x-5 gap-y-1 border-t border-[var(--color-hairline)] py-7 first:border-t-0 first:pt-0 sm:gap-x-8 sm:py-9">
                   <span className="font-[family-name:var(--font-display)] text-[clamp(38px,9vw,64px)] font-extrabold leading-[0.8] tracking-[-0.03em] text-[var(--color-accent)]/25">
                     {String(p.n).padStart(2, "0")}
                   </span>
                   <div className="pt-1">
+                    <div className="mb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
+                      {p.when}
+                    </div>
                     <h3 className="mb-2 font-[family-name:var(--font-display)] text-[19px] font-bold sm:text-[22px]">
                       {p.title}
                     </h3>
