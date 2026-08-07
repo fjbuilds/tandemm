@@ -188,10 +188,10 @@ export default function AboutPage() {
       </section>
 
       {/* ── FIRST HELLO → LIVE (process timeline) ── */}
-      <section className="bg-[var(--color-ink)] px-6 py-20 text-[var(--color-canvas)] sm:py-24">
+      <section className="bg-[var(--color-canvas-deep)] px-6 py-20 text-[var(--color-ink)] sm:py-24">
         <div className="mx-auto max-w-[860px]">
           <Reveal>
-            <div className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
+            <div className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-[var(--color-primary)]">
               The process
             </div>
             <h2 className="max-w-[620px] font-[family-name:var(--font-display)] text-[clamp(28px,3.8vw,42px)] font-extrabold leading-[1.05] tracking-[-0.03em]">
@@ -203,25 +203,25 @@ export default function AboutPage() {
           <div className="relative mt-12 sm:mt-14">
             <div
               aria-hidden
-              className="absolute left-[23px] top-4 bottom-4 w-[2px] bg-[var(--color-accent)]/30 sm:left-[27px]"
+              className="absolute left-[23px] top-4 bottom-4 w-[2px] bg-[var(--color-primary)]/25 sm:left-[27px]"
             />
 
-            {PROCESS_STEPS.map((p, i) => (
+            {PROCESS_STEPS.map((p) => (
               <Reveal key={p.n}>
                 <div className="relative flex gap-5 pb-10 last:pb-0 sm:gap-7">
                   <div className="relative z-10 flex-shrink-0">
-                    <div className="flex h-[48px] w-[48px] items-center justify-center rounded-full bg-[var(--color-accent)] font-[family-name:var(--font-display)] text-[18px] font-extrabold text-white shadow-[0_0_0_5px_var(--color-ink)] sm:h-[56px] sm:w-[56px] sm:text-[20px]">
+                    <div className="flex h-[48px] w-[48px] items-center justify-center rounded-full bg-[var(--color-primary)] font-[family-name:var(--font-display)] text-[18px] font-extrabold text-white shadow-[0_0_0_5px_var(--color-canvas-deep)] sm:h-[56px] sm:w-[56px] sm:text-[20px]">
                       {p.n}
                     </div>
                   </div>
                   <div className="flex-1 pt-1.5 sm:pt-2">
-                    <div className="mb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
+                    <div className="mb-1 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--color-primary)]">
                       {p.when}
                     </div>
-                    <h3 className="mb-2 font-[family-name:var(--font-display)] text-[19px] font-bold text-[var(--color-canvas)] sm:text-[22px]">
+                    <h3 className="mb-2 font-[family-name:var(--font-display)] text-[19px] font-bold text-[var(--color-ink)] sm:text-[22px]">
                       {p.title}
                     </h3>
-                    <p className="max-w-[560px] text-[14.5px] leading-[1.6] text-[var(--color-canvas)]/70 sm:text-[15px]">
+                    <p className="max-w-[560px] text-[14.5px] leading-[1.6] text-[var(--color-ink-muted)] sm:text-[15px]">
                       {p.body}
                     </p>
                   </div>
@@ -232,12 +232,12 @@ export default function AboutPage() {
 
           {/* Conclusion */}
           <Reveal>
-            <div className="mt-6 rounded-[var(--radius-xl)] border border-[var(--color-accent)]/40 bg-[var(--color-accent)]/10 px-6 py-6 sm:px-8 sm:py-7">
+            <div className="mt-6 rounded-[var(--radius-xl)] border border-[var(--color-primary)]/30 bg-[var(--color-primary)]/[0.06] px-6 py-6 sm:px-8 sm:py-7">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
-                <div className="font-[family-name:var(--font-display)] text-[26px] font-extrabold leading-none tracking-[-0.02em] text-[var(--color-accent)] sm:text-[32px]">
+                <div className="font-[family-name:var(--font-display)] text-[26px] font-extrabold leading-none tracking-[-0.02em] text-[var(--color-primary)] sm:text-[32px]">
                   ~7 days
                 </div>
-                <div className="text-[14.5px] leading-[1.55] text-[var(--color-canvas)]/85 sm:text-[15px]">
+                <div className="text-[14.5px] leading-[1.55] text-[var(--color-ink)] sm:text-[15px]">
                   From first click to being live. Your side of it: a phone call
                   and a handful of photos. That&rsquo;s honestly it. We handle
                   the rest.
