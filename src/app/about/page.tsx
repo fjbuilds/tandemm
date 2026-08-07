@@ -66,7 +66,8 @@ export default function AboutPage() {
           </Reveal>
           <Reveal>
             <h1 className="font-[family-name:var(--font-display)] text-[clamp(36px,5vw,56px)] font-extrabold leading-[1.04] tracking-[-0.03em]">
-              Two of us. Built for trades.
+              Two of us. Working in{" "}
+              <span className="lowercase tracking-[-0.045em]">tandemm</span>.
             </h1>
           </Reveal>
           <Reveal>
