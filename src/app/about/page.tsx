@@ -44,7 +44,7 @@ const PROCESS_STEPS = [
     n: 5,
     when: "Around day 7",
     title: "Everything goes live",
-    body: "Site, tracking, SEO and any ads switch on together. From day one you’re on one dashboard, seeing every enquiry traced back to what brought it in.",
+    body: "Site, tracking, SEO and any ads switch on together, and you’re set up on the Duo app so every enquiry, call and job lands in one place. From day one you can trace every lead back to what brought it in.",
   },
 ];
 
