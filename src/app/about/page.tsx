@@ -38,13 +38,13 @@ const FOUNDERS = [
     name: "Owen Harris",
     photo: "/brand/team/owen.jpg",
     imgClass: "object-center",
-    bio: "I handle design, SEO, and the day-to-day sales — building the sites, doing the ranking work, and picking up the phone. Nine years in sales, launched my first business in 2024, and then in 2026, Tandemm was born — after watching too many friends and family in trades pay over the odds for something that shouldn’t be this complicated.",
+    bio: "I handle design, SEO, and the day-to-day sales. Building the sites, doing the ranking work, and picking up the phone. Nine years in sales, launched my first business in 2024, and then in 2026, Tandemm was born, after watching too many friends and family in trades pay over the odds for something that shouldn’t be this complicated.",
   },
   {
     name: "FJ",
     photo: "/brand/team/fj.jpg",
     imgClass: "object-center",
-    bio: "Background in all things Google, ads and marketing. Realised it was time to strap the boots on and work with the industry I know best. On Tandemm I run the paid side, and I’ll make sure your name rings bells in your town and the surrounding areas — sticking by your side the whole way.",
+    bio: "Background in all things Google, ads and marketing. Realised it was time to strap the boots on and work with the industry I know best. On Tandemm I run the paid side, and I’ll make sure your name rings bells in your town and the surrounding areas, sticking by your side the whole way.",
   },
 ];
 
@@ -73,7 +73,7 @@ export default function AboutPage() {
             <p className="mx-auto mt-[22px] max-w-[600px] text-[17px] leading-[1.6] text-[var(--color-ink-muted)]">
               We only work with tradespeople. Not gyms, not clinics,
               not restaurants. Every hour we spend, every page we build,
-              every ad we run, is inside one industry &mdash; so we get good at it.
+              every ad we run, is inside one industry, so we get good at it.
             </p>
           </Reveal>
         </div>
@@ -129,7 +129,7 @@ export default function AboutPage() {
                 Family and friends on the tools, too busy on jobs to think about
                 long-term growth, so no buffer for the quiet spells. A good
                 August, a dead November. Chasing quotes that never come back.
-                The kind of business everyone recommends &mdash; that still has
+                The kind of business everyone recommends, that still has
                 to fight for the next booking.
               </p>
             </Reveal>
@@ -139,7 +139,7 @@ export default function AboutPage() {
                 in their town knew they existed. They had a website, a Google
                 profile, the areas they cover listed out. Looked fine from the
                 outside. Just didn&rsquo;t do the one thing a website is meant
-                to do &mdash; turn strangers into enquiries.
+                to do: turn strangers into enquiries.
               </p>
             </Reveal>
             <Reveal>
@@ -175,7 +175,7 @@ export default function AboutPage() {
             </h2>
             <p className="mx-auto mb-12 max-w-[560px] text-center text-[16.5px] leading-[1.6] text-[var(--color-ink-muted)]">
               Fair. Most trades we speak to have. Here&rsquo;s how we&rsquo;re
-              different &mdash; and if you don&rsquo;t buy it, don&rsquo;t sign anything.
+              different. And if you don&rsquo;t buy it, don&rsquo;t sign anything.
             </p>
           </Reveal>
 
@@ -183,7 +183,7 @@ export default function AboutPage() {
             {[
               {
                 q: "“They signed me up then vanished.”",
-                a: "One of us is on your account &mdash; not a junior, not a rota. Same number every time.",
+                a: "One of us is on your account, not a junior, not a rota. Same number every time.",
               },
               {
                 q: "“I paid for a site I can’t change.”",
