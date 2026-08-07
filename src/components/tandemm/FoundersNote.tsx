@@ -11,47 +11,40 @@ import { Reveal } from "@/components/tandemm/Reveal";
  */
 export function FoundersNote() {
   return (
-    <section className="v2-section-pad px-6 py-14 sm:py-16">
+    <section className="px-6 pb-6 pt-2 sm:pb-10 sm:pt-4">
       <div className="mx-auto max-w-[760px]">
         <Reveal>
-          <div className="rounded-[var(--radius-xl)] border border-[var(--color-hairline)] bg-[var(--color-surface-muted)] px-6 py-8 sm:px-10 sm:py-10">
+          <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:gap-6 sm:text-left">
             {/* faces */}
-            <div className="mb-5 flex items-center justify-center gap-3">
+            <div className="flex flex-shrink-0 items-center -space-x-2">
               {/* eslint-disable @next/next/no-img-element */}
               <img
                 src="/brand/team/owen.jpg"
                 alt="Owen Harris, co-founder of Tandemm"
-                className="h-16 w-16 rounded-full object-cover grayscale ring-2 ring-[var(--color-canvas)] sm:h-[72px] sm:w-[72px]"
+                className="h-14 w-14 rounded-full object-cover grayscale ring-2 ring-[var(--color-canvas)] sm:h-[60px] sm:w-[60px]"
               />
               <img
                 src="/brand/team/fj.jpg"
                 alt="FJ, co-founder of Tandemm"
-                className="h-16 w-16 rounded-full object-cover grayscale ring-2 ring-[var(--color-canvas)] sm:h-[72px] sm:w-[72px]"
+                className="h-14 w-14 rounded-full object-cover grayscale ring-2 ring-[var(--color-canvas)] sm:h-[60px] sm:w-[60px]"
               />
               {/* eslint-enable @next/next/no-img-element */}
             </div>
 
-            <div className="text-center">
-              <div className="mb-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
-                Who you&rsquo;re dealing with
+            <div className="flex-1">
+              <div className="mb-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--color-accent)]">
+                It&rsquo;s just the two of us
               </div>
-              <p className="mx-auto max-w-[520px] font-[family-name:var(--font-display)] text-[18px] leading-[1.4] font-semibold text-[var(--color-ink)] sm:text-[20px]">
-                It&rsquo;s just the two of us. You&rsquo;ll speak to Owen or
-                FJ &mdash; every call, every check&#8209;in. Not a rota, not a junior.
-              </p>
-              <p className="mx-auto mt-3 max-w-[500px] text-[14px] leading-[1.6] text-[var(--color-ink-muted)]">
-                Owen runs design and SEO. FJ runs paid ads. Both of us handle
-                new-client calls. Same numbers, same people, every month.
-              </p>
-              <div className="mt-5 text-[13px] font-semibold text-[var(--color-ink-muted)]">
-                &mdash; Owen &amp; FJ&nbsp;&middot;&nbsp;
+              <p className="max-w-[520px] font-[family-name:var(--font-display)] text-[16px] leading-[1.4] font-semibold text-[var(--color-ink)] sm:text-[17px]">
+                Owen runs design and SEO. FJ runs paid ads. Both of us
+                answer the phone.{" "}
                 <Link
                   href="/about"
-                  className="text-[var(--color-accent)] underline-offset-4 hover:underline"
+                  className="whitespace-nowrap text-[var(--color-accent)] underline-offset-4 hover:underline"
                 >
-                  more about us
+                  About us &rarr;
                 </Link>
-              </div>
+              </p>
             </div>
           </div>
         </Reveal>

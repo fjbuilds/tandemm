@@ -291,6 +291,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── FOUNDERS NOTE (trust anchor, high-up) ──────────────── */}
+      <FoundersNote />
+
       {/* ── TRUST STRIP ─────────────────────────────────────────── */}
       <TrustPartners />
 
@@ -667,9 +670,6 @@ export default function HomePage() {
           </Reveal>
         </div>
       </section>
-
-      {/* ── FOUNDERS NOTE (trust anchor) ───────────────────────── */}
-      <FoundersNote />
 
       {/* ── CONTACT ─────────────────────────────────────────────── */}
       <section className="v2-contact">
