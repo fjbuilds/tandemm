@@ -13,6 +13,7 @@ import { DiamondLoader } from "@/components/tandemm/DiamondLoader";
 import { TrustPartners } from "@/components/tandemm/TrustPartners";
 import { GuaranteeStrip } from "@/components/tandemm/GuaranteeStrip";
 import { ContactOptions } from "@/components/tandemm/ContactOptions";
+import { FoundersNote } from "@/components/tandemm/FoundersNote";
 import { FlowConnector } from "@/components/tandemm/FlowConnector";
 import {
   GoogleLocalPack,
@@ -666,6 +667,9 @@ export default function HomePage() {
           </Reveal>
         </div>
       </section>
+
+      {/* ── FOUNDERS NOTE (trust anchor) ───────────────────────── */}
+      <FoundersNote />
 
       {/* ── CONTACT ─────────────────────────────────────────────── */}
       <section className="v2-contact">
