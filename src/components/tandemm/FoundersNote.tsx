@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Reveal } from "@/components/tandemm/Reveal";
 
 /**
- * Small trust anchor for the home page — a signed note from Owen and FJ
+ * Small trust anchor for the home page: a signed note from Owen and FJ
  * making it plain who the "human" behind the site actually is. Kept
  * visually distinct from the About page's founder cards (circular
  * avatars, personal tone, single band).
