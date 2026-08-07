@@ -59,7 +59,7 @@ const FOUNDERS = [
     name: "FJ",
     photo: "/brand/team/fj.jpg",
     imgClass: "object-center",
-    bio: "Background in all things Google, ads and marketing. Realised it was time to strap the boots on and work with the industry I know best. On Tandemm I run the paid side, and I’ll make sure your name rings bells in your town and the surrounding areas, sticking by your side the whole way.",
+    bio: "Background in all things Google, ads and marketing. Realised it was time to strap the boots on and work with the industry I know best. On Tandemm I run the paid ads side, and I’ll make sure your name rings bells in your town and the surrounding areas, sticking by your side the whole way.",
   },
 ];
 
