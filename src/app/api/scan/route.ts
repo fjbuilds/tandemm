@@ -9,6 +9,21 @@ interface Finding {
   passed: boolean;
   copy: string;
   severity: number;
+  evidence?: string;
+}
+
+interface SiteSnapshot {
+  title: string | null;
+  contactMethodCount: number | null;
+  loadSec: string | null;
+}
+
+function estimateMonthlyLoss(findings: Finding[]): { low: number; high: number } | null {
+  const totalSeverity = findings.reduce((s, f) => s + (f.passed ? 0 : f.severity), 0);
+  if (totalSeverity === 0) return null;
+  const low = Math.round((totalSeverity * 180) / 50) * 50;
+  const high = Math.round((totalSeverity * 340) / 50) * 50;
+  return { low, high };
 }
 
 function normaliseUrl(raw: string): string {
@@ -35,7 +50,7 @@ async function checkPageSpeed(url: string): Promise<{ speed: Finding; mobile: Fi
     const fcp = data.lighthouseResult?.audits?.["first-contentful-paint"]?.numericValue;
     const loadMs = fcp ?? data.lighthouseResult?.audits?.["speed-index"]?.numericValue ?? null;
     const loadSec = loadMs ? (loadMs / 1000).toFixed(1) : null;
-    const speedPassed = loadMs ? loadMs < 3000 : true;
+    const speedPassed = loadMs ? loadMs < 2500 : true;
 
     const viewportAudit = data.lighthouseResult?.audits?.["viewport"];
     const fontSizeAudit = data.lighthouseResult?.audits?.["font-size"];
@@ -52,19 +67,21 @@ async function checkPageSpeed(url: string): Promise<{ speed: Finding; mobile: Fi
         passed: speedPassed,
         copy: loadSec
           ? speedPassed
-            ? `Your site loads in ${loadSec}s on mobile. That is under the 3 second threshold where 53% of visitors abandon the page (Google/SOASTA, 2017).`
-            : `Your site takes ${loadSec}s to load on mobile. 53% of visitors leave a page that takes more than 3 seconds to load, and each extra second reduces conversions by up to 20% (Google/SOASTA, 2017).`
+            ? `Your homepage renders in ${loadSec}s on mobile, comfortably under the 2.5s threshold where visitor drop-off starts. Keep it there (Google/SOASTA, 2017).`
+            : `Your homepage takes ${loadSec}s to render on mobile. 53% of visitors leave a page that takes over 3 seconds, and each extra second cuts conversions by up to 20% (Google/SOASTA, 2017). At your load time, roughly half your traffic is bouncing before they see anything.`
           : "We could not measure your page speed. The site may be blocking automated checks.",
         severity: speedPassed ? 0 : loadMs && loadMs > 5000 ? 5 : 4,
+        evidence: loadSec ? `${loadSec}s to first paint on mobile` : undefined,
       },
       mobile: {
         id: "mobile",
         label: "Mobile usability",
         passed: mobilePassed,
         copy: mobilePassed
-          ? "Your site appears to be optimised for mobile. Text is readable and buttons are easy to tap. 61% of users say they are unlikely to return to a site that is not mobile friendly (Google, 2018)."
-          : "Your site is not optimised for mobile. 61% of people will not return to a mobile site that is hard to use, and 40% go straight to a competitor instead (Google, 2018). With 78% of local searches on mobile leading to a purchase within 24 hours, that is work going to someone else.",
+          ? "Your site is optimised for mobile. Text is readable and buttons are easy to tap. 61% of users won't return to a site that isn't mobile friendly (Google, 2018)."
+          : `Your site fails ${mobileFails.length} mobile usability check${mobileFails.length !== 1 ? "s" : ""} (viewport, tap targets or font sizing). 61% of people won't return to a mobile site that's hard to use, and 40% go straight to a competitor (Google, 2018). 78% of local searches on mobile lead to a purchase within 24 hours — that traffic is going elsewhere.`,
         severity: mobilePassed ? 0 : 4,
+        evidence: mobilePassed ? "Viewport, tap targets and font size all pass" : `${mobileFails.length} of 3 mobile checks failed`,
       },
     };
   } catch {
@@ -106,7 +123,7 @@ async function fetchHtml(url: string): Promise<string | null> {
   }
 }
 
-function checkEnquiryCapture(html: string): Finding {
+function checkEnquiryCapture(html: string): Finding & { methodCount: number } {
   const hasPhone =
     /tel:[+\d]/.test(html) ||
     /(?:call|phone|ring|telephone)\s*(?:us|now|today)/i.test(html);
@@ -118,87 +135,100 @@ function checkEnquiryCapture(html: string): Finding {
 
   const methods = { phone: hasPhone, form: hasForm, chat: hasChat, whatsapp: hasWhatsApp, email: hasEmail };
   const present = Object.entries(methods).filter(([, v]) => v).map(([k]) => k);
-  const missing = Object.entries(methods)
-    .filter(([k, v]) => !v && ["phone", "form"].includes(k))
-    .map(([k]) => (k === "phone" ? "visible phone number" : "contact form"));
+  const secondary = hasChat || hasWhatsApp || hasEmail;
+
+  const missing: string[] = [];
+  if (!hasPhone) missing.push("a visible phone number");
+  if (!hasForm) missing.push("an enquiry form");
+  if (!secondary) missing.push("a fast-response channel (WhatsApp, chat or email)");
 
   const passed = missing.length === 0;
+  const prettyList = present.length ? present.join(", ") : "none";
 
   return {
     id: "enquiry",
     label: "Enquiry capture",
     passed,
     copy: passed
-      ? `Your site has ${present.length} way${present.length > 1 ? "s" : ""} for customers to reach you. 78% of customers hire the first business that responds to their enquiry (Lead Connect, 2023), so having multiple contact methods protects against missed leads.`
-      : `Your site has no ${missing.join(" or ")}. 78% of customers hire the first business that responds (Lead Connect, 2023). Every missing contact method is a job going to a competitor who picks up faster.`,
+      ? `You give customers ${present.length} ways to reach you (${prettyList}). 78% of customers hire the first business that responds (Lead Connect, 2023) — multiple channels means you catch enquiries in the 3-minute window that matters.`
+      : `You're missing ${missing.join(" and ")}. 78% of customers hire the first business that responds (Lead Connect, 2023). If a lead can't reach you in the way they prefer, they call the next result on Google — usually within 5 minutes.`,
     severity: passed ? 0 : missing.length >= 2 ? 5 : 3,
+    evidence: `${present.length} contact method${present.length !== 1 ? "s" : ""} detected${present.length ? ` (${prettyList})` : ""}`,
+    methodCount: present.length,
   };
 }
 
 function checkReviews(html: string): Finding {
-  const hasReviews =
-    /reviews?|testimonials?|★|⭐|star-rating|rating/i.test(html) &&
-    !/no.{0,10}reviews/i.test(html);
   const hasSchema = /"@type"\s*:\s*"Review"/i.test(html) || /aggregateRating/i.test(html);
-  const hasWidget =
-    /trustpilot|google.*review|feefo|reviews\.io|yotpo|birdeye|podium/i.test(html);
+  const widgetMatch = html.match(
+    /trustpilot|google.?review|feefo|reviews\.io|yotpo|birdeye|podium|checkatrade|trustatrader|mybuilder/i,
+  );
+  const hasWidget = !!widgetMatch;
+  const starGlyphs = /★|⭐|\bstar-rating\b/i.test(html);
+  const testimonialSection = /class=["'][^"']*(testimonial|review)[^"']*["']/i.test(html);
 
-  const passed = hasReviews || hasSchema || hasWidget;
+  const passed = hasSchema || hasWidget || (starGlyphs && testimonialSection);
+
+  const detected: string[] = [];
+  if (hasSchema) detected.push("review schema");
+  if (widgetMatch) detected.push(widgetMatch[0].toLowerCase());
+  if (testimonialSection) detected.push("testimonial section");
 
   return {
     id: "reviews",
     label: "Reviews and testimonials",
     passed,
     copy: passed
-      ? "Your site shows reviews or testimonials. 93% of consumers say online reviews influence their purchase decisions (Podium, 2021). This is one of the strongest trust signals for local trades."
-      : "Your site shows no reviews or testimonials. 93% of consumers say online reviews influence their buying decisions (Podium, 2021), and 47% will not use a business with fewer than four stars (BrightLocal, 2023). Without social proof, potential customers move on.",
+      ? `Real review proof detected on your site (${detected.join(", ")}). 93% of consumers say online reviews influence their buying decisions (Podium, 2021) — this is one of your strongest trust signals.`
+      : "No verifiable reviews or testimonials on your homepage — no review schema, no third-party widget, no dedicated testimonial section. 93% of consumers say reviews drive their decision (Podium, 2021) and 47% won't use a business under 4 stars (BrightLocal, 2023). Right now you're asking visitors to take you on faith.",
     severity: passed ? 0 : 4,
+    evidence: passed ? `Proof found: ${detected.join(", ")}` : "No review widget, schema or testimonial block found",
   };
 }
 
-function checkLocalSeo(html: string, trade?: string, location?: string): Finding {
+function checkLocalSeo(html: string, trade?: string, location?: string): Finding & { titleText: string | null } {
   const titleMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
-  const metaMatch = html.match(/<meta[^>]*name=["']description["'][^>]*content=["']([^"']*)["']/i) ??
-    html.match(/<meta[^>]*content=["']([^"']*)["'][^>]*name=["']description["']/i);
-
-  const title = titleMatch?.[1]?.toLowerCase() ?? "";
-  const desc = metaMatch?.[1]?.toLowerCase() ?? "";
-  const combined = title + " " + desc;
+  const rawTitle = titleMatch?.[1]?.trim() ?? "";
+  const title = rawTitle.toLowerCase();
 
   let hasLocation = false;
   let hasTrade = false;
 
   if (location) {
     const locTerms = location.toLowerCase().split(/[,\s]+/).filter((t) => t.length > 2);
-    hasLocation = locTerms.some((t) => combined.includes(t));
+    hasLocation = locTerms.some((t) => title.includes(t));
   } else {
     const locationPatterns =
-      /london|manchester|birmingham|leeds|glasgow|liverpool|edinburgh|bristol|sheffield|cardiff|nottingham|leicester|newcastle|brighton|plymouth|reading|kent|essex|surrey|sussex|hampshire|devon|cornwall|norfolk|suffolk/i;
-    hasLocation = locationPatterns.test(combined);
+      /london|manchester|birmingham|leeds|glasgow|liverpool|edinburgh|bristol|sheffield|cardiff|nottingham|leicester|newcastle|brighton|plymouth|reading|kent|essex|surrey|sussex|hampshire|devon|cornwall|norfolk|suffolk|twickenham|richmond|st\s*margarets|kingston|wimbledon|croydon|hackney|islington|camden|greenwich|barnet|enfield|harrow|bromley|ealing|hounslow|redbridge|havering/i;
+    hasLocation = locationPatterns.test(title);
   }
 
   if (trade) {
     const tradeTerms = trade.toLowerCase().split(/[,\s/]+/).filter((t) => t.length > 2);
-    hasTrade = tradeTerms.some((t) => combined.includes(t));
+    hasTrade = tradeTerms.some((t) => title.includes(t));
   } else {
     const tradePatterns =
-      /plumb|electric|roof|build|landscap|paint|decor|joiner|carpent|heating|boiler|kitchen|bathroom|extension|loft|driveway|garden|fencing|tiling|flooring|guttering|drainage|solar|ev.?charg/i;
-    hasTrade = tradePatterns.test(combined);
+      /plumb|electric|roof|build|landscap|paint|decor|joiner|carpent|heating|boiler|kitchen|bathroom|extension|loft|driveway|garden|fencing|tiling|flooring|guttering|drainage|solar|ev.?charg|mechanic|garage|servic|repair|mot|tyre/i;
+    hasTrade = tradePatterns.test(title);
   }
 
   const passed = hasLocation && hasTrade;
   const missingParts: string[] = [];
-  if (!hasLocation) missingParts.push(location || "your town");
+  if (!hasLocation) missingParts.push(location || "your town or area");
   if (!hasTrade) missingParts.push(trade || "your trade");
+
+  const titleQuote = rawTitle ? `"${rawTitle.length > 90 ? rawTitle.slice(0, 87) + "…" : rawTitle}"` : "empty";
 
   return {
     id: "seo",
     label: "Local SEO signals",
     passed,
     copy: passed
-      ? "Your title tag and meta description mention your trade and location. 46% of all Google searches have local intent (GoGulf, 2023), so this gives you a real advantage over competitors who skip it."
-      : `Your site does not mention ${missingParts.join(" or ")} in its title or description. 46% of all Google searches have local intent (GoGulf, 2023), and 76% of people who search for something nearby visit a business within 24 hours (Google, 2022). If your site does not say what you do and where, you are invisible to the customers already looking for you.`,
-    severity: passed ? 0 : 3,
+      ? `Your homepage title (${titleQuote}) names both your trade and your area. 46% of Google searches have local intent (GoGulf, 2023) — you're set up to catch them.`
+      : `Your homepage title reads ${titleQuote}. It doesn't include ${missingParts.join(" or ")}. 46% of Google searches have local intent (GoGulf, 2023) and 76% of nearby searches turn into a visit within 24 hours (Google, 2022). Right now Google can't tell what you do or where — so it shows a competitor who spelled it out.`,
+    severity: passed ? 0 : 4,
+    evidence: `Homepage title: ${titleQuote}`,
+    titleText: rawTitle || null,
   };
 }
 
@@ -220,11 +250,19 @@ export async function POST(request: NextRequest) {
     const [psi, html] = await Promise.all([checkPageSpeed(url), fetchHtml(url)]);
 
     const findings: Finding[] = [psi.speed, psi.mobile];
+    const snapshot: SiteSnapshot = {
+      title: null,
+      contactMethodCount: null,
+      loadSec: psi.speed.evidence?.match(/^([\d.]+)s/)?.[1] ?? null,
+    };
 
     if (html) {
-      findings.push(checkEnquiryCapture(html));
-      findings.push(checkReviews(html));
-      findings.push(checkLocalSeo(html, trade, location));
+      const enquiry = checkEnquiryCapture(html);
+      const reviews = checkReviews(html);
+      const seo = checkLocalSeo(html, trade, location);
+      findings.push(enquiry, reviews, seo);
+      snapshot.title = seo.titleText;
+      snapshot.contactMethodCount = enquiry.methodCount;
     } else {
       findings.push({
         id: "enquiry",
@@ -249,8 +287,9 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    findings.sort((a, b) => b.severity - a.severity);
+    findings.sort((a, b) => (a.passed === b.passed ? b.severity - a.severity : a.passed ? 1 : -1));
     const failCount = findings.filter((f) => !f.passed).length;
+    const estimate = estimateMonthlyLoss(findings);
 
     let scanId: string | null = null;
     if (supabase) {
@@ -267,7 +306,7 @@ export async function POST(request: NextRequest) {
       scanId = data?.id ?? null;
     }
 
-    return Response.json({ scanId, findings, failCount, url });
+    return Response.json({ scanId, findings, failCount, url, snapshot, estimate });
   } catch (err) {
     console.error("Scan error:", err);
     return Response.json({ error: "Scan failed" }, { status: 500 });

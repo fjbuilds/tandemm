@@ -21,9 +21,27 @@ interface Finding {
   passed: boolean;
   copy: string;
   severity: number;
+  evidence?: string;
 }
 
-type ScanData = { findings: Finding[]; failCount: number; scanId: string | null };
+interface Snapshot {
+  title: string | null;
+  contactMethodCount: number | null;
+  loadSec: string | null;
+}
+
+interface Estimate {
+  low: number;
+  high: number;
+}
+
+type ScanData = {
+  findings: Finding[];
+  failCount: number;
+  scanId: string | null;
+  snapshot?: Snapshot;
+  estimate?: Estimate | null;
+};
 
 type Step = "entry" | "scanning" | "results" | "confirmed";
 
@@ -56,6 +74,8 @@ function ScanTool() {
   const [findings, setFindings] = useState<Finding[]>([]);
   const [failCount, setFailCount] = useState(0);
   const [scanId, setScanId] = useState<string | null>(null);
+  const [snapshot, setSnapshot] = useState<Snapshot | null>(null);
+  const [estimate, setEstimate] = useState<Estimate | null>(null);
   const [checkStates, setCheckStates] = useState<Record<string, "waiting" | "running" | "done">>(
     () => Object.fromEntries(CHECKS.map((c) => [c.id, "waiting" as const]))
   );
@@ -90,17 +110,23 @@ function ScanTool() {
         return res.json();
       })
       .then((data) => {
-        scanDataRef.current = { findings: data.findings, failCount: data.failCount, scanId: data.scanId };
+        scanDataRef.current = {
+          findings: data.findings,
+          failCount: data.failCount,
+          scanId: data.scanId,
+          snapshot: data.snapshot,
+          estimate: data.estimate ?? null,
+        };
       })
       .catch(() => {
         scanDataRef.current = { findings: [], failCount: 0, scanId: null };
       });
 
-    const staggerDelays = [0, 1800, 3200, 5000, 6800];
-    const checkDurations = [1600, 1200, 1500, 1600, 1400];
+    const staggerDelays = [0, 550, 1100, 1700, 2250];
+    const checkDurations = [700, 550, 650, 600, 550];
 
     for (let i = 0; i < CHECKS.length; i++) {
-      await new Promise((r) => setTimeout(r, i === 0 ? 400 : staggerDelays[i] - staggerDelays[i - 1]));
+      await new Promise((r) => setTimeout(r, i === 0 ? 200 : staggerDelays[i] - staggerDelays[i - 1]));
       setCheckStates((prev) => ({ ...prev, [CHECKS[i].id]: "running" }));
       setProgressPct(Math.round(((i * 2 + 1) / (CHECKS.length * 2)) * 100));
 
@@ -111,13 +137,13 @@ function ScanTool() {
 
     await fetchPromise;
 
-    await new Promise((r) => setTimeout(r, 600));
-
     const data = scanDataRef.current as ScanData | null;
     if (data) {
       setFindings(data.findings);
       setFailCount(data.failCount);
       setScanId(data.scanId);
+      setSnapshot(data.snapshot ?? null);
+      setEstimate(data.estimate ?? null);
     }
 
     setStep("results");
@@ -168,10 +194,10 @@ function ScanTool() {
             {step === "entry" && (
               <div className="scan-entry">
                 <h1 className="scan-headline">
-                  Find out what&rsquo;s costing you jobs
+                  See what&rsquo;s losing you work.
                 </h1>
                 <p className="scan-subheadline">
-                  Enter your website below and we will check it against five things that cost trades businesses work every week.
+                  Drop your website in. We&rsquo;ll read it live and show you the 5 things that quietly send trade jobs to your competitors.
                 </p>
                 <form
                   className="scan-url-form"
@@ -244,7 +270,45 @@ function ScanTool() {
             <div className="scan-results-header">
               <h2 className="scan-results-title">Your site scan results</h2>
               <p className="scan-results-url">{url}</p>
+              {snapshot && (snapshot.title || snapshot.contactMethodCount !== null || snapshot.loadSec) && (
+                <div className="scan-snapshot">
+                  <span className="scan-snapshot-label">What we read on your site</span>
+                  <ul className="scan-snapshot-list">
+                    {snapshot.title && (
+                      <li>
+                        <span className="scan-snapshot-key">Homepage title</span>
+                        <span className="scan-snapshot-val">&ldquo;{snapshot.title.length > 80 ? snapshot.title.slice(0, 77) + "…" : snapshot.title}&rdquo;</span>
+                      </li>
+                    )}
+                    {snapshot.contactMethodCount !== null && (
+                      <li>
+                        <span className="scan-snapshot-key">Contact methods</span>
+                        <span className="scan-snapshot-val">{snapshot.contactMethodCount} detected</span>
+                      </li>
+                    )}
+                    {snapshot.loadSec && (
+                      <li>
+                        <span className="scan-snapshot-key">Load time</span>
+                        <span className="scan-snapshot-val">{snapshot.loadSec}s on mobile</span>
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              )}
             </div>
+
+            {/* TALLY — money headline, above findings so it lands first */}
+            {estimate && failCount > 0 && (
+              <div className="scan-tally">
+                Estimated <strong>£{estimate.low.toLocaleString()}–£{estimate.high.toLocaleString()}</strong> in jobs slipping away every month.
+                <span className="scan-tally-sub">{failCount} of 5 checks failed. Details below.</span>
+              </div>
+            )}
+            {!estimate && failCount === 0 && findings.length > 0 && (
+              <div className="scan-tally scan-tally--pass">
+                Your site passes all 5 checks. There are still faster ways to win more of your area — worth a chat.
+              </div>
+            )}
 
             {/* FINDINGS */}
             <div className="scan-findings">
@@ -269,17 +333,16 @@ function ScanTool() {
                   <div className="scan-finding-content">
                     <div className="scan-finding-label">{f.label}</div>
                     <p className="scan-finding-copy">{f.copy}</p>
+                    {f.evidence && (
+                      <div className="scan-finding-evidence">
+                        <span className="scan-finding-evidence-tag">Evidence</span>
+                        <span>{f.evidence}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
             </div>
-
-            {/* TALLY */}
-            {failCount > 0 && (
-              <div className="scan-tally">
-                You have {failCount} of 5 issue{failCount !== 1 ? "s" : ""} costing you jobs
-              </div>
-            )}
 
             {/* LOCKED PANEL / CONTACT FORM */}
             {!panelUnlocked && step === "results" && (
@@ -287,15 +350,14 @@ function ScanTool() {
                   <div className="scan-gate-locked">
                     <div className="scan-gate-lock-icon">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                        <path d="M12 2l2.4 6.8L21 10l-5 4.4L17.5 22 12 18.2 6.5 22 8 14.4 3 10l6.6-1.2z" />
                       </svg>
                     </div>
                     <h3 className="scan-gate-title">
-                      See exactly how many jobs this is likely costing you each month, and what to fix first.
+                      Want the fix plan?
                     </h3>
                     <p className="scan-gate-sub">
-                      Leave your number and one of our team will call you within 24 hours.
+                      Free 15-minute call within 24 hours. We&rsquo;ll walk you through what to fix first, in what order, and what it would recover — for {url.replace(/^https?:\/\//, "")}. No pitch deck, no card, no follow-up spam.
                     </p>
                   </div>
 
@@ -348,7 +410,7 @@ function ScanTool() {
                       disabled={!contactName.trim() || !contactPhone.trim() || submitting}
                       className="scan-contact-submit"
                     >
-                      {submitting ? "Sending..." : "Show me the full picture"}
+                      {submitting ? "Sending..." : "Get my free fix plan →"}
                     </button>
                   </div>
                 </div>
