@@ -254,25 +254,58 @@ async function checkPageSpeed(url: string): Promise<{ speed: Finding; mobile: Fi
       },
     };
   } catch {
-    return {
-      speed: {
-        id: "speed",
-        label: "Mobile page speed",
-        passed: true,
-        copy: "We could not run a full PageSpeed test on your site. Google's tool was not able to reach it in time. May just be a timeout on our end, worth checking manually.",
-        severity: 0,
-        sources: [SOURCES.googleSpeed],
-      },
-      mobile: {
-        id: "mobile",
-        label: "Mobile usability",
-        passed: true,
-        copy: "We couldn't run the full mobile audit. Worth checking manually on your phone if you haven't recently.",
-        severity: 0,
-        sources: [SOURCES.googleMobile],
-      },
-    };
+    return psiFallback(url);
   }
+}
+
+// Real substitute checks used when Google PageSpeed is unreachable. TTFB + HTTPS are both real
+// signals customers experience, tied to real reasons visitors bounce.
+async function psiFallback(url: string): Promise<{ speed: Finding; mobile: Finding }> {
+  const isHttps = /^https:/i.test(url);
+  const domain = extractDomain(url) ?? url;
+  let ttfbMs: number | null = null;
+  let reachable = false;
+  try {
+    const t0 = Date.now();
+    const res = await fetch(url, {
+      method: "HEAD",
+      redirect: "follow",
+      signal: AbortSignal.timeout(8000),
+    });
+    ttfbMs = Date.now() - t0;
+    reachable = res.ok;
+  } catch {
+    // stays null / false
+  }
+
+  const speedPassed = reachable && ttfbMs !== null && ttfbMs < 800;
+  const speedFinding: Finding = {
+    id: "speed",
+    label: "Server response time",
+    passed: speedPassed,
+    copy: ttfbMs === null
+      ? "Your site did not respond to our request within 8 seconds. If our request struggled, real customers on 4G or a patchy signal are seeing the same thing, and most will just try the next Google result."
+      : speedPassed
+        ? `Your server responded in ${ttfbMs}ms, which is fast. Anything under 800ms is considered healthy and keeps you off the pile that Google flags as slow.`
+        : `Your server took ${ttfbMs}ms to send the first byte. Anything over 800ms starts hurting your Google ranking and pushes mobile visitors to bounce before the page even paints. BrightLocal's UK research shows mobile trade searches are where most trades win or lose the enquiry.`,
+    severity: speedPassed ? 0 : ttfbMs === null || ttfbMs > 2000 ? 5 : 4,
+    evidence: ttfbMs === null ? "No HTTP response within 8 seconds" : `TTFB: ${ttfbMs}ms via HEAD request`,
+    sources: [SOURCES.googleSpeed, SOURCES.webDevVitals],
+  };
+
+  const mobileFinding: Finding = {
+    id: "mobile",
+    label: "Mobile trust signals",
+    passed: isHttps,
+    copy: isHttps
+      ? `Your site uses HTTPS on ${domain}, so mobile browsers show it as secure. That is the baseline trust signal every visitor sees before they even read the page.`
+      : `Your site is not on HTTPS. Every modern mobile browser shows visitors a "Not secure" warning before they even see your homepage. BrightLocal's UK research puts trust signals at the top of the local hiring decision, and this one is a hard block that costs you clicks before the customer sees a single word.`,
+    severity: isHttps ? 0 : 5,
+    evidence: isHttps ? `HTTPS enabled on ${domain}` : `No HTTPS on ${domain}, browsers show "Not secure"`,
+    sources: [SOURCES.googleMobile, SOURCES.brightLocalReviews],
+  };
+
+  return { speed: speedFinding, mobile: mobileFinding };
 }
 
 async function fetchHtml(url: string): Promise<string | null> {

@@ -292,125 +292,184 @@ function ScanTool() {
       )}
 
       {/* RESULTS */}
-      {(step === "results" || step === "confirmed") && (
+      {(step === "results" || step === "confirmed") && (() => {
+        const passCount = findings.filter((f) => f.passed).length;
+        const dom = snapshot?.domain ?? domainFromUrl(url);
+        const fav =
+          snapshot?.faviconUrl ??
+          (dom ? `https://www.google.com/s2/favicons?domain=${encodeURIComponent(dom)}&sz=64` : null);
+        let priorityCounter = 0;
+        return (
         <section className="scan-results-section">
           <div className="scan-results-inner">
-            <div className="scan-results-header">
-              <h2 className="scan-results-title">Your Website Check results</h2>
-              <p className="scan-results-url">{url}</p>
-              <SitePreview
-                domain={snapshot?.domain ?? domainFromUrl(url)}
-                faviconUrl={
-                  snapshot?.faviconUrl ??
-                  (domainFromUrl(url)
-                    ? `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domainFromUrl(url)!)}&sz=64`
-                    : null)
-                }
-                screenshotUrl={snapshot?.screenshotUrl ?? null}
-              />
-              {snapshot && (snapshot.title || snapshot.metaDescription || snapshot.contactMethodCount !== null || snapshot.loadSec) && (
-                <div className="scan-snapshot">
-                  <span className="scan-snapshot-label">What we read on your site</span>
-                  <ul className="scan-snapshot-list">
-                    {snapshot.title && (
-                      <li>
-                        <span className="scan-snapshot-key">&lt;title&gt; tag</span>
-                        <span className="scan-snapshot-val">&ldquo;{snapshot.title.length > 100 ? snapshot.title.slice(0, 97) + "…" : snapshot.title}&rdquo;</span>
-                      </li>
-                    )}
-                    {snapshot.metaDescription && (
-                      <li>
-                        <span className="scan-snapshot-key">Meta description</span>
-                        <span className="scan-snapshot-val">&ldquo;{snapshot.metaDescription.length > 140 ? snapshot.metaDescription.slice(0, 137) + "…" : snapshot.metaDescription}&rdquo;</span>
-                      </li>
-                    )}
-                    {snapshot.contactMethodCount !== null && (
-                      <li>
-                        <span className="scan-snapshot-key">Contact methods</span>
-                        <span className="scan-snapshot-val">{snapshot.contactMethodCount} detected on homepage</span>
-                      </li>
-                    )}
-                    {snapshot.loadSec && (
-                      <li>
-                        <span className="scan-snapshot-key">Mobile load</span>
-                        <span className="scan-snapshot-val">{snapshot.loadSec}s (Google PageSpeed)</span>
-                      </li>
-                    )}
-                  </ul>
+
+            {/* HERO. 2-col: big message on the left, real screenshot on the right. */}
+            <div className="scan-hero-band">
+              <div className="scan-hero-band-copy">
+                <div className="scan-hero-band-eyebrow">
+                  Website Check {dom && <>for <span className="scan-hero-band-domain">{dom}</span></>}
                 </div>
-              )}
+                <h2 className="scan-hero-band-title">
+                  {failCount === 0
+                    ? "You’re on the front foot."
+                    : failCount >= 3
+                      ? "Your site is quietly losing you jobs."
+                      : "There are a few real gaps we can fix."}
+                </h2>
+                {marketShare && failCount > 0 && (
+                  <div className="scan-hero-metric">
+                    <div className="scan-hero-metric-num">
+                      {marketShare.competitorRatioLow}
+                      {marketShare.competitorRatioHigh > marketShare.competitorRatioLow && (
+                        <>-{marketShare.competitorRatioHigh}</>
+                      )}
+                      <span className="scan-hero-metric-denom">/10</span>
+                    </div>
+                    <p className="scan-hero-metric-copy">
+                      of the people searching for your trade in your area right now are choosing a competitor before they get to you.
+                    </p>
+                    <div className="scan-hero-metric-sub">
+                      Roughly <strong>{marketShare.lostLow}
+                      {marketShare.lostHigh > marketShare.lostLow ? `-${marketShare.lostHigh}` : ""}%</strong>{" "}
+                      of your local search market going elsewhere.
+                    </div>
+                  </div>
+                )}
+                {(!marketShare || failCount === 0) && findings.length > 0 && (
+                  <div className="scan-hero-metric scan-hero-metric--pass">
+                    <div className="scan-hero-metric-num">
+                      5<span className="scan-hero-metric-denom">/5</span>
+                    </div>
+                    <p className="scan-hero-metric-copy">
+                      Your site passes every check. That is rare. The website is only half the picture though. The ceiling now is Google Business Profile, review flow and how fast enquiries get answered.
+                    </p>
+                  </div>
+                )}
+                <div className="scan-hero-band-score" aria-label={`${passCount} of ${findings.length} checks passing`}>
+                  {findings.map((f) => (
+                    <span
+                      key={f.id}
+                      className={cn("scan-hero-band-dot", f.passed ? "is-pass" : "is-fail")}
+                      title={`${f.label}: ${f.passed ? "working" : "needs attention"}`}
+                    />
+                  ))}
+                  <span className="scan-hero-band-score-text">
+                    {passCount}/{findings.length} working
+                  </span>
+                </div>
+              </div>
+              <div className="scan-hero-band-preview">
+                <SitePreview domain={dom} faviconUrl={fav} screenshotUrl={snapshot?.screenshotUrl ?? null} />
+              </div>
             </div>
 
-            {/* TALLY. Market-share framing, trade-agnostic, above findings so it lands first. */}
-            {marketShare && failCount > 0 && (
-              <div className="scan-tally">
-                Right now, roughly <strong>{marketShare.competitorRatioLow} in 10</strong>
-                {marketShare.competitorRatioHigh > marketShare.competitorRatioLow && (
-                  <> to <strong>{marketShare.competitorRatioHigh} in 10</strong></>
-                )}{" "}
-                of the people searching for your trade in your area are choosing a competitor before they get to you.
-                <span className="scan-tally-sub">
-                  {failCount} of 5 checks failed. That is roughly {marketShare.lostLow}
-                  {marketShare.lostHigh > marketShare.lostLow ? `-${marketShare.lostHigh}` : ""}% of your local search market going elsewhere.
-                </span>
-              </div>
-            )}
-            {(!marketShare || failCount === 0) && findings.length > 0 && (
-              <div className="scan-tally scan-tally--pass">
-                Your site passes all 5 checks. That is rare, well done. The website side is only half the picture though. Most trades still lose the majority of local searches because of Google Business Profile, review flow, and how leads are followed up after they land. Worth a call to see where the ceiling is.
-              </div>
-            )}
-
-            {/* FINDINGS */}
+            {/* FINDINGS. Priority-numbered fails, dimmed passes below. */}
+            <div className="scan-findings-heading">
+              <h3>What we found</h3>
+              <span className="scan-findings-heading-count">
+                {failCount === 0 ? "All 5 working" : `${failCount} of ${findings.length} to fix`}
+              </span>
+            </div>
             <div className="scan-findings">
-              {findings.map((f, i) => (
-                <div
-                  key={f.id}
-                  className={cn("scan-finding", f.passed ? "scan-finding--pass" : "scan-finding--fail")}
-                  style={{ animationDelay: `${i * 120}ms` }}
-                >
-                  <div className="scan-finding-status">
-                    {f.passed ? (
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <path d="M5 12l5 5 9-11" />
-                      </svg>
-                    ) : (
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M12 8v4M12 16h.01" />
-                      </svg>
-                    )}
-                  </div>
-                  <div className="scan-finding-content">
-                    <div className="scan-finding-label">{f.label}</div>
-                    <p className="scan-finding-copy">{f.copy}</p>
-                    {f.evidence && (
-                      <div className="scan-finding-evidence">
-                        <span className="scan-finding-evidence-tag">Evidence</span>
-                        <span>{f.evidence}</span>
+              {findings.map((f, i) => {
+                if (!f.passed) priorityCounter += 1;
+                const priority = !f.passed ? priorityCounter : null;
+                return (
+                  <div
+                    key={f.id}
+                    className={cn("scan-finding", f.passed ? "scan-finding--pass" : "scan-finding--fail")}
+                    style={{ animationDelay: `${i * 80}ms` }}
+                  >
+                    <div className="scan-finding-lead">
+                      <div className="scan-finding-status">
+                        {f.passed ? (
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <path d="M5 12l5 5 9-11" />
+                          </svg>
+                        ) : priority ? (
+                          <span className="scan-finding-priority">{priority}</span>
+                        ) : (
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 8v4M12 16h.01" />
+                          </svg>
+                        )}
                       </div>
-                    )}
-                    {f.sources && f.sources.length > 0 && (
-                      <div className="scan-finding-sources">
-                        <span className="scan-finding-sources-label">Sources:</span>
-                        {f.sources.map((s, si) => (
-                          <a
-                            key={s.url}
-                            href={s.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="scan-finding-source-link"
-                          >
-                            {s.label}
-                            {si < (f.sources?.length ?? 0) - 1 ? "," : ""}
-                          </a>
-                        ))}
+                      <div className="scan-finding-badges">
+                        <span className={cn("scan-finding-badge", f.passed ? "is-pass" : "is-fail")}>
+                          {f.passed ? "Working" : f.severity >= 5 ? "Critical" : f.severity >= 4 ? "High priority" : "Fix this"}
+                        </span>
                       </div>
-                    )}
+                    </div>
+                    <div className="scan-finding-content">
+                      <div className="scan-finding-label">{f.label}</div>
+                      <p className="scan-finding-copy">{f.copy}</p>
+                      {f.evidence && (
+                        <div className="scan-finding-evidence">
+                          <span className="scan-finding-evidence-tag">Evidence</span>
+                          <span>{f.evidence}</span>
+                        </div>
+                      )}
+                      {f.sources && f.sources.length > 0 && (
+                        <div className="scan-finding-sources">
+                          <span className="scan-finding-sources-label">Sources:</span>
+                          {f.sources.map((s, si) => (
+                            <a
+                              key={s.url}
+                              href={s.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="scan-finding-source-link"
+                            >
+                              {s.label}
+                              {si < (f.sources?.length ?? 0) - 1 ? "," : ""}
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
+
+            {/* Raw scan data. Collapsed by default. Proof that this was a real check. */}
+            {snapshot && (snapshot.title || snapshot.metaDescription || snapshot.contactMethodCount !== null || snapshot.loadSec) && (
+              <details className="scan-snapshot-details">
+                <summary>
+                  <span>What we actually read on your site</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </summary>
+                <ul className="scan-snapshot-list">
+                  {snapshot.title && (
+                    <li>
+                      <span className="scan-snapshot-key">&lt;title&gt; tag</span>
+                      <span className="scan-snapshot-val">&ldquo;{snapshot.title.length > 100 ? snapshot.title.slice(0, 97) + "…" : snapshot.title}&rdquo;</span>
+                    </li>
+                  )}
+                  {snapshot.metaDescription && (
+                    <li>
+                      <span className="scan-snapshot-key">Meta description</span>
+                      <span className="scan-snapshot-val">&ldquo;{snapshot.metaDescription.length > 140 ? snapshot.metaDescription.slice(0, 137) + "…" : snapshot.metaDescription}&rdquo;</span>
+                    </li>
+                  )}
+                  {snapshot.contactMethodCount !== null && (
+                    <li>
+                      <span className="scan-snapshot-key">Contact methods</span>
+                      <span className="scan-snapshot-val">{snapshot.contactMethodCount} detected on homepage</span>
+                    </li>
+                  )}
+                  {snapshot.loadSec && (
+                    <li>
+                      <span className="scan-snapshot-key">Mobile load</span>
+                      <span className="scan-snapshot-val">{snapshot.loadSec}s (Google PageSpeed)</span>
+                    </li>
+                  )}
+                </ul>
+              </details>
+            )}
 
             {/* LOCKED PANEL / CONTACT FORM */}
             {!panelUnlocked && step === "results" && (
@@ -506,7 +565,8 @@ function ScanTool() {
             )}
           </div>
         </section>
-      )}
+        );
+      })()}
     </>
   );
 }
