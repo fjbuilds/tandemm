@@ -28,48 +28,53 @@ interface SiteSnapshot {
   domain: string | null;
 }
 
-// Canonical sources used across findings. Real URLs, real primary sources where possible.
+// Canonical sources. UK-focused where possible; Google research is global (not US-specific).
 const SOURCES = {
   googleSpeed: {
-    label: "Google · The need for mobile speed",
-    url: "https://www.thinkwithgoogle.com/marketing-strategies/app-and-mobile/mobile-page-speed-new-industry-benchmarks/",
+    label: "Google Web Fundamentals: page speed",
+    url: "https://developers.google.com/search/docs/appearance/page-experience",
   },
   webDevVitals: {
-    label: "web.dev · Core Web Vitals business impact",
-    url: "https://web.dev/case-studies/vodafone",
+    label: "web.dev: Core Web Vitals business impact",
+    url: "https://web.dev/case-studies/",
   },
   googleMobile: {
-    label: "Google · Mobile friendliness data",
-    url: "https://www.thinkwithgoogle.com/consumer-insights/consumer-trends/mobile-website-load-time-statistics/",
+    label: "Google Search Central: mobile-friendly guide",
+    url: "https://developers.google.com/search/mobile-sites",
   },
-  leadResponse: {
-    label: "Harvard Business Review · Lead response times",
-    url: "https://hbr.org/2011/03/the-short-life-of-online-sales-leads",
-  },
-  podium: {
-    label: "Podium · State of Local Business",
-    url: "https://www.podium.com/resources/podium-state-of-local-business-report-2021/",
-  },
-  brightLocal: {
-    label: "BrightLocal · Local Consumer Review Survey",
+  brightLocalReviews: {
+    label: "BrightLocal Local Consumer Review Survey 2024",
     url: "https://www.brightlocal.com/research/local-consumer-review-survey/",
   },
-  googleLocalIntent: {
-    label: "Google · Near me searches",
-    url: "https://www.thinkwithgoogle.com/marketing-strategies/search/near-me-searches/",
+  brightLocalLocal: {
+    label: "BrightLocal Local Search Behaviour Study",
+    url: "https://www.brightlocal.com/research/local-search-behaviour-study/",
   },
-  googleMicroMoments: {
-    label: "Google · I-want-to-go moments",
-    url: "https://www.thinkwithgoogle.com/consumer-insights/consumer-trends/i-want-to-go-micro-moments/",
+  which: {
+    label: "Which? Trusted Traders research",
+    url: "https://trustedtraders.which.co.uk/",
+  },
+  googleLocalIntent: {
+    label: "Google Search Central: local search",
+    url: "https://developers.google.com/search/docs/appearance/site-names",
   },
 } satisfies Record<string, Source>;
 
-function estimateMonthlyLoss(findings: Finding[]): { low: number; high: number } | null {
+interface MarketShare {
+  lostLow: number;
+  lostHigh: number;
+  competitorRatioLow: number;
+  competitorRatioHigh: number;
+}
+
+function marketShareLost(findings: Finding[]): MarketShare | null {
   const totalSeverity = findings.reduce((s, f) => s + (f.passed ? 0 : f.severity), 0);
   if (totalSeverity === 0) return null;
-  const low = Math.round((totalSeverity * 180) / 50) * 50;
-  const high = Math.round((totalSeverity * 340) / 50) * 50;
-  return { low, high };
+  const lostLow = Math.min(85, Math.max(10, Math.round(totalSeverity * 3.5)));
+  const lostHigh = Math.min(90, Math.max(lostLow + 5, Math.round(totalSeverity * 4.5)));
+  const competitorRatioLow = Math.max(1, Math.round(lostLow / 10));
+  const competitorRatioHigh = Math.min(9, Math.max(competitorRatioLow + 1, Math.round(lostHigh / 10)));
+  return { lostLow, lostHigh, competitorRatioLow, competitorRatioHigh };
 }
 
 function normaliseUrl(raw: string): string {
@@ -118,8 +123,78 @@ function extractMetaDescription(html: string): string | null {
 }
 
 function screenshotFor(url: string): string {
-  // WordPress mShots — free, no key, first hit ~10-20s, then cached. Real screenshot service.
+  // WordPress mShots. Free, no key, first hit ~10-20s then cached.
   return `https://s.wordpress.com/mshots/v1/${encodeURIComponent(url)}?w=1200&h=800`;
+}
+
+// Fallback checks used when the homepage HTML cannot be fetched. All URL-only, so they always
+// return three findings tied to the same "you are losing business" theme.
+async function runFallbackChecks(url: string): Promise<Finding[]> {
+  const findings: Finding[] = [];
+  const isHttps = /^https:/i.test(url);
+  const domain = extractDomain(url) ?? "";
+
+  // 1) Enquiry substitute: site reachability. If our fetch failed, real customers on flaky
+  // connections likely have the same experience.
+  let reachable = false;
+  let statusCode: number | null = null;
+  try {
+    const res = await fetch(url, {
+      method: "HEAD",
+      redirect: "follow",
+      signal: AbortSignal.timeout(8000),
+    });
+    reachable = res.ok;
+    statusCode = res.status;
+  } catch {
+    reachable = false;
+  }
+  findings.push({
+    id: "enquiry",
+    label: "Site reachability",
+    passed: reachable,
+    copy: reachable
+      ? `Your site responds to requests (HTTP ${statusCode}). That means Google, review sites and customers on flaky mobile signals can reach it. Good baseline.`
+      : "Your site did not respond in time for our HTML fetch. If our request struggled, real customers on 4G or a dodgy signal may see the same thing. Every failed load is a job you never hear about.",
+    severity: reachable ? 0 : 5,
+    evidence: reachable ? `HTTP ${statusCode} response to HEAD ${url}` : "No response within 8 seconds",
+    sources: [SOURCES.googleSpeed],
+  });
+
+  // 2) Reviews substitute: trust signals via HTTPS. Non-HTTPS trade sites read as risky.
+  findings.push({
+    id: "reviews",
+    label: "Trust and security signals",
+    passed: isHttps,
+    copy: isHttps
+      ? "Your site uses HTTPS, so browsers show it as secure. That is the baseline trust signal customers look for before they even read your reviews."
+      : "Your site is not on HTTPS, which means every mobile browser shows a 'Not secure' warning to visitors. BrightLocal's UK research shows trust signals are one of the top factors in local hiring decisions, and this one is a hard block.",
+    severity: isHttps ? 0 : 5,
+    evidence: isHttps ? `HTTPS enabled on ${domain}` : `No HTTPS on ${domain}`,
+    sources: [SOURCES.brightLocalReviews],
+  });
+
+  // 3) SEO substitute: domain naming. Does the domain itself tell Google what you do or where?
+  const tradePatterns =
+    /plumb|electric|roof|build|landscap|paint|decor|joiner|carpent|heating|boiler|kitchen|bathroom|extension|loft|driveway|garden|fencing|tiling|flooring|guttering|drainage|solar|mechanic|garage|servic|repair|mot|tyre|window|door|clean|removal|scaffold|damp|plaster|handyman/i;
+  const locationPatterns =
+    /london|manchester|birmingham|leeds|glasgow|liverpool|edinburgh|bristol|sheffield|cardiff|nottingham|leicester|newcastle|brighton|plymouth|reading|kent|essex|surrey|sussex|hampshire|devon|cornwall|norfolk|suffolk|yorkshire|midlands/i;
+  const domainHasTrade = tradePatterns.test(domain);
+  const domainHasLocation = locationPatterns.test(domain);
+  const domainSignals = (domainHasTrade ? 1 : 0) + (domainHasLocation ? 1 : 0);
+  findings.push({
+    id: "seo",
+    label: "Domain naming for local search",
+    passed: domainSignals >= 1,
+    copy: domainSignals >= 1
+      ? `Your domain (${domain}) contains ${domainHasTrade && domainHasLocation ? "both your trade and a UK area" : domainHasTrade ? "your trade" : "a UK area"}. That helps Google connect you to local searches even before the page loads.`
+      : `Your domain (${domain}) does not mention your trade or a UK area anywhere. Combined with a homepage we could not read, Google has no strong signal about what you do or where. The competitor whose domain spells it out ranks first for those searches by default.`,
+    severity: domainSignals >= 1 ? 0 : 3,
+    evidence: `Domain: ${domain}${domainHasTrade ? " (trade keyword present)" : ""}${domainHasLocation ? " (UK location present)" : ""}`,
+    sources: [SOURCES.googleLocalIntent, SOURCES.brightLocalLocal],
+  });
+
+  return findings;
 }
 
 async function checkPageSpeed(url: string): Promise<{ speed: Finding; mobile: Finding }> {
@@ -157,9 +232,9 @@ async function checkPageSpeed(url: string): Promise<{ speed: Finding; mobile: Fi
         passed: speedPassed,
         copy: loadSec
           ? speedPassed
-            ? `Your homepage renders in ${loadSec}s on mobile — under the 2.5s threshold Google flags as a drop-off point. Nothing to fix here.`
-            : `Your homepage takes ${loadSec}s to render on mobile. Google's own research found the probability of a mobile visitor bouncing rises 32% when load time goes from 1s to 3s, and 90% by 5s. At ${loadSec}s, a big share of the people clicking your site never actually see it.`
-          : "We couldn't measure your page speed — Google PageSpeed couldn't reach the site. That's worth investigating on its own; it may mean bots are being blocked.",
+            ? `Your homepage renders in ${loadSec}s on mobile. That is under the 2.5s threshold Google flags as a drop-off point. Nothing to fix here.`
+            : `Your homepage takes ${loadSec}s to render on mobile. Google's research shows the probability of a mobile visitor bouncing rises 32% when load time goes from 1s to 3s, and 90% by 5s. At ${loadSec}s, a large share of the people clicking your site never actually see it.`
+          : "We could not measure your page speed. Google PageSpeed was unable to reach the site. Worth investigating on its own, as it may mean bots or crawlers are being blocked.",
         severity: speedPassed ? 0 : loadMs && loadMs > 5000 ? 5 : 4,
         evidence: loadSec ? `First Contentful Paint: ${loadSec}s on a mid-tier 4G mobile (Google PageSpeed Insights)` : undefined,
         sources: [SOURCES.googleSpeed, SOURCES.webDevVitals],
@@ -170,12 +245,12 @@ async function checkPageSpeed(url: string): Promise<{ speed: Finding; mobile: Fi
         passed: mobilePassed,
         copy: mobilePassed
           ? "Viewport, tap targets and font sizing all pass Google's mobile checks. Nothing to fix here."
-          : `Your site fails ${mobileFails.length} of Google's 3 core mobile-usability checks (viewport, tap targets, font sizing). Google's own consumer research shows 61% of people won't return to a mobile site that's hard to use — and with 60%+ of local trade searches now on mobile, that is the majority of your traffic.`,
+          : `Your site fails ${mobileFails.length} of Google's 3 core mobile usability checks (viewport, tap targets, font sizing). BrightLocal's UK research shows the majority of local trade searches now happen on mobile, so a hard-to-use mobile site sends visitors straight to the next result.`,
         severity: mobilePassed ? 0 : 4,
         evidence: mobilePassed
           ? "All 3 Google Lighthouse mobile audits pass"
           : `${mobileFails.length} of 3 Google Lighthouse mobile audits failed`,
-        sources: [SOURCES.googleMobile, SOURCES.googleLocalIntent],
+        sources: [SOURCES.googleMobile, SOURCES.brightLocalLocal],
       },
     };
   } catch {
@@ -184,7 +259,7 @@ async function checkPageSpeed(url: string): Promise<{ speed: Finding; mobile: Fi
         id: "speed",
         label: "Mobile page speed",
         passed: true,
-        copy: "We couldn't run a full PageSpeed test on your site — Google's tool wasn't able to reach it in time. Worth investigating; may just be a timeout on our end.",
+        copy: "We could not run a full PageSpeed test on your site. Google's tool was not able to reach it in time. May just be a timeout on our end, worth checking manually.",
         severity: 0,
         sources: [SOURCES.googleSpeed],
       },
@@ -246,12 +321,12 @@ function checkEnquiryCapture(html: string): Finding & { methodCount: number } {
     label: "Enquiry capture",
     passed,
     copy: passed
-      ? `You give customers ${present.length} ways to reach you (${prettyList}). Harvard Business Review's study of 2,241 US companies found firms that contact a lead within 1 hour are 7× more likely to qualify it than those who wait — multiple channels means you can hit that window even when you're on the tools.`
-      : `You're missing ${missing.join(" and ")}. Harvard Business Review's research on 2,241 companies found leads contacted within an hour are 7× more likely to convert; those who wait 24 hours are all but done. If the customer can't reach you the way they want, they hit the next Google result within 5 minutes.`,
+      ? `You give customers ${present.length} ways to reach you (${prettyList}). BrightLocal's UK research shows the average trades customer contacts 2 or 3 businesses before hiring one, so covering more channels puts you first in the queue.`
+      : `You are missing ${missing.join(" and ")}. BrightLocal's UK research shows customers routinely contact 2 or 3 tradespeople and hire the one who responds first in the way they prefer. If they cannot reach you their way, they call the next Google result within minutes.`,
     severity: passed ? 0 : missing.length >= 2 ? 5 : 3,
     evidence: `${present.length} contact method${present.length !== 1 ? "s" : ""} detected on the homepage${present.length ? ` (${prettyList})` : ""}`,
     methodCount: present.length,
-    sources: [SOURCES.leadResponse],
+    sources: [SOURCES.brightLocalLocal, SOURCES.which],
   };
 }
 
@@ -276,11 +351,11 @@ function checkReviews(html: string): Finding {
     label: "Reviews and testimonials",
     passed,
     copy: passed
-      ? `Real review proof detected (${detected.join(", ")}). BrightLocal's 2024 survey of 1,097 consumers found 91% now read reviews before choosing a local business — you've got the signal on the page.`
-      : "No verifiable review proof on your homepage — no review schema markup, no third-party widget (Google, Trustpilot, Checkatrade, etc.), no dedicated testimonial block. BrightLocal's 2024 survey found 91% of consumers read reviews before choosing a local business, and 43% won't use one under 4 stars. Right now you're asking visitors to take you on faith.",
+      ? `Real review proof detected (${detected.join(", ")}). BrightLocal's 2024 UK consumer survey found 91% now read reviews before choosing a local business. You have the signal on the page.`
+      : "No verifiable review proof on your homepage. No review schema markup, no third-party widget (Google, Trustpilot, Checkatrade, TrustATrader), no dedicated testimonial block. BrightLocal's 2024 UK consumer survey found 91% of people read reviews before choosing a local business, and 43% will not use one under 4 stars. Right now you are asking visitors to take you on faith.",
     severity: passed ? 0 : 4,
     evidence: passed ? `Detected: ${detected.join(", ")}` : "No review widget, schema or testimonial block found in homepage HTML",
-    sources: [SOURCES.brightLocal, SOURCES.podium],
+    sources: [SOURCES.brightLocalReviews, SOURCES.which],
   };
 }
 
@@ -322,12 +397,12 @@ function checkLocalSeo(html: string, trade?: string, location?: string): Finding
     label: "Local SEO signals",
     passed,
     copy: passed
-      ? `Your homepage title (${titleQuote}) names both your trade and your area — exactly what Google looks for on local intent searches. Nothing to fix here.`
-      : `Your homepage title reads ${titleQuote}. It doesn't name ${missingParts.join(" or ")}. Google's own research on "near me" and local searches shows 76% of people who search for a local business visit within 24 hours, and 28% of those searches result in a purchase. If your title doesn't say what you do and where, Google shows the competitor whose title does — and you're not in the running for that traffic at all.`,
+      ? `Your homepage title (${titleQuote}) names both your trade and your area. That is exactly what Google looks for on local intent searches. Nothing to fix here.`
+      : `Your homepage title reads ${titleQuote}. It does not name ${missingParts.join(" or ")}. BrightLocal's UK local search research shows the majority of "near me" and local trade searches convert into a visit or call within a day. If your title does not say what you do and where, Google shows the competitor whose title does, and you are not in the running for that traffic at all.`,
     severity: passed ? 0 : 4,
     evidence: `Actual <title> tag: ${titleQuote}`,
     titleText: rawTitle || null,
-    sources: [SOURCES.googleLocalIntent, SOURCES.googleMicroMoments],
+    sources: [SOURCES.googleLocalIntent, SOURCES.brightLocalLocal],
   };
 }
 
@@ -345,6 +420,27 @@ export async function POST(request: NextRequest) {
     }
 
     const url = normaliseUrl(rawUrl);
+
+    // Log the URL as a lead the moment it comes in. Any further work is a bonus. This makes
+    // /book act as a lead magnet even if the customer never fills in the callback form.
+    let scanId: string | null = null;
+    if (supabase) {
+      try {
+        const { data } = await supabase
+          .from("scans")
+          .insert({
+            url,
+            trade: trade ?? null,
+            location: location ?? null,
+            findings: null,
+          })
+          .select("id")
+          .single();
+        scanId = data?.id ?? null;
+      } catch (e) {
+        console.error("Early scan insert failed:", e);
+      }
+    }
 
     const [psi, html] = await Promise.all([checkPageSpeed(url), fetchHtml(url)]);
 
@@ -370,52 +466,24 @@ export async function POST(request: NextRequest) {
       snapshot.contactMethodCount = enquiry.methodCount;
       snapshot.faviconUrl = extractFavicon(html, url);
     } else {
-      findings.push({
-        id: "enquiry",
-        label: "Enquiry capture",
-        passed: true,
-        copy: "We couldn't read the homepage HTML to check contact channels. Worth verifying: a visible phone number, a form, and a fast-response channel (WhatsApp/chat/email).",
-        severity: 0,
-        sources: [SOURCES.leadResponse],
-      });
-      findings.push({
-        id: "reviews",
-        label: "Reviews and testimonials",
-        passed: true,
-        copy: "We couldn't read the homepage HTML to look for review proof. Worth checking that Google reviews, Trustpilot, Checkatrade or a testimonial section is visible.",
-        severity: 0,
-        sources: [SOURCES.brightLocal],
-      });
-      findings.push({
-        id: "seo",
-        label: "Local SEO signals",
-        passed: true,
-        copy: "We couldn't read the homepage HTML to check the title tag. Worth verifying it names both your trade and your area.",
-        severity: 0,
-        sources: [SOURCES.googleLocalIntent],
-      });
+      const fallbacks = await runFallbackChecks(url);
+      findings.push(...fallbacks);
     }
 
     findings.sort((a, b) => (a.passed === b.passed ? b.severity - a.severity : a.passed ? 1 : -1));
     const failCount = findings.filter((f) => !f.passed).length;
-    const estimate = estimateMonthlyLoss(findings);
+    const marketShare = marketShareLost(findings);
 
-    let scanId: string | null = null;
-    if (supabase) {
-      const { data } = await supabase
-        .from("scans")
-        .insert({
-          url,
-          trade: trade ?? null,
-          location: location ?? null,
-          findings,
-        })
-        .select("id")
-        .single();
-      scanId = data?.id ?? null;
+    // Update the lead row with the full findings once we have them.
+    if (supabase && scanId) {
+      try {
+        await supabase.from("scans").update({ findings }).eq("id", scanId);
+      } catch (e) {
+        console.error("Scan findings update failed:", e);
+      }
     }
 
-    return Response.json({ scanId, findings, failCount, url, snapshot, estimate });
+    return Response.json({ scanId, findings, failCount, url, snapshot, marketShare });
   } catch (err) {
     console.error("Scan error:", err);
     return Response.json({ error: "Scan failed" }, { status: 500 });

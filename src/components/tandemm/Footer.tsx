@@ -7,7 +7,7 @@ const pageLinks = [
   { href: "/pricing", label: "Pricing" },
   { href: "/system", label: "How it works" },
   { href: "/about", label: "About" },
-  { href: "/book", label: "Free site scan" },
+  { href: "/book", label: "Free Website Check" },
 ];
 
 export function Footer() {

@@ -46,9 +46,9 @@ export async function POST(request: NextRequest) {
       await resend?.emails.send({
         from: "Tandemm Leads <leads@tandemm.co.uk>",
         to: ["hello@tandemm.co.uk"],
-        subject: `Site scan lead: ${name.trim()} (${phone.trim()})`,
+        subject: `Website Check lead: ${name.trim()} (${phone.trim()})`,
         html: `
-          <h2>New site scan lead</h2>
+          <h2>New Website Check lead</h2>
           <table style="border-collapse:collapse;font-family:sans-serif;font-size:14px">
             <tr><td style="padding:6px 12px;font-weight:bold">Name</td><td style="padding:6px 12px">${name}</td></tr>
             <tr><td style="padding:6px 12px;font-weight:bold">Phone</td><td style="padding:6px 12px"><a href="tel:${phone}">${phone}</a></td></tr>

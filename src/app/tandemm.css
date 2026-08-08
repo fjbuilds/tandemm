@@ -7946,13 +7946,13 @@ body {
 }
 
 .scan-results-inner {
-  max-width: 720px;
+  max-width: 820px;
   margin: 0 auto;
 }
 
 .scan-results-header {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 }
 
 .scan-results-title {
@@ -7982,11 +7982,12 @@ body {
 .scan-finding {
   display: flex;
   gap: 16px;
-  padding: 20px 24px;
+  padding: 22px 26px;
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-hairline);
   background: var(--color-surface);
   animation: scan-finding-in 0.4s ease-out both;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 @keyframes scan-finding-in {
@@ -7996,10 +7997,17 @@ body {
 
 .scan-finding--fail {
   border-left: 4px solid #c44;
+  background: linear-gradient(180deg, rgba(204,68,68,0.045), rgba(204,68,68,0.015));
+  box-shadow: 0 2px 6px -3px rgba(204,68,68,0.18);
 }
 
 .scan-finding--pass {
   border-left: 4px solid #2a7;
+  opacity: 0.82;
+}
+
+.scan-finding--pass:hover {
+  opacity: 1;
 }
 
 .scan-finding-status {

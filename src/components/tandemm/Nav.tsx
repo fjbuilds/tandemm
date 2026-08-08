@@ -63,8 +63,8 @@ export function Nav({
             aria-current={active === "book" ? "page" : undefined}
             className="whitespace-nowrap rounded-[var(--radius-pill)] bg-white px-3.5 py-[11px] text-[13px] font-semibold text-[var(--color-primary)] no-underline sm:px-5 sm:text-sm"
           >
-            <span className="sm:hidden">Free scan</span>
-            <span className="hidden sm:inline">Free site scan</span>
+            <span className="sm:hidden">Free Check</span>
+            <span className="hidden sm:inline">Free Website Check</span>
           </Link>
           <button
             type="button"
@@ -115,7 +115,7 @@ export function Nav({
               onClick={() => setMenuOpen(false)}
               className="mt-1 rounded-[var(--radius-pill)] bg-white px-4 py-3 text-center text-[15px] font-semibold text-[var(--color-primary)] no-underline"
             >
-              Free site scan
+              Free Website Check
             </Link>
           </nav>
         </div>

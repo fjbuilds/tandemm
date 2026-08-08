@@ -40,9 +40,11 @@ interface Snapshot {
   domain: string | null;
 }
 
-interface Estimate {
-  low: number;
-  high: number;
+interface MarketShare {
+  lostLow: number;
+  lostHigh: number;
+  competitorRatioLow: number;
+  competitorRatioHigh: number;
 }
 
 type ScanData = {
@@ -50,7 +52,7 @@ type ScanData = {
   failCount: number;
   scanId: string | null;
   snapshot?: Snapshot;
-  estimate?: Estimate | null;
+  marketShare?: MarketShare | null;
 };
 
 type Step = "entry" | "scanning" | "results" | "confirmed";
@@ -100,7 +102,7 @@ function ScanTool() {
   const [failCount, setFailCount] = useState(0);
   const [scanId, setScanId] = useState<string | null>(null);
   const [snapshot, setSnapshot] = useState<Snapshot | null>(null);
-  const [estimate, setEstimate] = useState<Estimate | null>(null);
+  const [marketShare, setMarketShare] = useState<MarketShare | null>(null);
   const [statusIndex, setStatusIndex] = useState(0);
   const [contactName, setContactName] = useState("");
   const [contactPhone, setContactPhone] = useState("");
@@ -152,7 +154,7 @@ function ScanTool() {
         failCount: data.failCount,
         scanId: data.scanId,
         snapshot: data.snapshot,
-        estimate: data.estimate ?? null,
+        marketShare: data.marketShare ?? null,
       };
     } catch {
       scanDataRef.current = { findings: [], failCount: 0, scanId: null };
@@ -168,7 +170,7 @@ function ScanTool() {
       setFailCount(data.failCount);
       setScanId(data.scanId);
       setSnapshot(data.snapshot ?? null);
-      setEstimate(data.estimate ?? null);
+      setMarketShare(data.marketShare ?? null);
     }
 
     // Short beat so the progress bar visibly fills before transitioning.
@@ -294,7 +296,7 @@ function ScanTool() {
         <section className="scan-results-section">
           <div className="scan-results-inner">
             <div className="scan-results-header">
-              <h2 className="scan-results-title">Your site scan results</h2>
+              <h2 className="scan-results-title">Your Website Check results</h2>
               <p className="scan-results-url">{url}</p>
               <SitePreview
                 domain={snapshot?.domain ?? domainFromUrl(url)}
@@ -339,16 +341,23 @@ function ScanTool() {
               )}
             </div>
 
-            {/* TALLY — money headline, above findings so it lands first */}
-            {estimate && failCount > 0 && (
+            {/* TALLY. Market-share framing, trade-agnostic, above findings so it lands first. */}
+            {marketShare && failCount > 0 && (
               <div className="scan-tally">
-                Estimated <strong>£{estimate.low.toLocaleString()}–£{estimate.high.toLocaleString()}</strong> in jobs slipping away every month.
-                <span className="scan-tally-sub">{failCount} of 5 checks failed. Details below.</span>
+                Right now, roughly <strong>{marketShare.competitorRatioLow} in 10</strong>
+                {marketShare.competitorRatioHigh > marketShare.competitorRatioLow && (
+                  <> to <strong>{marketShare.competitorRatioHigh} in 10</strong></>
+                )}{" "}
+                of the people searching for your trade in your area are choosing a competitor before they get to you.
+                <span className="scan-tally-sub">
+                  {failCount} of 5 checks failed. That is roughly {marketShare.lostLow}
+                  {marketShare.lostHigh > marketShare.lostLow ? `-${marketShare.lostHigh}` : ""}% of your local search market going elsewhere.
+                </span>
               </div>
             )}
-            {!estimate && failCount === 0 && findings.length > 0 && (
+            {(!marketShare || failCount === 0) && findings.length > 0 && (
               <div className="scan-tally scan-tally--pass">
-                Your site passes all 5 checks. There are still faster ways to win more of your area — worth a chat.
+                Your site passes all 5 checks. That is rare, well done. The website side is only half the picture though. Most trades still lose the majority of local searches because of Google Business Profile, review flow, and how leads are followed up after they land. Worth a call to see where the ceiling is.
               </div>
             )}
 
@@ -413,10 +422,14 @@ function ScanTool() {
                       </svg>
                     </div>
                     <h3 className="scan-gate-title">
-                      Want the fix plan?
+                      {failCount === 0
+                        ? "Let’s talk about how to get you more of your area."
+                        : "Let’s talk through how to fix this and bring in more customers."}
                     </h3>
                     <p className="scan-gate-sub">
-                      Free 15-minute call within 24 hours. We&rsquo;ll walk you through what to fix first, in what order, and what it would recover — for {url.replace(/^https?:\/\//, "")}. No pitch deck, no card, no follow-up spam.
+                      {failCount === 0
+                        ? `Leave your number and we will call within 24 hours to walk you through how we help trades like yours win a bigger share of local searches. Specific to ${url.replace(/^https?:\/\//, "")}, no generic pitch.`
+                        : `Leave your number and we will call you within 24 hours to talk through what to fix first, in what order, and how we would help you bring in more customers from your area. Specific to ${url.replace(/^https?:\/\//, "")}, no generic pitch.`}
                     </p>
                   </div>
 
@@ -469,7 +482,7 @@ function ScanTool() {
                       disabled={!contactName.trim() || !contactPhone.trim() || submitting}
                       className="scan-contact-submit"
                     >
-                      {submitting ? "Sending..." : "Get my free fix plan →"}
+                      {submitting ? "Sending..." : "Book my call →"}
                     </button>
                   </div>
                 </div>

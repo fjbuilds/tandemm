@@ -31,7 +31,7 @@ const options = [
   },
   {
     key: "book",
-    label: "Free site scan",
+    label: "Free Website Check",
     sub: "See where you are losing jobs, in seconds",
     href: "/book",
     external: false,
