@@ -15,6 +15,11 @@ const bookPaletteOverride = {
   "--color-hairline-soft": "#E1E3DC",
 } as CSSProperties;
 
+interface Source {
+  label: string;
+  url: string;
+}
+
 interface Finding {
   id: string;
   label: string;
@@ -22,12 +27,17 @@ interface Finding {
   copy: string;
   severity: number;
   evidence?: string;
+  sources?: Source[];
 }
 
 interface Snapshot {
   title: string | null;
+  metaDescription: string | null;
   contactMethodCount: number | null;
   loadSec: string | null;
+  faviconUrl: string | null;
+  screenshotUrl: string | null;
+  domain: string | null;
 }
 
 interface Estimate {
@@ -45,13 +55,19 @@ type ScanData = {
 
 type Step = "entry" | "scanning" | "results" | "confirmed";
 
-const CHECKS = [
-  { id: "speed", label: "Mobile page speed" },
-  { id: "enquiry", label: "Enquiry capture" },
-  { id: "reviews", label: "Reviews and testimonials" },
-  { id: "seo", label: "Local SEO signals" },
-  { id: "mobile", label: "Mobile usability" },
-];
+function normaliseUrlClient(raw: string): string {
+  let u = raw.trim().replace(/\/+$/, "");
+  if (!/^https?:\/\//i.test(u)) u = "https://" + u;
+  return u;
+}
+
+function domainFromUrl(raw: string): string | null {
+  try {
+    return new URL(normaliseUrlClient(raw)).hostname.replace(/^www\./, "");
+  } catch {
+    return null;
+  }
+}
 
 export default function BookPage() {
   return (
@@ -68,6 +84,15 @@ export default function BookPage() {
   );
 }
 
+const SCAN_STATUSES = [
+  "Fetching your homepage HTML…",
+  "Running Google PageSpeed test (mobile)…",
+  "Reading the <title> tag and meta description…",
+  "Counting contact channels (phone, form, WhatsApp, chat)…",
+  "Scanning for review widgets, schema and testimonial blocks…",
+  "Checking your title against local SEO signals…",
+];
+
 function ScanTool() {
   const [step, setStep] = useState<Step>("entry");
   const [url, setUrl] = useState("");
@@ -76,9 +101,7 @@ function ScanTool() {
   const [scanId, setScanId] = useState<string | null>(null);
   const [snapshot, setSnapshot] = useState<Snapshot | null>(null);
   const [estimate, setEstimate] = useState<Estimate | null>(null);
-  const [checkStates, setCheckStates] = useState<Record<string, "waiting" | "running" | "done">>(
-    () => Object.fromEntries(CHECKS.map((c) => [c.id, "waiting" as const]))
-  );
+  const [statusIndex, setStatusIndex] = useState(0);
   const [contactName, setContactName] = useState("");
   const [contactPhone, setContactPhone] = useState("");
   const [bestTime, setBestTime] = useState("");
@@ -96,46 +119,48 @@ function ScanTool() {
 
   const runScan = useCallback(async (scanUrl: string) => {
     setStep("scanning");
-    setProgressPct(0);
-    setCheckStates(Object.fromEntries(CHECKS.map((c) => [c.id, "waiting" as const])));
+    setProgressPct(6);
+    setStatusIndex(0);
     scanDataRef.current = null;
 
-    const fetchPromise = fetch("/api/scan", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ url: scanUrl }),
-    })
-      .then(async (res) => {
-        if (!res.ok) throw new Error("Scan failed");
-        return res.json();
-      })
-      .then((data) => {
-        scanDataRef.current = {
-          findings: data.findings,
-          failCount: data.failCount,
-          scanId: data.scanId,
-          snapshot: data.snapshot,
-          estimate: data.estimate ?? null,
-        };
-      })
-      .catch(() => {
-        scanDataRef.current = { findings: [], failCount: 0, scanId: null };
+    // Progress bar creeps forward while the real fetch runs. Caps at 92 until API returns.
+    const started = Date.now();
+    const progressTimer = setInterval(() => {
+      setProgressPct((p) => {
+        const elapsed = (Date.now() - started) / 1000;
+        const target = Math.min(92, 6 + Math.round(elapsed * 6));
+        return p < target ? target : p;
       });
+    }, 300);
 
-    const staggerDelays = [0, 550, 1100, 1700, 2250];
-    const checkDurations = [700, 550, 650, 600, 550];
+    // Status text rotates through the actual jobs being done. Slower than the fetch, so it
+    // never advertises something the API has already finished.
+    const statusTimer = setInterval(() => {
+      setStatusIndex((i) => (i + 1) % SCAN_STATUSES.length);
+    }, 1600);
 
-    for (let i = 0; i < CHECKS.length; i++) {
-      await new Promise((r) => setTimeout(r, i === 0 ? 200 : staggerDelays[i] - staggerDelays[i - 1]));
-      setCheckStates((prev) => ({ ...prev, [CHECKS[i].id]: "running" }));
-      setProgressPct(Math.round(((i * 2 + 1) / (CHECKS.length * 2)) * 100));
-
-      await new Promise((r) => setTimeout(r, checkDurations[i]));
-      setCheckStates((prev) => ({ ...prev, [CHECKS[i].id]: "done" }));
-      setProgressPct(Math.round(((i * 2 + 2) / (CHECKS.length * 2)) * 100));
+    try {
+      const res = await fetch("/api/scan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: scanUrl }),
+      });
+      if (!res.ok) throw new Error("Scan failed");
+      const data = await res.json();
+      scanDataRef.current = {
+        findings: data.findings,
+        failCount: data.failCount,
+        scanId: data.scanId,
+        snapshot: data.snapshot,
+        estimate: data.estimate ?? null,
+      };
+    } catch {
+      scanDataRef.current = { findings: [], failCount: 0, scanId: null };
     }
 
-    await fetchPromise;
+    clearInterval(progressTimer);
+    clearInterval(statusTimer);
+    setProgressPct(100);
 
     const data = scanDataRef.current as ScanData | null;
     if (data) {
@@ -145,6 +170,9 @@ function ScanTool() {
       setSnapshot(data.snapshot ?? null);
       setEstimate(data.estimate ?? null);
     }
+
+    // Short beat so the progress bar visibly fills before transitioning.
+    await new Promise((r) => setTimeout(r, 350));
 
     setStep("results");
     window.scrollTo({ top: 0, behavior: "instant" });
@@ -228,37 +256,35 @@ function ScanTool() {
               </div>
             )}
 
-            {step === "scanning" && (
-              <div className="scan-processing">
-                <div className="scan-processing-header">
-                  <p className="scan-processing-url">Scanning {url}</p>
-                  <div className="scan-progress-bar">
-                    <div className="scan-progress-fill" style={{ width: `${progressPct}%` }} />
+            {step === "scanning" && (() => {
+              const dom = domainFromUrl(url);
+              const normalised = normaliseUrlClient(url);
+              const previewShot = dom
+                ? `https://s.wordpress.com/mshots/v1/${encodeURIComponent(normalised)}?w=1200&h=800`
+                : null;
+              const previewFav = dom
+                ? `https://www.google.com/s2/favicons?domain=${encodeURIComponent(dom)}&sz=64`
+                : null;
+              return (
+                <div className="scan-processing">
+                  <SitePreview
+                    domain={dom}
+                    faviconUrl={previewFav}
+                    screenshotUrl={previewShot}
+                    loading
+                  />
+                  <div className="scan-processing-header">
+                    <div className="scan-progress-bar">
+                      <div className="scan-progress-fill" style={{ width: `${progressPct}%` }} />
+                    </div>
+                    <p className="scan-processing-status">
+                      <span className="scan-processing-status-dot" aria-hidden="true" />
+                      {SCAN_STATUSES[statusIndex]}
+                    </p>
                   </div>
                 </div>
-
-                <div className="scan-checklist">
-                  {CHECKS.map((check) => (
-                    <div key={check.id} className={cn("scan-check-row", `scan-check-row--${checkStates[check.id]}`)}>
-                      <div className="scan-check-indicator">
-                        {checkStates[check.id] === "waiting" && (
-                          <div className="scan-check-dot" />
-                        )}
-                        {checkStates[check.id] === "running" && (
-                          <div className="scan-check-spinner" />
-                        )}
-                        {checkStates[check.id] === "done" && (
-                          <svg className="scan-check-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M5 12l5 5 9-11" />
-                          </svg>
-                        )}
-                      </div>
-                      <span className="scan-check-label">{check.label}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+              );
+            })()}
           </div>
         </section>
       )}
@@ -270,26 +296,42 @@ function ScanTool() {
             <div className="scan-results-header">
               <h2 className="scan-results-title">Your site scan results</h2>
               <p className="scan-results-url">{url}</p>
-              {snapshot && (snapshot.title || snapshot.contactMethodCount !== null || snapshot.loadSec) && (
+              <SitePreview
+                domain={snapshot?.domain ?? domainFromUrl(url)}
+                faviconUrl={
+                  snapshot?.faviconUrl ??
+                  (domainFromUrl(url)
+                    ? `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domainFromUrl(url)!)}&sz=64`
+                    : null)
+                }
+                screenshotUrl={snapshot?.screenshotUrl ?? null}
+              />
+              {snapshot && (snapshot.title || snapshot.metaDescription || snapshot.contactMethodCount !== null || snapshot.loadSec) && (
                 <div className="scan-snapshot">
                   <span className="scan-snapshot-label">What we read on your site</span>
                   <ul className="scan-snapshot-list">
                     {snapshot.title && (
                       <li>
-                        <span className="scan-snapshot-key">Homepage title</span>
-                        <span className="scan-snapshot-val">&ldquo;{snapshot.title.length > 80 ? snapshot.title.slice(0, 77) + "…" : snapshot.title}&rdquo;</span>
+                        <span className="scan-snapshot-key">&lt;title&gt; tag</span>
+                        <span className="scan-snapshot-val">&ldquo;{snapshot.title.length > 100 ? snapshot.title.slice(0, 97) + "…" : snapshot.title}&rdquo;</span>
+                      </li>
+                    )}
+                    {snapshot.metaDescription && (
+                      <li>
+                        <span className="scan-snapshot-key">Meta description</span>
+                        <span className="scan-snapshot-val">&ldquo;{snapshot.metaDescription.length > 140 ? snapshot.metaDescription.slice(0, 137) + "…" : snapshot.metaDescription}&rdquo;</span>
                       </li>
                     )}
                     {snapshot.contactMethodCount !== null && (
                       <li>
                         <span className="scan-snapshot-key">Contact methods</span>
-                        <span className="scan-snapshot-val">{snapshot.contactMethodCount} detected</span>
+                        <span className="scan-snapshot-val">{snapshot.contactMethodCount} detected on homepage</span>
                       </li>
                     )}
                     {snapshot.loadSec && (
                       <li>
-                        <span className="scan-snapshot-key">Load time</span>
-                        <span className="scan-snapshot-val">{snapshot.loadSec}s on mobile</span>
+                        <span className="scan-snapshot-key">Mobile load</span>
+                        <span className="scan-snapshot-val">{snapshot.loadSec}s (Google PageSpeed)</span>
                       </li>
                     )}
                   </ul>
@@ -337,6 +379,23 @@ function ScanTool() {
                       <div className="scan-finding-evidence">
                         <span className="scan-finding-evidence-tag">Evidence</span>
                         <span>{f.evidence}</span>
+                      </div>
+                    )}
+                    {f.sources && f.sources.length > 0 && (
+                      <div className="scan-finding-sources">
+                        <span className="scan-finding-sources-label">Sources:</span>
+                        {f.sources.map((s, si) => (
+                          <a
+                            key={s.url}
+                            href={s.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="scan-finding-source-link"
+                          >
+                            {s.label}
+                            {si < (f.sources?.length ?? 0) - 1 ? "," : ""}
+                          </a>
+                        ))}
                       </div>
                     )}
                   </div>
@@ -436,5 +495,59 @@ function ScanTool() {
         </section>
       )}
     </>
+  );
+}
+
+function SitePreview({
+  domain,
+  faviconUrl,
+  screenshotUrl,
+  loading = false,
+}: {
+  domain: string | null;
+  faviconUrl: string | null;
+  screenshotUrl: string | null;
+  loading?: boolean;
+}) {
+  if (!domain) return null;
+  return (
+    <div className={cn("site-preview", loading && "site-preview--loading")}>
+      <div className="site-preview-chrome">
+        <div className="site-preview-chrome-dots" aria-hidden="true">
+          <span /><span /><span />
+        </div>
+        <div className="site-preview-chrome-bar">
+          {faviconUrl && (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img src={faviconUrl} alt="" className="site-preview-favicon" width={16} height={16} />
+          )}
+          <span className="site-preview-domain">{domain}</span>
+        </div>
+      </div>
+      <div className="site-preview-shot">
+        {screenshotUrl ? (
+          <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={screenshotUrl}
+              alt={`Screenshot of ${domain}`}
+              className="site-preview-shot-img"
+              loading="lazy"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).style.display = "none";
+              }}
+            />
+            {loading && (
+              <div className="site-preview-shot-overlay">
+                <div className="site-preview-shot-spinner" aria-hidden="true" />
+                <span>Rendering live screenshot…</span>
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="site-preview-shot-fallback">No preview available</div>
+        )}
+      </div>
+    </div>
   );
 }

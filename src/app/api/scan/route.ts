@@ -3,6 +3,11 @@ import { supabase } from "@/lib/supabase";
 
 export const maxDuration = 30;
 
+interface Source {
+  label: string;
+  url: string;
+}
+
 interface Finding {
   id: string;
   label: string;
@@ -10,13 +15,54 @@ interface Finding {
   copy: string;
   severity: number;
   evidence?: string;
+  sources?: Source[];
 }
 
 interface SiteSnapshot {
   title: string | null;
+  metaDescription: string | null;
   contactMethodCount: number | null;
   loadSec: string | null;
+  faviconUrl: string | null;
+  screenshotUrl: string | null;
+  domain: string | null;
 }
+
+// Canonical sources used across findings. Real URLs, real primary sources where possible.
+const SOURCES = {
+  googleSpeed: {
+    label: "Google · The need for mobile speed",
+    url: "https://www.thinkwithgoogle.com/marketing-strategies/app-and-mobile/mobile-page-speed-new-industry-benchmarks/",
+  },
+  webDevVitals: {
+    label: "web.dev · Core Web Vitals business impact",
+    url: "https://web.dev/case-studies/vodafone",
+  },
+  googleMobile: {
+    label: "Google · Mobile friendliness data",
+    url: "https://www.thinkwithgoogle.com/consumer-insights/consumer-trends/mobile-website-load-time-statistics/",
+  },
+  leadResponse: {
+    label: "Harvard Business Review · Lead response times",
+    url: "https://hbr.org/2011/03/the-short-life-of-online-sales-leads",
+  },
+  podium: {
+    label: "Podium · State of Local Business",
+    url: "https://www.podium.com/resources/podium-state-of-local-business-report-2021/",
+  },
+  brightLocal: {
+    label: "BrightLocal · Local Consumer Review Survey",
+    url: "https://www.brightlocal.com/research/local-consumer-review-survey/",
+  },
+  googleLocalIntent: {
+    label: "Google · Near me searches",
+    url: "https://www.thinkwithgoogle.com/marketing-strategies/search/near-me-searches/",
+  },
+  googleMicroMoments: {
+    label: "Google · I-want-to-go moments",
+    url: "https://www.thinkwithgoogle.com/consumer-insights/consumer-trends/i-want-to-go-micro-moments/",
+  },
+} satisfies Record<string, Source>;
 
 function estimateMonthlyLoss(findings: Finding[]): { low: number; high: number } | null {
   const totalSeverity = findings.reduce((s, f) => s + (f.passed ? 0 : f.severity), 0);
@@ -30,6 +76,50 @@ function normaliseUrl(raw: string): string {
   let url = raw.trim().replace(/\/+$/, "");
   if (!/^https?:\/\//i.test(url)) url = "https://" + url;
   return url;
+}
+
+function extractDomain(url: string): string | null {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return null;
+  }
+}
+
+function extractFavicon(html: string, baseUrl: string): string | null {
+  const rels = ["apple-touch-icon", "icon", "shortcut icon"];
+  for (const rel of rels) {
+    const re = new RegExp(
+      `<link[^>]+rel=["']${rel}["'][^>]+href=["']([^"']+)["']|<link[^>]+href=["']([^"']+)["'][^>]+rel=["']${rel}["']`,
+      "i",
+    );
+    const m = html.match(re);
+    const href = m?.[1] ?? m?.[2];
+    if (href) {
+      try {
+        return new URL(href, baseUrl).toString();
+      } catch {
+        continue;
+      }
+    }
+  }
+  try {
+    return new URL("/favicon.ico", baseUrl).toString();
+  } catch {
+    return null;
+  }
+}
+
+function extractMetaDescription(html: string): string | null {
+  const m =
+    html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']*)["']/i) ??
+    html.match(/<meta[^>]+content=["']([^"']*)["'][^>]+name=["']description["']/i);
+  return m?.[1]?.trim() || null;
+}
+
+function screenshotFor(url: string): string {
+  // WordPress mShots — free, no key, first hit ~10-20s, then cached. Real screenshot service.
+  return `https://s.wordpress.com/mshots/v1/${encodeURIComponent(url)}?w=1200&h=800`;
 }
 
 async function checkPageSpeed(url: string): Promise<{ speed: Finding; mobile: Finding }> {
@@ -67,21 +157,25 @@ async function checkPageSpeed(url: string): Promise<{ speed: Finding; mobile: Fi
         passed: speedPassed,
         copy: loadSec
           ? speedPassed
-            ? `Your homepage renders in ${loadSec}s on mobile, comfortably under the 2.5s threshold where visitor drop-off starts. Keep it there (Google/SOASTA, 2017).`
-            : `Your homepage takes ${loadSec}s to render on mobile. 53% of visitors leave a page that takes over 3 seconds, and each extra second cuts conversions by up to 20% (Google/SOASTA, 2017). At your load time, roughly half your traffic is bouncing before they see anything.`
-          : "We could not measure your page speed. The site may be blocking automated checks.",
+            ? `Your homepage renders in ${loadSec}s on mobile — under the 2.5s threshold Google flags as a drop-off point. Nothing to fix here.`
+            : `Your homepage takes ${loadSec}s to render on mobile. Google's own research found the probability of a mobile visitor bouncing rises 32% when load time goes from 1s to 3s, and 90% by 5s. At ${loadSec}s, a big share of the people clicking your site never actually see it.`
+          : "We couldn't measure your page speed — Google PageSpeed couldn't reach the site. That's worth investigating on its own; it may mean bots are being blocked.",
         severity: speedPassed ? 0 : loadMs && loadMs > 5000 ? 5 : 4,
-        evidence: loadSec ? `${loadSec}s to first paint on mobile` : undefined,
+        evidence: loadSec ? `First Contentful Paint: ${loadSec}s on a mid-tier 4G mobile (Google PageSpeed Insights)` : undefined,
+        sources: [SOURCES.googleSpeed, SOURCES.webDevVitals],
       },
       mobile: {
         id: "mobile",
         label: "Mobile usability",
         passed: mobilePassed,
         copy: mobilePassed
-          ? "Your site is optimised for mobile. Text is readable and buttons are easy to tap. 61% of users won't return to a site that isn't mobile friendly (Google, 2018)."
-          : `Your site fails ${mobileFails.length} mobile usability check${mobileFails.length !== 1 ? "s" : ""} (viewport, tap targets or font sizing). 61% of people won't return to a mobile site that's hard to use, and 40% go straight to a competitor (Google, 2018). 78% of local searches on mobile lead to a purchase within 24 hours — that traffic is going elsewhere.`,
+          ? "Viewport, tap targets and font sizing all pass Google's mobile checks. Nothing to fix here."
+          : `Your site fails ${mobileFails.length} of Google's 3 core mobile-usability checks (viewport, tap targets, font sizing). Google's own consumer research shows 61% of people won't return to a mobile site that's hard to use — and with 60%+ of local trade searches now on mobile, that is the majority of your traffic.`,
         severity: mobilePassed ? 0 : 4,
-        evidence: mobilePassed ? "Viewport, tap targets and font size all pass" : `${mobileFails.length} of 3 mobile checks failed`,
+        evidence: mobilePassed
+          ? "All 3 Google Lighthouse mobile audits pass"
+          : `${mobileFails.length} of 3 Google Lighthouse mobile audits failed`,
+        sources: [SOURCES.googleMobile, SOURCES.googleLocalIntent],
       },
     };
   } catch {
@@ -90,15 +184,17 @@ async function checkPageSpeed(url: string): Promise<{ speed: Finding; mobile: Fi
         id: "speed",
         label: "Mobile page speed",
         passed: true,
-        copy: "Your page speed looks fine. Keep it under 3 seconds to stay ahead of 53% of visitors who leave slow sites (Google/SOASTA, 2017).",
+        copy: "We couldn't run a full PageSpeed test on your site — Google's tool wasn't able to reach it in time. Worth investigating; may just be a timeout on our end.",
         severity: 0,
+        sources: [SOURCES.googleSpeed],
       },
       mobile: {
         id: "mobile",
         label: "Mobile usability",
         passed: true,
-        copy: "Your site appears to be mobile friendly. 61% of users say they are unlikely to return to a site that is not mobile friendly (Google, 2018), so this keeps you in the running.",
+        copy: "We couldn't run the full mobile audit. Worth checking manually on your phone if you haven't recently.",
         severity: 0,
+        sources: [SOURCES.googleMobile],
       },
     };
   }
@@ -150,11 +246,12 @@ function checkEnquiryCapture(html: string): Finding & { methodCount: number } {
     label: "Enquiry capture",
     passed,
     copy: passed
-      ? `You give customers ${present.length} ways to reach you (${prettyList}). 78% of customers hire the first business that responds (Lead Connect, 2023) — multiple channels means you catch enquiries in the 3-minute window that matters.`
-      : `You're missing ${missing.join(" and ")}. 78% of customers hire the first business that responds (Lead Connect, 2023). If a lead can't reach you in the way they prefer, they call the next result on Google — usually within 5 minutes.`,
+      ? `You give customers ${present.length} ways to reach you (${prettyList}). Harvard Business Review's study of 2,241 US companies found firms that contact a lead within 1 hour are 7× more likely to qualify it than those who wait — multiple channels means you can hit that window even when you're on the tools.`
+      : `You're missing ${missing.join(" and ")}. Harvard Business Review's research on 2,241 companies found leads contacted within an hour are 7× more likely to convert; those who wait 24 hours are all but done. If the customer can't reach you the way they want, they hit the next Google result within 5 minutes.`,
     severity: passed ? 0 : missing.length >= 2 ? 5 : 3,
-    evidence: `${present.length} contact method${present.length !== 1 ? "s" : ""} detected${present.length ? ` (${prettyList})` : ""}`,
+    evidence: `${present.length} contact method${present.length !== 1 ? "s" : ""} detected on the homepage${present.length ? ` (${prettyList})` : ""}`,
     methodCount: present.length,
+    sources: [SOURCES.leadResponse],
   };
 }
 
@@ -179,10 +276,11 @@ function checkReviews(html: string): Finding {
     label: "Reviews and testimonials",
     passed,
     copy: passed
-      ? `Real review proof detected on your site (${detected.join(", ")}). 93% of consumers say online reviews influence their buying decisions (Podium, 2021) — this is one of your strongest trust signals.`
-      : "No verifiable reviews or testimonials on your homepage — no review schema, no third-party widget, no dedicated testimonial section. 93% of consumers say reviews drive their decision (Podium, 2021) and 47% won't use a business under 4 stars (BrightLocal, 2023). Right now you're asking visitors to take you on faith.",
+      ? `Real review proof detected (${detected.join(", ")}). BrightLocal's 2024 survey of 1,097 consumers found 91% now read reviews before choosing a local business — you've got the signal on the page.`
+      : "No verifiable review proof on your homepage — no review schema markup, no third-party widget (Google, Trustpilot, Checkatrade, etc.), no dedicated testimonial block. BrightLocal's 2024 survey found 91% of consumers read reviews before choosing a local business, and 43% won't use one under 4 stars. Right now you're asking visitors to take you on faith.",
     severity: passed ? 0 : 4,
-    evidence: passed ? `Proof found: ${detected.join(", ")}` : "No review widget, schema or testimonial block found",
+    evidence: passed ? `Detected: ${detected.join(", ")}` : "No review widget, schema or testimonial block found in homepage HTML",
+    sources: [SOURCES.brightLocal, SOURCES.podium],
   };
 }
 
@@ -224,11 +322,12 @@ function checkLocalSeo(html: string, trade?: string, location?: string): Finding
     label: "Local SEO signals",
     passed,
     copy: passed
-      ? `Your homepage title (${titleQuote}) names both your trade and your area. 46% of Google searches have local intent (GoGulf, 2023) — you're set up to catch them.`
-      : `Your homepage title reads ${titleQuote}. It doesn't include ${missingParts.join(" or ")}. 46% of Google searches have local intent (GoGulf, 2023) and 76% of nearby searches turn into a visit within 24 hours (Google, 2022). Right now Google can't tell what you do or where — so it shows a competitor who spelled it out.`,
+      ? `Your homepage title (${titleQuote}) names both your trade and your area — exactly what Google looks for on local intent searches. Nothing to fix here.`
+      : `Your homepage title reads ${titleQuote}. It doesn't name ${missingParts.join(" or ")}. Google's own research on "near me" and local searches shows 76% of people who search for a local business visit within 24 hours, and 28% of those searches result in a purchase. If your title doesn't say what you do and where, Google shows the competitor whose title does — and you're not in the running for that traffic at all.`,
     severity: passed ? 0 : 4,
-    evidence: `Homepage title: ${titleQuote}`,
+    evidence: `Actual <title> tag: ${titleQuote}`,
     titleText: rawTitle || null,
+    sources: [SOURCES.googleLocalIntent, SOURCES.googleMicroMoments],
   };
 }
 
@@ -250,10 +349,15 @@ export async function POST(request: NextRequest) {
     const [psi, html] = await Promise.all([checkPageSpeed(url), fetchHtml(url)]);
 
     const findings: Finding[] = [psi.speed, psi.mobile];
+    const domain = extractDomain(url);
     const snapshot: SiteSnapshot = {
       title: null,
+      metaDescription: null,
       contactMethodCount: null,
-      loadSec: psi.speed.evidence?.match(/^([\d.]+)s/)?.[1] ?? null,
+      loadSec: psi.speed.evidence?.match(/([\d.]+)s/)?.[1] ?? null,
+      faviconUrl: null,
+      screenshotUrl: screenshotFor(url),
+      domain,
     };
 
     if (html) {
@@ -262,28 +366,33 @@ export async function POST(request: NextRequest) {
       const seo = checkLocalSeo(html, trade, location);
       findings.push(enquiry, reviews, seo);
       snapshot.title = seo.titleText;
+      snapshot.metaDescription = extractMetaDescription(html);
       snapshot.contactMethodCount = enquiry.methodCount;
+      snapshot.faviconUrl = extractFavicon(html, url);
     } else {
       findings.push({
         id: "enquiry",
         label: "Enquiry capture",
         passed: true,
-        copy: "Your contact setup looks fine. 78% of customers hire the first business that responds (Lead Connect, 2023), so make sure enquiries reach you fast.",
+        copy: "We couldn't read the homepage HTML to check contact channels. Worth verifying: a visible phone number, a form, and a fast-response channel (WhatsApp/chat/email).",
         severity: 0,
+        sources: [SOURCES.leadResponse],
       });
       findings.push({
         id: "reviews",
         label: "Reviews and testimonials",
         passed: true,
-        copy: "Your reviews setup looks fine. 93% of consumers say online reviews influence their purchase decisions (Podium, 2021), so keep collecting them.",
+        copy: "We couldn't read the homepage HTML to look for review proof. Worth checking that Google reviews, Trustpilot, Checkatrade or a testimonial section is visible.",
         severity: 0,
+        sources: [SOURCES.brightLocal],
       });
       findings.push({
         id: "seo",
         label: "Local SEO signals",
         passed: true,
-        copy: "Your local SEO signals look fine. 46% of all Google searches have local intent (GoGulf, 2023), so keep your trade and location visible in your title and description.",
+        copy: "We couldn't read the homepage HTML to check the title tag. Worth verifying it names both your trade and your area.",
         severity: 0,
+        sources: [SOURCES.googleLocalIntent],
       });
     }
 
