@@ -510,7 +510,15 @@ export async function POST(request: NextRequest) {
     // Update the lead row with the full findings once we have them.
     if (supabase && scanId) {
       try {
-        await supabase.from("scans").update({ findings }).eq("id", scanId);
+        await supabase
+          .from("scans")
+          .update({
+            findings,
+            snapshot,
+            fail_count: failCount,
+            market_share: marketShare,
+          })
+          .eq("id", scanId);
       } catch (e) {
         console.error("Scan findings update failed:", e);
       }
